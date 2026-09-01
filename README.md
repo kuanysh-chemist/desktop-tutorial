@@ -1,5 +1,51 @@
-# Welcome to GitHub Desktop!
+# Классный журнал по химии
 
-This is your README. READMEs are where you can communicate what your project is and how to use it.
+Веб-приложение для учителя химии: журнал посещаемости/активности/поведения/д.з.
+по классам, быстрые отметки на уроке и отчёты за четверть.
 
-Write your name on line 6, save it, and then head back to GitHub Desktop.
+## Стек
+
+- React 19 (функциональные компоненты, хуки), Vite
+- Tailwind CSS 4 для стилей
+- `recharts` — графики, `lucide-react` — иконки, `xlsx` (SheetJS) — экспорт в Excel
+
+## Запуск
+
+```bash
+npm install
+npm run dev      # локальный сервер разработки
+npm run build    # production-сборка в dist/
+npm run lint     # oxlint
+```
+
+## Хранение данных
+
+Всё хранится в `localStorage` браузера (переживает перезагрузку страницы):
+
+- `classes` — список классов `{ id, name, archived }`
+- `students` — список учеников `{ id, classId, name }`
+- `rec_<classId>_<YYYY-MM-DD>` — записи урока `{ [studentId]: { attendance, activity, behavior, homework } }`
+
+Все чтения/записи в `localStorage` обёрнуты в `try/catch` (см. `src/lib/storage.js`).
+
+## Структура
+
+```
+src/
+  lib/            справочники статусов, даты/четверти, работа с localStorage,
+                  статистика по урокам, экспорт в Excel/HTML
+  hooks/          useAppData — CRUD по классам и ученикам
+  components/
+    journal/      вкладка «Журнал»
+    classes/      вкладка «Классы и ученики»
+    report/       вкладка «Отчёт»: отчёт по классу/ученику,
+                  сравнение классов/периодов
+    ui/           переиспользуемые элементы интерфейса
+```
+
+## Вкладки
+
+1. **Журнал** — отметки по ученикам на дату урока, быстрый режим, бланк для печати.
+2. **Классы и ученики** — добавление/удаление классов и учеников, архивация классов.
+3. **Отчёт** — отчёт по классу/ученику, сравнение классов и периодов,
+   экспорт в Excel и печатный HTML.
