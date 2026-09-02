@@ -10,6 +10,9 @@ import { resolvePeriod } from '../../lib/dates'
 import { exportClassReportXlsx } from '../../lib/exportXlsx'
 import { downloadReportHtml } from '../../lib/exportHtml'
 import { tallyByStudent, attendanceRate, activityRate, homeworkRate } from '../../lib/stats'
+import { SECTION } from '../../lib/theme'
+
+const ACCENT = SECTION.report.accent
 
 const MODES = [
   { key: 'class', label: 'Отчёт по классу' },
@@ -99,10 +102,10 @@ export default function ReportTab({ classes, allClasses, students, selectedClass
               onClick={() => setMode(m.key)}
               className="px-2.5 py-1 text-xs font-medium cursor-pointer"
               style={{
-                border: '1px solid #0f4c4c',
+                border: `1px solid ${ACCENT}`,
                 borderRadius: 3,
-                background: mode === m.key ? '#0f4c4c' : '#fff',
-                color: mode === m.key ? '#fff' : '#0f4c4c',
+                background: mode === m.key ? ACCENT : '#fff',
+                color: mode === m.key ? '#fff' : ACCENT,
               }}
             >
               {m.label}
@@ -113,7 +116,7 @@ export default function ReportTab({ classes, allClasses, students, selectedClass
         {mode !== 'compareClasses' && (
           <div className="flex flex-wrap items-center gap-3">
             <div>
-              <label className="block text-[11px] text-slate-500 mb-0.5">Класс</label>
+              <label className="block text-xs text-slate-500 mb-0.5">Класс</label>
               <select
                 value={selectedClassId}
                 onChange={(e) => onSelectClass(e.target.value)}
@@ -129,7 +132,7 @@ export default function ReportTab({ classes, allClasses, students, selectedClass
 
             {mode === 'student' && (
               <div>
-                <label className="block text-[11px] text-slate-500 mb-0.5">Ученик</label>
+                <label className="block text-xs text-slate-500 mb-0.5">Ученик</label>
                 <select
                   value={studentId}
                   onChange={(e) => setStudentId(e.target.value)}
@@ -146,7 +149,7 @@ export default function ReportTab({ classes, allClasses, students, selectedClass
 
             {mode !== 'comparePeriods' && (
               <div>
-                <label className="block text-[11px] text-slate-500 mb-0.5">Период</label>
+                <label className="block text-xs text-slate-500 mb-0.5">Период</label>
                 <PeriodPicker
                   mode={periodMode}
                   onModeChange={setPeriodMode}
@@ -164,7 +167,7 @@ export default function ReportTab({ classes, allClasses, students, selectedClass
                   type="button"
                   onClick={handleExportXlsx}
                   className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs cursor-pointer"
-                  style={{ border: '1px solid #0f4c4c', borderRadius: 3, color: '#0f4c4c' }}
+                  style={{ border: `1px solid ${ACCENT}`, borderRadius: 3, color: ACCENT }}
                 >
                   <FileSpreadsheet size={13} /> Excel
                 </button>

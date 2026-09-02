@@ -14,9 +14,9 @@ export default function StatusPicker({ dict, value, onChange, disabled }) {
             onClick={() => onChange(item.value)}
             className="flex items-center justify-center font-semibold select-none cursor-pointer"
             style={{
-              width: 26,
-              height: 24,
-              fontSize: 11,
+              width: 32,
+              height: 29,
+              fontSize: 13,
               border: `1px solid ${item.color}`,
               borderRadius: 3,
               background: active ? item.color : `${item.color}1a`,

@@ -3,6 +3,7 @@ import { DistributionBarChart } from './charts'
 import { ATTENDANCE, ACTIVITY, BEHAVIOR, HOMEWORK, dictByValue } from '../../lib/dictionaries'
 import { tallyByStudent, attendanceRate, activityRate, homeworkRate } from '../../lib/stats'
 import { formatRu } from '../../lib/dates'
+import { SECTION } from '../../lib/theme'
 
 export default function StudentReportView({ students, studentId, lessons, periodLabel }) {
   const student = students.find((s) => s.id === studentId)
@@ -39,10 +40,10 @@ export default function StudentReportView({ students, studentId, lessons, period
       </div>
 
       <div className="flex flex-wrap gap-2 mb-4">
-        <StatTile label="% посещаемости" value={fmtPct(attendanceRate(tally))} tone="#0f4c4c" />
-        <StatTile label="% активных уроков" value={fmtPct(activityRate(tally))} tone="#0f4c4c" />
-        <StatTile label="% выполнения д/з" value={fmtPct(homeworkRate(tally))} tone="#0f4c4c" />
-        <StatTile label="Замечания" value={notesCount} tone={notesCount > 0 ? '#b91c1c' : '#0f4c4c'} />
+        <StatTile label="% посещаемости" value={fmtPct(attendanceRate(tally))} tone={SECTION.report.accent} />
+        <StatTile label="% активных уроков" value={fmtPct(activityRate(tally))} tone={SECTION.report.accent} />
+        <StatTile label="% выполнения д/з" value={fmtPct(homeworkRate(tally))} tone={SECTION.report.accent} />
+        <StatTile label="Замечания" value={notesCount} tone={notesCount > 0 ? '#b91c1c' : SECTION.report.accent} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
@@ -68,7 +69,7 @@ export default function StudentReportView({ students, studentId, lessons, period
               })}
             </div>
           )}
-          <div className="flex gap-3 mt-2 text-[11px] text-slate-500">
+          <div className="flex gap-3 mt-2 text-xs text-slate-500">
             {ACTIVITY.map((d) => (
               <span key={d.value} className="flex items-center gap-1">
                 <span style={{ width: 9, height: 9, background: d.color, borderRadius: 2, display: 'inline-block' }} />
@@ -117,7 +118,7 @@ export default function StudentReportView({ students, studentId, lessons, period
       <div className="overflow-x-auto border border-slate-300 bg-white">
         <table className="w-full text-sm">
           <thead>
-            <tr style={{ background: '#e6efee' }}>
+            <tr style={{ background: SECTION.report.tint }}>
               <th className="text-left px-2 py-1">Дата</th>
               <th className="text-left px-2 py-1">Посещаемость</th>
               <th className="text-left px-2 py-1">Активность</th>

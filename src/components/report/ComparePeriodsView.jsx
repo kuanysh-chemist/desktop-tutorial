@@ -3,6 +3,9 @@ import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Toolti
 import PeriodPicker from './PeriodPicker'
 import { resolvePeriod } from '../../lib/dates'
 import { classDistribution, tallyByStudent, attendanceRate, activityRate, homeworkRate } from '../../lib/stats'
+import { SECTION } from '../../lib/theme'
+
+const ACCENT = SECTION.report.accent
 
 export default function ComparePeriodsView({ classStudents, lessons, selectedClassName }) {
   const [target, setTarget] = useState('class') // 'class' | 'student'
@@ -75,10 +78,10 @@ export default function ComparePeriodsView({ classStudents, lessons, selectedCla
             onClick={() => setTarget(o.key)}
             className="px-2.5 py-1 text-xs font-medium cursor-pointer"
             style={{
-              border: '1px solid #0f4c4c',
+              border: `1px solid ${ACCENT}`,
               borderRadius: 3,
-              background: target === o.key ? '#0f4c4c' : '#fff',
-              color: target === o.key ? '#fff' : '#0f4c4c',
+              background: target === o.key ? ACCENT : '#fff',
+              color: target === o.key ? '#fff' : ACCENT,
             }}
           >
             {o.label}
@@ -101,13 +104,13 @@ export default function ComparePeriodsView({ classStudents, lessons, selectedCla
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
         <div className="border border-slate-300 bg-white p-2.5">
-          <div className="text-xs font-semibold mb-1" style={{ color: '#0f4c4c' }}>
+          <div className="text-xs font-semibold mb-1" style={{ color: ACCENT }}>
             Период A
           </div>
           <PeriodPicker mode={modeA} onModeChange={setModeA} start={startA} end={endA} onStartChange={setStartA} onEndChange={setEndA} />
         </div>
         <div className="border border-slate-300 bg-white p-2.5">
-          <div className="text-xs font-semibold mb-1" style={{ color: '#0f4c4c' }}>
+          <div className="text-xs font-semibold mb-1" style={{ color: ACCENT }}>
             Период Б
           </div>
           <PeriodPicker mode={modeB} onModeChange={setModeB} start={startB} end={endB} onStartChange={setStartB} onEndChange={setEndB} />
@@ -118,14 +121,14 @@ export default function ComparePeriodsView({ classStudents, lessons, selectedCla
         <ResponsiveContainer width="100%" height={220}>
           <BarChart data={chartData} margin={{ left: -10, right: 16, top: 8, bottom: 4 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-            <XAxis dataKey="name" tick={{ fontSize: 10.5 }} />
-            <YAxis domain={[0, 100]} tick={{ fontSize: 10 }} />
+            <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+            <YAxis domain={[0, 100]} tick={{ fontSize: 12 }} />
             <Tooltip formatter={(v) => `${v}%`} />
             <Legend
               formatter={(v) => (v === 'A' ? labelA : labelB)}
-              wrapperStyle={{ fontSize: 11 }}
+              wrapperStyle={{ fontSize: 13 }}
             />
-            <Bar dataKey="A" fill="#0f4c4c" radius={[3, 3, 0, 0]} />
+            <Bar dataKey="A" fill={ACCENT} radius={[3, 3, 0, 0]} />
             <Bar dataKey="B" fill="#b45309" radius={[3, 3, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
@@ -134,7 +137,7 @@ export default function ComparePeriodsView({ classStudents, lessons, selectedCla
       <div className="overflow-x-auto border border-slate-300 bg-white">
         <table className="w-full text-sm">
           <thead>
-            <tr style={{ background: '#e6efee' }}>
+            <tr style={{ background: SECTION.report.tint }}>
               <th className="text-left px-2 py-1">Показатель</th>
               <th className="text-right px-2 py-1">{labelA}</th>
               <th className="text-right px-2 py-1">{labelB}</th>

@@ -2,6 +2,7 @@ import { BEHAVIOR } from '../../../lib/dictionaries'
 import { sortedBy } from '../../../lib/stats'
 import { DistributionBarChart } from '../charts'
 import StudentLink from '../StudentLink'
+import { SECTION } from '../../../lib/theme'
 
 export default function BehaviorSection({ students, dist, tally, onOpenStudent }) {
   const chartData = BEHAVIOR.map((d) => ({ name: d.label, value: dist.behavior[d.value] || 0, color: d.color }))
@@ -21,7 +22,7 @@ export default function BehaviorSection({ students, dist, tally, onOpenStudent }
         <h4 className="text-xs font-semibold text-slate-500 mb-1">Больше всего замечаний</h4>
         <table className="w-full text-sm">
           <thead>
-            <tr style={{ background: '#e6efee' }}>
+            <tr style={{ background: SECTION.report.tint }}>
               <th className="text-left px-2 py-1">Ученик</th>
               <th className="text-right px-2 py-1">Замечания</th>
               <th className="text-right px-2 py-1">Нарушения</th>

@@ -2,6 +2,7 @@ import { ACTIVITY } from '../../../lib/dictionaries'
 import { activityRate, sortedBy } from '../../../lib/stats'
 import { DistributionBarChart, LessonBarChart } from '../charts'
 import StudentLink from '../StudentLink'
+import { SECTION } from '../../../lib/theme'
 
 export default function ActivitySection({ students, dist, tally, byLesson, onOpenStudent }) {
   const chartData = ACTIVITY.map((d) => ({ name: d.label, value: dist.activity[d.value] || 0, color: d.color }))
@@ -25,7 +26,7 @@ export default function ActivitySection({ students, dist, tally, byLesson, onOpe
         <h4 className="text-xs font-semibold text-slate-500 mb-1">Топ-10 по проценту активных уроков</h4>
         <table className="w-full text-sm">
           <thead>
-            <tr style={{ background: '#e6efee' }}>
+            <tr style={{ background: SECTION.report.tint }}>
               <th className="text-left px-2 py-1">#</th>
               <th className="text-left px-2 py-1">Ученик</th>
               <th className="text-right px-2 py-1">% активных уроков</th>

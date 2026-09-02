@@ -96,6 +96,17 @@ export function homeworkRate(t) {
   return Math.round(((t.homework.done + t.homework.partial * 0.5) / t.homework.assigned) * 1000) / 10
 }
 
+// Сводный балл ученика для рейтинга «лучшие» — среднее по доступным метрикам
+// (посещаемость/активность/д.з.), минус штраф за замечания и нарушения.
+// Возвращает null, если по ученику вообще нет отмеченных данных.
+export function compositeScore(t) {
+  const parts = [attendanceRate(t), activityRate(t), homeworkRate(t)].filter((v) => v !== null)
+  if (parts.length === 0) return null
+  const base = parts.reduce((sum, v) => sum + v, 0) / parts.length
+  const penalty = t.behavior.note * 3 + t.behavior.violation * 8
+  return Math.max(0, Math.round((base - penalty) * 10) / 10)
+}
+
 // Динамика посещаемости по неделям: [{ week, rate }], отсортировано по неделе.
 export function weeklyAttendance(lessons) {
   const byWeek = new Map()

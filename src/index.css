@@ -8,6 +8,12 @@
   --accent-2: #0b3737;
 }
 
+html {
+  /* Базовый размер шрифта для всех rem-величин Tailwind (text-xs, text-sm, ...) —
+     подняли с браузерных 16px, чтобы весь интерфейс читался крупнее. */
+  font-size: 18px;
+}
+
 html, body {
   height: 100%;
 }
@@ -17,7 +23,7 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-  font-size: 13px;
+  font-size: 0.9rem;
 }
 
 #root {

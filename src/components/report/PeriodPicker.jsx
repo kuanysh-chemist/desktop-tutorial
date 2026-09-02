@@ -1,5 +1,8 @@
 import Pill from '../ui/Pill'
 import { QUARTERS } from '../../lib/dates'
+import { SECTION } from '../../lib/theme'
+
+const ACCENT = SECTION.report.accent
 
 const PRESETS = [
   { key: 'all', label: 'Вся история' },
@@ -12,7 +15,7 @@ export default function PeriodPicker({ mode, onModeChange, start, end, onStartCh
   return (
     <div className="flex flex-wrap items-center gap-1.5">
       {PRESETS.map((p) => (
-        <Pill key={p.key} active={mode === p.key} onClick={() => onModeChange(p.key)}>
+        <Pill key={p.key} active={mode === p.key} onClick={() => onModeChange(p.key)} tone={ACCENT}>
           {p.label}
         </Pill>
       ))}

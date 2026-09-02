@@ -6,6 +6,7 @@ import BehaviorSection from './sections/BehaviorSection'
 import HomeworkSection from './sections/HomeworkSection'
 import AtRiskSection from './sections/AtRiskSection'
 import SummarySection from './sections/SummarySection'
+import TopStudentsSection from './sections/TopStudentsSection'
 
 export default function ClassReportView({ className, periodLabel, students, lessons, onOpenStudent }) {
   if (students.length === 0) {
@@ -27,6 +28,10 @@ export default function ClassReportView({ className, periodLabel, students, less
       <div className="text-sm text-slate-500 mb-2">
         {className} · {periodLabel} · уроков: {lessons.length}
       </div>
+
+      <Card title="🏆 Топ-3 лучших ученика" defaultOpen>
+        <TopStudentsSection students={students} tally={tally} onOpenStudent={onOpenStudent} />
+      </Card>
 
       <Card title="Посещаемость">
         <AttendanceSection students={students} dist={dist} tally={tally} weekly={weekly} onOpenStudent={onOpenStudent} />

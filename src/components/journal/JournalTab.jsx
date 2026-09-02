@@ -6,6 +6,10 @@ import { FIELDS, QUICK_MODE_RECORD } from '../../lib/dictionaries'
 import { loadRecord, saveRecord, listRecordDates } from '../../lib/storage'
 import { downloadBlankForm } from '../../lib/exportHtml'
 import { todayISO, formatRu } from '../../lib/dates'
+import { SECTION } from '../../lib/theme'
+
+const ACCENT = SECTION.journal.accent
+const TINT = SECTION.journal.tint
 
 export default function JournalTab({ classes, students, selectedClassId, onSelectClass }) {
   const [date, setDate] = useState(todayISO())
@@ -108,7 +112,7 @@ export default function JournalTab({ classes, students, selectedClassId, onSelec
     <div>
       <div className="flex flex-wrap items-end gap-3 mb-3 border border-slate-300 bg-white p-3">
         <div>
-          <label className="block text-[11px] text-slate-500 mb-0.5">Класс</label>
+          <label className="block text-xs text-slate-500 mb-0.5">Класс</label>
           <select
             value={selectedClassId}
             onChange={(e) => onSelectClass(e.target.value)}
@@ -122,7 +126,7 @@ export default function JournalTab({ classes, students, selectedClassId, onSelec
           </select>
         </div>
         <div>
-          <label className="block text-[11px] text-slate-500 mb-0.5">Дата урока</label>
+          <label className="block text-xs text-slate-500 mb-0.5">Дата урока</label>
           <input
             type="date"
             value={date}
@@ -135,7 +139,7 @@ export default function JournalTab({ classes, students, selectedClassId, onSelec
           type="button"
           onClick={handleQuickMode}
           className="flex items-center gap-1.5 px-2.5 py-1.5 text-sm cursor-pointer"
-          style={{ border: '1px solid #0f4c4c', borderRadius: 3, color: '#0f4c4c' }}
+          style={{ border: `1px solid ${ACCENT}`, borderRadius: 3, color: ACCENT }}
           title="Всем: Был / Тихо, но работает / Норма. Домашку не трогает."
         >
           <Zap size={14} /> Быстрый режим
@@ -146,7 +150,7 @@ export default function JournalTab({ classes, students, selectedClassId, onSelec
           onClick={handleSave}
           disabled={saveState === 'saving'}
           className="flex items-center gap-1.5 px-2.5 py-1.5 text-sm text-white cursor-pointer"
-          style={{ background: '#0f4c4c', borderRadius: 3 }}
+          style={{ background: ACCENT, borderRadius: 3 }}
         >
           {saveState === 'saving' ? (
             <>
@@ -176,7 +180,7 @@ export default function JournalTab({ classes, students, selectedClassId, onSelec
       {savedDates.length > 0 && (
         <div className="flex flex-wrap gap-1.5 mb-3">
           {savedDates.map((d) => (
-            <Pill key={d} active={d === date} onClick={() => setDate(d)}>
+            <Pill key={d} active={d === date} onClick={() => setDate(d)} tone={ACCENT}>
               {formatRu(d)}
             </Pill>
           ))}
@@ -184,7 +188,7 @@ export default function JournalTab({ classes, students, selectedClassId, onSelec
       )}
 
       <div className="flex gap-3 mb-3 text-sm">
-        <SummaryChip label="Было" value={summary.present} color="#0f4c4c" />
+        <SummaryChip label="Было" value={summary.present} color={ACCENT} />
         <SummaryChip label="Опоздало" value={summary.late} color="#b45309" />
         <SummaryChip label="Уваж. причина" value={summary.excused} color="#64748b" />
         <SummaryChip label="Отсутствовало" value={summary.absent} color="#b91c1c" />
@@ -199,12 +203,12 @@ export default function JournalTab({ classes, students, selectedClassId, onSelec
         <div className="overflow-x-auto border border-slate-300 bg-white">
           <table className="w-full text-sm">
             <thead>
-              <tr style={{ background: '#e6efee' }}>
-                <th className="text-left px-2 py-1.5 font-semibold" style={{ color: '#0f4c4c' }}>
+              <tr style={{ background: TINT }}>
+                <th className="text-left px-2 py-1.5 font-semibold" style={{ color: ACCENT }}>
                   Ученик
                 </th>
                 {FIELDS.map((f) => (
-                  <th key={f.key} className="text-left px-2 py-1.5 font-semibold" style={{ color: '#0f4c4c' }}>
+                  <th key={f.key} className="text-left px-2 py-1.5 font-semibold" style={{ color: ACCENT }}>
                     {f.title}
                   </th>
                 ))}
@@ -224,7 +228,7 @@ export default function JournalTab({ classes, students, selectedClassId, onSelec
                   >
                     <td className="px-2 py-1.5 align-middle">
                       <div className="font-medium">{student.name}</div>
-                      {flagged && <div className="text-[10.5px]" style={{ color: '#92400e' }}>давно не отмечали — возможно, пропускают</div>}
+                      {flagged && <div className="text-xs" style={{ color: '#92400e' }}>давно не отмечали — возможно, пропускают</div>}
                     </td>
                     {FIELDS.map((f) => (
                       <td key={f.key} className="px-2 py-1.5 align-middle">

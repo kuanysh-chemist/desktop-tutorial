@@ -1,5 +1,6 @@
 import { attendanceRate, activityRate, homeworkRate, sortedBy } from '../../../lib/stats'
 import StudentLink from '../StudentLink'
+import { SECTION } from '../../../lib/theme'
 
 export default function SummarySection({ students, tally, onOpenStudent }) {
   const rows = sortedBy(students, (a, b) => a.name.localeCompare(b.name, 'ru'))
@@ -8,7 +9,7 @@ export default function SummarySection({ students, tally, onOpenStudent }) {
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
-          <tr style={{ background: '#e6efee' }}>
+          <tr style={{ background: SECTION.report.tint }}>
             <th className="text-left px-2 py-1">Ученик</th>
             <th className="text-right px-2 py-1">% посещаемости</th>
             <th className="text-right px-2 py-1">% активных уроков</th>

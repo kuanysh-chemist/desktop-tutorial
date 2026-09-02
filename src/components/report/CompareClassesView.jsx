@@ -1,6 +1,7 @@
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
 import { loadAllRecords } from '../../lib/storage'
 import { classDistribution, attendanceRate, activityRate, homeworkRate } from '../../lib/stats'
+import { SECTION } from '../../lib/theme'
 
 // Считает по всей истории каждого неархивного класса (без учёта фильтра периода).
 export default function CompareClassesView({ allClasses, students }) {
@@ -37,10 +38,10 @@ export default function CompareClassesView({ allClasses, students }) {
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={attendanceData} margin={{ left: -10, right: 16, top: 8, bottom: 4 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-              <XAxis dataKey="name" tick={{ fontSize: 11 }} />
-              <YAxis domain={[0, 100]} tick={{ fontSize: 10 }} />
+              <XAxis dataKey="name" tick={{ fontSize: 13 }} />
+              <YAxis domain={[0, 100]} tick={{ fontSize: 12 }} />
               <Tooltip formatter={(v) => [`${v}%`, 'посещаемость']} />
-              <Bar dataKey="rate" fill="#0f4c4c" radius={[3, 3, 0, 0]} />
+              <Bar dataKey="rate" fill={SECTION.report.accent} radius={[3, 3, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -49,8 +50,8 @@ export default function CompareClassesView({ allClasses, students }) {
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={activityData} margin={{ left: -10, right: 16, top: 8, bottom: 4 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-              <XAxis dataKey="name" tick={{ fontSize: 11 }} />
-              <YAxis domain={[0, 100]} tick={{ fontSize: 10 }} />
+              <XAxis dataKey="name" tick={{ fontSize: 13 }} />
+              <YAxis domain={[0, 100]} tick={{ fontSize: 12 }} />
               <Tooltip formatter={(v) => [`${v}%`, 'активность']} />
               <Bar dataKey="rate" fill="#b45309" radius={[3, 3, 0, 0]} />
             </BarChart>
@@ -61,7 +62,7 @@ export default function CompareClassesView({ allClasses, students }) {
       <div className="overflow-x-auto border border-slate-300 bg-white">
         <table className="w-full text-sm">
           <thead>
-            <tr style={{ background: '#e6efee' }}>
+            <tr style={{ background: SECTION.report.tint }}>
               <th className="text-left px-2 py-1">Класс</th>
               <th className="text-right px-2 py-1">Учеников</th>
               <th className="text-right px-2 py-1">Уроков</th>

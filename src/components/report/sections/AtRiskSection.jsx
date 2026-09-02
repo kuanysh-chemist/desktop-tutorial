@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { attendanceRate, activityRate, homeworkRate, sortedBy } from '../../../lib/stats'
 import StudentLink from '../StudentLink'
+import { SECTION } from '../../../lib/theme'
+
+const ACCENT = SECTION.report.accent
 
 const CRITERIA = [
   { key: 'attendance', label: 'Посещаемость', getRate: attendanceRate, defaultThreshold: 70, color: '#b91c1c' },
@@ -63,10 +66,10 @@ export default function AtRiskSection({ students, tally, onOpenStudent }) {
             onClick={() => setMinFailing(n)}
             className="px-2 py-0.5 text-xs cursor-pointer"
             style={{
-              border: '1px solid #0f4c4c',
+              border: `1px solid ${ACCENT}`,
               borderRadius: 999,
-              background: minFailing === n ? '#0f4c4c' : '#fff',
-              color: minFailing === n ? '#fff' : '#0f4c4c',
+              background: minFailing === n ? ACCENT : '#fff',
+              color: minFailing === n ? '#fff' : ACCENT,
             }}
           >
             {n === 3 ? 'все 3' : `от ${n}`}
@@ -77,7 +80,7 @@ export default function AtRiskSection({ students, tally, onOpenStudent }) {
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr style={{ background: '#e6efee' }}>
+            <tr style={{ background: SECTION.report.tint }}>
               <th className="text-left px-2 py-1">Ученик</th>
               <th className="text-right px-2 py-1">% посещаемости</th>
               <th className="text-right px-2 py-1">% активных</th>
@@ -105,7 +108,7 @@ export default function AtRiskSection({ students, tally, onOpenStudent }) {
                     {CRITERIA.filter((c) => e.fails[c.key]).map((c) => (
                       <span
                         key={c.key}
-                        className="px-1.5 py-0.5 text-[10.5px] rounded"
+                        className="px-1.5 py-0.5 text-xs rounded"
                         style={{ background: '#fee2e2', color: '#b91c1c' }}
                       >
                         {c.label}

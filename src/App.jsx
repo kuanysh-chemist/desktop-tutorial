@@ -4,6 +4,7 @@ import { useAppData } from './hooks/useAppData'
 import JournalTab from './components/journal/JournalTab'
 import ClassesTab from './components/classes/ClassesTab'
 import ReportTab from './components/report/ReportTab'
+import { SECTION } from './lib/theme'
 
 const TABS = [
   { key: 'journal', label: 'Журнал', icon: NotebookPen },
@@ -26,26 +27,30 @@ export default function App() {
       </header>
 
       <nav className="flex gap-1 px-3 pt-2 border-b border-slate-300 bg-white">
-        {TABS.map(({ key, label, icon: Icon }) => (
-          <button
-            key={key}
-            type="button"
-            onClick={() => setTab(key)}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium cursor-pointer"
-            style={{
-              borderTopLeftRadius: 4,
-              borderTopRightRadius: 4,
-              border: '1px solid #cbd5e1',
-              borderBottom: tab === key ? '1px solid #fff' : '1px solid #cbd5e1',
-              marginBottom: -1,
-              background: tab === key ? '#fff' : '#eef2f1',
-              color: tab === key ? '#0f4c4c' : '#475569',
-            }}
-          >
-            <Icon size={14} />
-            {label}
-          </button>
-        ))}
+        {TABS.map(({ key, label, icon: Icon }) => {
+          const { accent, tint } = SECTION[key]
+          const active = tab === key
+          return (
+            <button
+              key={key}
+              type="button"
+              onClick={() => setTab(key)}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium cursor-pointer"
+              style={{
+                borderTopLeftRadius: 4,
+                borderTopRightRadius: 4,
+                border: `1px solid ${active ? accent : '#cbd5e1'}`,
+                borderBottom: active ? `1px solid ${accent}` : '1px solid #cbd5e1',
+                marginBottom: -1,
+                background: active ? accent : tint,
+                color: active ? '#fff' : accent,
+              }}
+            >
+              <Icon size={14} />
+              {label}
+            </button>
+          )
+        })}
       </nav>
 
       <main className="flex-1 p-3">

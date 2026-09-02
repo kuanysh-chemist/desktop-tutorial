@@ -2,6 +2,7 @@ import { ATTENDANCE } from '../../../lib/dictionaries'
 import { attendanceRate, sortedBy } from '../../../lib/stats'
 import { DistributionBarChart, WeeklyLineChart } from '../charts'
 import StudentLink from '../StudentLink'
+import { SECTION } from '../../../lib/theme'
 
 export default function AttendanceSection({ students, dist, tally, weekly, onOpenStudent }) {
   const chartData = ATTENDANCE.map((d) => ({ name: d.label, value: dist.attendance[d.value] || 0, color: d.color }))
@@ -21,7 +22,7 @@ export default function AttendanceSection({ students, dist, tally, weekly, onOpe
         <h4 className="text-xs font-semibold text-slate-500 mb-1">По ученикам</h4>
         <table className="w-full text-sm">
           <thead>
-            <tr style={{ background: '#e6efee' }}>
+            <tr style={{ background: SECTION.report.tint }}>
               <th className="text-left px-2 py-1">Ученик</th>
               <th className="text-right px-2 py-1">% посещаемости</th>
               <th className="text-right px-2 py-1">Опозданий</th>

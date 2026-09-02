@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Plus, Archive, ArchiveRestore, Users } from 'lucide-react'
 import ConfirmButton from '../ui/ConfirmButton'
+import { SECTION } from '../../lib/theme'
+
+const ACCENT = SECTION.classes.accent
+const TINT = SECTION.classes.tint
 
 export default function ClassesTab({ data }) {
   const { classes, students, addClass, deleteClass, archiveClass, restoreClass, addStudent, deleteStudent } = data
@@ -38,7 +42,7 @@ export default function ClassesTab({ data }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
       <section className="border border-slate-300 bg-white p-3">
-        <h2 className="text-sm font-semibold mb-2" style={{ color: '#0f4c4c' }}>
+        <h2 className="text-sm font-semibold mb-2" style={{ color: ACCENT }}>
           Классы
         </h2>
         <form onSubmit={handleAddClass} className="flex gap-2 mb-3">
@@ -51,7 +55,7 @@ export default function ClassesTab({ data }) {
           <button
             type="submit"
             className="flex items-center gap-1 px-2 py-1 text-sm text-white cursor-pointer"
-            style={{ background: '#0f4c4c', borderRadius: 3 }}
+            style={{ background: ACCENT, borderRadius: 3 }}
           >
             <Plus size={14} /> Добавить
           </button>
@@ -65,7 +69,7 @@ export default function ClassesTab({ data }) {
               {activeClasses.map((c) => {
                 const count = students.filter((s) => s.classId === c.id).length
                 return (
-                  <tr key={c.id} style={{ background: manageClassId === c.id ? '#e6efee' : 'transparent' }}>
+                  <tr key={c.id} style={{ background: manageClassId === c.id ? TINT : 'transparent' }}>
                     <td
                       className="py-1.5 px-2 border-b border-slate-200 font-medium cursor-pointer"
                       onClick={() => setManageClassId(c.id)}
@@ -112,7 +116,7 @@ export default function ClassesTab({ data }) {
                         type="button"
                         onClick={() => restoreClass(c.id)}
                         className="flex items-center gap-1 px-2 py-1 text-xs cursor-pointer ml-auto"
-                        style={{ border: '1px solid #0f4c4c', borderRadius: 3, color: '#0f4c4c' }}
+                        style={{ border: `1px solid ${ACCENT}`, borderRadius: 3, color: ACCENT }}
                       >
                         <ArchiveRestore size={12} /> Восстановить
                       </button>
@@ -126,7 +130,7 @@ export default function ClassesTab({ data }) {
       </section>
 
       <section className="border border-slate-300 bg-white p-3">
-        <h2 className="text-sm font-semibold mb-2 flex items-center gap-1.5" style={{ color: '#0f4c4c' }}>
+        <h2 className="text-sm font-semibold mb-2 flex items-center gap-1.5" style={{ color: ACCENT }}>
           <Users size={15} />
           Ученики{manageClass ? ` — ${manageClass.name}` : ''}
         </h2>
@@ -145,7 +149,7 @@ export default function ClassesTab({ data }) {
               <button
                 type="submit"
                 className="flex items-center gap-1 px-2 py-1 text-sm text-white cursor-pointer"
-                style={{ background: '#0f4c4c', borderRadius: 3 }}
+                style={{ background: ACCENT, borderRadius: 3 }}
               >
                 <Plus size={14} /> Добавить
               </button>
