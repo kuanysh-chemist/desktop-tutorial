@@ -38,8 +38,8 @@ export default function CompareClassesView({ allClasses, students }) {
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={attendanceData} margin={{ left: -10, right: 16, top: 8, bottom: 4 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-              <XAxis dataKey="name" tick={{ fontSize: 13 }} />
-              <YAxis domain={[0, 100]} tick={{ fontSize: 12 }} />
+              <XAxis dataKey="name" tick={{ fontSize: 15 }} />
+              <YAxis domain={[0, 100]} tick={{ fontSize: 14 }} />
               <Tooltip formatter={(v) => [`${v}%`, 'посещаемость']} />
               <Bar dataKey="rate" fill={SECTION.report.accent} radius={[3, 3, 0, 0]} />
             </BarChart>
@@ -50,8 +50,8 @@ export default function CompareClassesView({ allClasses, students }) {
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={activityData} margin={{ left: -10, right: 16, top: 8, bottom: 4 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-              <XAxis dataKey="name" tick={{ fontSize: 13 }} />
-              <YAxis domain={[0, 100]} tick={{ fontSize: 12 }} />
+              <XAxis dataKey="name" tick={{ fontSize: 15 }} />
+              <YAxis domain={[0, 100]} tick={{ fontSize: 14 }} />
               <Tooltip formatter={(v) => [`${v}%`, 'активность']} />
               <Bar dataKey="rate" fill="#b45309" radius={[3, 3, 0, 0]} />
             </BarChart>

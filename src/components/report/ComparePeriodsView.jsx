@@ -121,12 +121,12 @@ export default function ComparePeriodsView({ classStudents, lessons, selectedCla
         <ResponsiveContainer width="100%" height={220}>
           <BarChart data={chartData} margin={{ left: -10, right: 16, top: 8, bottom: 4 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-            <XAxis dataKey="name" tick={{ fontSize: 12 }} />
-            <YAxis domain={[0, 100]} tick={{ fontSize: 12 }} />
+            <XAxis dataKey="name" tick={{ fontSize: 14 }} />
+            <YAxis domain={[0, 100]} tick={{ fontSize: 14 }} />
             <Tooltip formatter={(v) => `${v}%`} />
             <Legend
               formatter={(v) => (v === 'A' ? labelA : labelB)}
-              wrapperStyle={{ fontSize: 13 }}
+              wrapperStyle={{ fontSize: 15 }}
             />
             <Bar dataKey="A" fill={ACCENT} radius={[3, 3, 0, 0]} />
             <Bar dataKey="B" fill="#b45309" radius={[3, 3, 0, 0]} />
