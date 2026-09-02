@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { FlaskConical, NotebookPen, Users, BarChart3 } from 'lucide-react'
 import { useAppData } from './hooks/useAppData'
+import { useTheme } from './hooks/useTheme'
 import JournalTab from './components/journal/JournalTab'
 import ClassesTab from './components/classes/ClassesTab'
 import ReportTab from './components/report/ReportTab'
+import ThemeToggle from './components/ui/ThemeToggle'
 import { SECTION } from './lib/theme'
 
 const TABS = [
@@ -14,6 +16,7 @@ const TABS = [
 
 export default function App() {
   const data = useAppData()
+  const { theme, toggle: toggleTheme } = useTheme()
   const [tab, setTab] = useState('journal')
   const [selectedClassId, setSelectedClassId] = useState('')
 
@@ -24,6 +27,9 @@ export default function App() {
       <header className="flex items-center gap-2 px-4 py-2.5 text-white" style={{ background: '#0f4c4c' }}>
         <FlaskConical size={20} />
         <h1 className="text-base font-semibold m-0">Классный журнал по химии</h1>
+        <div className="ml-auto">
+          <ThemeToggle theme={theme} onToggle={toggleTheme} />
+        </div>
       </header>
 
       <nav className="flex gap-1 px-3 pt-2 border-b border-slate-300 bg-white">
@@ -39,8 +45,8 @@ export default function App() {
               style={{
                 borderTopLeftRadius: 4,
                 borderTopRightRadius: 4,
-                border: `1px solid ${active ? accent : '#cbd5e1'}`,
-                borderBottom: active ? `1px solid ${accent}` : '1px solid #cbd5e1',
+                border: `1px solid ${active ? accent : 'var(--border)'}`,
+                borderBottom: active ? `1px solid ${accent}` : '1px solid var(--border)',
                 marginBottom: -1,
                 background: active ? accent : tint,
                 color: active ? '#fff' : accent,

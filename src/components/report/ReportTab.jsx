@@ -104,7 +104,7 @@ export default function ReportTab({ classes, allClasses, students, selectedClass
               style={{
                 border: `1px solid ${ACCENT}`,
                 borderRadius: 3,
-                background: mode === m.key ? ACCENT : '#fff',
+                background: mode === m.key ? ACCENT : 'var(--surface)',
                 color: mode === m.key ? '#fff' : ACCENT,
               }}
             >
@@ -175,7 +175,7 @@ export default function ReportTab({ classes, allClasses, students, selectedClass
                   type="button"
                   onClick={handleExportHtml}
                   className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs cursor-pointer"
-                  style={{ border: '1px solid #cbd5e1', borderRadius: 3, color: '#475569' }}
+                  style={{ border: '1px solid var(--border)', borderRadius: 3, color: 'var(--muted)' }}
                 >
                   <Printer size={13} /> PDF / печать (HTML)
                 </button>

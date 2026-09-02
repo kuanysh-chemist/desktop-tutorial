@@ -130,7 +130,7 @@ export default function StudentReportView({ students, studentId, lessons, period
             {lessons.map((l, i) => {
               const rec = l.records[studentId]
               return (
-                <tr key={l.date} style={{ background: i % 2 ? '#f8fafa' : '#fff' }}>
+                <tr key={l.date} style={{ background: i % 2 ? 'var(--stripe)' : 'var(--surface)' }}>
                   <td className="px-2 py-1">{formatRu(l.date)}</td>
                   <td className="px-2 py-1">{cellLabel(ATTENDANCE, rec?.attendance)}</td>
                   <td className="px-2 py-1">{cellLabel(ACTIVITY, rec?.activity)}</td>

@@ -1,7 +1,7 @@
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
 import { loadAllRecords } from '../../lib/storage'
 import { classDistribution, attendanceRate, activityRate, homeworkRate } from '../../lib/stats'
-import { SECTION } from '../../lib/theme'
+import { SECTION, TOOLTIP_STYLE } from '../../lib/theme'
 
 // Считает по всей истории каждого неархивного класса (без учёта фильтра периода).
 export default function CompareClassesView({ allClasses, students }) {
@@ -37,10 +37,10 @@ export default function CompareClassesView({ allClasses, students }) {
           <h4 className="text-xs font-semibold text-slate-500 mb-1">% посещаемости по классам</h4>
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={attendanceData} margin={{ left: -10, right: 16, top: 8, bottom: 4 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-              <XAxis dataKey="name" tick={{ fontSize: 15 }} />
-              <YAxis domain={[0, 100]} tick={{ fontSize: 14 }} />
-              <Tooltip formatter={(v) => [`${v}%`, 'посещаемость']} />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-soft)" />
+              <XAxis dataKey="name" tick={{ fontSize: 15, fill: 'var(--muted)' }} />
+              <YAxis domain={[0, 100]} tick={{ fontSize: 14, fill: 'var(--muted)' }} />
+              <Tooltip {...TOOLTIP_STYLE} formatter={(v) => [`${v}%`, 'посещаемость']} />
               <Bar dataKey="rate" fill={SECTION.report.accent} radius={[3, 3, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
@@ -49,10 +49,10 @@ export default function CompareClassesView({ allClasses, students }) {
           <h4 className="text-xs font-semibold text-slate-500 mb-1">% активности по классам</h4>
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={activityData} margin={{ left: -10, right: 16, top: 8, bottom: 4 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-              <XAxis dataKey="name" tick={{ fontSize: 15 }} />
-              <YAxis domain={[0, 100]} tick={{ fontSize: 14 }} />
-              <Tooltip formatter={(v) => [`${v}%`, 'активность']} />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-soft)" />
+              <XAxis dataKey="name" tick={{ fontSize: 15, fill: 'var(--muted)' }} />
+              <YAxis domain={[0, 100]} tick={{ fontSize: 14, fill: 'var(--muted)' }} />
+              <Tooltip {...TOOLTIP_STYLE} formatter={(v) => [`${v}%`, 'активность']} />
               <Bar dataKey="rate" fill="#b45309" radius={[3, 3, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
@@ -74,7 +74,7 @@ export default function CompareClassesView({ allClasses, students }) {
           </thead>
           <tbody>
             {rows.map((r, i) => (
-              <tr key={r.id} style={{ background: i % 2 ? '#f8fafa' : '#fff' }}>
+              <tr key={r.id} style={{ background: i % 2 ? 'var(--stripe)' : 'var(--surface)' }}>
                 <td className="px-2 py-1 font-medium">{r.name}</td>
                 <td className="text-right px-2 py-1">{r.studentsCount}</td>
                 <td className="text-right px-2 py-1">{r.lessonsCount}</td>

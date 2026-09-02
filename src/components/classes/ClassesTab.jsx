@@ -90,7 +90,7 @@ export default function ClassesTab({ data }) {
                             type="button"
                             onClick={() => archiveClass(c.id)}
                             className="flex items-center gap-1 px-2 py-1 text-xs cursor-pointer"
-                            style={{ border: '1px solid #cbd5e1', borderRadius: 3, color: '#475569' }}
+                            style={{ border: '1px solid var(--border)', borderRadius: 3, color: 'var(--muted)' }}
                             title="Перенести в архив"
                           >
                             <Archive size={12} /> В архив

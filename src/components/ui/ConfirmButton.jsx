@@ -26,10 +26,10 @@ export default function ConfirmButton({ onConfirm, label = 'Удалить', con
       onClick={handleClick}
       className={`flex items-center gap-1 px-2 py-1 text-xs font-medium cursor-pointer ${className}`}
       style={{
-        border: `1px solid ${armed ? '#b91c1c' : '#cbd5e1'}`,
+        border: `1px solid ${armed ? '#b91c1c' : 'var(--border)'}`,
         borderRadius: 3,
-        background: armed ? '#fee2e2' : '#fff',
-        color: armed ? '#b91c1c' : '#475569',
+        background: armed ? 'var(--danger-tint)' : 'var(--surface)',
+        color: armed ? '#b91c1c' : 'var(--muted)',
       }}
     >
       <Trash2 size={12} />

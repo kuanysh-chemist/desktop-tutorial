@@ -1,5 +1,5 @@
 export default function Pill({ active, children, onClick, tone }) {
-  const toneColor = tone || '#0f4c4c'
+  const toneColor = tone || 'var(--accent-journal)'
   return (
     <button
       type="button"
@@ -8,7 +8,7 @@ export default function Pill({ active, children, onClick, tone }) {
       style={{
         border: `1px solid ${toneColor}`,
         borderRadius: 999,
-        background: active ? toneColor : '#fff',
+        background: active ? toneColor : 'var(--surface)',
         color: active ? '#fff' : toneColor,
       }}
     >

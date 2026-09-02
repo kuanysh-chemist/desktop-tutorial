@@ -171,7 +171,7 @@ export default function JournalTab({ classes, students, selectedClassId, onSelec
           type="button"
           onClick={handlePrintBlank}
           className="flex items-center gap-1.5 px-2.5 py-1.5 text-sm cursor-pointer"
-          style={{ border: '1px solid #cbd5e1', borderRadius: 3, color: '#475569' }}
+          style={{ border: '1px solid var(--border)', borderRadius: 3, color: 'var(--muted)' }}
         >
           <Printer size={14} /> Бланк для печати (HTML)
         </button>
@@ -222,13 +222,13 @@ export default function JournalTab({ classes, students, selectedClassId, onSelec
                   <tr
                     key={student.id}
                     style={{
-                      background: flagged ? '#fef3c7' : i % 2 ? '#f8fafa' : '#fff',
-                      borderBottom: '1px solid #e2e8f0',
+                      background: flagged ? 'var(--warn-tint)' : i % 2 ? 'var(--stripe)' : 'var(--surface)',
+                      borderBottom: '1px solid var(--border-soft)',
                     }}
                   >
                     <td className="px-2 py-1.5 align-middle">
                       <div className="font-medium">{student.name}</div>
-                      {flagged && <div className="text-xs" style={{ color: '#92400e' }}>давно не отмечали — возможно, пропускают</div>}
+                      {flagged && <div className="text-xs" style={{ color: 'var(--warn-text)' }}>давно не отмечали — возможно, пропускают</div>}
                     </td>
                     {FIELDS.map((f) => (
                       <td key={f.key} className="px-2 py-1.5 align-middle">

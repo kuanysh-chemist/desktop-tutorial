@@ -68,7 +68,7 @@ export default function AtRiskSection({ students, tally, onOpenStudent }) {
             style={{
               border: `1px solid ${ACCENT}`,
               borderRadius: 999,
-              background: minFailing === n ? ACCENT : '#fff',
+              background: minFailing === n ? ACCENT : 'var(--surface)',
               color: minFailing === n ? '#fff' : ACCENT,
             }}
           >
@@ -90,7 +90,7 @@ export default function AtRiskSection({ students, tally, onOpenStudent }) {
           </thead>
           <tbody>
             {filtered.map((e, i) => (
-              <tr key={e.student.id} style={{ background: i % 2 ? '#f8fafa' : '#fff' }}>
+              <tr key={e.student.id} style={{ background: i % 2 ? 'var(--stripe)' : 'var(--surface)' }}>
                 <td className="px-2 py-1">
                   <StudentLink name={e.student.name} onClick={() => onOpenStudent(e.student.id)} />
                 </td>
@@ -109,7 +109,7 @@ export default function AtRiskSection({ students, tally, onOpenStudent }) {
                       <span
                         key={c.key}
                         className="px-1.5 py-0.5 text-xs rounded"
-                        style={{ background: '#fee2e2', color: '#b91c1c' }}
+                        style={{ background: 'var(--danger-tint)', color: '#b91c1c' }}
                       >
                         {c.label}
                       </span>

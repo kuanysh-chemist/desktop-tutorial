@@ -34,7 +34,7 @@ export default function ActivitySection({ students, dist, tally, byLesson, onOpe
           </thead>
           <tbody>
             {top10.map((s, i) => (
-              <tr key={s.id} style={{ background: i % 2 ? '#f8fafa' : '#fff' }}>
+              <tr key={s.id} style={{ background: i % 2 ? 'var(--stripe)' : 'var(--surface)' }}>
                 <td className="px-2 py-1 text-slate-400">{i + 1}</td>
                 <td className="px-2 py-1">
                   <StudentLink name={s.name} onClick={() => onOpenStudent(s.id)} />

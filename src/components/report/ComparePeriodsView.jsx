@@ -3,7 +3,7 @@ import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Toolti
 import PeriodPicker from './PeriodPicker'
 import { resolvePeriod } from '../../lib/dates'
 import { classDistribution, tallyByStudent, attendanceRate, activityRate, homeworkRate } from '../../lib/stats'
-import { SECTION } from '../../lib/theme'
+import { SECTION, TOOLTIP_STYLE } from '../../lib/theme'
 
 const ACCENT = SECTION.report.accent
 
@@ -80,7 +80,7 @@ export default function ComparePeriodsView({ classStudents, lessons, selectedCla
             style={{
               border: `1px solid ${ACCENT}`,
               borderRadius: 3,
-              background: target === o.key ? ACCENT : '#fff',
+              background: target === o.key ? ACCENT : 'var(--surface)',
               color: target === o.key ? '#fff' : ACCENT,
             }}
           >
@@ -120,10 +120,10 @@ export default function ComparePeriodsView({ classStudents, lessons, selectedCla
       <div className="mb-4">
         <ResponsiveContainer width="100%" height={220}>
           <BarChart data={chartData} margin={{ left: -10, right: 16, top: 8, bottom: 4 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-            <XAxis dataKey="name" tick={{ fontSize: 14 }} />
-            <YAxis domain={[0, 100]} tick={{ fontSize: 14 }} />
-            <Tooltip formatter={(v) => `${v}%`} />
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--border-soft)" />
+            <XAxis dataKey="name" tick={{ fontSize: 14, fill: 'var(--muted)' }} />
+            <YAxis domain={[0, 100]} tick={{ fontSize: 14, fill: 'var(--muted)' }} />
+            <Tooltip {...TOOLTIP_STYLE} formatter={(v) => `${v}%`} />
             <Legend
               formatter={(v) => (v === 'A' ? labelA : labelB)}
               wrapperStyle={{ fontSize: 15 }}
@@ -146,13 +146,13 @@ export default function ComparePeriodsView({ classStudents, lessons, selectedCla
           </thead>
           <tbody>
             {rows.map((r, i) => (
-              <tr key={r.key} style={{ background: i % 2 ? '#f8fafa' : '#fff' }}>
+              <tr key={r.key} style={{ background: i % 2 ? 'var(--stripe)' : 'var(--surface)' }}>
                 <td className="px-2 py-1">{r.label}</td>
                 <td className="text-right px-2 py-1">{r.a === null ? '—' : `${r.a}${r.unit}`}</td>
                 <td className="text-right px-2 py-1">{r.b === null ? '—' : `${r.b}${r.unit}`}</td>
                 <td
                   className="text-right px-2 py-1 font-semibold"
-                  style={{ color: r.improved === null ? '#94a3b8' : r.improved ? '#0f4c4c' : '#b91c1c' }}
+                  style={{ color: r.improved === null ? 'var(--muted-2)' : r.improved ? 'var(--accent-journal)' : '#b91c1c' }}
                 >
                   {r.change === null ? '—' : `${r.change > 0 ? '+' : ''}${r.change}${r.unit}`}
                 </td>
