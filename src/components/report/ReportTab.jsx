@@ -6,10 +6,11 @@ import StudentReportView from './StudentReportView'
 import CompareClassesView from './CompareClassesView'
 import ComparePeriodsView from './ComparePeriodsView'
 import { loadAllRecords } from '../../lib/storage'
-import { resolvePeriod } from '../../lib/dates'
-import { exportClassReportXlsx } from '../../lib/exportXlsx'
+import { resolvePeriod, formatRu } from '../../lib/dates'
+import { exportClassReportXlsx, exportStudentReportXlsx } from '../../lib/exportXlsx'
 import { downloadReportHtml } from '../../lib/exportHtml'
 import { tallyByStudent, attendanceRate, activityRate, homeworkRate } from '../../lib/stats'
+import { ATTENDANCE, ACTIVITY, BEHAVIOR, HOMEWORK, cellLabel } from '../../lib/dictionaries'
 import { SECTION } from '../../lib/theme'
 
 const ACCENT = SECTION.report.accent
@@ -87,6 +88,56 @@ export default function ReportTab({ classes, allClasses, students, selectedClass
     downloadReportHtml({
       title: `Отчёт — ${selectedClass.name}`,
       subtitle: `Период: ${periodLabel}`,
+      blocks,
+    })
+  }
+
+  const selectedStudent = classStudents.find((s) => s.id === studentId)
+
+  function handleExportStudentXlsx() {
+    if (!selectedStudent) return
+    exportStudentReportXlsx({
+      studentName: selectedStudent.name,
+      className: selectedClass?.name || '',
+      periodLabel,
+      lessons: filtered,
+      studentId,
+    })
+  }
+
+  function handleExportStudentHtml() {
+    if (!selectedStudent) return
+    const tally = tallyByStudent(filtered, [studentId])[studentId]
+    const notesCount = tally.behavior.note + tally.behavior.violation
+    const blocks = [
+      {
+        heading: 'Сводка',
+        columns: ['Показатель', 'Значение'],
+        rows: [
+          ['% посещаемости', attendanceRate(tally) ?? '—'],
+          ['% активных уроков', activityRate(tally) ?? '—'],
+          ['% выполнения д/з', homeworkRate(tally) ?? '—'],
+          ['Замечания', notesCount],
+        ],
+      },
+      {
+        heading: 'По урокам',
+        columns: ['Дата', 'Посещаемость', 'Активность', 'Поведение', 'Д/З'],
+        rows: filtered.map((l) => {
+          const rec = l.records[studentId]
+          return [
+            formatRu(l.date),
+            cellLabel(ATTENDANCE, rec?.attendance),
+            cellLabel(ACTIVITY, rec?.activity),
+            cellLabel(BEHAVIOR, rec?.behavior),
+            cellLabel(HOMEWORK, rec?.homework),
+          ]
+        }),
+      },
+    ]
+    downloadReportHtml({
+      title: `Отчёт — ${selectedStudent.name}`,
+      subtitle: `Класс: ${selectedClass?.name || ''} · Период: ${periodLabel}`,
       blocks,
     })
   }
@@ -174,6 +225,27 @@ export default function ReportTab({ classes, allClasses, students, selectedClass
                 <button
                   type="button"
                   onClick={handleExportHtml}
+                  className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs cursor-pointer"
+                  style={{ border: '1px solid var(--border)', borderRadius: 3, color: 'var(--muted)' }}
+                >
+                  <Printer size={13} /> PDF / печать (HTML)
+                </button>
+              </div>
+            )}
+
+            {mode === 'student' && selectedStudent && (
+              <div className="flex gap-1.5 ml-auto">
+                <button
+                  type="button"
+                  onClick={handleExportStudentXlsx}
+                  className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs cursor-pointer"
+                  style={{ border: `1px solid ${ACCENT}`, borderRadius: 3, color: ACCENT }}
+                >
+                  <FileSpreadsheet size={13} /> Excel
+                </button>
+                <button
+                  type="button"
+                  onClick={handleExportStudentHtml}
                   className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs cursor-pointer"
                   style={{ border: '1px solid var(--border)', borderRadius: 3, color: 'var(--muted)' }}
                 >

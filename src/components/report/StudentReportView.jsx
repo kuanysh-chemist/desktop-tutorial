@@ -1,6 +1,6 @@
 import StatTile from '../ui/StatTile'
 import { DistributionBarChart } from './charts'
-import { ATTENDANCE, ACTIVITY, BEHAVIOR, HOMEWORK, dictByValue } from '../../lib/dictionaries'
+import { ATTENDANCE, ACTIVITY, BEHAVIOR, HOMEWORK, dictByValue, cellLabel } from '../../lib/dictionaries'
 import { tallyByStudent, attendanceRate, activityRate, homeworkRate } from '../../lib/stats'
 import { formatRu } from '../../lib/dates'
 import { SECTION } from '../../lib/theme'
@@ -151,11 +151,6 @@ export default function StudentReportView({ students, studentId, lessons, period
       </div>
     </div>
   )
-}
-
-function cellLabel(dict, value) {
-  const d = dictByValue(dict, value)
-  return d ? `${d.letter} — ${d.label}` : '—'
 }
 
 function fmtPct(v) {

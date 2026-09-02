@@ -37,6 +37,12 @@ export function dictByValue(dict, value) {
   return dict.find((item) => item.value === value)
 }
 
+// «П — Был» и т.п. — используется в таблице по урокам и её экспортах.
+export function cellLabel(dict, value) {
+  const d = dictByValue(dict, value)
+  return d ? `${d.letter} — ${d.label}` : '—'
+}
+
 export function defaultRecord() {
   return { attendance: undefined, activity: undefined, behavior: undefined, homework: undefined }
 }

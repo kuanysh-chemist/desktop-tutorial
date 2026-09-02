@@ -1,6 +1,8 @@
 import * as XLSX from 'xlsx'
 import { tallyByStudent, attendanceRate, activityRate, homeworkRate } from './stats'
 import { safeFileName } from './download'
+import { formatRu } from './dates'
+import { ATTENDANCE, ACTIVITY, BEHAVIOR, HOMEWORK, cellLabel } from './dictionaries'
 
 function sheetFromRows(rows) {
   return XLSX.utils.aoa_to_sheet(rows)
@@ -59,4 +61,39 @@ export function exportClassReportXlsx({ className, periodLabel, students, lesson
 
   const suffix = periodLabel ? `_${safeFileName(periodLabel)}` : ''
   XLSX.writeFile(wb, `Отчёт_${safeFileName(className)}${suffix}.xlsx`)
+}
+
+// lessons: [{ date, records }], каждый lesson.records[studentId] — запись за этот урок (может отсутствовать).
+export function exportStudentReportXlsx({ studentName, className, periodLabel, lessons, studentId }) {
+  const tally = tallyByStudent(lessons, [studentId])[studentId]
+  const notesCount = tally.behavior.note + tally.behavior.violation
+
+  const meta = [[`Ученик: ${studentName}`], [`Класс: ${className}`], [`Период: ${periodLabel}`], []]
+
+  const summaryRows = [
+    ['% посещаемости', attendanceRate(tally) ?? ''],
+    ['% активных уроков', activityRate(tally) ?? ''],
+    ['% выполнения д/з', homeworkRate(tally) ?? ''],
+    ['Замечания', notesCount],
+    ['Уроков в периоде', lessons.length],
+  ]
+
+  const lessonRows = [['Дата', 'Посещаемость', 'Активность', 'Поведение', 'Д/З']]
+  for (const lesson of lessons) {
+    const rec = lesson.records[studentId]
+    lessonRows.push([
+      formatRu(lesson.date),
+      cellLabel(ATTENDANCE, rec?.attendance),
+      cellLabel(ACTIVITY, rec?.activity),
+      cellLabel(BEHAVIOR, rec?.behavior),
+      cellLabel(HOMEWORK, rec?.homework),
+    ])
+  }
+
+  const wb = XLSX.utils.book_new()
+  XLSX.utils.book_append_sheet(wb, sheetFromRows([...meta, ...summaryRows]), 'Сводка')
+  XLSX.utils.book_append_sheet(wb, sheetFromRows([...meta, ...lessonRows]), 'По урокам')
+
+  const suffix = periodLabel ? `_${safeFileName(periodLabel)}` : ''
+  XLSX.writeFile(wb, `Отчёт_${safeFileName(studentName)}${suffix}.xlsx`)
 }
