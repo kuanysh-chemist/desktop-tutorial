@@ -1,3 +1,6 @@
 [submodule "nitroglycerin"]
 	path = nitroglycerin
 	url = https://github.com/phetsims/nitroglycerin.git
+[submodule "pubchem-mcp-server"]
+	path = pubchem-mcp-server
+	url = https://github.com/cyanheads/pubchem-mcp-server.git
