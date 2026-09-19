@@ -1,0 +1,3 @@
+[submodule "nitroglycerin"]
+	path = nitroglycerin
+	url = https://github.com/phetsims/nitroglycerin.git
