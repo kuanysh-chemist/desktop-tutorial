@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink-50: #f6f7f9;
+  --color-ink-100: #eceef2;
+  --color-ink-200: #d7dbe3;
+  --color-ink-400: #8b94a6;
+  --color-ink-600: #4a5468;
+  --color-ink-900: #171c26;
+  --color-brand-50: #eef6f3;
+  --color-brand-100: #d5eae2;
+  --color-brand-500: #1f7a5e;
+  --color-brand-600: #17614a;
+  --color-brand-700: #114b39;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: var(--color-ink-50);
+  color: var(--color-ink-900);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ячейки таблицы предпросмотра редактируются как обычный текст. */
+.cell-input {
+  field-sizing: content;
+  width: 100%;
+  min-height: 1.5rem;
+  resize: none;
+  background: transparent;
+  outline: none;
+  white-space: pre-wrap;
+}
+
+.cell-input:focus {
+  background: var(--color-brand-50);
+  border-radius: 0.25rem;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .print-area {
+    box-shadow: none !important;
+    border: none !important;
+  }
+}
