@@ -5,9 +5,22 @@ import BlockToggles from "@/components/BlockToggles";
 import KspPreview from "@/components/KspPreview";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import LessonForm from "@/components/LessonForm";
+import PlanLibrary from "@/components/PlanLibrary";
+import { applyEnhancement } from "@/lib/enhance";
 import { generatePlan } from "@/lib/generator";
 import { UI } from "@/lib/i18n";
 import { DEFAULT_ENABLED } from "@/lib/ksp-template";
+import {
+  deletePlan,
+  duplicatePlan,
+  loadDraft,
+  loadLibrary,
+  newId,
+  savePlan,
+  saveDraft,
+  storageAvailable,
+  type SavedPlan,
+} from "@/lib/storage";
 import type { ExtraKey, KspPlan, Lang, LessonInput } from "@/lib/types";
 
 const EMPTY_INPUT: LessonInput = {
@@ -42,15 +55,43 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [enhancing, setEnhancing] = useState(false);
+  const [library, setLibrary] = useState<SavedPlan[]>([]);
+  const [currentId, setCurrentId] = useState<string | null>(null);
+  const [storageOk, setStorageOk] = useState(true);
+  /** Были ли ручные правки после последней генерации. */
+  const [dirty, setDirty] = useState(false);
+  const [justSaved, setJustSaved] = useState(false);
 
-  // Дата ставится после монтирования: на сервере и клиенте она могла бы разойтись.
+  // localStorage и текущая дата читаются только после монтирования:
+  // на сервере их нет, а дата на сервере и клиенте могла бы разойтись.
   useEffect(() => {
+    const available = storageAvailable();
+    setStorageOk(available);
+    if (available) {
+      setLibrary(loadLibrary());
+      const draft = loadDraft();
+      if (draft) {
+        setLang(draft.lang);
+        setForm(draft.input);
+        setEnabled(draft.enabled);
+        if (draft.plan) {
+          setPlan(draft.plan);
+          setNotice(UI.draftRestored[draft.lang]);
+        }
+      }
+    }
     setForm((current) =>
       current.date
         ? current
         : { ...current, date: new Date().toISOString().slice(0, 10) },
     );
   }, []);
+
+  // Автосохранение черновика: перезагрузка страницы не должна терять работу.
+  useEffect(() => {
+    if (!storageOk) return;
+    saveDraft({ lang, input: form, plan, enabled });
+  }, [storageOk, lang, form, plan, enabled]);
 
   const build = useCallback(
     (input: LessonInput, targetLang: Lang) => {
@@ -62,6 +103,8 @@ export default function Home() {
         methodName: result.methodName,
       });
       setNotice(result.matched ? null : UI.noMatch[targetLang]);
+      setDirty(false);
+      setJustSaved(false);
     },
     [enabled],
   );
@@ -79,10 +122,63 @@ export default function Home() {
     build(form, lang);
   };
 
-  /** Смена языка меняет и интерфейс, и документ: план пересобирается. */
+  /**
+   * Смена языка меняет и интерфейс, и документ, поэтому план пересобирается.
+   * Ручные правки в ячейках при этом теряются — предупреждаем об этом до того,
+   * как они пропадут, а не после.
+   */
   const handleLang = (next: Lang) => {
+    if (plan && dirty && !window.confirm(UI.langSwitchWarning[lang])) return;
     setLang(next);
     if (plan) build(form, next);
+  };
+
+  /** Любая ручная правка ячейки помечает план изменённым. */
+  const handlePatch = (next: KspPlan) => {
+    setPlan(next);
+    setDirty(true);
+    setJustSaved(false);
+  };
+
+  const handleSave = () => {
+    if (!plan || !storageOk) return;
+    const id = currentId ?? newId();
+    setLibrary(
+      savePlan({
+        id,
+        savedAt: new Date().toISOString(),
+        lang,
+        input: form,
+        plan,
+        enabled,
+      }),
+    );
+    setCurrentId(id);
+    setDirty(false);
+    setJustSaved(true);
+  };
+
+  const handleOpen = (id: string) => {
+    const entry = library.find((item) => item.id === id);
+    if (!entry) return;
+    setLang(entry.lang);
+    setForm(entry.input);
+    setEnabled(entry.enabled);
+    setPlan(entry.plan);
+    setCurrentId(id);
+    setMeta(null);
+    setNotice(null);
+    setError(null);
+    setDirty(false);
+    setJustSaved(false);
+  };
+
+  const handleDuplicate = (id: string) => setLibrary(duplicatePlan(id));
+
+  const handleDelete = (id: string) => {
+    if (!window.confirm(UI.deleteConfirm[lang])) return;
+    setLibrary(deletePlan(id));
+    if (currentId === id) setCurrentId(null);
   };
 
   const handleToggle = (key: ExtraKey, next: boolean) => {
@@ -103,25 +199,9 @@ export default function Home() {
       });
       if (!response.ok) throw new Error(String(response.status));
       const { enhanced } = await response.json();
-      setPlan({
-        ...plan,
-        stages: plan.stages.map((stage) => ({
-          ...stage,
-          ...(enhanced[stage.id] ?? {}),
-        })),
-        extras: {
-          ...plan.extras,
-          criteria: enhanced.criteria ?? plan.extras.criteria,
-          descriptors: enhanced.descriptors ?? plan.extras.descriptors,
-          differentiationSupport:
-            enhanced.differentiationSupport ??
-            plan.extras.differentiationSupport,
-          differentiationChallenge:
-            enhanced.differentiationChallenge ??
-            plan.extras.differentiationChallenge,
-          safety: enhanced.safety ?? plan.extras.safety,
-        },
-      });
+      setPlan(applyEnhancement(plan, enhanced));
+      setDirty(true);
+      setJustSaved(false);
     } catch {
       setNotice(UI.enhanceFailed[lang]);
     } finally {
@@ -170,6 +250,16 @@ export default function Home() {
             lang={lang}
             enabled={enabled}
             onToggle={handleToggle}
+          />
+
+          <PlanLibrary
+            lang={lang}
+            items={library}
+            currentId={currentId}
+            available={storageOk}
+            onOpen={handleOpen}
+            onDuplicate={handleDuplicate}
+            onDelete={handleDelete}
           />
 
           <div className="flex flex-wrap gap-2">
@@ -228,8 +318,16 @@ export default function Home() {
                 >
                   {UI.exportPdf[lang]}
                 </button>
+                <button
+                  type="button"
+                  className={BUTTON_SECONDARY}
+                  disabled={!storageOk || justSaved}
+                  onClick={handleSave}
+                >
+                  {justSaved ? UI.saved[lang] : UI.saveToLibrary[lang]}
+                </button>
               </div>
-              <KspPreview lang={lang} plan={plan} onPatch={setPlan} />
+              <KspPreview lang={lang} plan={plan} onPatch={handlePatch} />
             </>
           ) : (
             <div className="flex min-h-64 items-center justify-center rounded-xl border border-dashed border-ink-200 bg-white/50 p-8 text-center text-sm text-ink-400">

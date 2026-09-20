@@ -51,7 +51,10 @@ for (const topic of TOPICS) {
   }
 }
 
-// 3. Покрытие: в каждом разделе программы есть хотя бы одна тема
+// 3. Покрытие: в каждом разделе программы есть не меньше трёх тем.
+//    Одной темы на раздел мало: учитель, скорее всего, ведёт по разделу
+//    несколько уроков, и все они получали бы один и тот же опыт.
+const MIN_TOPICS_PER_UNIT = 3;
 const byUnit = new Map<string, number>();
 for (const topic of TOPICS) {
   byUnit.set(topic.unit, (byUnit.get(topic.unit) ?? 0) + 1);
@@ -65,9 +68,13 @@ for (const unit of CURRICULUM) {
     console.log(`  ── ${currentGrade} класс ──`);
   }
   const count = byUnit.get(unit.id) ?? 0;
-  if (count === 0) problems.push(`раздел ${unit.id} «${unit.title.ru}» не покрыт ни одной темой`);
+  if (count < MIN_TOPICS_PER_UNIT) {
+    problems.push(
+      `раздел ${unit.id} «${unit.title.ru}»: тем ${count}, минимум ${MIN_TOPICS_PER_UNIT}`,
+    );
+  }
   console.log(
-    `  ${count > 0 ? "ok  " : "ПУСТО"} ${unit.id.padEnd(5)} ${unit.title.ru.padEnd(46)} тем: ${count}`,
+    `  ${count >= MIN_TOPICS_PER_UNIT ? "ok  " : "МАЛО"} ${unit.id.padEnd(5)} ${unit.title.ru.padEnd(46)} тем: ${count}`,
   );
 }
 

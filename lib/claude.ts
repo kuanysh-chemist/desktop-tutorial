@@ -9,32 +9,30 @@
 import "server-only";
 import Anthropic from "@anthropic-ai/sdk";
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
-import { z } from "zod";
+import { EnhancedSchema, type Enhanced } from "./enhance";
 import { STAGE_LABELS } from "./ksp-template";
 import type { KspPlan, Lang } from "./types";
 
 /** Модель по умолчанию; переопределяется переменной окружения. */
 const DEFAULT_MODEL = "claude-opus-5";
 
-const StageSchema = z.object({
-  teacher: z.string(),
-  student: z.string(),
-  assessment: z.string(),
-  resources: z.string(),
-});
+export type { Enhanced };
 
-const EnhancedSchema = z.object({
-  start: StageSchema,
-  middle: StageSchema,
-  end: StageSchema,
-  criteria: z.string(),
-  descriptors: z.string(),
-  differentiationSupport: z.string(),
-  differentiationChallenge: z.string(),
-  safety: z.string(),
-});
+/** Ответ messages.parse в объёме, который использует этот модуль. */
+interface ParseResult {
+  stop_reason: string | null;
+  parsed_output: Enhanced | null;
+}
 
-export type Enhanced = z.infer<typeof EnhancedSchema>;
+/**
+ * Узкий интерфейс клиента. Настоящий Anthropic SDK ему удовлетворяет, а тест
+ * подставляет заглушку — иначе путь доработки невозможно выполнить без ключа.
+ */
+export interface ClaudeClient {
+  messages: {
+    parse(params: Record<string, unknown>): Promise<ParseResult>;
+  };
+}
 
 const SYSTEM_PROMPT = `Ты — методист по химии в системе среднего образования Республики Казахстан.
 
@@ -62,19 +60,11 @@ const SYSTEM_PROMPT = `Ты — методист по химии в систем
 /** Ошибка, по которой клиент понимает, что нужно остаться на локальном плане. */
 export class ClaudeUnavailableError extends Error {}
 
-/**
- * Дорабатывает план. Бросает ClaudeUnavailableError, если ключ не настроен
- * или сервис недоступен — вызывающая сторона обязана это обработать.
- */
-export async function enhancePlan(
+/** Собирает системный и пользовательский промпты. Вынесено для тестов. */
+export function buildPrompt(
   plan: KspPlan,
   lang: Lang,
-): Promise<Enhanced> {
-  if (!process.env.ANTHROPIC_API_KEY) {
-    throw new ClaudeUnavailableError("ANTHROPIC_API_KEY не задан");
-  }
-
-  const client = new Anthropic();
+): { system: string; user: string } {
   const languageName = lang === "ru" ? "русском" : "казахском";
 
   const objectives = plan.header.objectives
@@ -94,7 +84,7 @@ export async function enhancePlan(
     )
     .join("\n\n");
 
-  const userPrompt = `Язык документа: ${languageName}.
+  const user = `Язык документа: ${languageName}.
 
 Тема урока: ${plan.header.topic}
 Класс: ${plan.header.grade}
@@ -115,12 +105,33 @@ ${draft}
 приёмы оценивания, дескрипторы и дифференциацию. Объём каждого поля —
 сопоставим с черновиком.`;
 
+  return { system: SYSTEM_PROMPT, user };
+}
+
+/**
+ * Дорабатывает план. Бросает ClaudeUnavailableError, если ключ не настроен
+ * или сервис недоступен — вызывающая сторона обязана это обработать.
+ *
+ * Клиент можно передать явно: так тест выполняет тот же путь без ключа и сети.
+ */
+export async function enhancePlan(
+  plan: KspPlan,
+  lang: Lang,
+  client?: ClaudeClient,
+): Promise<Enhanced> {
+  if (!client && !process.env.ANTHROPIC_API_KEY) {
+    throw new ClaudeUnavailableError("ANTHROPIC_API_KEY не задан");
+  }
+
+  const api: ClaudeClient = client ?? (new Anthropic() as unknown as ClaudeClient);
+  const { system, user } = buildPrompt(plan, lang);
+
   try {
-    const response = await client.messages.parse({
+    const response = await api.messages.parse({
       model: process.env.ANTHROPIC_MODEL || DEFAULT_MODEL,
       max_tokens: 16000,
-      system: SYSTEM_PROMPT,
-      messages: [{ role: "user", content: userPrompt }],
+      system,
+      messages: [{ role: "user", content: user }],
       output_config: { format: zodOutputFormat(EnhancedSchema) },
     });
 
