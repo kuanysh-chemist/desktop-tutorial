@@ -71,11 +71,28 @@ function trimDot(text: string): string {
   return text.replace(/\s*[.;]\s*$/, "");
 }
 
+/**
+ * Опускает первую букву, чтобы фраза встроилась в предложение после двоеточия
+ * или тире.
+ *
+ * Химические формулы при этом не трогаются: в «NaCl» регистр несёт смысл,
+ * «naCl» — запись другого вещества, а «CO» и «Co» — угарный газ и кобальт.
+ * Поэтому если первое слово содержит заглавную букву не в начале или цифровой
+ * индекс, текст остаётся как есть.
+ */
+function lowerFirst(text: string): string {
+  const firstWord = text.split(/\s/, 1)[0] ?? "";
+  const looksLikeFormula =
+    /[A-ZА-Я]/.test(firstWord.slice(1)) || /[0-9₀-₉]/.test(firstWord);
+  if (looksLikeFormula) return text;
+  return text.charAt(0).toLowerCase() + text.slice(1);
+}
+
 /** Приводит формулировку цели к форме «что обучающийся сможет сделать». */
 function asAbility(objective: LearningObjective, lang: Lang): string {
   const text = trimDot(objective.text || objective.code);
   if (!text) return lang === "ru" ? "достичь цели урока" : "сабақ мақсатына жету";
-  return text.charAt(0).toLowerCase() + text.slice(1);
+  return lowerFirst(text);
 }
 
 /**
@@ -181,14 +198,14 @@ function buildStages(
       ? [
           "Организационный момент: приветствие, проверка готовности рабочих мест и наличия тетрадей.",
           "Создание коллаборативной среды: приём «Комплимент соседу» для настроя на совместную работу.",
-          `Актуализация: фронтальный опрос по опорным знаниям — ${trimDot(topic.priorKnowledge.ru).toLowerCase()}.`,
+          `Актуализация: фронтальный опрос по опорным знаниям — ${lowerFirst(trimDot(topic.priorKnowledge.ru))}.`,
           `Постановка проблемы: ${primaryMethod.teacher.ru}`,
           "Совместное формулирование целей урока и критериев успеха, запись темы в тетрадь.",
         ].join("\n")
       : [
           "Ұйымдастыру кезеңі: сәлемдесу, жұмыс орындарының дайындығы мен дәптерлердің болуын тексеру.",
           "Ынтымақтастық ортасын құру: бірлескен жұмысқа көңіл-күй орнату үшін «Көршіңе мақтау» тәсілі.",
-          `Өзектендіру: тірек білім бойынша фронталды сұрау — ${trimDot(topic.priorKnowledge.kk).toLowerCase()}.`,
+          `Өзектендіру: тірек білім бойынша фронталды сұрау — ${lowerFirst(trimDot(topic.priorKnowledge.kk))}.`,
           `Проблема қою: ${primaryMethod.teacher.kk}`,
           "Сабақ мақсаттары мен табыс критерийлерін бірлесіп тұжырымдау, тақырыпты дәптерге жазу.",
         ].join("\n"),
@@ -215,22 +232,22 @@ function buildStages(
     minutes: time.middle,
     teacher: ru
       ? [
-          `Объяснение нового материала порциями с остановками на обсуждение: ${trimDot(sectionTitle(topic, "ru")).toLowerCase()}.`,
+          `Объяснение нового материала порциями с остановками на обсуждение: ${lowerFirst(trimDot(sectionTitle(topic, "ru")))}.`,
           `Инструктаж по технике безопасности перед практической частью: ${trimDot(experiment.safety.ru)}.`,
-          `Организация опыта «${experiment.title.ru}». Оборудование и реактивы: ${trimDot(experiment.materials.ru).toLowerCase()}.`,
+          `Организация опыта «${experiment.title.ru}». Оборудование и реактивы: ${lowerFirst(trimDot(experiment.materials.ru))}.`,
           `Ход работы: ${trimDot(experiment.procedure.ru)}.`,
           `${secondMethod.teacher.ru}`,
-          `Дифференциация. Поддержка: ${trimDot(diff.support.ru).toLowerCase()}. Усложнение: ${trimDot(diff.challenge.ru).toLowerCase()}.`,
-          `Если реактивов или вытяжного шкафа нет: ${trimDot(experiment.virtual.ru).toLowerCase()}.`,
+          `Дифференциация. Поддержка: ${lowerFirst(trimDot(diff.support.ru))}. Усложнение: ${lowerFirst(trimDot(diff.challenge.ru))}.`,
+          `Если реактивов или вытяжного шкафа нет: ${lowerFirst(trimDot(experiment.virtual.ru))}.`,
         ].join("\n")
       : [
-          `Жаңа материалды талқылауға тоқтай отырып, бөліктеп түсіндіру: ${trimDot(sectionTitle(topic, "kk")).toLowerCase()}.`,
+          `Жаңа материалды талқылауға тоқтай отырып, бөліктеп түсіндіру: ${lowerFirst(trimDot(sectionTitle(topic, "kk")))}.`,
           `Практикалық бөлім алдында қауіпсіздік техникасы бойынша нұсқаулық: ${trimDot(experiment.safety.kk)}.`,
-          `«${experiment.title.kk}» тәжірибесін ұйымдастыру. Жабдық пен реактивтер: ${trimDot(experiment.materials.kk).toLowerCase()}.`,
+          `«${experiment.title.kk}» тәжірибесін ұйымдастыру. Жабдық пен реактивтер: ${lowerFirst(trimDot(experiment.materials.kk))}.`,
           `Жұмыс барысы: ${trimDot(experiment.procedure.kk)}.`,
           `${secondMethod.teacher.kk}`,
-          `Саралау. Қолдау: ${trimDot(diff.support.kk).toLowerCase()}. Күрделендіру: ${trimDot(diff.challenge.kk).toLowerCase()}.`,
-          `Реактивтер немесе сору шкафы болмаса: ${trimDot(experiment.virtual.kk).toLowerCase()}.`,
+          `Саралау. Қолдау: ${lowerFirst(trimDot(diff.support.kk))}. Күрделендіру: ${lowerFirst(trimDot(diff.challenge.kk))}.`,
+          `Реактивтер немесе сору шкафы болмаса: ${lowerFirst(trimDot(experiment.virtual.kk))}.`,
         ].join("\n"),
     student: ru
       ? [
@@ -252,8 +269,8 @@ function buildStages(
       assessmentFor("middle", seed, 2)[lang],
     ].join("\n"),
     resources: ru
-      ? `Лабораторное оборудование и реактивы по списку опыта; таблица наблюдений; карточки дифференциации; ${trimDot(experiment.virtual.ru).toLowerCase()}.`
-      : `Тәжірибе тізімі бойынша зертханалық жабдық пен реактивтер; бақылау кестесі; саралау карточкалары; ${trimDot(experiment.virtual.kk).toLowerCase()}.`,
+      ? `Лабораторное оборудование и реактивы по списку опыта; таблица наблюдений; карточки дифференциации; ${lowerFirst(trimDot(experiment.virtual.ru))}.`
+      : `Тәжірибе тізімі бойынша зертханалық жабдық пен реактивтер; бақылау кестесі; саралау карточкалары; ${lowerFirst(trimDot(experiment.virtual.kk))}.`,
   };
 
   const end: LessonStage = {
