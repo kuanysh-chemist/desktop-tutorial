@@ -87,6 +87,20 @@ function formulasIn(text: string): string[] {
   return [...new Set(text.match(/[A-Z][A-Za-z]*[\u2080-\u2089\d]*/g) ?? [])];
 }
 
+/**
+ * Ищет обозначение как отдельное слово.
+ *
+ * Простая подстрока здесь не годится: односимвольная «U» (U-образная трубка)
+ * находится внутри «phet.colorado.edu», и проверка объявляла испорченной
+ * формулу, которой в плане вообще не было. Границы слова по латинице
+ * оставляют настоящие случаи — «u-образная», «nacl» — и отсеивают чужие
+ * слова и адреса.
+ */
+function occursAsToken(text: string, token: string): boolean {
+  const escaped = token.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(`(?<![A-Za-z])${escaped}(?![A-Za-z])`).test(text);
+}
+
 function planText(plan: KspPlan): string {
   return [
     ...plan.stages.flatMap((stage) => [
@@ -116,9 +130,20 @@ for (const topic of TOPICS) {
       lang,
     );
     const text = planText(plan);
-    for (const formula of formulasIn(topic.experiments[0].materials[lang])) {
+    // Опыт выбирается по хешу темы, поэтому проверяются формулы всех опытов,
+    // а не только первого: в план может попасть любой из них.
+    const formulas = new Set(
+      topic.experiments.flatMap((experiment) => [
+        ...formulasIn(experiment.materials[lang]),
+        ...formulasIn(experiment.procedure[lang]),
+      ]),
+    );
+    for (const formula of formulas) {
       formulaChecks++;
-      if (text.includes(formula.toLowerCase()) && !text.includes(formula)) {
+      if (
+        occursAsToken(text, formula.toLowerCase()) &&
+        !occursAsToken(text, formula)
+      ) {
         problems.push(
           `${topic.id} (${lang}): формула «${formula}» попала в план как «${formula.toLowerCase()}»`,
         );

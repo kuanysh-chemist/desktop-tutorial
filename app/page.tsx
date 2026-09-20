@@ -39,6 +39,8 @@ interface Meta {
   matched: boolean;
   experimentTitle: string;
   methodName: string;
+  activeMethods: string[];
+  ictNames: string[];
 }
 
 const BUTTON_PRIMARY =
@@ -61,6 +63,11 @@ export default function Home() {
   const [storageOk, setStorageOk] = useState(true);
   /** Были ли ручные правки после последней генерации. */
   const [dirty, setDirty] = useState(false);
+  /**
+   * Номер сценария урока. Та же тема с другим номером собирается из других
+   * приёмов и цифровых ресурсов — это и есть кнопка «Другой вариант».
+   */
+  const [variant, setVariant] = useState(0);
   const [justSaved, setJustSaved] = useState(false);
 
   // localStorage и текущая дата читаются только после монтирования:
@@ -95,13 +102,15 @@ export default function Home() {
   }, [storageOk, lang, form, plan, enabled]);
 
   const build = useCallback(
-    (input: LessonInput, targetLang: Lang) => {
-      const result = generatePlan(input, targetLang);
+    (input: LessonInput, targetLang: Lang, targetVariant: number) => {
+      const result = generatePlan(input, targetLang, targetVariant);
       setPlan({ ...result.plan, enabled });
       setMeta({
         matched: result.matched,
         experimentTitle: result.experimentTitle,
         methodName: result.methodName,
+        activeMethods: result.activeMethods,
+        ictNames: result.ictNames,
       });
       setNotice(result.matched ? null : UI.noMatch[targetLang]);
       setDirty(false);
@@ -120,7 +129,19 @@ export default function Home() {
       return;
     }
     setError(null);
-    build(form, lang);
+    build(form, lang, variant);
+  };
+
+  /**
+   * Собирает тот же урок из других приёмов. Правки в ячейках при этом
+   * теряются, поэтому предупреждаем до того, как они пропадут.
+   */
+  const handleAnotherVariant = () => {
+    if (!plan) return;
+    if (dirty && !window.confirm(UI.variantWarning[lang])) return;
+    const next = variant + 1;
+    setVariant(next);
+    build(form, lang, next);
   };
 
   /**
@@ -131,7 +152,7 @@ export default function Home() {
   const handleLang = (next: Lang) => {
     if (plan && dirty && !window.confirm(UI.langSwitchWarning[lang])) return;
     setLang(next);
-    if (plan) build(form, next);
+    if (plan) build(form, next, variant);
   };
 
   /** Любая ручная правка ячейки помечает план изменённым. */
@@ -167,6 +188,7 @@ export default function Home() {
     setEnabled(entry.enabled);
     setPlan(entry.plan);
     setCurrentId(id);
+    setVariant(0);
     setMeta(null);
     setNotice(null);
     setError(null);
@@ -277,6 +299,14 @@ export default function Home() {
             <button
               type="button"
               className={BUTTON_SECONDARY}
+              disabled={!plan}
+              onClick={handleAnotherVariant}
+            >
+              {UI.anotherVariant[lang]}
+            </button>
+            <button
+              type="button"
+              className={BUTTON_SECONDARY}
               disabled={!plan || enhancing}
               onClick={handleEnhance}
             >
@@ -293,6 +323,22 @@ export default function Home() {
               <div className="flex gap-2">
                 <dt className="shrink-0 font-semibold">{UI.method[lang]}:</dt>
                 <dd>{meta.methodName}</dd>
+              </div>
+              <div className="flex gap-2">
+                <dt className="shrink-0 font-semibold">
+                  {UI.activeMethodsLabel[lang]}:
+                </dt>
+                <dd>{meta.activeMethods.join(" · ")}</dd>
+              </div>
+              <div className="flex gap-2">
+                <dt className="shrink-0 font-semibold">{UI.ictLabel[lang]}:</dt>
+                <dd>{meta.ictNames.join(" · ")}</dd>
+              </div>
+              <div className="flex gap-2">
+                <dt className="shrink-0 font-semibold">
+                  {UI.variantLabel[lang]}:
+                </dt>
+                <dd>№ {variant + 1}</dd>
               </div>
             </dl>
           )}
