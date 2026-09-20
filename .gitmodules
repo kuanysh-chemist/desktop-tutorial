@@ -4,3 +4,6 @@
 [submodule "pubchem-mcp-server"]
 	path = pubchem-mcp-server
 	url = https://github.com/cyanheads/pubchem-mcp-server.git
+[submodule "mcp_rdkit"]
+	path = mcp_rdkit
+	url = https://github.com/s20ss/mcp_rdkit.git
