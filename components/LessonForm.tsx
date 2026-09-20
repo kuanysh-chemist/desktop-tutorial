@@ -4,7 +4,7 @@ import { UI } from "@/lib/i18n";
 import type { Lang, LessonInput } from "@/lib/types";
 
 const FIELD =
-  "w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm text-ink-900 outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-100";
+  "w-full rounded-lg border border-ink-200 bg-surface px-3 py-2 text-sm text-ink-900 outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-100";
 const LABEL = "mb-1.5 block text-sm font-medium text-ink-600";
 
 /**
@@ -90,7 +90,7 @@ export default function LessonForm({
         </div>
       </div>
 
-      <details className="rounded-lg border border-ink-200 bg-white/60 px-3 py-2">
+      <details className="rounded-lg border border-ink-200 bg-surface/60 px-3 py-2">
         <summary className="cursor-pointer text-sm font-medium text-ink-600">
           {lang === "ru" ? "Реквизиты шапки" : "Бас бөлім деректемелері"}
         </summary>

@@ -15,7 +15,7 @@ export default function LanguageSwitcher({
     <div
       role="group"
       aria-label="Язык / Тіл"
-      className="inline-flex rounded-lg border border-ink-200 bg-white p-0.5"
+      className="inline-flex rounded-lg border border-ink-200 bg-surface p-0.5"
     >
       {LANGS.map((item) => {
         const active = item.id === lang;

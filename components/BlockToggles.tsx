@@ -34,7 +34,7 @@ export default function BlockToggles({
               className={`rounded-full border px-3 py-1.5 text-xs font-medium transition ${
                 active
                   ? "border-brand-500 bg-brand-50 text-brand-700"
-                  : "border-ink-200 bg-white text-ink-400 hover:border-ink-400"
+                  : "border-ink-200 bg-surface text-ink-400 hover:border-ink-400"
               }`}
             >
               {EXTRA_LABELS[key][lang]}

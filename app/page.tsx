@@ -6,6 +6,7 @@ import KspPreview from "@/components/KspPreview";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import LessonForm from "@/components/LessonForm";
 import PlanLibrary from "@/components/PlanLibrary";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { applyEnhancement } from "@/lib/enhance";
 import { generatePlan } from "@/lib/generator";
 import { UI } from "@/lib/i18n";
@@ -43,7 +44,7 @@ interface Meta {
 const BUTTON_PRIMARY =
   "rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-600 disabled:cursor-not-allowed disabled:opacity-50";
 const BUTTON_SECONDARY =
-  "rounded-lg border border-ink-200 bg-white px-4 py-2.5 text-sm font-semibold text-ink-600 transition hover:border-brand-500 hover:text-brand-700 disabled:cursor-not-allowed disabled:opacity-50";
+  "rounded-lg border border-ink-200 bg-surface px-4 py-2.5 text-sm font-semibold text-ink-600 transition hover:border-brand-500 hover:text-brand-700 disabled:cursor-not-allowed disabled:opacity-50";
 
 export default function Home() {
   const [lang, setLang] = useState<Lang>("ru");
@@ -229,11 +230,14 @@ export default function Home() {
           </h1>
           <p className="mt-1 text-sm text-ink-400">{UI.appSubtitle[lang]}</p>
         </div>
-        <LanguageSwitcher lang={lang} onChange={handleLang} />
+        <div className="flex flex-wrap items-center gap-2">
+          <ThemeSwitcher lang={lang} />
+          <LanguageSwitcher lang={lang} onChange={handleLang} />
+        </div>
       </header>
 
-      <div className="grid gap-6 lg:grid-cols-[minmax(320px,400px)_1fr]">
-        <section className="no-print space-y-6 self-start rounded-xl border border-ink-200 bg-white p-4 shadow-sm sm:p-5">
+      <div className="ksp-layout grid gap-6 lg:grid-cols-[minmax(320px,400px)_1fr]">
+        <section className="no-print space-y-6 self-start rounded-xl border border-ink-200 bg-surface p-4 shadow-sm sm:p-5">
           <div>
             <h2 className="mb-4 text-sm font-semibold tracking-wide text-ink-900 uppercase">
               {UI.inputSection[lang]}
@@ -294,7 +298,7 @@ export default function Home() {
           )}
 
           {notice && (
-            <p className="rounded-lg bg-amber-50 p-3 text-xs text-amber-800">
+            <p className="rounded-lg bg-warn-bg p-3 text-xs text-warn-text">
               {notice}
             </p>
           )}
@@ -321,6 +325,13 @@ export default function Home() {
                 <button
                   type="button"
                   className={BUTTON_SECONDARY}
+                  onClick={() => window.print()}
+                >
+                  {UI.print[lang]}
+                </button>
+                <button
+                  type="button"
+                  className={BUTTON_SECONDARY}
                   disabled={!storageOk || justSaved}
                   onClick={handleSave}
                 >
@@ -330,7 +341,7 @@ export default function Home() {
               <KspPreview lang={lang} plan={plan} onPatch={handlePatch} />
             </>
           ) : (
-            <div className="flex min-h-64 items-center justify-center rounded-xl border border-dashed border-ink-200 bg-white/50 p-8 text-center text-sm text-ink-400">
+            <div className="flex min-h-64 items-center justify-center rounded-xl border border-dashed border-ink-200 bg-surface/50 p-8 text-center text-sm text-ink-400">
               {UI.emptyState[lang]}
             </div>
           )}

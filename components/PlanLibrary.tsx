@@ -35,7 +35,7 @@ export default function PlanLibrary({
       </p>
 
       {!available ? (
-        <p className="rounded-lg bg-amber-50 p-3 text-xs text-amber-800">
+        <p className="rounded-lg bg-warn-bg p-3 text-xs text-warn-text">
           {UI.storageOff[lang]}
         </p>
       ) : items.length === 0 ? (
@@ -50,7 +50,7 @@ export default function PlanLibrary({
                 className={`rounded-lg border px-2.5 py-2 text-xs transition ${
                   active
                     ? "border-brand-500 bg-brand-50"
-                    : "border-ink-200 bg-white"
+                    : "border-ink-200 bg-surface"
                 }`}
               >
                 <p className="truncate font-medium text-ink-900" title={item.input.topic}>

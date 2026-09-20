@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+/*
+ * Палитра приложения.
+ *
+ * Светлые значения объявлены в @theme и действуют по умолчанию.
+ * Тёмные перечислены ниже отдельными переменными — один раз, поэтому цвет
+ * правится в одном месте. Подставляются они в двух случаях: когда тёмная тема
+ * включена в системе и пользователь не выбрал светлую явно, и когда он выбрал
+ * тёмную вручную. Печать всегда идёт в светлом варианте.
+ */
 @theme {
   --color-ink-50: #f6f7f9;
   --color-ink-100: #eceef2;
@@ -7,11 +16,81 @@
   --color-ink-400: #8b94a6;
   --color-ink-600: #4a5468;
   --color-ink-900: #171c26;
+
   --color-brand-50: #eef6f3;
   --color-brand-100: #d5eae2;
   --color-brand-500: #1f7a5e;
   --color-brand-600: #17614a;
   --color-brand-700: #114b39;
+
+  /* Поверхности: панели, поля ввода, лист предпросмотра. */
+  --color-surface: #ffffff;
+
+  /* Предупреждения: темы нет в базе, хранилище недоступно. */
+  --color-warn-bg: #fdf3e0;
+  --color-warn-text: #845200;
+
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+}
+
+/* Значения тёмной палитры. Меняются здесь и нигде больше. */
+:root {
+  color-scheme: light;
+  --dark-ink-50: #0f1319;
+  --dark-ink-100: #1a2029;
+  --dark-ink-200: #2b3340;
+  --dark-ink-400: #8b94a6;
+  --dark-ink-600: #b3bcc9;
+  --dark-ink-900: #e9edf3;
+  --dark-brand-50: #12291f;
+  --dark-brand-100: #1c3b2d;
+  --dark-brand-500: #1f7a5e;
+  --dark-brand-600: #268f6d;
+  --dark-brand-700: #7fd3b1;
+  --dark-surface: #151b23;
+  --dark-warn-bg: #2a2312;
+  --dark-warn-text: #f0c674;
+}
+
+/* Тёмная тема из системных настроек, если светлая не выбрана вручную. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --color-ink-50: var(--dark-ink-50);
+    --color-ink-100: var(--dark-ink-100);
+    --color-ink-200: var(--dark-ink-200);
+    --color-ink-400: var(--dark-ink-400);
+    --color-ink-600: var(--dark-ink-600);
+    --color-ink-900: var(--dark-ink-900);
+    --color-brand-50: var(--dark-brand-50);
+    --color-brand-100: var(--dark-brand-100);
+    --color-brand-500: var(--dark-brand-500);
+    --color-brand-600: var(--dark-brand-600);
+    --color-brand-700: var(--dark-brand-700);
+    --color-surface: var(--dark-surface);
+    --color-warn-bg: var(--dark-warn-bg);
+    --color-warn-text: var(--dark-warn-text);
+  }
+}
+
+/* Тёмная тема, выбранная вручную. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-ink-50: var(--dark-ink-50);
+  --color-ink-100: var(--dark-ink-100);
+  --color-ink-200: var(--dark-ink-200);
+  --color-ink-400: var(--dark-ink-400);
+  --color-ink-600: var(--dark-ink-600);
+  --color-ink-900: var(--dark-ink-900);
+  --color-brand-50: var(--dark-brand-50);
+  --color-brand-100: var(--dark-brand-100);
+  --color-brand-500: var(--dark-brand-500);
+  --color-brand-600: var(--dark-brand-600);
+  --color-brand-700: var(--dark-brand-700);
+  --color-surface: var(--dark-surface);
+  --color-warn-bg: var(--dark-warn-bg);
+  --color-warn-text: var(--dark-warn-text);
 }
 
 html,
@@ -22,7 +101,20 @@ body {
 body {
   background-color: var(--color-ink-50);
   color: var(--color-ink-900);
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+}
+
+/* Копия содержимого ячейки, которая печатается вместо поля ввода. */
+.print-only {
+  display: none;
+}
+
+@media print {
+  .print-only {
+    display: block;
+    white-space: pre-wrap;
+  }
 }
 
 /* Ячейки таблицы предпросмотра редактируются как обычный текст. */
@@ -32,6 +124,7 @@ body {
   min-height: 1.5rem;
   resize: none;
   background: transparent;
+  color: inherit;
   outline: none;
   white-space: pre-wrap;
 }
@@ -41,9 +134,35 @@ body {
   border-radius: 0.25rem;
 }
 
+/*
+ * Печать всегда светлая: документ уходит на бумагу, а не на экран.
+ * Рамки таблицы делаются тёмными, иначе на принтере их почти не видно.
+ */
 @media print {
+  :root,
+  :root[data-theme="dark"] {
+    color-scheme: light;
+    --color-ink-50: #ffffff;
+    --color-ink-100: #efefef;
+    --color-ink-200: #666666;
+    --color-ink-400: #333333;
+    --color-ink-600: #222222;
+    --color-ink-900: #000000;
+    --color-surface: #ffffff;
+    --color-brand-50: #ffffff;
+    --color-brand-600: #000000;
+  }
+
   .no-print {
     display: none !important;
+  }
+
+  /*
+   * Форма скрыта, но её колонка в сетке остаётся, и предпросмотр съезжает
+   * в узкий первый столбец. На бумаге раскладка должна быть в один поток.
+   */
+  .ksp-layout {
+    display: block !important;
   }
 
   body {
@@ -53,5 +172,37 @@ body {
   .print-area {
     box-shadow: none !important;
     border: none !important;
+    padding: 0 !important;
+    /* Пять колонок должны уместиться в ширину листа. */
+    font-size: 9px;
   }
+
+  /*
+   * На экране таблица хода урока прокручивается вбок, на бумаге прокрутки нет:
+   * снимаем минимальную ширину, иначе правые колонки уезжают за край листа.
+   */
+  .flow-scroll {
+    overflow: visible !important;
+  }
+
+  .flow-scroll table {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  /* Строку таблицы лучше перенести целиком, чем разорвать между страницами. */
+  tr,
+  td,
+  th {
+    break-inside: avoid;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+}
+
+@page {
+  size: A4 portrait;
+  margin: 12mm;
 }

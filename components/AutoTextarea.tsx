@@ -28,13 +28,20 @@ export default function AutoTextarea({
   }, [value]);
 
   return (
-    <textarea
-      ref={ref}
-      aria-label={ariaLabel}
-      value={value}
-      rows={1}
-      onChange={(event) => onChange(event.target.value)}
-      className={`cell-input ${className}`}
-    />
+    <>
+      <textarea
+        ref={ref}
+        aria-label={ariaLabel}
+        value={value}
+        rows={1}
+        onChange={(event) => onChange(event.target.value)}
+        className={`cell-input no-print ${className}`}
+      />
+      {/*
+       * При печати поле ввода заменяется обычным текстом: у textarea высота
+       * задана под ширину экрана и на бумаге обрезала бы содержимое.
+       */}
+      <div className="print-only">{value}</div>
+    </>
   );
 }
