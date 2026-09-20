@@ -10,8 +10,8 @@
  * доработка формулировок.
  */
 import {
-  FALLBACK_TOPIC,
   matchTopic,
+  sectionTitle,
   type Experiment,
   type TopicEntry,
 } from "./chemistry-kb";
@@ -215,7 +215,7 @@ function buildStages(
     minutes: time.middle,
     teacher: ru
       ? [
-          `Объяснение нового материала порциями с остановками на обсуждение: ${trimDot(topic.section.ru).toLowerCase()}.`,
+          `Объяснение нового материала порциями с остановками на обсуждение: ${trimDot(sectionTitle(topic, "ru")).toLowerCase()}.`,
           `Инструктаж по технике безопасности перед практической частью: ${trimDot(experiment.safety.ru)}.`,
           `Организация опыта «${experiment.title.ru}». Оборудование и реактивы: ${trimDot(experiment.materials.ru).toLowerCase()}.`,
           `Ход работы: ${trimDot(experiment.procedure.ru)}.`,
@@ -224,7 +224,7 @@ function buildStages(
           `Если реактивов или вытяжного шкафа нет: ${trimDot(experiment.virtual.ru).toLowerCase()}.`,
         ].join("\n")
       : [
-          `Жаңа материалды талқылауға тоқтай отырып, бөліктеп түсіндіру: ${trimDot(topic.section.kk).toLowerCase()}.`,
+          `Жаңа материалды талқылауға тоқтай отырып, бөліктеп түсіндіру: ${trimDot(sectionTitle(topic, "kk")).toLowerCase()}.`,
           `Практикалық бөлім алдында қауіпсіздік техникасы бойынша нұсқаулық: ${trimDot(experiment.safety.kk)}.`,
           `«${experiment.title.kk}» тәжірибесін ұйымдастыру. Жабдық пен реактивтер: ${trimDot(experiment.materials.kk).toLowerCase()}.`,
           `Жұмыс барысы: ${trimDot(experiment.procedure.kk)}.`,
@@ -360,7 +360,7 @@ export function generatePlan(input: LessonInput, lang: Lang): GenerateResult {
 
   const plan: KspPlan = {
     header: {
-      section: matched ? topic.section[lang] : FALLBACK_TOPIC.section[lang],
+      section: sectionTitle(topic, lang),
       teacher: input.teacher,
       date: input.date,
       grade: input.grade,

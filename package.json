@@ -10,7 +10,9 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "verify:match": "tsx scripts/verify-match.ts",
-    "verify:export": "tsx scripts/verify-export.ts"
+    "verify:export": "tsx scripts/verify-export.ts",
+    "verify:coverage": "tsx scripts/verify-coverage.ts",
+    "verify": "npm run typecheck && npm run lint && npm run verify:coverage && npm run verify:match"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.127.0",
