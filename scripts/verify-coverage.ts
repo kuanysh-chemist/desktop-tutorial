@@ -5,7 +5,9 @@
  * Падает с ненулевым кодом, если найдено хотя бы одно нарушение.
  */
 import { CURRICULUM, TOPICS, sectionTitle } from "../lib/chemistry-kb";
+import { generatePlan } from "../lib/generator";
 import { DIFFERENTIATION, METHODS } from "../lib/pedagogy";
+import type { KspPlan, Lang } from "../lib/types";
 
 const problems: string[] = [];
 const methodIds = new Set(METHODS.map((method) => method.id));
@@ -78,7 +80,54 @@ for (const unit of CURRICULUM) {
   );
 }
 
-// 4. Название раздела действительно подставляется в шапку КСП
+// 4. Генерация не должна портить регистр химических формул.
+//    В «NaCl» регистр несёт смысл: «naCl» — запись другого вещества,
+//    а «CO» и «Co» — угарный газ и кобальт.
+function formulasIn(text: string): string[] {
+  return [...new Set(text.match(/[A-Z][A-Za-z]*[\u2080-\u2089\d]*/g) ?? [])];
+}
+
+function planText(plan: KspPlan): string {
+  return [
+    ...plan.stages.flatMap((stage) => [
+      stage.teacher,
+      stage.student,
+      stage.assessment,
+      stage.resources,
+    ]),
+    ...Object.values(plan.extras),
+  ].join("\n");
+}
+
+let formulaChecks = 0;
+for (const topic of TOPICS) {
+  for (const lang of ["ru", "kk"] as Lang[]) {
+    const { plan } = generatePlan(
+      {
+        topic: topic.keywords[0] ?? topic.id,
+        objectivesRaw: "9.1.1.1 проверка сохранения формул",
+        durationMinutes: 40,
+        grade: String(topic.grade),
+        teacher: "",
+        date: "2026-09-20",
+        present: "",
+        absent: "",
+      },
+      lang,
+    );
+    const text = planText(plan);
+    for (const formula of formulasIn(topic.experiments[0].materials[lang])) {
+      formulaChecks++;
+      if (text.includes(formula.toLowerCase()) && !text.includes(formula)) {
+        problems.push(
+          `${topic.id} (${lang}): формула «${formula}» попала в план как «${formula.toLowerCase()}»`,
+        );
+      }
+    }
+  }
+}
+
+// 5. Название раздела действительно подставляется в шапку КСП
 const sample = TOPICS[0];
 if (!sectionTitle(sample, "ru") || !sectionTitle(sample, "kk")) {
   problems.push("sectionTitle вернул пустую строку — шапка КСП останется без раздела");
@@ -87,8 +136,10 @@ if (!sectionTitle(sample, "ru") || !sectionTitle(sample, "kk")) {
 const byGrade = new Map<number, number>();
 for (const topic of TOPICS) byGrade.set(topic.grade, (byGrade.get(topic.grade) ?? 0) + 1);
 
+console.log(`\nПроверено сохранение регистра у ${formulaChecks} химических формул.`);
+
 console.log(
-  `\nИтого: ${TOPICS.length} тем в ${CURRICULUM.length} разделах` +
+  `Итого: ${TOPICS.length} тем в ${CURRICULUM.length} разделах` +
     ` (${[...byGrade.entries()].sort().map(([g, c]) => `${g} кл. — ${c}`).join(", ")})`,
 );
 
