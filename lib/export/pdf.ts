@@ -17,6 +17,7 @@ import {
 import { stageTitle } from "../generator";
 import type { ExtraKey, KspPlan, Lang } from "../types";
 import { buildFileName } from "./filename";
+import { downloadBlob } from "./download";
 
 /** A4 книжная: ширина 595,28 пт, поля по 28 пт. */
 const PAGE_WIDTH = 595.28;
@@ -137,9 +138,18 @@ async function loadPdfMake(): Promise<any> {
   return pdfMake;
 }
 
-/** Собирает PDF и отдаёт его браузеру на скачивание. */
+/**
+ * Собирает PDF и отдаёт его браузеру на скачивание.
+ *
+ * Скачивание идёт через собственный downloadBlob, а не через
+ * pdfMake.download(): так имя файла назначается тем же кодом, что и у DOCX,
+ * и не зависит от внутренностей pdfmake.
+ */
 export async function exportPdf(plan: KspPlan, lang: Lang): Promise<void> {
   const pdfMake = await loadPdfMake();
   const definition = buildPdfDefinition(plan, lang) as any;
-  pdfMake.createPdf(definition).download(buildFileName(plan, lang, "pdf"));
+  const blob: Blob = await new Promise((resolve) => {
+    pdfMake.createPdf(definition).getBlob(resolve);
+  });
+  downloadBlob(blob, buildFileName(plan, lang, "pdf"));
 }

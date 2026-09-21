@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Генератор КСП по химии | Химиядан ҚМЖ генераторы</title>
+    <meta
+      name="description"
+      content="Краткосрочные планы уроков химии по форме приказа № 130. Русский и казахский языки, экспорт в DOCX и PDF. Работает без интернета."
+    />
+    <!--
+      Выбранная тема применяется до первой отрисовки: иначе при тёмной теме
+      страница успевает мигнуть белым, пока грузится скрипт.
+    -->
+    <script>
+      try {
+        var t = localStorage.getItem("ksp-theme");
+        if (t === "dark" || t === "light") document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
+  </head>
+  <body class="antialiased">
+    <div id="root"></div>
+    <script type="module" src="./main.tsx"></script>
+  </body>
+</html>
