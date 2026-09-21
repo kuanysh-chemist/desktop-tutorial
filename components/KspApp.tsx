@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import BlockToggles from "@/components/BlockToggles";
 import KspPreview from "@/components/KspPreview";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
@@ -44,9 +44,29 @@ interface Meta {
 }
 
 const BUTTON_PRIMARY =
-  "rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-600 disabled:cursor-not-allowed disabled:opacity-50";
+  "rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-600 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50";
 const BUTTON_SECONDARY =
-  "rounded-lg border border-ink-200 bg-surface px-4 py-2.5 text-sm font-semibold text-ink-600 transition hover:border-brand-500 hover:text-brand-700 disabled:cursor-not-allowed disabled:opacity-50";
+  "rounded-lg border border-ink-200 bg-surface px-4 py-2.5 text-sm font-semibold text-ink-600 transition hover:border-brand-500 hover:text-brand-700 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50";
+const CARD =
+  "rounded-xl border border-ink-200 bg-surface p-4 shadow-sm sm:p-5";
+const CARD_TITLE =
+  "mb-4 text-xs font-semibold tracking-[0.08em] text-ink-400 uppercase";
+
+/** Колба — единственный рисунок в интерфейсе, знак предмета. */
+function FlaskMark() {
+  return (
+    <span
+      aria-hidden
+      className="grid size-10 shrink-0 place-items-center rounded-xl bg-brand-500 text-white shadow-sm"
+    >
+      <svg viewBox="0 0 24 24" className="size-6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M9 3h6" />
+        <path d="M10 3v6.2L4.8 18a2 2 0 0 0 1.7 3h11a2 2 0 0 0 1.7-3L14 9.2V3" />
+        <path d="M7.4 14h9.2" />
+      </svg>
+    </span>
+  );
+}
 
 /**
  * Всё приложение целиком. Вынесено из страницы Next.js, потому что этот же
@@ -76,6 +96,8 @@ export default function KspApp({ offline = false }: { offline?: boolean }) {
    * приёмов и цифровых ресурсов — это и есть кнопка «Другой вариант».
    */
   const [variant, setVariant] = useState(0);
+  /** На узком экране готовый план оказывается далеко внизу — прокручиваем к нему. */
+  const previewRef = useRef<HTMLElement>(null);
   const [justSaved, setJustSaved] = useState(false);
 
   // localStorage и текущая дата читаются только после монтирования:
@@ -123,6 +145,9 @@ export default function KspApp({ offline = false }: { offline?: boolean }) {
       setNotice(result.matched ? null : UI.noMatch[targetLang]);
       setDirty(false);
       setJustSaved(false);
+      if (window.innerWidth < 1024) {
+        previewRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     },
     [enabled],
   );
@@ -251,14 +276,40 @@ export default function KspApp({ offline = false }: { offline?: boolean }) {
     }
   };
 
+  /**
+   * Ctrl/Cmd + Enter собирает план прямо из поля ввода: учителю не нужно
+   * тянуться к кнопке после того, как он дописал цели обучения.
+   */
+  const handleFormKeys = (event: React.KeyboardEvent) => {
+    if (event.key !== "Enter" || !(event.ctrlKey || event.metaKey)) return;
+    event.preventDefault();
+    handleGenerate();
+  };
+
+  const metaRows =
+    meta && plan
+      ? [
+          { label: UI.experiment[lang], value: meta.experimentTitle },
+          { label: UI.method[lang], value: meta.methodName },
+          { label: UI.activeMethodsLabel[lang], value: meta.activeMethods.join(" · ") },
+          { label: UI.ictLabel[lang], value: meta.ictNames.join(" · ") },
+          { label: UI.variantLabel[lang], value: `№ ${variant + 1}` },
+        ]
+      : [];
+
   return (
-    <main className="mx-auto max-w-[1400px] px-4 py-6 sm:px-6 lg:px-8">
-      <header className="no-print mb-6 flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <h1 className="text-xl font-bold text-ink-900 sm:text-2xl">
-            {UI.appTitle[lang]}
-          </h1>
-          <p className="mt-1 text-sm text-ink-400">{UI.appSubtitle[lang]}</p>
+    <main className="mx-auto max-w-[1500px] px-4 pt-5 pb-10 sm:px-6 lg:px-8">
+      <header className="no-print mb-5 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <FlaskMark />
+          <div>
+            <h1 className="text-lg leading-tight font-bold text-ink-900 sm:text-xl">
+              {UI.appTitle[lang]}
+            </h1>
+            <p className="mt-0.5 text-xs text-ink-400 sm:text-sm">
+              {UI.appSubtitle[lang]}
+            </p>
+          </div>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <ThemeSwitcher lang={lang} />
@@ -266,104 +317,101 @@ export default function KspApp({ offline = false }: { offline?: boolean }) {
         </div>
       </header>
 
-      <div className="ksp-layout grid gap-6 lg:grid-cols-[minmax(320px,400px)_1fr]">
-        <section className="no-print space-y-6 self-start rounded-xl border border-ink-200 bg-surface p-4 shadow-sm sm:p-5">
-          <div>
-            <h2 className="mb-4 text-sm font-semibold tracking-wide text-ink-900 uppercase">
-              {UI.inputSection[lang]}
-            </h2>
+      <div className="ksp-layout grid gap-4 lg:grid-cols-[minmax(320px,380px)_1fr]">
+        <div className="no-print space-y-4 self-start">
+          <section className={CARD} onKeyDown={handleFormKeys}>
+            <h2 className={CARD_TITLE}>{UI.inputSection[lang]}</h2>
             <LessonForm
               lang={lang}
               value={form}
               onChange={setForm}
               error={error}
             />
-          </div>
 
-          <BlockToggles
-            lang={lang}
-            enabled={enabled}
-            onToggle={handleToggle}
-          />
-
-          <PlanLibrary
-            lang={lang}
-            items={library}
-            currentId={currentId}
-            available={storageOk}
-            onOpen={handleOpen}
-            onDuplicate={handleDuplicate}
-            onDelete={handleDelete}
-          />
-
-          <div className="flex flex-wrap gap-2">
-            <button
-              type="button"
-              className={BUTTON_PRIMARY}
-              onClick={handleGenerate}
-            >
-              {plan ? UI.regenerate[lang] : UI.generate[lang]}
-            </button>
-            <button
-              type="button"
-              className={BUTTON_SECONDARY}
-              disabled={!plan}
-              onClick={handleAnotherVariant}
-            >
-              {UI.anotherVariant[lang]}
-            </button>
-            {!offline && (
+            <div className="mt-5 flex flex-wrap gap-2">
+              <button
+                type="button"
+                className={BUTTON_PRIMARY}
+                onClick={handleGenerate}
+              >
+                {plan ? UI.regenerate[lang] : UI.generate[lang]}
+              </button>
               <button
                 type="button"
                 className={BUTTON_SECONDARY}
-                disabled={!plan || enhancing}
-                onClick={handleEnhance}
+                disabled={!plan}
+                onClick={handleAnotherVariant}
               >
-                {enhancing ? UI.enhancing[lang] : UI.enhance[lang]}
+                {UI.anotherVariant[lang]}
               </button>
+              {!offline && (
+                <button
+                  type="button"
+                  className={BUTTON_SECONDARY}
+                  disabled={!plan || enhancing}
+                  onClick={handleEnhance}
+                >
+                  {enhancing ? UI.enhancing[lang] : UI.enhance[lang]}
+                </button>
+              )}
+            </div>
+            <p className="mt-2 text-xs text-ink-400">{UI.generateHint[lang]}</p>
+
+            {meta && plan && (
+              <div className="mt-4 rounded-lg border border-ink-200 bg-ink-50 p-3">
+                {meta.matched && (
+                  <p className="mb-2 flex items-center gap-1.5 text-xs font-medium text-brand-700">
+                    <svg aria-hidden viewBox="0 0 20 20" className="size-4 shrink-0" fill="currentColor">
+                      <path d="M8.2 13.6 4.6 10l1.2-1.2 2.4 2.4 6-6L15.4 6z" />
+                    </svg>
+                    {UI.matchedTopic[lang]}
+                  </p>
+                )}
+                <dl className="space-y-2 text-xs">
+                  {metaRows.map((row) => (
+                    <div key={row.label}>
+                      <dt className="text-ink-400">{row.label}</dt>
+                      <dd className="mt-0.5 text-ink-900">{row.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
             )}
-          </div>
 
-          {meta && plan && (
-            <dl className="space-y-1.5 rounded-lg bg-ink-50 p-3 text-xs text-ink-600">
-              <div className="flex gap-2">
-                <dt className="shrink-0 font-semibold">{UI.experiment[lang]}:</dt>
-                <dd>{meta.experimentTitle}</dd>
-              </div>
-              <div className="flex gap-2">
-                <dt className="shrink-0 font-semibold">{UI.method[lang]}:</dt>
-                <dd>{meta.methodName}</dd>
-              </div>
-              <div className="flex gap-2">
-                <dt className="shrink-0 font-semibold">
-                  {UI.activeMethodsLabel[lang]}:
-                </dt>
-                <dd>{meta.activeMethods.join(" · ")}</dd>
-              </div>
-              <div className="flex gap-2">
-                <dt className="shrink-0 font-semibold">{UI.ictLabel[lang]}:</dt>
-                <dd>{meta.ictNames.join(" · ")}</dd>
-              </div>
-              <div className="flex gap-2">
-                <dt className="shrink-0 font-semibold">
-                  {UI.variantLabel[lang]}:
-                </dt>
-                <dd>№ {variant + 1}</dd>
-              </div>
-            </dl>
-          )}
+            {plan && !form.teacher.trim() && (
+              <p className="mt-3 rounded-lg bg-warn-bg p-3 text-xs text-warn-text">
+                {UI.fillTeacher[lang]}
+              </p>
+            )}
 
-          {notice && (
-            <p className="rounded-lg bg-warn-bg p-3 text-xs text-warn-text">
-              {notice}
-            </p>
-          )}
-        </section>
+            {notice && (
+              <p className="mt-3 rounded-lg bg-warn-bg p-3 text-xs text-warn-text">
+                {notice}
+              </p>
+            )}
+          </section>
 
-        <section className="min-w-0">
+          <section className={CARD}>
+            <BlockToggles lang={lang} enabled={enabled} onToggle={handleToggle} />
+          </section>
+
+          <section className={CARD}>
+            <PlanLibrary
+              lang={lang}
+              items={library}
+              currentId={currentId}
+              available={storageOk}
+              onOpen={handleOpen}
+              onDuplicate={handleDuplicate}
+              onDelete={handleDelete}
+            />
+          </section>
+        </div>
+
+        <section className="min-w-0" ref={previewRef}>
           {plan ? (
             <>
-              <div className="no-print mb-3 flex flex-wrap gap-2">
+              <div className="no-print sticky top-0 z-10 mb-3 flex flex-wrap gap-2 rounded-b-xl bg-ink-50/95 py-2 shadow-[0_10px_16px_-14px_rgba(15,23,42,0.6)] backdrop-blur">
                 <button
                   type="button"
                   className={BUTTON_SECONDARY}
@@ -397,8 +445,14 @@ export default function KspApp({ offline = false }: { offline?: boolean }) {
               <KspPreview lang={lang} plan={plan} onPatch={handlePatch} />
             </>
           ) : (
-            <div className="flex min-h-64 items-center justify-center rounded-xl border border-dashed border-ink-200 bg-surface/50 p-8 text-center text-sm text-ink-400">
-              {UI.emptyState[lang]}
+            <div className="flex min-h-72 flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-ink-200 bg-surface/60 p-8 text-center">
+              <FlaskMark />
+              <p className="max-w-sm text-sm text-ink-600">
+                {UI.emptyState[lang]}
+              </p>
+              <p className="max-w-sm text-xs text-ink-400">
+                {UI.emptyHint[lang]}
+              </p>
             </div>
           )}
         </section>
