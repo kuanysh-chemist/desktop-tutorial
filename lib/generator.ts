@@ -21,11 +21,14 @@ import {
   type TopicEntry,
 } from "./chemistry-kb";
 import {
+  ACTIVE_METHODS,
   activePool,
   boundReflection,
+  GAME_LIKE,
   type ActiveMethod,
+  type MethodRole,
 } from "./active-methods";
-import { ictPool, type IctResource } from "./ict";
+import { ICT, ictPool, type IctResource } from "./ict";
 import {
   ASSESSMENT,
   BASE_SAFETY,
@@ -33,6 +36,7 @@ import {
   HOMEWORK,
   METHODS,
   VALUES,
+  type AssessmentTechnique,
   type DifferentiationPattern,
   type HomeworkOption,
   type TeachingMethod,
@@ -51,6 +55,7 @@ import {
 } from "./lesson-blocks";
 import { DEFAULT_ENABLED, STAGE_LABELS } from "./ksp-template";
 import { UI } from "./i18n";
+import { NO_OPTIONS } from "./types";
 import type {
   Bilingual,
   KspExtras,
@@ -58,6 +63,7 @@ import type {
   Lang,
   LearningObjective,
   LessonInput,
+  LessonOptions,
   LessonStage,
   StageId,
 } from "./types";
@@ -236,6 +242,71 @@ function methodById(id: string): TeachingMethod {
   return METHODS.find((m) => m.id === id) ?? METHODS[0];
 }
 
+
+
+/**
+ * Сужает пул под включённый тумблер. Если после сужения не остаётся ничего,
+ * возвращается исходный пул: галочка не должна ломать генерацию темы, для
+ * которой подходящих приёмов просто нет.
+ */
+function prefer<T>(pool: T[], keep: (item: T) => boolean): T[] {
+  const narrowed = pool.filter(keep);
+  return narrowed.length ? narrowed : pool;
+}
+
+/**
+ * Приёмы и ресурсы, закреплённые за этапом в самой теме (TopicEntry.stagePlan).
+ *
+ * Закрепление адресное: приём занимает позицию своей роли, цифровой ресурс —
+ * позицию ресурса этапа, приём оценивания — позицию оценивания. Всё, что не
+ * закреплено, по-прежнему подбирается из пулов, поэтому планы остаются
+ * разными. Если на одну позицию закреплено несколько пунктов, их перебирает
+ * номер варианта.
+ */
+interface StagePins {
+  methods: Partial<Record<MethodRole, ActiveMethod>>;
+  ict?: IctResource;
+  assessment?: AssessmentTechnique;
+}
+
+function resolvePins(
+  ids: string[] | undefined,
+  variant: number,
+): StagePins {
+  const pins: StagePins = { methods: {} };
+  if (!ids?.length) return pins;
+
+  const byRole = new Map<MethodRole, ActiveMethod[]>();
+  const resources: IctResource[] = [];
+  const checks: AssessmentTechnique[] = [];
+
+  for (const id of ids) {
+    const method = ACTIVE_METHODS.find((m) => m.id === id);
+    if (method) {
+      const list = byRole.get(method.role) ?? [];
+      list.push(method);
+      byRole.set(method.role, list);
+      continue;
+    }
+    const resource = ICT.find((r) => r.id === id);
+    if (resource) {
+      resources.push(resource);
+      continue;
+    }
+    const check = ASSESSMENT.find((a) => a.id === id);
+    if (check) checks.push(check);
+    // Неизвестный идентификатор молча пропускается: план важнее, а ловит
+    // такие опечатки verify:coverage, где это ошибка сборки.
+  }
+
+  for (const [role, list] of byRole) {
+    pins.methods[role] = list[variant % list.length];
+  }
+  if (resources.length) pins.ict = resources[variant % resources.length];
+  if (checks.length) pins.assessment = checks[variant % checks.length];
+  return pins;
+}
+
 /**
  * Набор блоков, из которых собирается урок. Собирается один раз, чтобы
  * этапы и методические блоки (дифференциация, ценности) не расходились
@@ -270,13 +341,27 @@ function buildRecipe(
   duration: number,
   seed: number,
   variant: number,
+  options: LessonOptions,
 ): Recipe {
   const pick = makePicker(seed, variant);
   const time = splitTime(duration);
   const kind = topic.kind;
 
-  const warmup = pick(activePool("warmup", kind));
-  const activation = pick(activePool("activation", kind));
+  // Закрепления из темы. Пулы опрашиваются в любом случае, даже когда позиция
+  // закреплена: иначе появление закрепления в одной теме сдвинуло бы выбор на
+  // всех остальных позициях и сломало предсказуемость вариантов.
+  const pins = {
+    start: resolvePins(topic.stagePlan?.start, variant),
+    middle: resolvePins(topic.stagePlan?.middle, variant),
+    end: resolvePins(topic.stagePlan?.end, variant),
+  };
+
+  const warmupPool = options.gamification
+    ? prefer(activePool("warmup", kind), (m) => GAME_LIKE.has(m.id))
+    : activePool("warmup", kind);
+  const warmup = pins.start.methods.warmup ?? pick(warmupPool);
+  const activation =
+    pins.start.methods.activation ?? pick(activePool("activation", kind));
   // Середина урока раскладывается по времени. Практическая часть занимает
   // её ядро — на лабораторной теме почти половину, — и приёмы подбираются
   // из того, что останется. Если на приём применения времени не хватает,
@@ -286,34 +371,45 @@ function buildRecipe(
     4,
     Math.round(time.middle * (kind === "experiment" ? 0.55 : 0.75)),
   );
-  const study = pick(
-    fitting(activePool("study", kind), Math.max(4, Math.round(freeMinutes * 0.6))),
-  );
+  const study =
+    pins.middle.methods.study ??
+    pick(fitting(activePool("study", kind), Math.max(4, Math.round(freeMinutes * 0.6))));
   const practiceBudget = freeMinutes - study.minutes;
   const practicePool = activePool("practice", kind).filter(
     (m) => m.minutes <= practiceBudget,
   );
-  const practice = practicePool.length ? pick(practicePool) : undefined;
+  const gamePractice = options.gamification
+    ? prefer(practicePool, (m) => GAME_LIKE.has(m.id))
+    : practicePool;
+  const practice =
+    pins.middle.methods.practice ??
+    (gamePractice.length ? pick(gamePractice) : undefined);
   // Если начало урока оставило артефакт — таблицу ЗХУ, кластер, лист
   // утверждений, — рефлексия возвращает класс именно к нему.
   const reflection =
-    boundReflection(activation.id) ?? pick(activePool("reflection", kind));
+    pins.end.methods.reflection ??
+    boundReflection(activation.id) ??
+    pick(activePool("reflection", kind));
 
-  const assessmentStart = pick(ASSESSMENT.filter((a) => a.stages.includes("start")));
+  const assessmentStart =
+    pins.start.assessment ??
+    pick(ASSESSMENT.filter((a) => a.stages.includes("start")));
   // Один и тот же приём дважды за урок — это не оценивание, а привычка,
   // поэтому каждый следующий этап выбирает из ещё не занятых.
   const middlePool = without(
     ASSESSMENT.filter((a) => a.stages.includes("middle")),
     new Set([assessmentStart.id]),
   );
-  const middleA = pick(middlePool);
+  const middleA = pins.middle.assessment ?? pick(middlePool);
   const middleB = pick(without(middlePool, new Set([middleA.id])));
-  const assessmentEnd = pick(
-    without(
-      ASSESSMENT.filter((a) => a.stages.includes("end")),
-      new Set([assessmentStart.id, middleA.id, middleB.id]),
-    ),
-  );
+  const assessmentEnd =
+    pins.end.assessment ??
+    pick(
+      without(
+        ASSESSMENT.filter((a) => a.stages.includes("end")),
+        new Set([assessmentStart.id, middleA.id, middleB.id]),
+      ),
+    );
 
   // Если срез проводится цифровым опросом, сервис для него обязан оказаться
   // в графе «Ресурсы» — иначе оценивание ссылается на то, чего в плане нет.
@@ -322,21 +418,42 @@ function buildRecipe(
     return quiz.length ? quiz : pool;
   };
   const startIctPool =
-    assessmentStart.id === "quiz-instant"
+    assessmentStart.id === "quiz-instant" || options.gamification
       ? quizOnly(ictPool("start", kind))
       : ictPool("start", kind);
-  const ictStart = pick(startIctPool);
-  const ictMiddle = pick(without(ictPool("middle", kind), new Set([ictStart.id])));
+  const ictStart = pins.start.ict ?? pick(startIctPool);
+  const middlePoolIct = options.virtualLab
+    ? prefer(ictPool("middle", kind), (r) => r.purpose === "simulation")
+    : ictPool("middle", kind);
+  const ictMiddle =
+    pins.middle.ict ?? pick(without(middlePoolIct, new Set([ictStart.id])));
+  // Второй цифровой ресурс середины не должен повторить ни один из занятых,
+  // включая закреплённый в теме ресурс конца урока: тот выбирается позже и
+  // мимо общего отсева.
+  const endPinned = pins.end.ict;
+  // Если симуляцию потребовали, а середина закреплена другим ресурсом,
+  // симуляция занимает вторую позицию — требование тумблера не теряется.
+  const extraPool =
+    options.virtualLab && ictMiddle.purpose !== "simulation"
+      ? prefer(ictPool("middle", kind), (r) => r.purpose === "simulation")
+      : ictPool("middle", kind);
   const ictExtra = pick(
-    without(ictPool("middle", kind), new Set([ictStart.id, ictMiddle.id])),
+    without(
+      extraPool,
+      new Set(
+        [ictStart.id, ictMiddle.id, endPinned?.id].filter(
+          (id): id is string => Boolean(id),
+        ),
+      ),
+    ),
   );
   const endIctPool = without(
-    assessmentEnd.id === "quiz-instant"
+    assessmentEnd.id === "quiz-instant" || options.gamification
       ? quizOnly(ictPool("end", kind))
       : ictPool("end", kind),
     new Set([ictStart.id, ictMiddle.id, ictExtra.id]),
   );
-  const ictEnd = pick(endIctPool);
+  const ictEnd = endPinned ?? pick(endIctPool);
 
   const homeworkPool = HOMEWORK.filter(
     (h) => h.kinds.length === 0 || h.kinds.includes(kind),
@@ -386,6 +503,37 @@ function resourceLine(
   return `${trimDot(base[lang])}. ${label}: ${digital}`;
 }
 
+
+/**
+ * Строка CLIL в действиях педагога: термины урока в триплете плюс речевой
+ * образец. Если у темы терминов нет, остаётся общее описание подхода —
+ * пустой строки в документе быть не должно.
+ */
+function clilTeacherLine(topic: TopicEntry, lang: Lang): string {
+  const ru = lang === "ru";
+  const triplet = topic.terms
+    .slice(0, 4)
+    .map((term) => `${term.ru} — ${term.kk} — ${term.en}`)
+    .join("; ");
+  const frame = ru
+    ? "Речевой образец на доске: «When … is added, … is observed, therefore … reaction takes place»."
+    : "Тақтадағы тілдік үлгі: «When … is added, … is observed, therefore … reaction takes place».";
+  if (!triplet) {
+    return ru
+      ? `CLIL: ключевые термины урока вводятся в триплете казахский — русский — английский. ${frame}`
+      : `CLIL: сабақтың негізгі терминдері қазақша — орысша — ағылшынша үштікте енгізіледі. ${frame}`;
+  }
+  return ru
+    ? `CLIL: термины вводятся в триплете — ${triplet}. ${frame}`
+    : `CLIL: терминдер үштікте енгізіледі — ${triplet}. ${frame}`;
+}
+
+function clilStudentLine(lang: Lang): string {
+  return lang === "ru"
+    ? "Описывают наблюдение по речевому образцу, подписывают схему на двух языках и произносят английские термины вслух при защите вывода."
+    : "Бақылауды тілдік үлгі бойынша сипаттайды, сызбаға екі тілде жазады және қорытындыны қорғағанда ағылшын терминдерін дауыстап айтады.";
+}
+
 /** Собирает содержимое трёх этапов урока из рецепта. */
 function buildStages(
   topic: TopicEntry,
@@ -393,6 +541,7 @@ function buildStages(
   lang: Lang,
   duration: number,
   recipe: Recipe,
+  options: LessonOptions,
 ): LessonStage[] {
   const time = splitTime(duration);
   const ru = lang === "ru";
@@ -445,6 +594,7 @@ function buildStages(
           ? "Если реактивов или вытяжного шкафа нет: "
           : "Реактивтер немесе сору шкафы болмаса: "
       }${lowerFirst(trimDot(L(experiment.virtual)))}.`,
+      options.clil ? clilTeacherLine(topic, lang) : "",
     ]
       .filter(Boolean)
       .join("\n"),
@@ -453,6 +603,7 @@ function buildStages(
       L(recipe.study.student),
       L(recipe.experimentStudent),
       recipe.practice ? L(recipe.practice.student) : "",
+      options.clil ? clilStudentLine(lang) : "",
       L(recipe.report),
     ]
       .filter(Boolean)
@@ -553,14 +704,28 @@ export function generatePlan(
   lang: Lang,
   variant = 0,
 ): GenerateResult {
+  const options = input.options ?? NO_OPTIONS;
   const { topic, matched } = matchTopic(input.topic, input.grade);
   const seed = hash(input.topic || topic.id);
   const safeVariant = Math.max(0, Math.round(variant));
   const experiment =
     topic.experiments[(seed + safeVariant) % topic.experiments.length];
   const objectives = parseObjectives(input.objectivesRaw);
-  const recipe = buildRecipe(topic, input.durationMinutes, seed, safeVariant);
-  const stages = buildStages(topic, experiment, lang, input.durationMinutes, recipe);
+  const recipe = buildRecipe(
+    topic,
+    input.durationMinutes,
+    seed,
+    safeVariant,
+    options,
+  );
+  const stages = buildStages(
+    topic,
+    experiment,
+    lang,
+    input.durationMinutes,
+    recipe,
+    options,
+  );
   const extras = buildExtras(topic, experiment, lang, recipe);
 
   const plan: KspPlan = {
@@ -578,7 +743,8 @@ export function generatePlan(
     durationMinutes: input.durationMinutes,
     stages,
     extras,
-    enabled: { ...DEFAULT_ENABLED },
+    // Языковые цели — это и есть CLIL, поэтому галочка включает блок в документе.
+    enabled: { ...DEFAULT_ENABLED, languageGoals: options.clil || DEFAULT_ENABLED.languageGoals },
   };
 
   return {

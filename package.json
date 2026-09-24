@@ -14,6 +14,7 @@
     "verify:export": "tsx scripts/verify-export.ts",
     "verify:coverage": "tsx scripts/verify-coverage.ts",
     "verify:variety": "tsx scripts/verify-variety.ts",
+    "export:kb": "tsx scripts/export-kb.ts",
     "verify": "npm run typecheck && npm run lint && npm run verify:coverage && npm run verify:match && npm run verify:variety && npm run verify:export && npm run verify:claude",
     "verify:claude": "tsx --conditions react-server scripts/verify-claude.ts"
   },

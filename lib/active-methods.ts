@@ -289,6 +289,21 @@ export const ACTIVE_METHODS: ActiveMethod[] = [
     },
   },
   {
+    id: "concept-map",
+    name: { ru: "Концептуальная карта", kk: "Концептуалды карта" },
+    role: "study",
+    kinds: ["concept", "equation"],
+    minutes: 12,
+    teacher: {
+      ru: "Задаёт правило карты: понятия в рамках, а на каждой стрелке подписан глагол связи — «состоит из», «превращается в», «определяет». Связь без подписи не засчитывается.",
+      kk: "Карта ережесін береді: ұғымдар жақтауда, ал әр көрсеткіде байланыс етістігі жазылады — «құралады», «айналады», «анықтайды». Жазуы жоқ байланыс есептелмейді.",
+    },
+    student: {
+      ru: "Строят карту из 8–10 понятий темы, подписывают каждую стрелку и находят у соседней группы одну связь, которую можно назвать точнее.",
+      kk: "Тақырыптың 8–10 ұғымынан карта құрады, әр көрсеткіні жазады және көрші топтан дәлірек атауға болатын бір байланыс табады.",
+    },
+  },
+  {
     id: "station-rotation",
     name: { ru: "Ротация по станциям", kk: "Станциялар бойынша ротация" },
     role: "study",
@@ -727,6 +742,26 @@ export function boundReflection(activationId: string): ActiveMethod | undefined 
     (m) => m.role === "reflection" && m.requires === activationId,
   );
 }
+
+/**
+ * Приёмы с игровой механикой: счёт, время, соревнование, карточки.
+ * Список ведётся вручную — «игровое» определяется характером приёма,
+ * а не полем, которое легко проставить формально.
+ */
+export const GAME_LIKE = new Set([
+  "mosaic-groups",
+  "atoms-molecules",
+  "black-box",
+  "relay-equations",
+  "match-pairs",
+  "hot-chair",
+  "bloom-daisy",
+  "carousel",
+  "gallery",
+  "role-play",
+  "debate",
+  "target",
+]);
 
 export function activeById(id: string): ActiveMethod | undefined {
   return ACTIVE_METHODS.find((m) => m.id === id);

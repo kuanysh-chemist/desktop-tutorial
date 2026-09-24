@@ -86,6 +86,18 @@ export const ICT: IctResource[] = [
     },
   },
   {
+    id: "chemcollective",
+    name: { ru: "ChemCollective — виртуальный практикум", kk: "ChemCollective — виртуалды практикум" },
+    purpose: "simulation",
+    stages: ["middle"],
+    kinds: ["calculation", "equation"],
+    needsStudentDevice: true,
+    inPlan: {
+      ru: "ChemCollective (chemcollective.org): виртуальная лаборатория, где реактивы смешивают по расчёту — подходит для титрования и задач на концентрацию, когда бюретки и точных навесок в кабинете нет.",
+      kk: "ChemCollective (chemcollective.org): реактивтерді есеп бойынша араластыратын виртуалды зертхана — кабинетте бюретка мен дәл таразы болмағанда титрлеу және концентрация есептеріне қолайлы.",
+    },
+  },
+  {
     id: "video-experiment",
     name: { ru: "Видеофрагмент опыта", kk: "Тәжірибенің бейнеүзіндісі" },
     purpose: "content",

@@ -1,6 +1,8 @@
 "use client";
 
+import ApproachToggles from "@/components/ApproachToggles";
 import { UI } from "@/lib/i18n";
+import { NO_OPTIONS } from "@/lib/types";
 import type { Lang, LessonInput } from "@/lib/types";
 
 const FIELD =
@@ -89,6 +91,12 @@ export default function LessonForm({
           </select>
         </div>
       </div>
+
+      <ApproachToggles
+        lang={lang}
+        value={value.options ?? NO_OPTIONS}
+        onChange={(options) => set("options", options)}
+      />
 
       <details className="rounded-lg border border-ink-200 bg-surface/60 px-3 py-2">
         <summary className="cursor-pointer text-sm font-medium text-ink-600">

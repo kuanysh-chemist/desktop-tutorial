@@ -10,7 +10,7 @@ import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { applyEnhancement } from "@/lib/enhance";
 import { generatePlan } from "@/lib/generator";
 import { UI } from "@/lib/i18n";
-import { DEFAULT_ENABLED } from "@/lib/ksp-template";
+import { DEFAULT_ENABLED, EXTRA_ORDER } from "@/lib/ksp-template";
 import {
   deletePlan,
   duplicatePlan,
@@ -22,6 +22,7 @@ import {
   storageAvailable,
   type SavedPlan,
 } from "@/lib/storage";
+import { NO_OPTIONS } from "@/lib/types";
 import type { ExtraKey, KspPlan, Lang, LessonInput } from "@/lib/types";
 
 const EMPTY_INPUT: LessonInput = {
@@ -33,6 +34,7 @@ const EMPTY_INPUT: LessonInput = {
   date: "",
   present: "",
   absent: "",
+  options: NO_OPTIONS,
 };
 
 interface Meta {
@@ -134,7 +136,14 @@ export default function KspApp({ offline = false }: { offline?: boolean }) {
   const build = useCallback(
     (input: LessonInput, targetLang: Lang, targetVariant: number) => {
       const result = generatePlan(input, targetLang, targetVariant);
-      setPlan({ ...result.plan, enabled });
+      // Генератор сам включает блок, без которого выбранный подход не
+      // состоится: галочка CLIL требует языковых целей в документе. Выбор
+      // учителя при этом не сбрасывается — блоки объединяются по «или».
+      const merged = Object.fromEntries(
+        EXTRA_ORDER.map((key) => [key, enabled[key] || result.plan.enabled[key]]),
+      ) as Record<ExtraKey, boolean>;
+      setEnabled(merged);
+      setPlan({ ...result.plan, enabled: merged });
       setMeta({
         matched: result.matched,
         experimentTitle: result.experimentTitle,
@@ -251,7 +260,7 @@ export default function KspApp({ offline = false }: { offline?: boolean }) {
       const response = await fetch("/api/suggest", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan, lang }),
+        body: JSON.stringify({ plan, lang, options: form.options }),
       });
       if (!response.ok) throw new Error(String(response.status));
       const { enhanced } = await response.json();

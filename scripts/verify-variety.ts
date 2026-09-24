@@ -10,7 +10,8 @@
  */
 import { TOPICS } from "../lib/chemistry-kb";
 import { generatePlan } from "../lib/generator";
-import type { LessonInput } from "../lib/types";
+import { ICT } from "../lib/ict";
+import type { LessonInput, LessonOptions } from "../lib/types";
 
 /** Берём темы по всей программе, а не подряд: важен разброс по классам. */
 const SAMPLE = TOPICS.filter((_, index) => index % 4 === 0);
@@ -212,6 +213,67 @@ for (const topic of SAMPLE) {
 }
 check("задействовано активных приёмов", usedMethods.size >= 25, `${usedMethods.size}`);
 check("задействовано ИКТ-ресурсов", usedIct.size >= 15, `${usedIct.size}`);
+
+
+// ——— Тумблеры современных подходов обязаны менять сам план ———
+console.log("\nТумблеры CLIL, виртуальной лаборатории и геймификации:");
+const SIMULATIONS = ICT.filter((r) => r.purpose === "simulation").map((r) => r.inPlan.ru);
+const QUIZZES = ICT.filter((r) => r.purpose === "quiz").map((r) => r.inPlan.ru);
+
+function resourcesOf(topicRu: string, grade: number, options: LessonOptions): string {
+  const plan = generatePlan(
+    { ...inputFor(topicRu, grade), options },
+    "ru",
+    0,
+  ).plan;
+  return plan.stages.map((stage) => stage.resources).join("\n");
+}
+
+let withoutSimulation = 0;
+let withoutQuiz = 0;
+let withoutClil = 0;
+for (const topic of SAMPLE) {
+  const query = topic.keywords[0] ?? topic.id;
+  const lab = resourcesOf(query, topic.grade, {
+    clil: false,
+    virtualLab: true,
+    gamification: false,
+  });
+  if (!SIMULATIONS.some((text) => lab.includes(text))) withoutSimulation += 1;
+
+  const game = resourcesOf(query, topic.grade, {
+    clil: false,
+    virtualLab: false,
+    gamification: true,
+  });
+  if (!QUIZZES.some((text) => game.includes(text))) withoutQuiz += 1;
+
+  const clil = generatePlan(
+    {
+      ...inputFor(query, topic.grade),
+      options: { clil: true, virtualLab: false, gamification: false },
+    },
+    "ru",
+    0,
+  );
+  const hasLine = clil.plan.stages.some((stage) => stage.teacher.includes("CLIL:"));
+  if (!hasLine || !clil.plan.enabled.languageGoals) withoutClil += 1;
+}
+check(
+  "«Виртуальная лаборатория» даёт симуляцию в каждом плане",
+  withoutSimulation === 0,
+  `планов без симуляции: ${withoutSimulation} из ${SAMPLE.length}`,
+);
+check(
+  "«Геймификация» даёт сервис викторин в каждом плане",
+  withoutQuiz === 0,
+  `планов без викторины: ${withoutQuiz} из ${SAMPLE.length}`,
+);
+check(
+  "«CLIL» даёт триплет терминов и языковые цели",
+  withoutClil === 0,
+  `планов без CLIL: ${withoutClil} из ${SAMPLE.length}`,
+);
 
 console.log();
 if (failures.length) {

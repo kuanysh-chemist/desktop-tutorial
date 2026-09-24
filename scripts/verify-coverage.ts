@@ -6,8 +6,10 @@
  */
 import { CURRICULUM, TOPICS, sectionTitle } from "../lib/chemistry-kb";
 import { generatePlan } from "../lib/generator";
-import { DIFFERENTIATION, METHODS } from "../lib/pedagogy";
-import type { KspPlan, Lang } from "../lib/types";
+import { ACTIVE_METHODS } from "../lib/active-methods";
+import { ICT } from "../lib/ict";
+import { ASSESSMENT, DIFFERENTIATION, METHODS } from "../lib/pedagogy";
+import type { KspPlan, Lang, StageId } from "../lib/types";
 
 const problems: string[] = [];
 const methodIds = new Set(METHODS.map((method) => method.id));
@@ -78,6 +80,61 @@ for (const unit of CURRICULUM) {
   console.log(
     `  ${count >= MIN_TOPICS_PER_UNIT ? "ok  " : "МАЛО"} ${unit.id.padEnd(5)} ${unit.title.ru.padEnd(46)} тем: ${count}`,
   );
+}
+
+
+// 4a. Закрепления stagePlan должны разрешаться и подходить своему этапу.
+//     Идентификатор с опечаткой генератор молча пропустит, и учитель никогда
+//     не узнает, что закрепление не сработало, — поэтому ловим здесь.
+const ROLE_STAGE: Record<string, StageId> = {
+  warmup: "start",
+  activation: "start",
+  study: "middle",
+  practice: "middle",
+  reflection: "end",
+};
+
+let pinChecks = 0;
+for (const topic of TOPICS) {
+  if (!topic.stagePlan) continue;
+  for (const [stage, ids] of Object.entries(topic.stagePlan)) {
+    for (const id of ids ?? []) {
+      pinChecks++;
+      const method = ACTIVE_METHODS.find((m) => m.id === id);
+      if (method) {
+        if (ROLE_STAGE[method.role] !== stage) {
+          problems.push(
+            `${topic.id}: приём «${id}» относится к этапу «${ROLE_STAGE[method.role]}», а закреплён за «${stage}»`,
+          );
+        }
+        if (method.kinds.length && !method.kinds.includes(topic.kind)) {
+          problems.push(
+            `${topic.id}: приём «${id}» не предназначен для тем вида «${topic.kind}»`,
+          );
+        }
+        continue;
+      }
+      const resource = ICT.find((r) => r.id === id);
+      if (resource) {
+        if (!resource.stages.includes(stage as StageId)) {
+          problems.push(
+            `${topic.id}: ресурс «${id}» не рассчитан на этап «${stage}»`,
+          );
+        }
+        continue;
+      }
+      const check = ASSESSMENT.find((a) => a.id === id);
+      if (check) {
+        if (!check.stages.includes(stage as StageId)) {
+          problems.push(
+            `${topic.id}: приём оценивания «${id}» не рассчитан на этап «${stage}»`,
+          );
+        }
+        continue;
+      }
+      problems.push(`${topic.id}: закрепление «${id}» ни на что не указывает`);
+    }
+  }
 }
 
 // 4. Генерация не должна портить регистр химических формул.
@@ -161,7 +218,10 @@ if (!sectionTitle(sample, "ru") || !sectionTitle(sample, "kk")) {
 const byGrade = new Map<number, number>();
 for (const topic of TOPICS) byGrade.set(topic.grade, (byGrade.get(topic.grade) ?? 0) + 1);
 
-console.log(`\nПроверено сохранение регистра у ${formulaChecks} химических формул.`);
+console.log(
+  `\nПроверено сохранение регистра у ${formulaChecks} химических формул` +
+    ` и ${pinChecks} закреплений stagePlan.`,
+);
 
 console.log(
   `Итого: ${TOPICS.length} тем в ${CURRICULUM.length} разделах` +

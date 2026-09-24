@@ -11,7 +11,8 @@ import Anthropic from "@anthropic-ai/sdk";
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import { EnhancedSchema, type Enhanced } from "./enhance";
 import { STAGE_LABELS } from "./ksp-template";
-import type { KspPlan, Lang } from "./types";
+import { NO_OPTIONS } from "./types";
+import type { KspPlan, Lang, LessonOptions } from "./types";
 
 /** Модель по умолчанию; переопределяется переменной окружения. */
 const DEFAULT_MODEL = "claude-opus-5";
@@ -54,8 +55,41 @@ const SYSTEM_PROMPT = `Ты — методист по химии в систем
    групповая работа, формативное оценивание с дескрипторами.
 6. Дифференциация — конкретная: что именно получает слабый обучающийся и чем
    именно усложняется задание для сильного. Без общих слов.
-7. Сохраняй деловой стиль методического документа. Не используй markdown,
+7. Цифровые ресурсы называй конкретно: сервис, адрес и что именно на нём
+   делают на этом уроке. Не выдумывай сервисы, курсы и адреса — если
+   подходящего инструмента не знаешь, опиши работу без него.
+8. Сохраняй деловой стиль методического документа. Не используй markdown,
    эмодзи и заголовки. Абзацы разделяй переводом строки.`;
+
+/**
+ * Дополнения к системному промпту по галочкам учителя.
+ *
+ * Держатся отдельно и приписываются только при включённом тумблере: правило,
+ * которое действует всегда, модель начинает применять и там, где оно мешает —
+ * например, тянет виртуальную лабораторию в урок решения задач.
+ */
+const OPTION_RULES: Record<keyof LessonOptions, string> = {
+  virtualLab: `Обязательное требование этого запроса: виртуальная лаборатория.
+В середине урока назови конкретную симуляцию или виртуальную лабораторию
+(PhET, ChemCollective, виртуальная лаборатория BilimLand) и опиши, что именно
+обучающиеся в ней делают: какие параметры меняют, что наблюдают, какой вывод
+записывают. Это не замена техники безопасности, а рабочий вариант для школы,
+где нужных реактивов, вытяжного шкафа или точных весов нет. Реальный опыт при
+этом оставь в плане: виртуальный идёт как альтернатива или как подготовка
+к нему.`,
+  clil: `Обязательное требование этого запроса: CLIL.
+Введи ключевые термины урока в триплете казахский — русский — английский
+(не более пяти) и дай один речевой образец на английском для описания
+наблюдения, по которому обучающийся сможет построить фразу сам. Английские
+вставки должны быть уместны по уровню класса и не вытеснять предметное
+содержание. Свяжи тему с элементами STEM: измерение, обработка данных,
+расчёт, техническое или производственное приложение.`,
+  gamification: `Обязательное требование этого запроса: игровой формат.
+Включи один игровой приём с понятными правилами, ролями и критерием победы
+(эстафета уравнений, «найди пару», станционная игра, дебаты) и один сервис
+викторин (Kahoot!, Quizizz, Wordwall, Plickers) с указанием, что именно в нём
+проверяется. Игра должна работать на цель урока, а не занимать время.`,
+};
 
 /** Ошибка, по которой клиент понимает, что нужно остаться на локальном плане. */
 export class ClaudeUnavailableError extends Error {}
@@ -64,8 +98,15 @@ export class ClaudeUnavailableError extends Error {}
 export function buildPrompt(
   plan: KspPlan,
   lang: Lang,
+  options: LessonOptions = NO_OPTIONS,
 ): { system: string; user: string } {
   const languageName = lang === "ru" ? "русском" : "казахском";
+  const extraRules = (Object.keys(OPTION_RULES) as (keyof LessonOptions)[])
+    .filter((key) => options[key])
+    .map((key) => OPTION_RULES[key]);
+  const system = extraRules.length
+    ? `${SYSTEM_PROMPT}\n\n${extraRules.join("\n\n")}`
+    : SYSTEM_PROMPT;
 
   const objectives = plan.header.objectives
     .map((objective) =>
@@ -105,7 +146,7 @@ ${draft}
 приёмы оценивания, дескрипторы и дифференциацию. Объём каждого поля —
 сопоставим с черновиком.`;
 
-  return { system: SYSTEM_PROMPT, user };
+  return { system, user };
 }
 
 /**
@@ -117,14 +158,15 @@ ${draft}
 export async function enhancePlan(
   plan: KspPlan,
   lang: Lang,
-  client?: ClaudeClient,
+  settings: { options?: LessonOptions; client?: ClaudeClient } = {},
 ): Promise<Enhanced> {
+  const { options = NO_OPTIONS, client } = settings;
   if (!client && !process.env.ANTHROPIC_API_KEY) {
     throw new ClaudeUnavailableError("ANTHROPIC_API_KEY не задан");
   }
 
   const api: ClaudeClient = client ?? (new Anthropic() as unknown as ClaudeClient);
-  const { system, user } = buildPrompt(plan, lang);
+  const { system, user } = buildPrompt(plan, lang, options);
 
   try {
     const response = await api.messages.parse({

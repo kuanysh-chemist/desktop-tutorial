@@ -85,6 +85,51 @@ async function main(): Promise<void> {
   check(kk.includes("казахском"), "язык документа передан для казахского");
   check(kk.includes("Сабақтың басы"), "подписи этапов переключились на казахский");
 
+  console.log("\nПравила по галочкам учителя");
+  // Правило, которое действует всегда, модель начинает применять и там, где
+  // оно мешает, — поэтому проверяем, что без галочки его в промпте нет.
+  check(
+    !system.includes("Обязательное требование этого запроса"),
+    "без галочек дополнительных требований в промпте нет",
+  );
+  const lab = buildPrompt(plan, "ru", {
+    clil: false,
+    virtualLab: true,
+    gamification: false,
+  }).system;
+  check(
+    lab.includes("виртуальная лаборатория") && lab.includes("ChemCollective"),
+    "галочка «виртуальная лаборатория» добавляет требование с названиями сервисов",
+  );
+  check(!lab.includes("CLIL."), "чужие требования при этом не приписываются");
+  const clil = buildPrompt(plan, "ru", {
+    clil: true,
+    virtualLab: false,
+    gamification: false,
+  }).system;
+  check(
+    clil.includes("триплете") && clil.includes("STEM"),
+    "галочка «CLIL» добавляет требование о триплете терминов и STEM",
+  );
+  const game = buildPrompt(plan, "ru", {
+    clil: false,
+    virtualLab: false,
+    gamification: true,
+  }).system;
+  check(
+    game.includes("Kahoot") && game.includes("критерием победы"),
+    "галочка «геймификация» добавляет требование об игровом приёме и сервисе",
+  );
+  const all = buildPrompt(plan, "ru", {
+    clil: true,
+    virtualLab: true,
+    gamification: true,
+  }).system;
+  check(
+    (all.match(/Обязательное требование этого запроса/g) ?? []).length === 3,
+    "три галочки дают три требования",
+  );
+
   console.log("\nСхема ответа");
   check(EnhancedSchema.safeParse(PAYLOAD).success, "корректный ответ проходит схему");
   check(
@@ -94,7 +139,7 @@ async function main(): Promise<void> {
 
   console.log("\nВызов с заглушкой клиента");
   const captured: Record<string, unknown>[] = [];
-  const enhanced = await enhancePlan(plan, "ru", stubClient({ parsed_output: PAYLOAD }, captured));
+  const enhanced = await enhancePlan(plan, "ru", { client: stubClient({ parsed_output: PAYLOAD }, captured) });
   check(enhanced.middle.teacher === "T2", "ответ возвращён вызывающей стороне");
   const params = captured[0] ?? {};
   check(typeof params.model === "string" && params.model.length > 0, "модель передана");
@@ -104,13 +149,13 @@ async function main(): Promise<void> {
 
   console.log("\nОтказы");
   await expectUnavailable("отказ модели → ClaudeUnavailableError", () =>
-    enhancePlan(plan, "ru", stubClient({ stop_reason: "refusal" })),
+    enhancePlan(plan, "ru", { client: stubClient({ stop_reason: "refusal" }) }),
   );
   await expectUnavailable("пустой разбор → ClaudeUnavailableError", () =>
-    enhancePlan(plan, "ru", stubClient({ parsed_output: null })),
+    enhancePlan(plan, "ru", { client: stubClient({ parsed_output: null }) }),
   );
   await expectUnavailable("сетевая ошибка → ClaudeUnavailableError", () =>
-    enhancePlan(plan, "ru", stubClient(new Error("ECONNRESET"))),
+    enhancePlan(plan, "ru", { client: stubClient(new Error("ECONNRESET")) }),
   );
 
   const savedKey = process.env.ANTHROPIC_API_KEY;

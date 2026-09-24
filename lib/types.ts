@@ -69,6 +69,27 @@ export interface KspPlan {
   enabled: Record<ExtraKey, boolean>;
 }
 
+/**
+ * Современные подходы, которые учитель включает галочкой.
+ *
+ * Тумблеры меняют сам локальный план, а не только запрос к Claude: иначе у
+ * школы без ключа API галочки ничего бы не делали.
+ */
+export interface LessonOptions {
+  /** Предметно-языковая интеграция: термины в триплете и речевые образцы. */
+  clil: boolean;
+  /** Обязательная виртуальная лаборатория или симуляция в середине урока. */
+  virtualLab: boolean;
+  /** Игровые форматы и сервисы викторин. */
+  gamification: boolean;
+}
+
+export const NO_OPTIONS: LessonOptions = {
+  clil: false,
+  virtualLab: false,
+  gamification: false,
+};
+
 /** Данные, которые учитель вводит вручную (Шаг 2 техзадания). */
 export interface LessonInput {
   topic: string;
@@ -79,4 +100,6 @@ export interface LessonInput {
   date: string;
   present: string;
   absent: string;
+  /** Необязательно: старые сохранённые планы этого поля не содержат. */
+  options?: LessonOptions;
 }

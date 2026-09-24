@@ -1,12 +1,14 @@
 import { NextResponse } from "next/server";
 import { ClaudeUnavailableError, enhancePlan } from "@/lib/claude";
-import type { KspPlan, Lang } from "@/lib/types";
+import type { KspPlan, Lang, LessonOptions } from "@/lib/types";
 
 export const runtime = "nodejs";
 
 interface SuggestBody {
   plan: KspPlan;
   lang: Lang;
+  /** Галочки современных подходов. Необязательны: без них правил не добавляем. */
+  options?: LessonOptions;
 }
 
 /**
@@ -31,7 +33,9 @@ export async function POST(request: Request): Promise<NextResponse> {
   }
 
   try {
-    const enhanced = await enhancePlan(body.plan, body.lang);
+    const enhanced = await enhancePlan(body.plan, body.lang, {
+      options: body.options,
+    });
     return NextResponse.json({ enhanced });
   } catch (error) {
     if (error instanceof ClaudeUnavailableError) {
