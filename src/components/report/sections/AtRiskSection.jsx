@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { attendanceRate, activityRate, homeworkRate, sortedBy } from '../../../lib/stats'
+import { attendanceRate, homeworkRate, sortedBy } from '../../../lib/stats'
 import StudentLink from '../StudentLink'
 import { SECTION } from '../../../lib/theme'
 
@@ -7,12 +7,11 @@ const ACCENT = SECTION.report.accent
 
 const CRITERIA = [
   { key: 'attendance', label: 'Посещаемость', getRate: attendanceRate, defaultThreshold: 70, color: '#b91c1c' },
-  { key: 'activity', label: 'Активность', getRate: activityRate, defaultThreshold: 30, color: '#b45309' },
   { key: 'homework', label: 'Д/З', getRate: homeworkRate, defaultThreshold: 60, color: '#7c2d12' },
 ]
 
 export default function AtRiskSection({ students, tally, onOpenStudent }) {
-  const [thresholds, setThresholds] = useState({ attendance: 70, activity: 30, homework: 60 })
+  const [thresholds, setThresholds] = useState({ attendance: 70, homework: 60 })
   const [minFailing, setMinFailing] = useState(1)
 
   const evaluated = students.map((s) => {
@@ -38,7 +37,7 @@ export default function AtRiskSection({ students, tally, onOpenStudent }) {
 
   return (
     <div>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-3">
         {CRITERIA.map((c) => (
           <div key={c.key}>
             <label className="block text-xs text-slate-500 mb-1">
@@ -59,7 +58,7 @@ export default function AtRiskSection({ students, tally, onOpenStudent }) {
 
       <div className="flex items-center gap-2 mb-3">
         <span className="text-xs text-slate-500">Сработало показателей:</span>
-        {[1, 2, 3].map((n) => (
+        {[1, 2].map((n) => (
           <button
             key={n}
             type="button"
@@ -72,7 +71,7 @@ export default function AtRiskSection({ students, tally, onOpenStudent }) {
               color: minFailing === n ? '#fff' : ACCENT,
             }}
           >
-            {n === 3 ? 'все 3' : `от ${n}`}
+            {n === 2 ? 'оба' : `от ${n}`}
           </button>
         ))}
       </div>
@@ -83,7 +82,6 @@ export default function AtRiskSection({ students, tally, onOpenStudent }) {
             <tr style={{ background: SECTION.report.tint }}>
               <th className="text-left px-2 py-1">Ученик</th>
               <th className="text-right px-2 py-1">% посещаемости</th>
-              <th className="text-right px-2 py-1">% активных</th>
               <th className="text-right px-2 py-1">% выполнения д/з</th>
               <th className="text-left px-2 py-1">Критерии</th>
             </tr>
@@ -120,7 +118,7 @@ export default function AtRiskSection({ students, tally, onOpenStudent }) {
             ))}
             {filtered.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-2 py-2 text-slate-400">
+                <td colSpan={4} className="px-2 py-2 text-slate-400">
                   Никто не проходит по выбранным порогам
                 </td>
               </tr>
