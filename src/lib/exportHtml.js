@@ -1,5 +1,5 @@
 import { downloadText, safeFileName } from './download'
-import { ATTENDANCE, ACTIVITY, BEHAVIOR, HOMEWORK } from './dictionaries'
+import { ATTENDANCE, BEHAVIOR, HOMEWORK } from './dictionaries'
 import { formatRu } from './dates'
 
 function esc(value) {
@@ -58,7 +58,6 @@ function legendBlock() {
     `<div><b>${esc(title)}:</b> ${dict.map((d) => `${esc(d.letter)} — ${esc(d.label)}`).join('; ')}</div>`
   return `<div class="legend">
     ${line(ATTENDANCE, 'Посещаемость')}
-    ${line(ACTIVITY, 'Активность')}
     ${line(BEHAVIOR, 'Поведение')}
     ${line(HOMEWORK, 'Д/З')}
   </div>`
@@ -69,12 +68,12 @@ export function downloadBlankForm({ className, date, students }) {
   const rows = students
     .map(
       (s, i) => `<tr><td>${i + 1}</td><td>${esc(s.name)}</td>
-      <td style="width:110px"></td><td style="width:90px"></td><td style="width:90px"></td><td style="width:90px"></td></tr>`
+      <td style="width:110px"></td><td style="width:90px"></td><td style="width:90px"></td></tr>`
     )
     .join('')
   const bodyHtml = `
     <table>
-      <thead><tr><th>#</th><th>Ученик</th><th>Посещаемость</th><th>Активность</th><th>Поведение</th><th>Д/З</th></tr></thead>
+      <thead><tr><th>#</th><th>Ученик</th><th>Посещаемость</th><th>Поведение</th><th>Д/З</th></tr></thead>
       <tbody>${rows}</tbody>
     </table>
     ${legendBlock()}

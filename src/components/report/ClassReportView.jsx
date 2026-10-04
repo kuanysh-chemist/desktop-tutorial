@@ -1,7 +1,6 @@
 import Card from '../ui/Card'
-import { classDistribution, tallyByStudent, weeklyAttendance, activityByLesson } from '../../lib/stats'
+import { classDistribution, tallyByStudent, weeklyAttendance } from '../../lib/stats'
 import AttendanceSection from './sections/AttendanceSection'
-import ActivitySection from './sections/ActivitySection'
 import BehaviorSection from './sections/BehaviorSection'
 import HomeworkSection from './sections/HomeworkSection'
 import AtRiskSection from './sections/AtRiskSection'
@@ -21,7 +20,6 @@ export default function ClassReportView({ className, periodLabel, students, less
   const dist = classDistribution(lessons)
   const tally = tallyByStudent(lessons, ids)
   const weekly = weeklyAttendance(lessons)
-  const byLesson = activityByLesson(lessons)
 
   return (
     <div>
@@ -35,10 +33,6 @@ export default function ClassReportView({ className, periodLabel, students, less
 
       <Card title="Посещаемость">
         <AttendanceSection students={students} dist={dist} tally={tally} weekly={weekly} onOpenStudent={onOpenStudent} />
-      </Card>
-
-      <Card title="Активность">
-        <ActivitySection students={students} dist={dist} tally={tally} byLesson={byLesson} onOpenStudent={onOpenStudent} />
       </Card>
 
       <Card title="Поведение">

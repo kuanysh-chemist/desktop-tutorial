@@ -7,12 +7,6 @@ export const ATTENDANCE = [
   { value: 'absent', label: 'Отсутствовал', letter: 'Н', color: '#b91c1c' },
 ]
 
-export const ACTIVITY = [
-  { value: 'active', label: 'Активный', letter: 'А', color: '#0f4c4c' },
-  { value: 'quiet', label: 'Тихо, но работает', letter: 'Т', color: '#64748b' },
-  { value: 'passive', label: 'Ничего не делает', letter: 'Н', color: '#b91c1c' },
-]
-
 export const BEHAVIOR = [
   { value: 'normal', label: 'Норма', letter: 'N', color: '#0f4c4c' },
   { value: 'note', label: 'Замечание', letter: 'З', color: '#b45309' },
@@ -28,7 +22,6 @@ export const HOMEWORK = [
 
 export const FIELDS = [
   { key: 'attendance', title: 'Посещаемость', dict: ATTENDANCE },
-  { key: 'activity', title: 'Активность', dict: ACTIVITY },
   { key: 'behavior', title: 'Поведение', dict: BEHAVIOR },
   { key: 'homework', title: 'Д/З', dict: HOMEWORK },
 ]
@@ -43,19 +36,14 @@ export function cellLabel(dict, value) {
   return d ? `${d.letter} — ${d.label}` : '—'
 }
 
-export function defaultRecord() {
-  return { attendance: undefined, activity: undefined, behavior: undefined, homework: undefined }
-}
-
-// Старые записи могли не содержать activity/homework — подставляем значения по умолчанию.
+// Старые записи могли не содержать homework — подставляем значение по умолчанию.
 export function normalizeRecord(rec) {
   const source = rec || {}
   return {
     attendance: source.attendance,
-    activity: source.activity || 'quiet',
     behavior: source.behavior,
     homework: source.homework || 'na',
   }
 }
 
-export const QUICK_MODE_RECORD = { attendance: 'present', activity: 'quiet', behavior: 'normal' }
+export const QUICK_MODE_RECORD = { attendance: 'present', behavior: 'normal' }

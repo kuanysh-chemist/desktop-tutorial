@@ -1,5 +1,5 @@
 import { Trophy } from 'lucide-react'
-import { attendanceRate, activityRate, homeworkRate, compositeScore, sortedBy } from '../../../lib/stats'
+import { attendanceRate, homeworkRate, compositeScore, sortedBy } from '../../../lib/stats'
 import StudentLink from '../StudentLink'
 
 const MEDALS = [
@@ -36,7 +36,6 @@ export default function TopStudentsSection({ students, tally, onOpenStudent }) {
             </div>
             <div className="text-xs text-slate-600 space-y-0.5">
               <div>% посещаемости: {fmt(attendanceRate(t))}</div>
-              <div>% активных уроков: {fmt(activityRate(t))}</div>
               <div>% выполнения д/з: {fmt(homeworkRate(t))}</div>
               <div>Замечания: {t.behavior.note + t.behavior.violation}</div>
             </div>

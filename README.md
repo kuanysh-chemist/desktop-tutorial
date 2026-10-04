@@ -1,6 +1,6 @@
 # Классный журнал по химии
 
-Веб-приложение для учителя химии: журнал посещаемости/активности/поведения/д.з.
+Веб-приложение для учителя химии: журнал посещаемости/поведения/д.з.
 по классам, быстрые отметки на уроке и отчёты за четверть.
 
 ## Стек
@@ -24,7 +24,7 @@ npm run lint     # oxlint
 
 - `classes` — список классов `{ id, name, archived }`
 - `students` — список учеников `{ id, classId, name }`
-- `rec_<classId>_<YYYY-MM-DD>` — записи урока `{ [studentId]: { attendance, activity, behavior, homework } }`
+- `rec_<classId>_<YYYY-MM-DD>` — записи урока `{ [studentId]: { attendance, behavior, homework } }`
 
 Все чтения/записи в `localStorage` обёрнуты в `try/catch` (см. `src/lib/storage.js`).
 

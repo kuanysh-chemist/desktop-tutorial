@@ -1,7 +1,7 @@
 import StatTile from '../ui/StatTile'
 import { DistributionBarChart } from './charts'
-import { ATTENDANCE, ACTIVITY, BEHAVIOR, HOMEWORK, dictByValue, cellLabel } from '../../lib/dictionaries'
-import { tallyByStudent, attendanceRate, activityRate, homeworkRate } from '../../lib/stats'
+import { ATTENDANCE, BEHAVIOR, HOMEWORK, cellLabel } from '../../lib/dictionaries'
+import { tallyByStudent, attendanceRate, homeworkRate } from '../../lib/stats'
 import { formatRu } from '../../lib/dates'
 import { SECTION } from '../../lib/theme'
 
@@ -21,10 +21,6 @@ export default function StudentReportView({ students, studentId, lessons, period
 
   const attendanceChart = ATTENDANCE.map((d) => ({ name: d.label, value: tally.attendance[d.value] || 0, color: d.color }))
 
-  const activityTimeline = lessons
-    .map((l) => ({ date: l.date, status: l.records[studentId]?.activity }))
-    .filter((x) => x.status)
-
   const noteDates = lessons
     .map((l) => ({ date: l.date, status: l.records[studentId]?.behavior }))
     .filter((x) => x.status === 'note' || x.status === 'violation')
@@ -41,43 +37,13 @@ export default function StudentReportView({ students, studentId, lessons, period
 
       <div className="flex flex-wrap gap-2 mb-4">
         <StatTile label="% посещаемости" value={fmtPct(attendanceRate(tally))} tone={SECTION.report.accent} />
-        <StatTile label="% активных уроков" value={fmtPct(activityRate(tally))} tone={SECTION.report.accent} />
         <StatTile label="% выполнения д/з" value={fmtPct(homeworkRate(tally))} tone={SECTION.report.accent} />
         <StatTile label="Замечания" value={notesCount} tone={notesCount > 0 ? '#b91c1c' : SECTION.report.accent} />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-        <div>
-          <h4 className="text-xs font-semibold text-slate-500 mb-1">Посещаемость</h4>
-          <DistributionBarChart data={attendanceChart} height={100} />
-        </div>
-        <div>
-          <h4 className="text-xs font-semibold text-slate-500 mb-1">Активность по урокам</h4>
-          {activityTimeline.length === 0 ? (
-            <p className="text-sm text-slate-400">Нет данных</p>
-          ) : (
-            <div className="flex flex-wrap gap-1">
-              {activityTimeline.map((x) => {
-                const d = dictByValue(ACTIVITY, x.status)
-                return (
-                  <span
-                    key={x.date}
-                    title={`${formatRu(x.date)} — ${d.label}`}
-                    style={{ width: 16, height: 16, background: d.color, borderRadius: 2, display: 'inline-block' }}
-                  />
-                )
-              })}
-            </div>
-          )}
-          <div className="flex gap-3 mt-2 text-xs text-slate-500">
-            {ACTIVITY.map((d) => (
-              <span key={d.value} className="flex items-center gap-1">
-                <span style={{ width: 9, height: 9, background: d.color, borderRadius: 2, display: 'inline-block' }} />
-                {d.label}
-              </span>
-            ))}
-          </div>
-        </div>
+      <div className="mb-4">
+        <h4 className="text-xs font-semibold text-slate-500 mb-1">Посещаемость</h4>
+        <DistributionBarChart data={attendanceChart} height={100} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
@@ -121,7 +87,6 @@ export default function StudentReportView({ students, studentId, lessons, period
             <tr style={{ background: SECTION.report.tint }}>
               <th className="text-left px-2 py-1">Дата</th>
               <th className="text-left px-2 py-1">Посещаемость</th>
-              <th className="text-left px-2 py-1">Активность</th>
               <th className="text-left px-2 py-1">Поведение</th>
               <th className="text-left px-2 py-1">Д/З</th>
             </tr>
@@ -133,7 +98,6 @@ export default function StudentReportView({ students, studentId, lessons, period
                 <tr key={l.date} style={{ background: i % 2 ? 'var(--stripe)' : 'var(--surface)' }}>
                   <td className="px-2 py-1">{formatRu(l.date)}</td>
                   <td className="px-2 py-1">{cellLabel(ATTENDANCE, rec?.attendance)}</td>
-                  <td className="px-2 py-1">{cellLabel(ACTIVITY, rec?.activity)}</td>
                   <td className="px-2 py-1">{cellLabel(BEHAVIOR, rec?.behavior)}</td>
                   <td className="px-2 py-1">{cellLabel(HOMEWORK, rec?.homework)}</td>
                 </tr>
@@ -141,7 +105,7 @@ export default function StudentReportView({ students, studentId, lessons, period
             })}
             {lessons.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-2 py-2 text-slate-400">
+                <td colSpan={4} className="px-2 py-2 text-slate-400">
                   Нет уроков за выбранный период
                 </td>
               </tr>

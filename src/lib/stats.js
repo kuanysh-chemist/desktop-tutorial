@@ -11,7 +11,6 @@ export function lessonsInRange(lessons, start, end) {
 
 const emptyTally = () => ({
   attendance: { present: 0, late: 0, excused: 0, absent: 0, marked: 0 },
-  activity: { active: 0, quiet: 0, passive: 0, marked: 0 },
   behavior: { normal: 0, note: 0, violation: 0, marked: 0 },
   homework: { done: 0, partial: 0, none: 0, na: 0, assigned: 0 },
 })
@@ -29,10 +28,6 @@ export function tallyByStudent(lessons, studentIds) {
       if (rec.attendance) {
         t.attendance.marked++
         t.attendance[rec.attendance] = (t.attendance[rec.attendance] || 0) + 1
-      }
-      if (rec.activity) {
-        t.activity.marked++
-        t.activity[rec.activity] = (t.activity[rec.activity] || 0) + 1
       }
       if (rec.behavior) {
         t.behavior.marked++
@@ -58,10 +53,6 @@ export function classDistribution(lessons) {
         dist.attendance.marked++
         dist.attendance[rec.attendance]++
       }
-      if (rec.activity) {
-        dist.activity.marked++
-        dist.activity[rec.activity]++
-      }
       if (rec.behavior) {
         dist.behavior.marked++
         dist.behavior[rec.behavior]++
@@ -86,10 +77,6 @@ export function attendanceRate(t) {
   return pct(t.attendance.present + t.attendance.late, t.attendance.marked)
 }
 
-export function activityRate(t) {
-  return pct(t.activity.active, t.activity.marked)
-}
-
 // Частично выполненная домашка считается за половину.
 export function homeworkRate(t) {
   if (!t.homework.assigned) return null
@@ -97,10 +84,10 @@ export function homeworkRate(t) {
 }
 
 // Сводный балл ученика для рейтинга «лучшие» — среднее по доступным метрикам
-// (посещаемость/активность/д.з.), минус штраф за замечания и нарушения.
+// (посещаемость/д.з.), минус штраф за замечания и нарушения.
 // Возвращает null, если по ученику вообще нет отмеченных данных.
 export function compositeScore(t) {
-  const parts = [attendanceRate(t), activityRate(t), homeworkRate(t)].filter((v) => v !== null)
+  const parts = [attendanceRate(t), homeworkRate(t)].filter((v) => v !== null)
   if (parts.length === 0) return null
   const base = parts.reduce((sum, v) => sum + v, 0) / parts.length
   const penalty = t.behavior.note * 3 + t.behavior.violation * 8
@@ -123,20 +110,6 @@ export function weeklyAttendance(lessons) {
   return Array.from(byWeek.entries())
     .sort((a, b) => (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0))
     .map(([week, b]) => ({ week, rate: pct(b.present, b.marked) }))
-}
-
-// Доля активных учеников по каждому уроку: [{ date, rate }]
-export function activityByLesson(lessons) {
-  return lessons.map((lesson) => {
-    let active = 0
-    let marked = 0
-    for (const rec of Object.values(lesson.records || {})) {
-      if (!rec.activity) continue
-      marked++
-      if (rec.activity === 'active') active++
-    }
-    return { date: lesson.date, rate: pct(active, marked) }
-  })
 }
 
 export function studentName(students, id) {

@@ -46,18 +46,3 @@ export function WeeklyLineChart({ data, color = SECTION.report.accent, label = '
     </ResponsiveContainer>
   )
 }
-
-// Столбчатый график доли по каждому уроку (даты по оси X).
-export function LessonBarChart({ data, color = SECTION.report.accent, label = '%' }) {
-  return (
-    <ResponsiveContainer width="100%" height={200}>
-      <BarChart data={data} margin={{ left: -10, right: 16, top: 8, bottom: 4 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="var(--border-soft)" />
-        <XAxis dataKey="date" tickFormatter={formatRu} tick={{ fontSize: 14, fill: 'var(--muted)' }} />
-        <YAxis domain={[0, 100]} tick={{ fontSize: 14, fill: 'var(--muted)' }} />
-        <Tooltip {...TOOLTIP_STYLE} labelFormatter={formatRu} formatter={(v) => [`${v ?? 0}%`, label]} />
-        <Bar dataKey="rate" fill={color} radius={[3, 3, 0, 0]} />
-      </BarChart>
-    </ResponsiveContainer>
-  )
-}

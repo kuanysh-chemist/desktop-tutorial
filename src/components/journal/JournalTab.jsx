@@ -140,7 +140,7 @@ export default function JournalTab({ classes, students, selectedClassId, onSelec
           onClick={handleQuickMode}
           className="flex items-center gap-1.5 px-2.5 py-1.5 text-sm cursor-pointer"
           style={{ border: `1px solid ${ACCENT}`, borderRadius: 3, color: ACCENT }}
-          title="Всем: Был / Тихо, но работает / Норма. Домашку не трогает."
+          title="Всем: Был / Норма. Домашку не трогает."
         >
           <Zap size={14} /> Быстрый режим
         </button>

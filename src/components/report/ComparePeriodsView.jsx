@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts'
 import PeriodPicker from './PeriodPicker'
 import { resolvePeriod } from '../../lib/dates'
-import { classDistribution, tallyByStudent, attendanceRate, activityRate, homeworkRate } from '../../lib/stats'
+import { classDistribution, tallyByStudent, attendanceRate, homeworkRate } from '../../lib/stats'
 import { SECTION, TOOLTIP_STYLE } from '../../lib/theme'
 
 const ACCENT = SECTION.report.accent
@@ -41,7 +41,6 @@ export default function ComparePeriodsView({ classStudents, lessons, selectedCla
 
   const metrics = [
     { key: 'attendance', label: '% посещаемости', getValue: attendanceRate, higherIsBetter: true, unit: '%' },
-    { key: 'activity', label: '% активных уроков', getValue: activityRate, higherIsBetter: true, unit: '%' },
     { key: 'homework', label: '% выполнения д/з', getValue: homeworkRate, higherIsBetter: true, unit: '%' },
     {
       key: 'notes',

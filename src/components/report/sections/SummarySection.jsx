@@ -1,4 +1,4 @@
-import { attendanceRate, activityRate, homeworkRate, sortedBy } from '../../../lib/stats'
+import { attendanceRate, homeworkRate, sortedBy } from '../../../lib/stats'
 import StudentLink from '../StudentLink'
 import { SECTION } from '../../../lib/theme'
 
@@ -12,7 +12,6 @@ export default function SummarySection({ students, tally, onOpenStudent }) {
           <tr style={{ background: SECTION.report.tint }}>
             <th className="text-left px-2 py-1">Ученик</th>
             <th className="text-right px-2 py-1">% посещаемости</th>
-            <th className="text-right px-2 py-1">% активных уроков</th>
             <th className="text-right px-2 py-1">Замечания</th>
             <th className="text-right px-2 py-1">% выполнения д/з</th>
           </tr>
@@ -26,7 +25,6 @@ export default function SummarySection({ students, tally, onOpenStudent }) {
                   <StudentLink name={s.name} onClick={() => onOpenStudent(s.id)} />
                 </td>
                 <td className="text-right px-2 py-1">{attendanceRate(t) ?? '—'}{attendanceRate(t) !== null ? '%' : ''}</td>
-                <td className="text-right px-2 py-1">{activityRate(t) ?? '—'}{activityRate(t) !== null ? '%' : ''}</td>
                 <td className="text-right px-2 py-1">{t.behavior.note + t.behavior.violation}</td>
                 <td className="text-right px-2 py-1">{homeworkRate(t) ?? '—'}{homeworkRate(t) !== null ? '%' : ''}</td>
               </tr>

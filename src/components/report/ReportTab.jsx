@@ -9,8 +9,8 @@ import { loadAllRecords } from '../../lib/storage'
 import { resolvePeriod, formatRu } from '../../lib/dates'
 import { exportClassReportXlsx, exportStudentReportXlsx } from '../../lib/exportXlsx'
 import { downloadReportHtml } from '../../lib/exportHtml'
-import { tallyByStudent, attendanceRate, activityRate, homeworkRate } from '../../lib/stats'
-import { ATTENDANCE, ACTIVITY, BEHAVIOR, HOMEWORK, cellLabel } from '../../lib/dictionaries'
+import { tallyByStudent, attendanceRate, homeworkRate } from '../../lib/stats'
+import { ATTENDANCE, BEHAVIOR, HOMEWORK, cellLabel } from '../../lib/dictionaries'
 import { SECTION } from '../../lib/theme'
 
 const ACCENT = SECTION.report.accent
@@ -78,10 +78,10 @@ export default function ReportTab({ classes, allClasses, students, selectedClass
     const blocks = [
       {
         heading: 'Сводка по ученикам',
-        columns: ['Ученик', '% посещаемости', '% активных уроков', 'Замечания', 'Нарушения', '% выполнения д/з'],
+        columns: ['Ученик', '% посещаемости', 'Замечания', 'Нарушения', '% выполнения д/з'],
         rows: classStudents.map((s) => {
           const t = tally[s.id]
-          return [s.name, attendanceRate(t) ?? '—', activityRate(t) ?? '—', t.behavior.note, t.behavior.violation, homeworkRate(t) ?? '—']
+          return [s.name, attendanceRate(t) ?? '—', t.behavior.note, t.behavior.violation, homeworkRate(t) ?? '—']
         }),
       },
     ]
@@ -115,20 +115,18 @@ export default function ReportTab({ classes, allClasses, students, selectedClass
         columns: ['Показатель', 'Значение'],
         rows: [
           ['% посещаемости', attendanceRate(tally) ?? '—'],
-          ['% активных уроков', activityRate(tally) ?? '—'],
           ['% выполнения д/з', homeworkRate(tally) ?? '—'],
           ['Замечания', notesCount],
         ],
       },
       {
         heading: 'По урокам',
-        columns: ['Дата', 'Посещаемость', 'Активность', 'Поведение', 'Д/З'],
+        columns: ['Дата', 'Посещаемость', 'Поведение', 'Д/З'],
         rows: filtered.map((l) => {
           const rec = l.records[studentId]
           return [
             formatRu(l.date),
             cellLabel(ATTENDANCE, rec?.attendance),
-            cellLabel(ACTIVITY, rec?.activity),
             cellLabel(BEHAVIOR, rec?.behavior),
             cellLabel(HOMEWORK, rec?.homework),
           ]
