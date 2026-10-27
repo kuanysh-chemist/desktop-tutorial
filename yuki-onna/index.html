@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><title>Юки-онна</title>
+<style>
+@font-face{font-family:Corm;src:url(fonts/corm-cyrillic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;font-weight:500}
+@font-face{font-family:Corm;src:url(fonts/corm-latin.woff2) format('woff2');font-weight:500;unicode-range:U+0000-00FF,U+2000-206F}
+@font-face{font-family:CormorantI;src:url(fonts/cormi-cyrillic.woff2) format('woff2');font-style:italic;font-weight:500;unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:CormorantI;src:url(fonts/cormi-latin.woff2) format('woff2');font-style:italic;font-weight:500;unicode-range:U+0000-00FF,U+2000-206F}
+@font-face{font-family:CormorantSC;src:url(fonts/cormsc-cyrillic.woff2) format('woff2');font-weight:600;unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:CormorantSC;src:url(fonts/cormsc-latin.woff2) format('woff2');font-weight:600;unicode-range:U+0000-00FF,U+2000-206F}
+@font-face{font-family:ShipporiB1;src:url(fonts/jp.woff2) format('woff2');font-weight:800}
+html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}
+</style></head><body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script src="src/timeline.js"></script><script src="src/core.js"></script><script src="src/art.js"></script><script src="src/scenes.js"></script>
+<script>
+// interactive preview: ?t=12.5 renders a still; otherwise plays in real time
+const q=new URLSearchParams(location.search);
+READY.then(()=>{ if(q.has('t')) renderAt(parseFloat(q.get('t'))); else if(!q.has('render')){ const t0=performance.now(); (function loop(){ renderAt(((performance.now()-t0)/1000)%END); requestAnimationFrame(loop); })(); } window.LOADED=true; });
+</script></body></html>
