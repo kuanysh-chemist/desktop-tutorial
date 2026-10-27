@@ -128,7 +128,7 @@ function scene1(t) {
     const head = E.io(p) * 1.15, tail = Math.max(0, head - .55);
     for (let L = 0; L < 4; L++) {
       ctx.filter = `blur(${[40, 20, 8, 3][L]}px)`;
-      ctx.strokeStyle = `rgba(225,250,250,${[.18, .22, .28, .4][L] * Math.sin(p * Math.PI)})`; ctx.lineCap = 'round';
+      ctx.strokeStyle = `rgba(225,250,250,${[.3, .36, .45, .6][L] * Math.sin(p * Math.PI)})`; ctx.lineCap = 'round';
       for (let i = 1; i < pts.length; i++) { const u = i / 40; if (u < tail || u > head) continue; ctx.lineWidth = [260, 150, 70, 18][L] * (1 - u * .8) * clamp((u - tail) * 6); ctx.beginPath(); ctx.moveTo(pts[i - 1][0], pts[i - 1][1]); ctx.lineTo(pts[i][0], pts[i][1]); ctx.stroke(); }
     }
     reset(ctx);
@@ -139,9 +139,10 @@ function scene1(t) {
 // S2 5–12: lips ECU, finger "hush"
 function scene2(t) {
   const k = seg(t, 5, 12.2);
-  const sc = lerp(.95, 1.12, E.io(k)) * (1 + .004 * Math.sin(t * 1.7));
+  const sc = lerp(.82, 1.38, E.io(k)) * (1 + .004 * Math.sin(t * 1.7));
+  const tilt = E.io(seg(t, 8.6, 10.4));
   reset(ctx); ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
-  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.translate(W / 2 + lerp(40, -30, k), H / 2 + 80 + lerp(20, -10, k)); ctx.rotate(lerp(-.03, .015, E.io(k))); ctx.scale(sc, sc);
+  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.translate(W / 2 + lerp(220, -120, E.io(k)), H / 2 + lerp(160, 40, E.io(k)) - tilt * 60); ctx.rotate(lerp(-.07, .035, E.io(k))); ctx.scale(sc, sc);
   lipsECU(ctx, t, { part: .25 + .12 * Math.sin(t * 1.3), finger: seg(t, 8.15, 9.0), breath: seg(t, 5.1, 7.6) });
   reset(ctx);
   // cold light grade
@@ -290,9 +291,9 @@ function scene5(t) {
 // S6 32.5–42: eyes ECU, the glow fades — mercy
 function scene6(t, still) {
   const k = seg(t, 32.4, 42.2);
-  const sc = lerp(.78, .98, E.io(k));
+  const sc = still ? .95 : lerp(.72, 1.16, E.io(k));
   reset(ctx); ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
-  ctx.translate(W / 2 + lerp(60, -40, k), H / 2 + lerp(10, -10, k)); ctx.rotate(lerp(-.035, .02, E.io(k))); ctx.scale(sc, sc);
+  ctx.translate(W / 2 + lerp(160, -90, E.io(k)), H / 2 + lerp(30, -20, k)); ctx.rotate(lerp(-.06, .03, E.io(k))); ctx.scale(sc, sc);
   const blink = t > 34.42 && t < 34.62 ? 1 - Math.sin(seg(t, 34.42, 34.62) * Math.PI) * .95 : 1;
   const close = 1 - E.i(seg(t, 40.7, 41.5)) * .95;
   const glow = still ? 1 : (1 - E.io(seg(t, 35.8, 39.8))) * (.85 + .15 * Math.sin(t * 6));
@@ -421,7 +422,7 @@ function seatedYuki(g, t, o = {}) {
 }
 function scene9(t) {
   const k = seg(t, 51.7, 59.1);
-  const c = { x: lerp(-180, 60, E.io(k)), y: lerp(-40, -90, k), z: lerp(0, 160, E.io(k)), roll: lerp(.025, -.01, k) };
+  const c = { x: lerp(-260, 150, E.io(k)), y: lerp(-20, -40, k), z: lerp(-80, 240, E.io(k)), roll: lerp(.03, -.015, k) };
   const blue = Math.max(Math.exp(-Math.pow((t - 56.0) * 6, 2)), Math.exp(-Math.pow((t - 56.35) * 8, 2)) * .7);
   const fireI = (1 - .35 * seg(t, 57.0, 58.6)) * (1 - .6 * blue);
   woodWall(ctx, c, 1800, '#5c3019', '#0e2427', fireI * (1 - blue));
@@ -619,7 +620,7 @@ function overlays(t) {
   // frost on the lens
   const f1 = pulse(t, 3.3, 5.0, 6.5), f2 = pulse(t, 60.4, 63.0, 63.8);
   if (f1 > 0) frost(f1, f1 * f1 * .62);
-  if (f2 > 0) frost(f2, f2 * f2 * .5);
+  if (f2 > 0) frost(f2, f2 * f2 * .78);
   // white-outs
   const wh = Math.max(pulse(t, 11.45, 12.0, 12.9), pulse(t, 41.2, 42.0, 42.9), pulse(t, 76.15, 76.6, 77.4) * .92);
   if (wh > 0) { reset(ctx); ctx.fillStyle = `rgba(240,250,250,${wh})`; ctx.fillRect(0, 0, W, H); }
@@ -654,7 +655,7 @@ function overlays(t) {
 const EMPH = { 'дыханием.': 'ice', 'никому': 'blow', 'застыла.': 'ice', 'рассказал.': 'red', 'остановилось.': 'stop', 'она.': 'redEnd', 'я»,': 'ice' };
 function subtitles(t) {
   const on = TL.some((L, i) => t > L.words[0][1] - .3 && t < L.end + 1.2);
-  if (on) { reset(ctx); ctx.fillStyle = vgrad(ctx, H - 330, H, [[0, 'rgba(0,0,0,0)'], [1, 'rgba(0,0,0,.42)']]); ctx.fillRect(0, H - 330, W, 330); }
+  if (on) { reset(ctx); ctx.fillStyle = vgrad(ctx, H - 300, H, [[0, 'rgba(0,0,0,0)'], [.55, 'rgba(0,0,0,.32)'], [1, 'rgba(0,0,0,.58)']]); ctx.fillRect(0, H - 300, W, 300); }
   for (let li = 0; li < TL.length; li++) {
     const L = TL[li], next = TL[li + 1];
     const tIn = L.words[0][1] - .12, tOut = Math.min(L.end + .9, next ? next.start - .05 : 999);
@@ -664,12 +665,17 @@ function subtitles(t) {
     ctx.font = `${yuki ? 'italic 500' : '500'} ${size}px ${yuki ? 'CormorantI' : 'Corm'}`;
     const sp = ctx.measureText(' ').width;
     const widths = L.words.map(([w]) => ctx.measureText(w).width);
-    const total = widths.reduce((a, b) => a + b, 0) + sp * (widths.length - 1);
-    let x = W / 2 - total / 2; const y = H - 118 - (isLast ? 0 : 0);
+    // wrap into rows no wider than 80% of the frame
+    const rows = [[]]; let acc = 0;
+    widths.forEach((wd, i) => { if (acc > 0 && acc + sp + wd > W * .8) { rows.push([]); acc = 0; } rows[rows.length - 1].push(i); acc += (acc ? sp : 0) + wd; });
+    const rowOf = [], xOf = [];
+    rows.forEach((r, ri) => { const tw = r.reduce((a, i) => a + widths[i], 0) + sp * (r.length - 1); let xx = W / 2 - tw / 2; r.forEach(i => { rowOf[i] = ri; xOf[i] = xx; xx += widths[i] + sp; }); });
+    const lh = size * 1.12, y0 = H - 118 - (rows.length - 1) * lh;
     const out = seg(t, tOut, tOut + .5);
     L.words.forEach(([w, wt], i) => {
       const a = E.o(seg(t, wt - .06, wt + .32));
-      if (a <= 0) { x += widths[i] + sp; return; }
+      if (a <= 0) return;
+      const x = xOf[i], y = y0 + rowOf[i] * lh;
       const em = EMPH[w];
       reset(ctx); ctx.font = `${yuki ? 'italic 500' : '500'} ${size}px ${yuki ? 'CormorantI' : 'Corm'}`; ctx.textBaseline = 'alphabetic';
       let dy = (1 - a) * 16 - out * 14, alpha = a * (1 - out), blur = (1 - a) * 8 + out * 6, dx = 0;
@@ -679,7 +685,7 @@ function subtitles(t) {
       if (em === 'blow') { const bk = E.i(seg(t, wt + .9, wt + 2.0)); dx = bk * 220; alpha *= 1 - bk; blur += bk * 10; }
       if (em === 'stop' && t > wt + .7) alpha *= 1 - seg(t, wt + .7, wt + .75) * .6;
       ctx.globalAlpha = alpha; if (blur > .3) ctx.filter = `blur(${blur.toFixed(1)}px)`;
-      ctx.shadowColor = yuki || em === 'ice' ? 'rgba(80,220,235,.65)' : 'rgba(0,0,0,.85)'; ctx.shadowBlur = yuki || em === 'ice' ? 22 : 14;
+      ctx.shadowColor = yuki || em === 'ice' ? 'rgba(10,60,70,.95)' : 'rgba(0,0,0,.95)'; ctx.shadowBlur = 16;
       ctx.fillStyle = col; ctx.fillText(w, x + dx, y + dy);
       if (em === 'ice') { // crystal sparkle
         ctx.filter = 'none'; ctx.shadowBlur = 0; ctx.strokeStyle = `rgba(230,255,255,${alpha * Math.max(0, Math.sin((t - wt) * 4))})`; ctx.lineWidth = 1.2; ctx.globalAlpha *= .5;
@@ -689,7 +695,6 @@ function subtitles(t) {
         const bk = seg(t, wt + .8, wt + 2.2); ctx.filter = 'none'; ctx.shadowBlur = 0;
         for (let q = 0; q < 50; q++) { const u = clamp(bk * 1.4 - hash(q) * .4); if (u <= 0 || u >= 1) continue; ctx.fillStyle = `rgba(240,250,250,${(1 - u) * .9})`; ctx.fillRect(x + hash(q * 3) * widths[i] + u * 380, y - hash(q * 5) * size * .8 - u * 60 * hash(q * 7), 3, 3); }
       }
-      x += widths[i] + sp;
     });
     reset(ctx);
   }

@@ -245,7 +245,7 @@ function eyesECU(g, t, o = {}) {
   // skin
   const sk = g.createLinearGradient(0, -540, 0, 540);
   sk.addColorStop(0, mixColor('#c9d6d6', '#f0d9cc', warm)); sk.addColorStop(.5, mixColor('#e9efee', '#f6e6dc', warm)); sk.addColorStop(1, mixColor('#b8c9ca', '#e2c3b3', warm));
-  g.fillStyle = sk; g.fillRect(-1400, -800, 2800, 1600);
+  g.fillStyle = sk; g.fillRect(-2600, -1700, 5200, 3400);
   // nose bridge & socket shading
   g.save(); g.filter = 'blur(30px)';
   g.fillStyle = mixColor('#7f9ea2', '#b58f80', warm); g.globalAlpha = .45;
@@ -332,7 +332,7 @@ function lipsECU(g, t, o = {}) {
   const part = o.part ?? .2, fing = o.finger ?? 0;
   const sk = g.createLinearGradient(0, -540, 0, 540);
   sk.addColorStop(0, '#d9e3e2'); sk.addColorStop(.5, '#eef3f1'); sk.addColorStop(1, '#b3c4c5');
-  g.fillStyle = sk; g.fillRect(-1400, -800, 2800, 1600);
+  g.fillStyle = sk; g.fillRect(-2600, -1700, 5200, 3400);
   g.save(); g.filter = 'blur(40px)'; g.fillStyle = 'rgba(110,140,145,.45)';
   g.beginPath(); g.ellipse(0, -420, 260, 120, 0, 0, 6.28); g.fill(); // nose shadow
   g.beginPath(); g.ellipse(0, 330, 420, 120, 0, 0, 6.28); g.fill(); // chin crease
