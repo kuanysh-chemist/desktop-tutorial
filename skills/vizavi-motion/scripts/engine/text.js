@@ -16,7 +16,7 @@ function captions(t, TL, opt = {}) {
   if (on && o.backing > 0) { reset(ctx); ctx.fillStyle = vgrad(ctx, H - 300, H, [[0, 'rgba(0,0,0,0)'], [.55, `rgba(0,0,0,${o.backing * .55})`], [1, `rgba(0,0,0,${o.backing})`]]); ctx.fillRect(0, H - 300, W, 300); }
   for (let li = 0; li < TL.length; li++) {
     const L = TL[li], next = TL[li + 1];
-    const tIn = L.words[0][1] - .12, tOut = Math.min(L.end + .9, next ? next.start - .05 : 1e9);
+    const tIn = L.words[0][1] - .12, tOut = Math.max(L.words[L.words.length - 1][1] + .3, Math.min(L.end + .9, next ? next.words[0][1] - .62 : 1e9)); // fade (.5 s) ends before the next line starts
     if (t < tIn || t > tOut + .5) continue;
     const alt = L.who === o.altWho, size = alt ? o.sizeAlt : o.size;
     const font = `${alt ? 'italic ' : ''}${o.weight} ${size}px ${alt ? o.fontAlt : o.font}`;

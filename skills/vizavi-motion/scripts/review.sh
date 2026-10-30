@@ -15,7 +15,8 @@ DUR=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$V")
 {
   ffprobe -v error -show_entries stream=codec_name,profile,width,height,r_frame_rate,pix_fmt,nb_frames,sample_rate,channels -show_entries format=duration,size -of compact "$V"
   ffmpeg -nostats -i "$V" -af ebur128=peak=true -f null - 2>&1 | grep -E "^\s+(I|LRA|Peak):" || echo "no audio stream"
-} | tee "$O/probe.txt"
+} > "$O/probe.txt"
+cat "$O/probe.txt" || true   # stdout may be closed early (e.g. piped into head) — never abort the review for that
 n=$(python3 -c "import math;print(math.ceil($DUR/12))")
 for i in $(seq 0 $((n-1))); do
   st=$((i*12))
@@ -40,7 +41,7 @@ a = np.fromfile(sys.argv[1], dtype=np.int16).astype(np.float32) / 32768
 for s in WhisperModel("small", device="cpu", compute_type="int8").transcribe(a, language=sys.argv[2])[0]:
     print(f"{s.start:6.2f}-{s.end:6.2f} {s.text}")
 EOF
-    rm -f "$O/a.raw"; echo "--- transcript of final mix:"; cat "$O/transcript.txt"
+    rm -f "$O/a.raw"; { echo "--- transcript of final mix (hallucinates on music-only audio):"; cat "$O/transcript.txt"; } || true
   fi
 fi
-ls "$O"
+ls "$O" || true
