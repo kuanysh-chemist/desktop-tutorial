@@ -115,10 +115,10 @@ def pluck(f, dur=3.0, bright=.6, bend=0.0, body=(180, 4200)):
 
 def flute(notes, vib=5.2, breath=.18):
     """Breathy flute / shakuhachi line. notes = [(Hz or 'A4', seconds), ...] with portamento + delayed vibrato."""
-    total = sum(d for _, d in notes); n = int(total * SR); t = np.arange(n) / SR
+    n = sum(int(round(d * SR)) for _, d in notes); t = np.arange(n) / SR   # sum of per-note lengths (no rounding gap)
     f = np.zeros(n); a = np.zeros(n); pos = 0
     for nm, d in notes:
-        m = int(d * SR); st = np.arange(m) / SR
+        m = int(round(d * SR)); st = np.arange(m) / SR
         f[pos:pos + m] = note(nm) if isinstance(nm, str) else nm
         a[pos:pos + m] = np.clip(np.minimum(1, st / .12) * np.minimum(1, (d - st) / .25), 0, 1); pos += m
     f = filt(f, 'lowpass', 6)

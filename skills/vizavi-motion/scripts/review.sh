@@ -24,7 +24,7 @@ done
 if [ $# -gt 0 ]; then
   k=0
   for c in "$@"; do for o in -0.4 -0.2 -0.07 0.07 0.2 0.4; do
-    t=$(python3 -c "print(max(0,min($DUR-0.02,$c+$o)))"); k=$((k+1))
+    t=$(python3 -c "print(round(max(0,min($DUR-0.02,$c+$o)),2))"); k=$((k+1))
     ffmpeg -v error -y -ss "$t" -i "$V" -frames:v 1 -vf "scale=320:-1,drawtext=text='$t':x=4:y=4:fontsize=16:fontcolor=yellow:box=1:boxcolor=black@0.6" "$O/fr/$(printf %03d $k).jpg"
   done; done
   ffmpeg -v error -y -framerate 1 -i "$O/fr/%03d.jpg" -vf "tile=6x$#:padding=2" -frames:v 1 "$O/cuts.jpg"
