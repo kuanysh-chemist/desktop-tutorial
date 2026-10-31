@@ -160,7 +160,7 @@ const RING = Array.from({ length: NR }, (_, r) => {
 // main ring for the close-up: ring 5 sits near the centre of the field
 const HERO = 5;
 // time warp: motion slows down as the melt becomes viscous (integral of speed → smooth, no jumps)
-function speedAt(t) { return t < 28.8 ? 1 : lerp(1, .12, E.io(seg(t, 28.8, 31.5))); }
+function speedAt(t) { return t < 27.0 ? 1 : lerp(1, .12, E.io(seg(t, 27.0, 31.5))); }
 function phaseAt(t) { let p = 0; for (let x = 15; x < t; x += 1 / 30) p += speedAt(x) / 30; return p; }
 // chain path k: a meandering curve across the field; s in [0,1]
 function chainPt(k, s, ph) {
@@ -256,7 +256,7 @@ function hud(t) {
   ctx.fillStyle = 'rgba(143,163,214,.25)'; ctx.fillRect(60, 140, 300, 4); ctx.fillStyle = BLUE.cyan; ctx.fillRect(60, 140, 300 * seg(t, T.gridIn, T.toC), 4);
   // top-right: live variables
   const temp = track([[15, 25], [19.6, 25], [21.0, 120], [23.3, 120], [24.7, 160], [28.6, 165], [31.6, 190]], t);
-  const vLog = track([[15, Math.log10(.007)], [29.6, Math.log10(.007)], [32.0, Math.log10(93)]], t);
+  const vLog = track([[15, Math.log10(.007)], [25.6, Math.log10(.007)], [32.0, Math.log10(93)]], t, E.s); // rises from the λ-transition on
   const ringsPct = Math.round(lerp(100, 25, E.io(seg(t, 25.5, 28.0))));
   const rows = [
     ['температура', `${Math.round(temp)} °C`, temp >= 159 ? BLUE.red : BLUE.hi],
@@ -304,9 +304,9 @@ function hud(t) {
 function roundRect(g, x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
 function bigWord(t, word, t0, t1, col = BLUE.word) {
   const a = E.o(seg(t, t0, t0 + .35)) * (1 - E.io(seg(t, t1 - .4, t1))); if (a <= 0) return;
-  reset(ctx); ctx.globalAlpha = a; ctx.font = '800 110px Unb'; ctx.textAlign = 'center'; ctx.letterSpacing = `${lerp(30, 6, E.o(seg(t, t0, t0 + .6)))}px`;
+  reset(ctx); ctx.globalAlpha = a; ctx.font = '800 100px Unb'; ctx.textAlign = 'center'; ctx.letterSpacing = `${lerp(30, 6, E.o(seg(t, t0, t0 + .6)))}px`;
   ctx.fillStyle = col; ctx.shadowColor = rgba(col.length === 7 ? col : '#C9D3F0', .5); ctx.shadowBlur = 30;
-  ctx.fillText(word, W / 2, 1290 + (1 - a) * 30); reset(ctx);
+  ctx.fillText(word, W / 2, 1240 + (1 - a) * 30); reset(ctx);
 }
 
 // ---------------- transitions ----------------
