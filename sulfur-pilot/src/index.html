@@ -1,0 +1,25 @@
+<!doctype html>
+<!-- vizavi-motion page template. Copy next to your project:
+       project/index.html (this file), project/fonts/fonts.css (fetch_fonts.py), project/engine/{core,text}.js,
+       project/timeline.js (vo.py, optional), project/scenes.js (your film; must set window.DURATION and window.renderAt).
+     Open index.html?t=12.5 for one still; without ?t it plays in real time (preview only — export via render.js). -->
+<html lang="ru"><head><meta charset="utf-8"><title>vizavi-motion</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}</style>
+</head><body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>window.TL = [];</script>
+<script src="timeline.js" onerror="void 0"></script>
+<script src="engine/core.js"></script>
+<script src="engine/text.js"></script>
+<script src="scenes.js"></script>
+<script>
+// Fonts used by scenes: list them in window.FONTS (e.g. ['500 50px Corm','600 50px CormSC']) so they load before frame 0.
+const q = new URLSearchParams(location.search);
+window.READY = document.fonts.ready.then(() => Promise.all((window.FONTS || []).map(f => document.fonts.load(f, 'АаЯя Aa 0')))).then(() => window.ASSETS);
+READY.then(() => {
+  if (q.has('t')) renderAt(parseFloat(q.get('t')));
+  else if (!q.has('render')) { const t0 = performance.now(); (function loop() { renderAt(((performance.now() - t0) / 1000) % DURATION); requestAnimationFrame(loop); })(); }
+  window.LOADED = true;
+});
+</script></body></html>
