@@ -1,0 +1,866 @@
+<title>Реакция жылдамдығы</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Layout: 1280x720 sahna, ekranga sai olshenedi. Bes faktordyn bes tusi: tabigat-benefit violet, konc-blue, qysym-amber, temp-red, kat-green */
+:root{
+  --bg:#e9f2ff; --surface:#ffffff; --ink:#10203a; --muted:#52668a; --line:#d3e1f5; --panel:#f3f8ff;
+  --nature:#8a5cf6; --conc:#1b86ff; --press:#e89a00; --temp:#f0443f; --cat:#0fa97a;
+  --shadow:0 14px 40px rgba(16,32,58,.12);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#08111f; --surface:#11213a; --ink:#eaf2ff; --muted:#9db2d6; --line:#27406a; --panel:#172a49;
+  --nature:#a98bff; --conc:#4aa3ff; --press:#ffbc2e; --temp:#ff6b66; --cat:#2fd6a0; --shadow:0 14px 40px rgba(0,0,0,.45);
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#08111f; --surface:#11213a; --ink:#eaf2ff; --muted:#9db2d6; --line:#27406a; --panel:#172a49;
+  --nature:#a98bff; --conc:#4aa3ff; --press:#ffbc2e; --temp:#ff6b66; --cat:#2fd6a0; --shadow:0 14px 40px rgba(0,0,0,.45);
+  color-scheme:dark}
+
+html{box-sizing:border-box;height:100%;overflow:hidden}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:'Rubik',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:26px;line-height:1.3}
+sub,sup{font-size:.62em;line-height:0}
+button,select,input{font:inherit;color:inherit}
+#app{height:100%;display:flex;flex-direction:column}
+#fit{flex:1;min-height:0;position:relative;overflow:hidden;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-top:12px}
+#stage{position:absolute;left:50%;top:50%;width:1280px;height:720px;transform-origin:center center;transform:translate(-50%,-50%);background:var(--surface);border-radius:28px;box-shadow:var(--shadow);overflow:hidden}
+
+.nav{flex:none;height:64px;display:flex;align-items:center;gap:14px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.nav button{border:0;border-radius:14px;background:var(--surface);box-shadow:var(--shadow);width:48px;height:44px;font-size:22px;cursor:pointer}
+.nav button:hover{background:var(--panel)}
+.nav .cnt{min-width:64px;font-size:18px;color:var(--muted);font-variant-numeric:tabular-nums}
+.dots{flex:1;display:flex;gap:6px;justify-content:center;flex-wrap:nowrap;overflow:hidden}
+.dots i{flex:0 1 22px;min-width:6px;height:8px;border-radius:5px;background:var(--line);cursor:pointer;transition:background .3s,flex-basis .3s}
+.dots i.on{background:var(--conc);flex-basis:34px}
+.dots i.done{background:color-mix(in srgb,var(--conc) 45%,var(--line))}
+button:focus-visible,input:focus-visible,select:focus-visible,.flip:focus-visible,.card:focus-visible{outline:3px solid var(--conc);outline-offset:2px}
+
+/* slides */
+.slide{position:absolute;inset:0;padding:34px 60px 30px;opacity:0;pointer-events:none;transform:translateX(40px);transition:opacity .45s,transform .45s;display:flex;flex-direction:column;--c:var(--conc)}
+.slide.active{opacity:1;pointer-events:auto;transform:none}
+.slide::before{content:"";position:absolute;left:0;top:0;bottom:0;width:14px;background:var(--c)}
+.f-nature{--c:var(--nature)} .f-conc{--c:var(--conc)} .f-press{--c:var(--press)} .f-temp{--c:var(--temp)} .f-cat{--c:var(--cat)}
+.tag{align-self:flex-start;background:var(--c);color:#fff;font-weight:600;font-size:17px;letter-spacing:.06em;text-transform:uppercase;padding:4px 14px;border-radius:99px}
+.f-press .tag{color:#2a1c00}
+h2{margin:8px 0 14px;font-size:46px;line-height:1.1;font-weight:800;text-wrap:balance}
+h2 em{font-style:normal;color:var(--c)}
+.body{flex:1;min-height:0;display:flex;gap:36px;align-items:stretch}
+.col{display:flex;flex-direction:column;gap:14px;min-width:0}
+.lead{font-size:30px;line-height:1.3}
+.small{font-size:21px;color:var(--muted)}
+.fx{display:inline-block;font-size:44px;font-weight:700;background:color-mix(in srgb,var(--c) 13%,var(--surface));border-radius:18px;padding:10px 26px;white-space:nowrap}
+.fx.sm{font-size:34px;padding:8px 20px}
+.fx.xl{font-size:56px;padding:14px 32px}
+.hl{color:var(--c);font-weight:700}
+.panel{background:var(--panel);border:2px solid var(--line);border-radius:22px;padding:18px 22px}
+.btn{border:0;border-radius:14px;background:var(--c);color:#fff;font-weight:600;padding:10px 22px;font-size:22px;cursor:pointer}
+.f-press .btn{color:#2a1c00}
+.btn.ghost{background:color-mix(in srgb,var(--c) 14%,var(--surface));color:var(--ink)}
+.btn:hover{filter:brightness(1.07)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:5px 14px;font-size:21px;cursor:pointer;font-weight:500}
+.chip.on{background:var(--c);border-color:var(--c);color:#fff}
+.f-press .chip.on{color:#2a1c00}
+input[type=range]{width:100%;height:30px;accent-color:var(--c);cursor:pointer}
+canvas{display:block;border-radius:20px;background:color-mix(in srgb,var(--c) 7%,var(--surface));border:2px solid var(--line)}
+.step{opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s;pointer-events:none}
+.step.on{opacity:1;transform:none;pointer-events:auto}
+.fade{opacity:0;transition:opacity .6s}.fade.on{opacity:1}
+.pop{opacity:0}
+.slide.active .pop{animation:pop .55s cubic-bezier(.2,1.3,.4,1) both;animation-delay:calc(var(--i,0)*.09s + .15s)}
+@keyframes pop{from{opacity:0;transform:translateY(24px) scale(.94)}to{opacity:1;transform:none}}
+.legend{display:flex;gap:16px;font-size:19px;color:var(--muted);align-items:center}
+.dot{display:inline-block;width:16px;height:16px;border-radius:50%;vertical-align:-2px;margin-right:6px}
+.ok{color:var(--cat)} .bad{color:var(--temp)}
+.kbd{font-size:19px;color:var(--muted)}
+select{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:6px 10px;font-size:21px;max-width:100%}
+input[type=number]{width:90px;border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:6px 8px;font-size:21px}
+.big{font-size:64px;font-weight:800;color:var(--c);line-height:1}
+
+/* title */
+.s-title{padding:0;--c:var(--conc)}
+.s-title::before{display:none}
+.s-title canvas#drift{position:absolute;inset:0;border:0;border-radius:0;background:transparent;width:1280px;height:720px}
+.s-title .in{position:relative;padding:64px 80px;max-width:880px}
+.s-title h1{font-size:68px;line-height:1.05;font-weight:800;margin:18px 0 22px;text-wrap:balance}
+.s-title h1 span{background:linear-gradient(90deg,var(--conc),var(--cat));-webkit-background-clip:text;background-clip:text;color:transparent}
+.pills{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.pill{padding:6px 18px;border-radius:99px;color:#fff;font-weight:600;font-size:22px}
+
+/* race */
+.race{display:flex;flex-direction:column;gap:16px;margin:4px 0 6px}
+.rrow{display:grid;grid-template-columns:300px 1fr 230px;gap:18px;align-items:center}
+.rrow b{font-size:26px;font-weight:600}
+.track{height:34px;border-radius:17px;background:var(--panel);border:2px solid var(--line);overflow:hidden}
+.fill{height:100%;width:0;border-radius:17px}
+.rrow span{font-size:22px;color:var(--muted)}
+
+/* overview cards */
+.cards5{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;flex:1;margin-top:6px}
+.card{border:0;text-align:left;border-radius:24px;padding:22px 18px;background:color-mix(in srgb,var(--c) 14%,var(--surface));border-bottom:8px solid var(--c);cursor:pointer;display:flex;flex-direction:column;gap:12px;transition:transform .25s}
+.card:hover{transform:translateY(-8px)}
+.card .ci{width:64px;height:64px;border-radius:20px;background:var(--c);display:grid;place-items:center}
+.card h3{margin:0;font-size:27px;line-height:1.12;font-weight:700}
+.card p{margin:0;font-size:20px;color:var(--muted)}
+
+/* tubes */
+.tubes{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:2px}
+.tubecol{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.glass{position:relative;width:98px;height:230px;border:5px solid var(--line);border-top:none;border-radius:0 0 49px 49px;overflow:hidden;background:color-mix(in srgb,var(--c) 5%,var(--surface))}
+.liq{position:absolute;left:0;right:0;bottom:0;height:0;background:color-mix(in srgb,var(--conc) 28%,transparent);transition:height 1.3s ease}
+.glass.poured .liq{height:68%}
+.metal{position:absolute;left:50%;bottom:10px;width:48px;height:18px;border-radius:7px;transform:translateX(-50%)}
+.bub{position:absolute;bottom:34px;width:11px;height:11px;border-radius:50%;border:2px solid rgba(255,255,255,.95);background:rgba(255,255,255,.35);animation:rise 1.5s linear forwards}
+@keyframes rise{to{transform:translateY(-150px);opacity:0}}
+.tubecol b{font-size:30px}
+.tubecol .eq{font-size:19px;color:var(--muted);min-height:50px}
+.spd{font-size:19px;font-weight:600;padding:3px 14px;border-radius:99px;color:#fff}
+
+/* surface cubes */
+.cubes{display:grid;gap:5px;width:200px;height:200px;transition:gap .4s}
+.cubes i{background:var(--nature);border-radius:4px;animation:cube .5s both}
+@keyframes cube{from{transform:scale(.4);opacity:0}}
+.opts{display:flex;flex-direction:column;gap:8px}
+.qrow{display:flex;flex-direction:column;gap:8px;padding:14px 18px}
+.qrow .qt{font-size:27px;font-weight:600}
+.qrow .qo{display:flex;gap:8px;flex-wrap:wrap}
+.qo button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:6px 14px;font-size:22px;cursor:pointer;font-weight:500}
+.qo button.right{background:var(--cat);border-color:var(--cat);color:#fff}
+.qo button.wrong{background:var(--temp);border-color:var(--temp);color:#fff}
+
+/* steps list */
+.steps{display:flex;flex-direction:column;gap:20px}
+.st{display:flex;gap:16px;align-items:baseline;font-size:34px}
+.st .n{flex:none;width:42px;height:42px;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;font-size:23px;font-weight:700;transform:translateY(-2px)}
+.f-press .st .n{color:#2a1c00}
+.ans{font-size:44px;font-weight:700;color:var(--c)}
+
+.cols{display:flex;align-items:flex-end;gap:12px;height:230px}
+.colm{width:84px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+.colm .bar{width:100%;border-radius:12px 12px 0 0;background:var(--c);height:var(--h)}
+.colm b{font-size:24px}.colm i{font-style:normal;font-size:17px;color:var(--muted)}
+
+.thermo{position:relative;width:30px;height:230px;border-radius:15px;background:var(--panel);border:2px solid var(--line);overflow:hidden}
+.thermo div{position:absolute;left:0;right:0;bottom:0;transition:height .3s,background .3s}
+.logbar{height:22px;border-radius:11px;background:var(--panel);border:2px solid var(--line);overflow:hidden}
+.logbar div{height:100%;background:var(--c);transition:width .35s}
+.read{display:flex;justify-content:space-between;align-items:baseline;font-size:23px;gap:10px}
+.read b{font-size:30px;color:var(--c);font-variant-numeric:tabular-nums}
+
+/* flip cards */
+.flipgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;flex:1;margin-top:4px}
+.flip{perspective:1000px;cursor:pointer;border-radius:22px;min-height:0}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .65s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:22px;padding:18px 20px;display:flex;flex-direction:column;justify-content:center;gap:6px}
+.front{background:var(--c);color:#fff;align-items:flex-start}
+.front h3{margin:0;font-size:32px;font-weight:800;line-height:1.1}
+.front span{font-size:19px;opacity:.9}
+.back{transform:rotateY(180deg);background:color-mix(in srgb,var(--c) 14%,var(--surface));border:3px solid var(--c);font-size:21px;line-height:1.28}
+.back b{color:var(--c)}
+.fact{background:var(--panel);border:2px dashed var(--line);border-radius:22px;padding:18px 22px;display:flex;flex-direction:column;justify-content:center;gap:4px}
+
+/* everyday */
+.eve{display:grid;grid-template-columns:1fr 1fr;gap:18px;flex:1}
+.ecard{display:flex;gap:18px;align-items:center;padding:18px 22px;border-radius:24px;background:color-mix(in srgb,var(--c) 12%,var(--surface));border-left:10px solid var(--c)}
+.ecard svg{flex:none;width:100px;height:100px}
+.ecard h3{margin:0 0 4px;font-size:27px;line-height:1.1}
+.ecard p{margin:0;font-size:21px;color:var(--muted);line-height:1.25}
+.etag{display:inline-block;font-size:16px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:var(--c);border-radius:99px;padding:1px 12px;margin-bottom:6px}
+.f-press .etag{color:#2a1c00}
+@keyframes flick{0%,100%{transform:scale(1) rotate(-2deg)}50%{transform:scale(1.07,1.12) rotate(2deg)}}
+@keyframes spinS{to{transform:rotate(360deg)}}
+@keyframes fz{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes bubU{0%{transform:translateY(0);opacity:0}20%{opacity:1}100%{transform:translateY(-46px);opacity:0}}
+.flame{transform-origin:50px 88px;animation:flick .9s ease-in-out infinite}
+.snow{transform-origin:50px 50px;animation:spinS 9s linear infinite}
+.grains rect{animation:fz 1.6s ease-in-out infinite}
+.grains rect:nth-child(2n){animation-delay:.3s}.grains rect:nth-child(3n){animation-delay:.7s}
+.bu{animation:bubU 2.2s linear infinite}.bu:nth-of-type(2){animation-delay:.7s}.bu:nth-of-type(3){animation-delay:1.4s}
+
+/* quiz */
+.qz{flex:1;display:flex;flex-direction:column;gap:14px}
+.qq{font-size:38px;font-weight:600;line-height:1.25;min-height:130px}
+.qopts{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.qopts button{border:3px solid var(--line);background:var(--surface);border-radius:18px;padding:20px 22px;font-size:32px;text-align:left;cursor:pointer;font-weight:500}
+.qopts button:hover:not(:disabled){border-color:var(--c)}
+.qopts button.right{background:var(--cat);border-color:var(--cat);color:#fff}
+.qopts button.wrong{background:var(--temp);border-color:var(--temp);color:#fff}
+.qexp{font-size:28px;min-height:34px;color:var(--muted)}
+.qbar{display:flex;gap:8px;align-items:center}
+.qbar i{width:34px;height:10px;border-radius:5px;background:var(--line)}
+.qbar i.ok{background:var(--cat)}.qbar i.no{background:var(--temp)}.qbar i.cur{background:var(--conc)}
+
+/* summary */
+.sum{display:flex;flex-direction:column;gap:14px;flex:1}
+.srow{flex:1;display:grid;grid-template-columns:320px 1fr;gap:20px;align-items:center;border-radius:22px;padding:8px 26px;background:color-mix(in srgb,var(--c) 13%,var(--surface));border-left:10px solid var(--c)}
+.srow b{font-size:34px}
+.srow span{font-size:30px}
+.srow .a{color:var(--c);font-weight:700}
+
+@media (prefers-reduced-motion: reduce){.slide,.step,.fade{transition:none}.slide.active .pop{animation:none;opacity:1}.flame,.snow,.grains rect,.bu{animation:none}}
+</style>
+
+<div id="app">
+ <div id="fit"><div id="stage">
+
+<!-- 1 -->
+<section class="slide s-title" data-id="title">
+  <canvas id="drift"></canvas>
+  <div class="in">
+    <span class="tag">10-сынып · Химия</span>
+    <h1>Реакция жылдамдығына <span>әсер ететін факторлар</span></h1>
+    <div class="lead">Неге біреуі секундта жанады, ал екіншісі жылдар бойы тот басады?</div>
+    <div class="pills">
+      <span class="pill" style="background:var(--nature)">Табиғат</span>
+      <span class="pill" style="background:var(--conc)">Концентрация</span>
+      <span class="pill" style="background:var(--press);color:#2a1c00">Қысым</span>
+      <span class="pill" style="background:var(--temp)">Температура</span>
+      <span class="pill" style="background:var(--cat)">Катализатор</span>
+    </div>
+    <p class="kbd" style="margin-top:24px">Алға: → немесе Space · Артқа: ← · Толық экран: F</p>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="slide f-conc" data-id="rate">
+  <span class="tag">Кіріспе</span>
+  <h2>Реакция жылдамдығы — бұл не?</h2>
+  <div class="race">
+    <div class="rrow"><b>Темірдің тоттануы</b><div class="track"><div class="fill" data-t="12" style="background:var(--temp)"></div></div><span>жылдар</span></div>
+    <div class="rrow"><b>Отынның жануы</b><div class="track"><div class="fill" data-t="5" style="background:var(--press)"></div></div><span>минуттар</span></div>
+    <div class="rrow"><b>H<sub>2</sub> + O<sub>2</sub> жарылысы</b><div class="track"><div class="fill" data-t="0.5" style="background:var(--conc)"></div></div><span>секундтың бөлігі</span></div>
+  </div>
+  <div class="row small" style="display:flex;gap:16px;align-items:center"><button class="btn" id="raceGo">Жарысты қайталау</button><span>Уақыт масштабы көрнекілік үшін алынған</span></div>
+  <div class="step" data-step="1" style="margin-top:20px;display:flex;gap:26px;align-items:center">
+    <div class="fx">v = Δc / Δt</div>
+    <div class="lead">Жылдамдық — <span class="hl">бірлік уақытта</span> заттың концентрациясы қаншаға өзгергені<br><span class="small">өлшем бірлігі: моль/(л·с)</span></div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="slide f-conc" data-id="collide">
+  <span class="tag">Негізгі идея</span>
+  <h2>Реакция бөлшектер <em>соқтығысқанда</em> жүреді</h2>
+  <div class="body">
+    <div class="col"><canvas id="cv3"></canvas>
+      <div class="legend"><span><i class="dot" style="background:#1b86ff"></i>A</span><span><i class="dot" style="background:#ff9f1a"></i>B</span><span><i class="dot" style="background:var(--cat)"></i>тиімді соқтығысу</span><span><i class="dot" style="background:#9aa7bd"></i>тиімсіз</span></div>
+      <div class="read"><span>Барлық соқтығысу</span><b id="t3all">0</b></div>
+      <div class="read"><span>Тиімді (реакция болды)</span><b id="t3eff">0</b></div>
+    </div>
+    <div class="col" style="flex:1;justify-content:center;gap:22px">
+      <div class="lead step" data-step="1"><span class="hl">1.</span> Бөлшектер <b>кездесуі</b> керек</div>
+      <div class="lead step" data-step="2"><span class="hl">2.</span> Энергиясы <b>жеткілікті</b> болуы керек<br><span class="small">(тек жылдам соқтығысу тиімді)</span></div>
+      <div class="lead step" data-step="3"><span class="hl">3.</span> Бағыты <b>дұрыс</b> болуы керек</div>
+      <div class="lead step" data-step="4" style="font-weight:700">Соқтығысу көп және тиімді болса — реакция тез жүреді</div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="slide f-conc" data-id="five">
+  <span class="tag">Жоспар</span>
+  <h2>Жылдамдыққа не әсер етеді?</h2>
+  <div class="cards5">
+    <button class="card f-nature pop" style="--i:0" data-go="nature"><div class="ci"><svg width="38" height="38" viewBox="0 0 38 38"><circle cx="12" cy="19" r="8" fill="#fff"/><circle cx="27" cy="12" r="6" fill="#fff" opacity=".8"/><circle cx="27" cy="27" r="6" fill="#fff" opacity=".6"/></svg></div><h3>Заттардың табиғаты</h3><p>Mg мен Cu бірдей емес</p></button>
+    <button class="card f-conc pop" style="--i:1" data-go="conc"><div class="ci"><svg width="38" height="38" viewBox="0 0 38 38" fill="#fff"><circle cx="9" cy="9" r="4"/><circle cx="22" cy="8" r="4"/><circle cx="31" cy="17" r="4"/><circle cx="12" cy="21" r="4"/><circle cx="24" cy="26" r="4"/><circle cx="8" cy="32" r="4"/><circle cx="31" cy="32" r="4"/></svg></div><h3>Концентрация</h3><p>Бөлшек көп — соқтығысу көп</p></button>
+    <button class="card f-press pop" style="--i:2" data-go="press"><div class="ci"><svg width="38" height="38" viewBox="0 0 38 38"><rect x="4" y="6" width="8" height="26" rx="3" fill="#2a1c00"/><rect x="14" y="14" width="20" height="10" rx="3" fill="#2a1c00"/></svg></div><h3>Қысым</h3><p>Газдар сығылады</p></button>
+    <button class="card f-temp pop" style="--i:3" data-go="temp"><div class="ci"><svg width="38" height="38" viewBox="0 0 38 38"><rect x="15" y="3" width="8" height="22" rx="4" fill="#fff"/><circle cx="19" cy="28" r="8" fill="#fff"/></svg></div><h3>Температура</h3><p>Қыздырсақ — тез</p></button>
+    <button class="card f-cat pop" style="--i:4" data-go="cat"><div class="ci"><svg width="38" height="38" viewBox="0 0 38 38"><path d="M4 30 Q19 -6 34 30" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/></svg></div><h3>Катализатор</h3><p>Жолды қысқартады</p></button>
+  </div>
+  <p class="kbd" style="margin:14px 0 0">Карточканы басып, тақырыпқа тез өтуге болады</p>
+</section>
+
+<!-- 5 -->
+<section class="slide f-nature" data-id="nature">
+  <span class="tag">1-фактор</span>
+  <h2>Заттардың <em>табиғаты</em>: бір қышқыл, төрт металл</h2>
+  <div class="tubes" id="tubes">
+    <div class="tubecol"><div class="glass"><div class="liq"></div><div class="metal" style="background:#cfd6df"></div></div><b>Mg</b><div class="eq">Mg + 2HCl → MgCl<sub>2</sub> + H<sub>2</sub>↑</div><span class="spd" style="background:var(--temp)">өте жылдам</span></div>
+    <div class="tubecol"><div class="glass"><div class="liq"></div><div class="metal" style="background:#8fa2b8"></div></div><b>Zn</b><div class="eq">Zn + 2HCl → ZnCl<sub>2</sub> + H<sub>2</sub>↑</div><span class="spd" style="background:var(--press);color:#2a1c00">жылдам</span></div>
+    <div class="tubecol"><div class="glass"><div class="liq"></div><div class="metal" style="background:#5d6676"></div></div><b>Fe</b><div class="eq">Fe + 2HCl → FeCl<sub>2</sub> + H<sub>2</sub>↑</div><span class="spd" style="background:var(--conc)">баяу</span></div>
+    <div class="tubecol"><div class="glass"><div class="liq"></div><div class="metal" style="background:#d9822b"></div></div><b>Cu</b><div class="eq">Cu + HCl → реакция жоқ</div><span class="spd" style="background:#8a97ad">жүрмейді</span></div>
+  </div>
+  <div style="display:flex;gap:14px;align-items:center;margin-top:8px"><button class="btn" id="pour">HCl құю</button><button class="btn ghost" id="unpour">Қайта бастау</button>
+    <div class="lead step" data-step="1" style="margin-left:12px">Қышқыл бірдей, бірақ жылдамдық <span class="hl">металға</span> байланысты</div></div>
+</section>
+
+<!-- 6 -->
+<section class="slide f-conc" data-id="conc">
+  <span class="tag">2-фактор</span>
+  <h2><em>Концентрация</em>: бөлшек көп — соқтығысу көп</h2>
+  <div class="body">
+    <div class="col"><canvas id="cv6"></canvas>
+      <div class="legend"><span><i class="dot" style="background:#1b86ff"></i>A бөлшектері</span><span><i class="dot" style="background:#ff9f1a"></i>B бөлшектері</span></div></div>
+    <div class="col" style="flex:1;justify-content:center;gap:16px">
+      <div class="panel"><div class="read"><span>A концентрациясы</span><b id="nA6">4</b></div><input type="range" id="rA6" min="1" max="12" value="4" aria-label="A концентрациясы"></div>
+      <div class="panel"><div class="read"><span>B концентрациясы</span><b id="nB6">4</b></div><input type="range" id="rB6" min="1" max="12" value="4" aria-label="B концентрациясы"></div>
+      <div class="read"><span>Соқтығысу, 1 с-та</span><b id="r6">0</b></div>
+      <div class="read"><span>Жылдамдық (бастапқыдан)</span><b id="x6">×1</b></div>
+      <div class="lead step" data-step="1" style="font-weight:700">v өседі, себебі c(A) · c(B) өседі</div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="slide f-conc" data-id="mass">
+  <span class="tag">Заң</span>
+  <h2>Әрекеттесуші массалар заңы</h2>
+  <div class="col" style="gap:22px;flex:1">
+    <div class="step" data-step="1"><div class="small">Кез келген қарапайым реакция:</div><div class="fx xl">aA + bB → cC + dD</div></div>
+    <div class="step" data-step="2"><div class="small">Жылдамдық концентрациялардың көбейтіндісіне тура пропорционал:</div><div class="fx xl">v = k · c<sup>a</sup>(A) · c<sup>b</sup>(B)</div></div>
+    <div class="step" data-step="3"><div class="small">Мысалы:</div><div class="fx">2H<sub>2</sub> + O<sub>2</sub> → 2H<sub>2</sub>O &nbsp;&nbsp; v = k · c<sup class="hl">2</sup>(H<sub>2</sub>) · c(O<sub>2</sub>)</div></div>
+    <div class="lead step" data-step="4"><span class="hl">Коэффициент → дәреже.</span><br><span class="small">k — жылдамдық константасы: c = 1 моль/л болса, v = k</span></div>
+    <div class="small step" data-step="5">Заңды 1867 жылы норвегиялық ғалымдар К. Гульдберг пен П. Вааге тұжырымдаған</div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="slide f-nature" data-id="solid">
+  <span class="tag">Назар аудар</span>
+  <h2>Қатты заттың концентрациясы <em>алынбайды</em></h2>
+  <div class="body">
+    <div class="col" style="flex:1.5;gap:10px">
+      <div class="panel qrow" data-q="0"><div class="qt">N<sub>2</sub> + 3H<sub>2</sub> ⇌ 2NH<sub>3</sub></div><div class="qo"></div></div>
+      <div class="panel qrow" data-q="1"><div class="qt">C(қ) + O<sub>2</sub> → CO<sub>2</sub></div><div class="qo"></div></div>
+      <div class="panel qrow" data-q="2"><div class="qt">Mg(қ) + 2HCl(с) → MgCl<sub>2</sub> + H<sub>2</sub></div><div class="qo"></div></div>
+      <div class="lead" id="sq" style="min-height:40px;font-size:25px"></div>
+    </div>
+    <div class="col" style="flex:1;align-items:center">
+      <div class="small" style="text-align:center">Қатты заттың беті ұлғайса, жылдамдық артады</div>
+      <div class="cubes" id="cubes"></div>
+      <div class="chips" id="cubeBtns"><button class="chip on" data-k="1">1 кесек</button><button class="chip" data-k="2">4 бөлік</button><button class="chip" data-k="4">16 бөлік</button></div>
+      <div class="read" style="width:100%"><span>Бет ауданы</span><b id="cubeS">×1</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="slide f-conc" data-id="task1">
+  <span class="tag">Есеп</span>
+  <h2>CO концентрациясын 3 есе арттырдық</h2>
+  <div class="body">
+    <div class="col" style="flex:1.2">
+      <div class="lead">2CO + O<sub>2</sub> → 2CO<sub>2</sub>. Жылдамдық неше есе артады?</div>
+      <div class="steps">
+        <div class="st step" data-step="1"><span class="n">1</span><span>v<sub>1</sub> = k · c<sup>2</sup>(CO) · c(O<sub>2</sub>)</span></div>
+        <div class="st step" data-step="2"><span class="n">2</span><span>v<sub>2</sub> = k · (3c)<sup>2</sup>(CO) · c(O<sub>2</sub>)</span></div>
+        <div class="st step" data-step="3"><span class="n">3</span><span>v<sub>2</sub> / v<sub>1</sub> = 3<sup>2</sup></span></div>
+        <div class="ans step" data-step="4">Жауабы: <span class="cnt" data-countto="9">9</span> есе артады</div>
+      </div>
+    </div>
+    <div class="panel col" style="flex:1;gap:10px">
+      <div class="small" style="font-weight:600">Калькулятор</div>
+      <select id="cR" aria-label="Реакция"></select>
+      <div class="small" id="cNA">A</div><div class="chips" id="cA"></div>
+      <div class="small" id="cNB">B</div><div class="chips" id="cB"></div>
+      <div class="fx sm" id="cF" style="margin-top:4px;align-self:flex-start"></div>
+      <div class="lead hl" id="cO"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="slide f-press" data-id="press">
+  <span class="tag">3-фактор</span>
+  <h2><em>Қысым</em>: тек газдар үшін</h2>
+  <div class="body">
+    <div class="col"><canvas id="cv10"></canvas>
+      <div class="legend"><span><i class="dot" style="background:#1b86ff"></i>SO<sub>2</sub></span><span><i class="dot" style="background:#ff9f1a"></i>O<sub>2</sub></span></div></div>
+    <div class="col" style="flex:1;justify-content:center;gap:14px">
+      <div class="panel"><div class="read"><span>Қысым</span><b id="p10">×1</b></div><input type="range" id="rP10" min="1" max="4" value="1" step="1" aria-label="Қысым"></div>
+      <div class="read"><span>Көлем</span><b id="v10">1</b></div>
+      <div class="read"><span>Концентрация</span><b id="c10">×1</b></div>
+      <div class="small">2SO<sub>2</sub> + O<sub>2</sub> → 2SO<sub>3</sub> &nbsp; v = k·c<sup>2</sup>(SO<sub>2</sub>)·c(O<sub>2</sub>)</div>
+      <div class="read"><span>Жылдамдық</span><b id="x10">×1</b></div>
+      <div class="lead step" data-step="1">P↑ → c↑ → v↑ &nbsp; · &nbsp; P↓ → c↓ → v↓</div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="slide f-press" data-id="task2">
+  <span class="tag">Есеп</span>
+  <h2>Қысымды 4 есе көтердік</h2>
+  <div class="lead">2SO<sub>2</sub>(г) + O<sub>2</sub>(г) ⇌ 2SO<sub>3</sub>(г). Жылдамдық қалай өзгереді?</div>
+  <div class="steps" style="margin-top:14px">
+    <div class="st step" data-step="1"><span class="n">1</span><span>Қысым ×4 → әр газдың концентрациясы ×4</span></div>
+    <div class="st step" data-step="2"><span class="n">2</span><span>v<sub>1</sub> = k · c<sup>2</sup>(SO<sub>2</sub>) · c(O<sub>2</sub>)</span></div>
+    <div class="st step" data-step="3"><span class="n">3</span><span>v<sub>2</sub> = k · (4c)<sup>2</sup> · (4c) = 4<sup>2</sup> · 4 · v<sub>1</sub></span></div>
+    <div class="ans step" data-step="4">Жауабы: 4<sup>3</sup> = <span class="cnt" data-countto="64">64</span> есе артады</div>
+    <div class="lead step" data-step="5" style="margin-top:6px">Ал қысым 2 есе төмендесе? &nbsp; (½)<sup>3</sup> = ⅛ &nbsp;→&nbsp; <span class="hl">8 есе кемиді</span></div>
+  </div>
+</section>
+
+<!-- 12 -->
+<section class="slide f-temp" data-id="temp">
+  <span class="tag">4-фактор</span>
+  <h2><em>Температура</em>: қыздырсақ — тезірек</h2>
+  <div class="body">
+    <div class="col"><canvas id="cv12"></canvas>
+      <div class="read"><span>Тиімді соқтығысу, 1 с-та</span><b id="r12">0</b></div></div>
+    <div class="col" style="align-items:center"><div class="thermo"><div id="th"></div></div></div>
+    <div class="col" style="flex:1;justify-content:center;gap:12px">
+      <div class="panel"><div class="read"><span>Температура</span><b id="T12">20 °C</b></div><input type="range" id="rT12" min="20" max="100" value="20" step="10" aria-label="Температура"></div>
+      <div class="small">Температуралық коэффициент γ</div>
+      <div class="chips" id="gam12"><button class="chip on" data-g="2">γ = 2</button><button class="chip" data-g="3">γ = 3</button><button class="chip" data-g="4">γ = 4</button></div>
+      <div class="read"><span>Жылдамдық</span><b id="x12">×1</b></div>
+      <div class="logbar"><div id="lb12" style="width:0"></div></div>
+      <div class="small">+10 °C → жылдамдық ×γ</div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 -->
+<section class="slide f-temp" data-id="vh">
+  <span class="tag">Ереже</span>
+  <h2>Вант-Гофф ережесі</h2>
+  <div class="body">
+    <div class="col" style="flex:1.1;gap:14px">
+      <div class="fx">v<sub>2</sub> = v<sub>1</sub> · γ<sup>(t<sub>2</sub> − t<sub>1</sub>) / 10</sup></div>
+      <div class="small">γ = 2…4 — температуралық коэффициент</div>
+      <div class="lead" style="margin-top:12px"><b>Есеп:</b> γ = 2, 20 °C → 70 °C. Жылдамдық неше есе артады?</div>
+      <div class="lead">Δt = 50 °C → 50 : 10 = <span class="hl">5 қадам</span></div>
+      <div class="ans step" data-step="6">2<sup>5</sup> = <span class="cnt" data-countto="32">32</span> есе артады</div>
+    </div>
+    <div class="cols" style="align-self:flex-end;flex:1.3;justify-content:flex-end">
+      <div class="colm"><div class="bar" style="--h:12px"></div><b>×1</b><i>20 °C</i></div>
+      <div class="colm step" data-step="1"><div class="bar" style="--h:22px"></div><b>×2</b><i>30 °C</i></div>
+      <div class="colm step" data-step="2"><div class="bar" style="--h:40px"></div><b>×4</b><i>40 °C</i></div>
+      <div class="colm step" data-step="3"><div class="bar" style="--h:74px"></div><b>×8</b><i>50 °C</i></div>
+      <div class="colm step" data-step="4"><div class="bar" style="--h:140px"></div><b>×16</b><i>60 °C</i></div>
+      <div class="colm step" data-step="5"><div class="bar" style="--h:200px"></div><b>×32</b><i>70 °C</i></div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 -->
+<section class="slide f-temp" data-id="task3">
+  <span class="tag">Есеп</span>
+  <h2>Реакция қанша уақытта аяқталады?</h2>
+  <div class="body">
+    <div class="col" style="flex:1.15">
+      <div class="lead">80 °C-та реакция 18 мин-та аяқталады, γ = 3. 110 °C-та қанша уақыт керек?</div>
+      <div class="steps">
+        <div class="st step" data-step="1"><span class="n">1</span><span>Δt = 110 − 80 = 30 °C → <b>3 қадам</b></span></div>
+        <div class="st step" data-step="2"><span class="n">2</span><span>v<sub>2</sub>/v<sub>1</sub> = 3<sup>3</sup> = 27</span></div>
+        <div class="st step" data-step="3"><span class="n">3</span><span>Жылдамдық ×27 → уақыт 27 есе аз</span></div>
+        <div class="ans step" data-step="4">1080 с : 27 = <span class="cnt" data-countto="40">40</span> с</div>
+      </div>
+    </div>
+    <div class="panel col" style="flex:1;gap:10px">
+      <div class="small" style="font-weight:600">Калькулятор</div>
+      <div class="chips" id="gC"><button class="chip" data-g="2">γ = 2</button><button class="chip on" data-g="3">γ = 3</button><button class="chip" data-g="4">γ = 4</button></div>
+      <div class="read"><span>t<sub>1</sub>, °C</span><input type="number" id="t1" value="80" step="10"></div>
+      <div class="read"><span>t<sub>2</sub>, °C</span><input type="number" id="t2" value="110" step="10"></div>
+      <div class="read"><span>Уақыт t<sub>1</sub>-де, мин</span><input type="number" id="tm" value="18" min="0" step="1"></div>
+      <div class="fx sm" id="kF" style="align-self:flex-start"></div>
+      <div class="lead hl" id="kO"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 15 -->
+<section class="slide f-cat" data-id="cat">
+  <span class="tag">5-фактор</span>
+  <h2><em>Катализатор</em>: аласа жол табады</h2>
+  <div class="body">
+    <div class="col"><svg id="svgE" viewBox="0 0 660 380" width="700" height="404" role="img" aria-label="Энергия диаграммасы">
+      <line x1="40" y1="340" x2="640" y2="340" stroke="var(--muted)" stroke-width="3"/><line x1="40" y1="340" x2="40" y2="14" stroke="var(--muted)" stroke-width="3"/>
+      <text x="48" y="28" font-size="20" fill="var(--muted)">Энергия</text><text x="470" y="368" font-size="20" fill="var(--muted)">Реакция барысы</text>
+      <path id="pathA" d="M50 250 C150 250 180 60 320 60 C460 60 500 300 620 300" fill="none" stroke="var(--temp)" stroke-width="6" stroke-linecap="round"/>
+      <g class="fade" data-step="1"><path id="pathB" d="M50 250 C150 250 190 160 320 160 C450 160 500 300 620 300" fill="none" stroke="var(--cat)" stroke-width="6" stroke-linecap="round"/></g>
+      <text x="62" y="236" font-size="20" fill="var(--ink)">A + B</text><text x="540" y="328" font-size="20" fill="var(--ink)">AB</text>
+      <line x1="320" y1="250" x2="320" y2="64" stroke="var(--temp)" stroke-width="3" stroke-dasharray="6 5"/><text x="330" y="150" font-size="22" font-weight="700" fill="var(--temp)">Eб</text>
+      <g class="fade" data-step="1"><line x1="380" y1="250" x2="380" y2="164" stroke="var(--cat)" stroke-width="3" stroke-dasharray="6 5"/><text x="390" y="212" font-size="22" font-weight="700" fill="var(--cat)">Eб(кат.)</text></g>
+      <circle id="ballA" r="13" fill="var(--temp)" stroke="#fff" stroke-width="3" cx="50" cy="250"/>
+      <g class="fade" data-step="1"><circle id="ballB" r="13" fill="var(--cat)" stroke="#fff" stroke-width="3" cx="50" cy="250"/></g>
+    </svg></div>
+    <div class="col" style="flex:1;justify-content:center;gap:20px">
+      <div class="lead"><span class="ok" style="color:var(--temp)">●</span> катализаторсыз — биік асу, <b>баяу</b></div>
+      <div class="lead step" data-step="1"><span style="color:var(--cat)">●</span> катализатормен — төмен асу, <b>жылдам</b></div>
+      <div class="lead step" data-step="2">Eб төмендейді → белсенді бөлшек көп</div>
+      <div class="fx sm step" data-step="3">A + B + K → AB + K</div>
+      <div class="small step" data-step="3">K — реакциядан кейін өзгермей қалады</div>
+    </div>
+  </div>
+</section>
+
+<!-- 16 -->
+<section class="slide f-cat" data-id="types">
+  <span class="tag">Катализ</span>
+  <h2>Катализ түрлері мен көмекшілер</h2>
+  <div class="flipgrid" id="flips">
+    <div class="flip" tabindex="0" style="--c:var(--cat)"><div class="in"><div class="face front"><h3>Гомогенді катализ</h3><span>басу — ашылады</span></div><div class="face back"><div>Реагент пен катализатор <b>бір фазада</b>.<br>SO<sub>2</sub> → SO<sub>3</sub>, катализатор NO<sub>2</sub></div></div></div></div>
+    <div class="flip" tabindex="0" style="--c:var(--cat)"><div class="in"><div class="face front"><h3>Гетерогенді катализ</h3><span>басу — ашылады</span></div><div class="face back"><div>Реагент пен катализатор <b>әртүрлі фазада</b>.<br>4NH<sub>3</sub> + 5O<sub>2</sub> → 4NO + 6H<sub>2</sub>O (Pt)</div></div></div></div>
+    <div class="flip" tabindex="0" style="--c:var(--temp)"><div class="in"><div class="face front"><h3>Ингибитор</h3><span>басу — ашылады</span></div><div class="face back"><div>Реакцияны <b>баяулатады</b>.<br>Металдың тот басуына қарсы қолданылады</div></div></div></div>
+    <div class="flip" tabindex="0" style="--c:var(--nature)"><div class="in"><div class="face front"><h3>Катализдік у</h3><span>басу — ашылады</span></div><div class="face back"><div>Катализатордың белсенділігін <b>төмендетеді немесе жояды</b>: H<sub>2</sub>O, CO, H<sub>2</sub>S, As</div></div></div></div>
+    <div class="flip" tabindex="0" style="--c:var(--conc)"><div class="in"><div class="face front"><h3>Промотор</h3><span>басу — ашылады</span></div><div class="face back"><div>Катализатордың белсенділігін <b>арттыратын</b> қоспа</div></div></div></div>
+    <div class="fact"><div class="small">Өндірістегі реакциялардың</div><div class="big" style="color:var(--cat)">~90%</div><div class="small">катализдік. Ферменттер — тірі ағзадағы биокатализаторлар</div></div>
+  </div>
+</section>
+
+<!-- 17 -->
+<section class="slide f-cat" data-id="life">
+  <span class="tag">Күнделікті өмір</span>
+  <h2>Мұны өмірде қайда көреміз?</h2>
+  <div class="eve">
+    <div class="ecard pop f-temp" style="--i:0"><svg viewBox="0 0 100 100"><g class="snow" stroke="var(--c)" stroke-width="7" stroke-linecap="round"><line x1="50" y1="10" x2="50" y2="90"/><line x1="15" y1="30" x2="85" y2="70"/><line x1="15" y1="70" x2="85" y2="30"/></g></svg><div><span class="etag">Температура</span><h3>Тоңазытқыш</h3><p>Суықта реакция баяулайды, тағам кеш бұзылады</p></div></div>
+    <div class="ecard pop f-conc" style="--i:1"><svg viewBox="0 0 100 100"><path class="flame" d="M50 8 C62 30 82 42 82 66 A32 32 0 0 1 18 66 C18 50 32 44 36 28 C44 38 46 22 50 8Z" fill="var(--c)"/><path class="flame" d="M50 52 C58 62 66 66 66 76 A16 16 0 0 1 34 76 C34 66 44 62 50 52Z" fill="#fff" opacity=".85"/></svg><div><span class="etag">Концентрация</span><h3>Отты үрлеу</h3><p>Оттегі көбейеді — от қарқынды жанады</p></div></div>
+    <div class="ecard pop f-nature" style="--i:2"><svg viewBox="0 0 100 100"><g class="grains" fill="var(--c)"><rect x="12" y="14" width="20" height="20" rx="3"/><rect x="40" y="14" width="20" height="20" rx="3"/><rect x="68" y="14" width="20" height="20" rx="3"/><rect x="12" y="42" width="20" height="20" rx="3"/><rect x="40" y="42" width="20" height="20" rx="3"/><rect x="68" y="42" width="20" height="20" rx="3"/><rect x="12" y="70" width="20" height="20" rx="3"/><rect x="40" y="70" width="20" height="20" rx="3"/><rect x="68" y="70" width="20" height="20" rx="3"/></g></svg><div><span class="etag">Бет ауданы</span><h3>Ұнтақ қант</h3><p>Ұсақ бөлшек кесекке қарағанда тез ериді</p></div></div>
+    <div class="ecard pop f-cat" style="--i:3"><svg viewBox="0 0 100 100"><ellipse cx="50" cy="66" rx="38" ry="24" fill="#b8814b"/><circle cx="36" cy="62" r="3" fill="#7d5328"/><circle cx="58" cy="72" r="3" fill="#7d5328"/><circle class="bu" cx="40" cy="40" r="5" fill="none" stroke="var(--c)" stroke-width="3"/><circle class="bu" cx="56" cy="40" r="4" fill="none" stroke="var(--c)" stroke-width="3"/><circle class="bu" cx="48" cy="40" r="3" fill="none" stroke="var(--c)" stroke-width="3"/></svg><div><span class="etag">Катализатор</span><h3>Шикі картоп + H<sub>2</sub>O<sub>2</sub></h3><p>Ферменті бар шикі картоп сутек пероксидін тез ыдыратады</p></div></div>
+  </div>
+</section>
+
+<!-- 18 -->
+<section class="slide f-conc" data-id="quiz">
+  <span class="tag">Мини-тест</span>
+  <h2>Біліміңді тексер</h2>
+  <div class="qz">
+    <div class="qbar" id="qbar"></div>
+    <div class="qq" id="qq"></div>
+    <div class="qopts" id="qopts"></div>
+    <div class="qexp" id="qexp"></div>
+    <div><button class="btn" id="qnext" style="display:none">Келесі сұрақ</button></div>
+  </div>
+</section>
+
+<!-- 19 -->
+<section class="slide f-conc" data-id="sum">
+  <span class="tag">Қорытынды</span>
+  <h2>Не есте қалды?</h2>
+  <div class="sum">
+    <div class="srow f-nature step" data-step="1"><b>Табиғат</b><span>белсенді зат <span class="a">тез</span> әрекеттеседі: Mg &gt; Zn &gt; Fe</span></div>
+    <div class="srow f-conc step" data-step="2"><b>Концентрация</b><span>c↑ → <span class="a">v↑</span>, &nbsp;v = k·c<sup>a</sup>(A)·c<sup>b</sup>(B), қатты зат кірмейді</span></div>
+    <div class="srow f-press step" data-step="3"><b>Қысым</b><span>тек газдар: P↑ → c↑ → <span class="a">v↑</span></span></div>
+    <div class="srow f-temp step" data-step="4"><b>Температура</b><span>+10 °C → жылдамдық <span class="a">×γ</span> (γ = 2…4)</span></div>
+    <div class="srow f-cat step" data-step="5"><b>Катализатор</b><span>Eб↓ → <span class="a">v↑</span>, өзі жұмсалмайды; ингибитор v↓</span></div>
+  </div>
+</section>
+
+ </div></div>
+ <nav class="nav" aria-label="Слайд басқару">
+  <button id="bPrev" aria-label="Артқа">←</button>
+  <span class="cnt" id="cnt">1 / 19</span>
+  <div class="dots" id="dots"></div>
+  <button id="bFs" aria-label="Толық экран" title="Толық экран (F)">⛶</button>
+  <button id="bNext" aria-label="Алға">→</button>
+ </nav>
+</div>
+
+<script>
+(function(){
+'use strict';
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const slides=$$('.slide'), N=slides.length, stage=$('#stage'), fit=$('#fit');
+const ids=slides.map(s=>s.dataset.id);
+let cur=-1, stepIdx=0, groups=[];
+const hooks={enter:{},leave:{}}, tickers={};
+const tick=(id,fn)=>{(tickers[id]=tickers[id]||[]).push(fn)};
+
+/* ---------- scale ---------- */
+function resize(){
+  const cs=getComputedStyle(fit);
+  const w=fit.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
+  const h=fit.clientHeight-parseFloat(cs.paddingTop);
+  const s=Math.max(.2,Math.min(w/1280,h/720));
+  stage.style.transform='translate(-50%,-50%) scale('+s+')';
+  stage.style.top='calc(50% + 6px)';
+}
+addEventListener('resize',resize);
+
+/* ---------- nav ---------- */
+const dots=$('#dots');
+slides.forEach((s,i)=>{const d=document.createElement('i');d.title=(i+1);d.addEventListener('click',()=>go(i));dots.appendChild(d)});
+function groupsOf(s){
+  const m=new Map();
+  $$('[data-step]',s).forEach(e=>{const k=+e.dataset.step;if(!m.has(k))m.set(k,[]);m.get(k).push(e)});
+  return [...m.keys()].sort((a,b)=>a-b).map(k=>m.get(k));
+}
+function countUp(el){
+  const to=+el.dataset.countto, t0=performance.now(), D=900;
+  (function f(t){const p=Math.min(1,(t-t0)/D), e=1-Math.pow(1-p,3);el.textContent=Math.round(to*e);if(p<1)requestAnimationFrame(f)})(t0);
+}
+function reveal(g,on){g.forEach(e=>{e.classList.toggle('on',on);if(on)$$('.cnt[data-countto]',e).forEach(countUp)})}
+function go(i,end){
+  i=Math.max(0,Math.min(N-1,i));
+  if(cur>=0){slides[cur].classList.remove('active');(hooks.leave[ids[cur]]||(()=>{}))()}
+  cur=i; const s=slides[cur]; s.classList.add('active');
+  groups=groupsOf(s); stepIdx=end?groups.length:0;
+  groups.forEach((g,k)=>g.forEach(e=>{e.classList.toggle('on',k<stepIdx);$$('.cnt[data-countto]',e).forEach(c=>{if(k>=stepIdx)c.textContent=c.dataset.countto})}));
+  (hooks.enter[ids[cur]]||(()=>{}))();
+  $('#cnt').textContent=(cur+1)+' / '+N;
+  $$('i',dots).forEach((d,k)=>{d.classList.toggle('on',k===cur);d.classList.toggle('done',k<cur)});
+  try{history.replaceState(null,'','#slide-'+(cur+1))}catch(e){}
+}
+function next(){ if(stepIdx<groups.length){reveal(groups[stepIdx],true);stepIdx++} else if(cur<N-1) go(cur+1) }
+function prev(){ if(stepIdx>0){stepIdx--;reveal(groups[stepIdx],false)} else if(cur>0) go(cur-1,true) }
+$('#bNext').addEventListener('click',next); $('#bPrev').addEventListener('click',prev);
+$('#bFs').addEventListener('click',fs);
+function fs(){try{if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen()}catch(e){}}
+addEventListener('keydown',e=>{
+  const t=e.target; if(t&&(t.tagName==='SELECT'||(t.tagName==='INPUT'&&t.type==='number')))return;
+  if(e.ctrlKey||e.metaKey||e.altKey)return;
+  if(['ArrowRight','PageDown',' ','Enter'].includes(e.key)&&!(t&&t.tagName==='BUTTON'&&e.key!=='ArrowRight')){e.preventDefault();next()}
+  else if(['ArrowLeft','PageUp','Backspace'].includes(e.key)){e.preventDefault();prev()}
+  else if(e.key==='Home'){go(0)} else if(e.key==='End'){go(N-1,true)}
+  else if(e.key==='f'||e.key==='F'||e.key==='а'||e.key==='А'){fs()}
+});
+document.addEventListener('pointerup',e=>{const t=e.target;if(t&&t.type==='range')setTimeout(()=>t.blur(),0)});
+$$('[data-go]').forEach(b=>b.addEventListener('click',()=>go(ids.indexOf(b.dataset.go))));
+
+/* ---------- particle box ---------- */
+class Box{
+  constructor(cv,o){
+    this.w=o.w||560;this.h=o.h||340;this.r=o.r||9;this.speed=1;this.thr=o.thr||0;this.piston=!!o.piston;
+    cv.width=this.w*2;cv.height=this.h*2;cv.style.width=this.w+'px';cv.style.height=this.h+'px';
+    this.cv=cv;this.c=cv.getContext('2d');this.wx=o.wall||this.w;this.tx=this.wx;
+    this.ps=[];this.fl=[];this.log=[];this.tot=0;this.eff=0;this.cols=['#1b86ff','#ff9f1a'];
+  }
+  spawn(t){const a=Math.random()*6.283,v=70+Math.random()*80;
+    return{t,x:this.r+Math.random()*(this.wx-2*this.r),y:this.r+Math.random()*(this.h-2*this.r),vx:Math.cos(a)*v,vy:Math.sin(a)*v,cd:0}}
+  count(t,n){const a=this.ps.filter(p=>p.t===t);let k=a.length;
+    while(k<n){this.ps.push(this.spawn(t));k++}
+    while(k>n){const p=a.pop();this.ps.splice(this.ps.indexOf(p),1);k--}}
+  reset(){this.tot=0;this.eff=0;this.log.length=0}
+  rate(){const n=performance.now()/1000;this.log=this.log.filter(t=>n-t<3);return this.log.length/3}
+  step(dt){
+    const r=this.r,s=this.speed,ps=this.ps,now=performance.now()/1000;
+    this.wx+=(this.tx-this.wx)*Math.min(1,dt*6);
+    for(const p of ps){
+      p.x+=p.vx*s*dt;p.y+=p.vy*s*dt;p.cd=Math.max(0,p.cd-dt);
+      if(p.x<r){p.x=r;p.vx=Math.abs(p.vx)} if(p.x>this.wx-r){p.x=this.wx-r;p.vx=-Math.abs(p.vx)}
+      if(p.y<r){p.y=r;p.vy=Math.abs(p.vy)} if(p.y>this.h-r){p.y=this.h-r;p.vy=-Math.abs(p.vy)}
+    }
+    for(let i=0;i<ps.length;i++)for(let j=i+1;j<ps.length;j++){
+      const a=ps[i],b=ps[j],dx=a.x-b.x,dy=a.y-b.y,d2=dx*dx+dy*dy,m=2*r;
+      if(d2<m*m){
+        const d=Math.sqrt(d2)||.01,nx=dx/d,ny=dy/d,rx=a.vx-b.vx,ry=a.vy-b.vy,vn=rx*nx+ry*ny;
+        if(vn<0){a.vx-=vn*nx;a.vy-=vn*ny;b.vx+=vn*nx;b.vy+=vn*ny;
+          if(a.t!==b.t&&a.cd<=0&&b.cd<=0){
+            const rel=Math.hypot(rx,ry)*s,ok=rel>=this.thr;a.cd=b.cd=.35;this.tot++;
+            if(ok){this.eff++;this.log.push(now)}
+            this.fl.push({x:(a.x+b.x)/2,y:(a.y+b.y)/2,t:0,ok});
+          }}
+        const ov=(m-d)/2;a.x+=nx*ov;a.y+=ny*ov;b.x-=nx*ov;b.y-=ny*ov;
+      }
+    }
+    this.draw(dt);
+  }
+  draw(dt){
+    const c=this.c;c.setTransform(2,0,0,2,0,0);c.clearRect(0,0,this.w,this.h);
+    if(this.piston){c.fillStyle='#8b98b0';c.fillRect(this.wx,0,12,this.h);c.fillRect(this.wx+12,this.h/2-9,this.w,18);}
+    for(const p of this.ps){c.beginPath();c.arc(p.x,p.y,this.r,0,6.283);c.fillStyle=this.cols[p.t];c.fill();
+      c.lineWidth=2;c.strokeStyle='rgba(255,255,255,.75)';c.stroke()}
+    this.fl=this.fl.filter(f=>(f.t+=dt)<.45);
+    for(const f of this.fl){const k=f.t/.45;c.beginPath();c.arc(f.x,f.y,this.r+4+k*22,0,6.283);
+      c.lineWidth=f.ok?5:3;c.strokeStyle=f.ok?'rgba(15,169,122,'+(1-k)+')':'rgba(154,167,189,'+(.8*(1-k))+')';c.stroke()}
+  }
+}
+function boxOn(id,cv,o,onTick){
+  const b=new Box(cv,o);let acc=0;
+  tick(id,dt=>{b.step(dt);acc+=dt;if(acc>.25){acc=0;onTick&&onTick(b)}});
+  return b;
+}
+
+/* ---------- 1 title drift ---------- */
+(function(){
+  const cv=$('#drift'),c=cv.getContext('2d');cv.width=2560;cv.height=1440;
+  const cols=['#8a5cf6','#1b86ff','#e89a00','#f0443f','#0fa97a'];
+  const P=Array.from({length:34},(_,i)=>({x:Math.random()*1280,y:Math.random()*720,r:8+Math.random()*20,vx:(Math.random()-.5)*26,vy:(Math.random()-.5)*26,c:cols[i%5]}));
+  tick('title',dt=>{
+    c.setTransform(2,0,0,2,0,0);c.clearRect(0,0,1280,720);
+    for(const p of P){p.x+=p.vx*dt;p.y+=p.vy*dt;if(p.x<-30)p.x=1310;if(p.x>1310)p.x=-30;if(p.y<-30)p.y=750;if(p.y>750)p.y=-30}
+    c.lineWidth=2;
+    for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++){const d=Math.hypot(P[i].x-P[j].x,P[i].y-P[j].y);
+      if(d<150){c.globalAlpha=(1-d/150)*.35;c.strokeStyle=P[i].c;c.beginPath();c.moveTo(P[i].x,P[i].y);c.lineTo(P[j].x,P[j].y);c.stroke()}}
+    for(const p of P){c.globalAlpha=.5;c.fillStyle=p.c;c.beginPath();c.arc(p.x,p.y,p.r,0,6.283);c.fill()}
+    c.globalAlpha=1;
+  });
+})();
+
+/* ---------- 2 race ---------- */
+function race(){$$('#raceGo').forEach(()=>{});
+  $$('.fill',slides[ids.indexOf('rate')]).forEach(f=>{f.style.transition='none';f.style.width='0';void f.offsetWidth;f.style.transition='width '+f.dataset.t+'s linear';f.style.width='100%'})}
+hooks.enter.rate=race; $('#raceGo').addEventListener('click',race);
+
+/* ---------- 3 collisions ---------- */
+(function(){
+  const b=boxOn('collide',$('#cv3'),{thr:170},b=>{$('#t3all').textContent=b.tot;$('#t3eff').textContent=b.eff});
+  b.count(0,7);b.count(1,7);hooks.enter.collide=()=>b.reset();
+})();
+
+/* ---------- 5 tubes ---------- */
+(function(){
+  const gl=$$('#tubes .glass'),rates=[70,230,700,0];let tm=[];
+  function stop(){tm.forEach(clearInterval);tm=[]}
+  function pour(){stop();gl.forEach((g,i)=>{g.classList.add('poured');if(rates[i]){setTimeout(()=>{tm.push(setInterval(()=>{
+      const b=document.createElement('i');b.className='bub';b.style.left=(16+Math.random()*58)+'px';g.appendChild(b);b.addEventListener('animationend',()=>b.remove())},rates[i]))},700)}})}
+  function unpour(){stop();gl.forEach(g=>{g.classList.remove('poured');$$('.bub',g).forEach(b=>b.remove())})}
+  $('#pour').addEventListener('click',pour);$('#unpour').addEventListener('click',unpour);
+  hooks.leave.nature=unpour;hooks.enter.nature=unpour;
+})();
+
+/* ---------- 6 concentration ---------- */
+(function(){
+  const b=boxOn('conc',$('#cv6'),{},b=>{$('#r6').textContent=b.rate().toFixed(1)});
+  const A=$('#rA6'),B=$('#rB6');
+  function upd(){const a=+A.value,c=+B.value;b.count(0,a);b.count(1,c);b.reset();$('#nA6').textContent=a;$('#nB6').textContent=c;
+    const x=a*c/16;$('#x6').textContent='×'+(Math.round(x*100)/100).toString().replace('.',',')}
+  A.addEventListener('input',upd);B.addEventListener('input',upd);upd();
+})();
+
+/* ---------- 8 solid + cubes ---------- */
+(function(){
+  const Q=[
+    {o:['v = k·c(N₂)·c(H₂)','v = k·c(N₂)·c³(H₂)','v = k·c²(NH₃)'],a:1,e:'Газ: коэффициент = дәреже (H₂ үшін 3).'},
+    {o:['v = k·c(C)·c(O₂)','v = k·c(CO₂)','v = k·c(O₂)'],a:2,e:'Көмір — қатты зат, теңдеуге кірмейді.'},
+    {o:['v = k·c²(HCl)','v = k·c(Mg)·c²(HCl)','v = k·c(H₂)'],a:0,e:'Mg — қатты зат, тек HCl концентрациясы қалады.'}
+  ];
+  const sub=s=>s.replace(/[₂₃]/g,m=>'<sub>'+(m==='₂'?'2':'3')+'</sub>').replace(/³/g,'<sup>3</sup>').replace(/²/g,'<sup>2</sup>');
+  $$('.qrow').forEach(row=>{const q=Q[+row.dataset.q],box=$('.qo',row);
+    q.o.forEach((t,i)=>{const bt=document.createElement('button');bt.innerHTML=sub(t);
+      bt.addEventListener('click',()=>{ $$('button',box).forEach(x=>x.classList.remove('right','wrong'));
+        bt.classList.add(i===q.a?'right':'wrong'); if(i!==q.a)$$('button',box)[q.a].classList.add('right');
+        $('#sq').textContent=(i===q.a?'Дұрыс! ':'Жоқ. ')+q.e});
+      box.appendChild(bt)})});
+  const cu=$('#cubes');
+  function cubes(k){cu.style.gridTemplateColumns='repeat('+k+',1fr)';cu.innerHTML='';
+    for(let i=0;i<k*k;i++){const e=document.createElement('i');e.style.animationDelay=(i*8)+'ms';cu.appendChild(e)}
+    cu.style.gap=(k===1?0:k===2?6:3)+'px';$('#cubeS').textContent='×'+k}
+  $$('#cubeBtns .chip').forEach(c=>c.addEventListener('click',()=>{$$('#cubeBtns .chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');cubes(+c.dataset.k)}));
+  cubes(1);
+})();
+
+/* ---------- 9 concentration calculator ---------- */
+(function(){
+  const R=[
+    {t:'2CO + O₂ → 2CO₂',n:['CO','O₂'],e:[2,1]},
+    {t:'2NO + O₂ → 2NO₂',n:['NO','O₂'],e:[2,1]},
+    {t:'N₂ + 3H₂ ⇌ 2NH₃',n:['N₂','H₂'],e:[1,3]},
+    {t:'2A + B → C',n:['A','B'],e:[2,1]},
+    {t:'4Al(қ) + 3O₂ → 2Al₂O₃',n:['Al (қатты зат)','O₂'],e:[0,3]}
+  ];
+  const V=[.5,1,2,3,4],L=['½','1','2','3','4'];let ri=0,mA=3,mB=1;
+  const sel=$('#cR');R.forEach((r,i)=>{const o=document.createElement('option');o.value=i;o.textContent=r.t;sel.appendChild(o)});
+  function chips(id,get,set){const box=$(id);box.innerHTML='';V.forEach((v,i)=>{const b=document.createElement('button');b.className='chip'+(get()===v?' on':'');b.textContent='×'+L[i];
+    b.addEventListener('click',()=>{set(v);render()});box.appendChild(b)})}
+  const fmt=x=>x>=1?(x===1?'өзгермейді':(Math.round(x*100)/100)+' есе артады'):(Math.round(1/x*100)/100)+' есе кемиді';
+  const nm=s=>s.replace(/₂/g,'<sub>2</sub>').replace(/₃/g,'<sub>3</sub>');
+  function render(){
+    const r=R[ri];
+    $('#cNA').innerHTML='c('+nm(r.n[0])+') өзгерісі';$('#cNB').innerHTML='c('+nm(r.n[1])+') өзгерісі';
+    chips('#cA',()=>mA,v=>mA=v);chips('#cB',()=>mB,v=>mB=v);
+    const res=Math.pow(mA,r.e[0])*Math.pow(mB,r.e[1]),f=v=>v===.5?'½':v;
+    $('#cF').innerHTML='('+f(mA)+')<sup>'+r.e[0]+'</sup> · ('+f(mB)+')<sup>'+r.e[1]+'</sup> = '+(res<1?'1/'+Math.round(1/res*100)/100:Math.round(res*100)/100);
+    $('#cO').textContent='v '+fmt(res)+(r.e[0]===0?' (қатты зат әсер етпейді)':'');
+  }
+  sel.addEventListener('change',()=>{ri=+sel.value;render()});render();
+})();
+
+/* ---------- 10 pressure ---------- */
+(function(){
+  const b=boxOn('press',$('#cv10'),{piston:true,wall:520,h:300},b=>{});
+  b.count(0,9);b.count(1,5);
+  const el=$('#rP10');
+  function upd(){const P=+el.value;b.tx=520/P;b.reset();$('#p10').textContent='×'+P;$('#v10').textContent=P===1?'1':'1/'+P;$('#c10').textContent='×'+P;$('#x10').textContent='×'+Math.pow(P,3)}
+  el.addEventListener('input',upd);hooks.enter.press=()=>{};upd();
+})();
+
+/* ---------- 12 temperature ---------- */
+(function(){
+  let g=2,T=20;
+  const b=boxOn('temp',$('#cv12'),{thr:155},b=>{$('#r12').textContent=b.rate().toFixed(1)});
+  b.count(0,8);b.count(1,8);
+  const fmtN=n=>n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ');
+  function upd(){
+    b.speed=.55+(T-20)/60;b.reset();
+    $('#T12').textContent=T+' °C';
+    const m=Math.pow(g,(T-20)/10);$('#x12').textContent='×'+fmtN(m);
+    $('#lb12').style.width=(Math.log(m)/Math.log(Math.pow(g,8))*100)+'%';
+    const f=(T-20)/80;$('#th').style.height=(10+f*90)+'%';$('#th').style.background='hsl('+(215-215*f)+' 88% 55%)';
+  }
+  $('#rT12').addEventListener('input',e=>{T=+e.target.value;upd()});
+  $$('#gam12 .chip').forEach(c=>c.addEventListener('click',()=>{$$('#gam12 .chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');g=+c.dataset.g;upd()}));
+  upd();
+})();
+
+/* ---------- 14 temperature calculator ---------- */
+(function(){
+  let g=3;
+  const fmtN=n=>(Math.round(n*100)/100).toString().replace('.',',');
+  function upd(){
+    const t1=+$('#t1').value,t2=+$('#t2').value,tm=+$('#tm').value,m=Math.pow(g,(t2-t1)/10);
+    $('#kF').innerHTML=g+'<sup>('+(t2-t1)+')/10</sup> = '+fmtN(m);
+    const sec=tm*60/m;
+    $('#kO').textContent='v ×'+fmtN(m)+(tm>0?' · уақыт: '+(sec<120?fmtN(sec)+' с':fmtN(sec/60)+' мин'):'');
+  }
+  $$('#gC .chip').forEach(c=>c.addEventListener('click',()=>{$$('#gC .chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');g=+c.dataset.g;upd()}));
+  ['#t1','#t2','#tm'].forEach(s=>$(s).addEventListener('input',upd));upd();
+})();
+
+/* ---------- 15 energy diagram ---------- */
+(function(){
+  const pa=$('#pathA'),pb=$('#pathB'),ba=$('#ballA'),bb=$('#ballB'),la=pa.getTotalLength(),lb=pb.getTotalLength();let t=0;
+  const ease=p=>p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
+  tick('cat',dt=>{t+=dt;
+    const pA=Math.min(1,(t%8)/6.5),pB=Math.min(1,(t%8)/2.6);
+    let a=pa.getPointAtLength(la*pA),b2=pb.getPointAtLength(lb*pB);
+    ba.setAttribute('cx',a.x);ba.setAttribute('cy',a.y-13);bb.setAttribute('cx',b2.x);bb.setAttribute('cy',b2.y-13)});
+})();
+
+/* ---------- 16 flip ---------- */
+$$('#flips .flip').forEach(f=>{const t=()=>f.classList.toggle('on');f.addEventListener('click',t);f.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();t()}})});
+hooks.leave.types=()=>$$('#flips .flip').forEach(f=>f.classList.remove('on'));
+
+/* ---------- 18 quiz ---------- */
+(function(){
+  const Q=[
+    {q:'2NO + O<sub>2</sub> → 2NO<sub>2</sub>. NO концентрациясын 3 есе арттырса, жылдамдық...',o:['3 есе артады','6 есе артады','9 есе артады','27 есе артады'],a:2,e:'v = k·c²(NO)·c(O₂) → 3² = 9 есе.'},
+    {q:'2SO<sub>2</sub> + O<sub>2</sub> → 2SO<sub>3</sub> (газдар). Қысымды 2 есе төмендетсек...',o:['2 есе кемиді','4 есе кемиді','6 есе кемиді','8 есе кемиді'],a:3,e:'(½)²·(½) = ⅛ → 8 есе кемиді.'},
+    {q:'4Al(қ) + 3O<sub>2</sub> → 2Al<sub>2</sub>O<sub>3</sub>. O<sub>2</sub> концентрациясын 3 есе арттырсақ...',o:['3 есе артады','9 есе артады','27 есе артады','81 есе артады'],a:2,e:'Al — қатты зат. v = k·c³(O₂) → 3³ = 27 есе.'},
+    {q:'A(г) + B(г) → C(г). Жылдамдық 25 есе артуы үшін қысымды неше есе арттыру керек?',o:['3 есе','4 есе','5 есе','10 есе'],a:2,e:'v ~ P·P = P². P² = 25 → P = 5.'},
+    {q:'γ = 3. Жылдамдықты 27 есе арттыру үшін температураны қанша градусқа көтеру керек?',o:['10 °C','20 °C','30 °C','40 °C'],a:2,e:'3ⁿ = 27 → n = 3 қадам → 30 °C.'},
+    {q:'Реакцияны баяулататын зат қалай аталады?',o:['Катализатор','Промотор','Ингибитор','Катализдік у'],a:2,e:'Ингибитор жылдамдықты азайтады (мысалы, тоттануға қарсы).'}
+  ];
+  const fixSub=s=>s.replace(/₂/g,'<sub>2</sub>').replace(/²/g,'<sup>2</sup>').replace(/³/g,'<sup>3</sup>').replace(/ⁿ/g,'<sup>n</sup>');
+  let qi=0,score=0,res=[];
+  const bar=$('#qbar'),qq=$('#qq'),qo=$('#qopts'),ex=$('#qexp'),nb=$('#qnext');
+  const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+  function drawBar(){bar.innerHTML='';Q.forEach((_,i)=>{const e=document.createElement('i');e.className=res[i]===1?'ok':res[i]===0?'no':i===qi?'cur':'';bar.appendChild(e)})}
+  function show(){
+    ex.textContent='';nb.style.display='none';qo.innerHTML='';drawBar();
+    if(qi>=Q.length){qq.innerHTML='Нәтиже: <span class="hl">'+score+' / '+Q.length+'</span><br><span class="small">'+(score>=5?'Керемет! Тақырыпты жақсы меңгердің.':score>=3?'Жақсы! Қателескен сұрақтарды қайта қара.':'Тақырыпты қайталап, тағы бір рет байқап көр.')+'</span>';
+      nb.textContent='Қайта бастау';nb.style.display='';nb.onclick=()=>{qi=0;score=0;res=[];show()};return}
+    const q=Q[qi];qq.innerHTML=(qi+1)+'. '+q.q;
+    const opts=shuffle(q.o.map((t,i)=>({t,ok:i===q.a})));
+    opts.forEach(o=>{const b=document.createElement('button');b.textContent=o.t;
+      b.addEventListener('click',()=>{ if(res[qi]!==undefined)return;
+        res[qi]=o.ok?1:0;if(o.ok)score++;b.classList.add(o.ok?'right':'wrong');
+        $$('button',qo).forEach((x,k)=>{if(opts[k].ok)x.classList.add('right');x.disabled=true});
+        ex.innerHTML=(o.ok?'<b class="ok">Дұрыс!</b> ':'<b class="bad">Қате.</b> ')+fixSub(q.e);
+        nb.textContent=qi<Q.length-1?'Келесі сұрақ':'Нәтижені көру';nb.style.display='';nb.onclick=()=>{qi++;show()};drawBar()});
+      qo.appendChild(b)});
+  }
+  hooks.enter.quiz=()=>{qi=0;score=0;res=[];show()};
+})();
+
+/* ---------- loop ---------- */
+let last=performance.now();
+(function loop(t){
+  const dt=Math.min(.05,(t-last)/1000);last=t;
+  if(cur>=0)(tickers[ids[cur]]||[]).forEach(f=>f(dt));
+  requestAnimationFrame(loop);
+})(last);
+
+/* ---------- start ---------- */
+resize();
+const m=/^#slide-(\d+)$/.exec(location.hash||'');
+go(m?Math.min(N,Math.max(1,+m[1]))-1:0);
+window.__go=go;
+requestAnimationFrame(resize);
+})();
+</script>
