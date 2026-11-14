@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Сіріңке тарихы — анимация</title>
+<style>
+  :root { --bg:#14161c; --fg:#e8e2d4; --mut:#9a958a; --acc:#5dff8f; }
+  html,body { margin:0; background:var(--bg); color:var(--fg); font:14px/1.4 system-ui,sans-serif; }
+  #wrap { display:flex; flex-direction:column; align-items:center; gap:10px; padding:12px; }
+  #out { height:min(80vh, 960px); width:auto; aspect-ratio:9/16; background:#000; border-radius:6px; }
+  #ui { display:flex; flex-wrap:wrap; gap:6px; align-items:center; justify-content:center; max-width:720px; }
+  button { background:#262a33; color:var(--fg); border:1px solid #3a3f4a; border-radius:6px; padding:5px 9px; cursor:pointer; }
+  button:hover { border-color:var(--acc); }
+  input[type=range] { width:min(90vw,540px); }
+  #info { color:var(--mut); }
+</style>
+</head>
+<body>
+<div id="wrap">
+  <div id="ui"><button id="play">▶ Ойнату</button><span id="info">жүктелуде…</span></div>
+  <input id="scrub" type="range" min="0" max="1000" value="0">
+  <div id="ui2" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:720px"></div>
+</div>
+<script src="lib/brush.js"></script>
+<script src="src/kit.js"></script>
+<script src="src/engine.js"></script>
+<script src="src/scenes.js"></script>
+<script>
+(async () => {
+  await Engine.init(document.getElementById('wrap'));
+  const wrap = document.getElementById('wrap'); wrap.insertBefore(Engine.out, wrap.children[1]);
+  const info = document.getElementById('info'), scrub = document.getElementById('scrub');
+  let T = 0, playing = false, t0 = 0, T0 = 0;
+  const show = () => { const r = Engine.render(T); info.textContent = `${T.toFixed(2)} / ${Engine.total.toFixed(1)} c · ${SCENES[r.scene].name}`; scrub.value = Math.round(T / Engine.total * 1000); };
+  // hooks for the offline renderer
+  window.renderAt = (t) => { T = t; Engine.render(t); return Engine.out.toDataURL('image/jpeg', 0.93); };
+  window.videoInfo = () => ({ total: Engine.total, fps: FPS, dfps: DFPS, scenes: SCENES.map((s, i) => ({ name: s.name, start: Engine.starts[i], dur: s.dur })) });
+  const ui2 = document.getElementById('ui2');
+  SCENES.forEach((s, i) => { const b = document.createElement('button'); b.textContent = i + 1; b.title = s.name; b.onclick = () => { T = Engine.starts[i] + 0.01; T0 = T; t0 = performance.now(); show(); }; ui2.appendChild(b); });
+  scrub.oninput = () => { T = scrub.value / 1000 * Engine.total; T0 = T; t0 = performance.now(); show(); };
+  document.getElementById('play').onclick = (e) => { playing = !playing; e.target.textContent = playing ? '❚❚ Тоқтату' : '▶ Ойнату'; T0 = T; t0 = performance.now(); };
+  const loop = () => { if (playing) { T = T0 + (performance.now() - t0) / 1000; if (T >= Engine.total) { T = 0; T0 = 0; t0 = performance.now(); } show(); } requestAnimationFrame(loop); };
+  show(); loop();
+  window.__ready = true;
+})();
+</script>
+</body>
+</html>
