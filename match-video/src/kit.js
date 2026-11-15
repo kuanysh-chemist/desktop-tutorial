@@ -80,6 +80,12 @@ function partial(pts, prog) {
 // shape(points, opts): closed shape with optional watercolor fill / flat wash / outline / hatch
 function shape(pts, o = {}) {
   if (!pts || pts.length < 3) return;
+  // opaque base under translucent watercolour, so the background does not show through characters
+  if (o.solid && o.fill) {
+    resetState(); sd((o.id || 'x') + 'base', false);
+    B.wash(mixHex(o.fill, '#ffffff', 0.18), 255);
+    B.beginShape(o.curve ?? 0.4); for (const p of pts) B.vertex(p[0], p[1]); B.endShape(true);
+  }
   resetState();
   sd(o.id ?? ('s' + pts.length + '_' + Math.round(pts[0][0]) + '_' + Math.round(pts[0][1])), o.boil !== false);
   if (o.fill) { B.fill(o.fill, o.op ?? 190); B.fillBleed(o.bleed ?? 0.1); B.fillTexture(o.tex ?? 0.35, o.border ?? 0.35, o.scatter ?? true); }
@@ -128,7 +134,7 @@ function flamePts(x, y, size, t, k = 1, salt = 0) {
 function flame(x, y, size, t, o = {}) {
   if (size <= 0.5) return;
   const outer = o.outer || '#e8692a', inner = o.inner || '#ffd25a';
-  shape(flamePts(x, y, size, t, 1, o.salt || 0), { fill: outer, op: 235, bleed: 0.04, tex: 0.2, border: 0.5, curve: 0.6, id: 'fl' + (o.id || '') + Math.floor(t * 12), boil: false });
+  shape(flamePts(x, y, size, t, 1, o.salt || 0), { fill: outer, op: 235, bleed: 0.04, tex: 0.2, border: 0.5, curve: 0.6, id: 'fl' + (o.id || '') + Math.floor(t * 24), boil: false });
   shape(flamePts(x, y + size * 0.1, size, t + 0.3, 0.55, (o.salt || 0) + 2), { wash: inner, wop: 255, curve: 0.6, id: 'fi' + (o.id || '') });
 }
 
@@ -156,182 +162,38 @@ function matchbox(x, y, w, h, o = {}) {
   }
 }
 
-// ---------- hands ----------
-// Fist seen from the side, holding something at (x,y); `ang` = direction the forearm comes from (radians)
-function fist(x, y, ang, s = 1, o = {}) {
-  // ang = direction from the fist towards the forearm (radians)
-  const sleeve = o.sleeve || '#5b6b8a';
-  const skin = o.skin || '#e9bf98';
-  const R = (pts) => xf(pts, { x, y, s, r: ang + Math.PI });
-  // sleeve: tapered tube from the wrist backwards, with a cuff
-  shape(R([[-34, -24], [-230, -34], [-230, 34], [-34, 24]]), { fill: sleeve, op: 225, bleed: 0.05, tex: 0.4, border: 0.3, line: INK, w: 1.4, curve: 0.15, id: 'sl' + (o.id || '') });
-  shape(R([[-30, -26], [-52, -28], [-52, 28], [-30, 26]]), { wash: mixHex(sleeve, '#000000', 0.25), line: INK, w: 1.2, curve: 0.1, id: 'cf' + (o.id || '') });
-  // fist (knuckles forward)
-  const f = [[-30, -20], [-6, -28], [20, -26], [36, -14], [38, 6], [32, 24], [8, 30], [-22, 26], [-32, 12]];
-  shape(R(f), { fill: skin, op: 235, bleed: 0.04, tex: 0.2, border: 0.2, line: INK, w: 1.5, curve: 0.55, id: 'fs' + (o.id || '') });
-  for (let i = 0; i < 3; i++) {
-    const yy = -12 + i * 12;
-    path(R([[14, yy], [34, yy + 1]]), 'HB', INK, 1.0, { id: 'fc' + i + (o.id || '') });
-  }
-  path(R([[-20, -22], [6, -34], [26, -24]]), 'HB', INK, 1.3, { id: 'th' + (o.id || '') });
-}
-
-// ---------- characters ----------
-// Bust in 3/4-front view. Head centre at (0,0) in local space, head ~ 120x150.
-// opt: skin, hair, hairStyle(bun|curly|bald|short|scarf|wavy), coat, collar(white|shawl|cravat|band|hoodie),
-//      expr(neutral|worry|surprised|blow|focus), mustache, beard, jawGlow (0..1), blush, look (eye offset)
-function person(x, y, s, opt = {}) {
-  const id = opt.id || 'p';
-  const T = (pts) => xf(pts, { x, y, s });
-  const skin = opt.skin || '#ecc6a2';
-  const coat = opt.coat || '#4f5d75';
-  const hair = opt.hair || '#3b2a20';
-  const expr = opt.expr || 'neutral';
-  const ex = opt.look || 0;
-
-  // --- back hair (behind head)
-  if (opt.hairStyle === 'curly') {
-    const wig = [[-82, -70], [-92, 10], [-104, 90], [-96, 170], [-60, 190], [-40, 120], [40, 120], [60, 190], [96, 170], [104, 90], [92, 10], [82, -70], [40, -112], [-40, -112]];
-    shape(T(wig), { fill: hair, op: 210, bleed: 0.12, tex: 0.6, border: 0.4, curve: 0.6, id: id + 'wig' });
-  }
-  if (opt.hairStyle === 'bun') {
-    shape(T(ell(28, -92, 34, 28, 18)), { fill: hair, op: 220, bleed: 0.06, tex: 0.5, line: INK, w: 1.1, id: id + 'bun' });
-  }
-  if (opt.hairStyle === 'scarf') {
-    const sc = [[-80, -40], [-92, 40], [-78, 120], [-40, 150], [40, 150], [78, 120], [92, 40], [80, -40], [50, -100], [0, -116], [-50, -100]];
-    shape(T(sc), { fill: opt.scarf || '#8a6f5a', op: 215, bleed: 0.08, tex: 0.45, line: INK, w: 1.2, curve: 0.6, id: id + 'scb' });
-  }
-
-  // --- body / coat
-  const body = [[-175, 330], [-160, 190], [-110, 132], [-34, 104], [34, 104], [110, 132], [160, 190], [175, 330]];
-  shape(T(body), { fill: coat, op: 215, bleed: 0.08, tex: 0.45, border: 0.3, line: INK, w: 1.5, curve: 0.45, id: id + 'body' });
-  // neck
-  shape(T([[-24, 66], [24, 66], [28, 118], [-28, 118]]), { fill: skin, op: 200, bleed: 0.05, tex: 0.2, border: 0.1, curve: 0.2, id: id + 'neck' });
-  path(T([[-24, 62], [-28, 116]]), 'HB', INK, 1.0, { id: id + 'nl' });
-  path(T([[24, 62], [28, 116]]), 'HB', INK, 1.0, { id: id + 'nr' });
-  // collar variants
-  if (opt.collar === 'band') { // 17th c. white falling band
-    shape(T([[-70, 112], [70, 112], [92, 176], [0, 196], [-92, 176]]), { fill: '#f7f3ea', op: 200, bleed: 0.03, tex: 0.15, line: INK, w: 1.2, curve: 0.35, id: id + 'band' });
-  } else if (opt.collar === 'cravat') {
-    shape(T([[-46, 106], [46, 106], [20, 150], [0, 190], [-20, 150]]), { fill: '#f4efe4', op: 200, bleed: 0.03, tex: 0.1, line: INK, w: 1.1, curve: 0.4, id: id + 'crv' });
-    path(T([[-60, 110], [-30, 200], [-46, 300]]), 'HB', INK, 1.1, { id: id + 'lap1' });
-    path(T([[60, 110], [30, 200], [46, 300]]), 'HB', INK, 1.1, { id: id + 'lap2' });
-  } else if (opt.collar === 'shawl') {
-    shape(T([[-150, 210], [-100, 130], [-30, 112], [0, 170], [30, 112], [100, 130], [150, 210], [60, 250], [0, 230], [-60, 250]]), { fill: opt.shawl || '#7b5d4c', op: 205, bleed: 0.06, tex: 0.55, line: INK, w: 1.2, curve: 0.4, id: id + 'shawl', hatch: [7, 60, { rand: 0.2 }], hcolor: '#3b2a20', hw: 0.6 });
-  } else if (opt.collar === 'white') {
-    path(T([[-40, 110], [0, 140], [40, 110]]), 'HB', INK, 1.1, { id: id + 'wc' });
-  } else if (opt.collar === 'hoodie') {
-    shape(T([[-90, 118], [0, 150], [90, 118], [70, 170], [0, 186], [-70, 170]]), { fill: mixHex(coat, '#000000', 0.15), op: 200, bleed: 0.05, tex: 0.3, line: INK, w: 1.1, curve: 0.5, id: id + 'hood' });
-  }
-  if (opt.hairStyle === 'curly') {
-    for (const sx of [-1, 1]) shape(T([[sx * 60, 0], [sx * 96, 20], [sx * 108, 100], [sx * 100, 180], [sx * 70, 200], [sx * 58, 120]]), { fill: hair, op: 225, bleed: 0.1, tex: 0.6, border: 0.4, line: INK, w: 1.1, curve: 0.6, id: id + 'lobe' + sx });
-  }
-  if (opt.apron) {
-    shape(T([[-80, 200], [80, 200], [96, 330], [-96, 330]]), { fill: '#efe7d6', op: 190, bleed: 0.03, tex: 0.2, line: INK, w: 1.1, curve: 0.2, id: id + 'apr' });
-  }
-
-  // --- head
-  const head = [];
-  for (let i = 0; i < 30; i++) {
-    const a = i / 30 * TAU; const lower = Math.max(0, Math.sin(a));
-    const puff = expr === 'blow' ? 1 + 0.12 * Math.exp(-Math.pow((Math.sin(a) - 0.45) * 3, 2)) : 1;
-    head.push([Math.cos(a) * 60 * (1 - 0.2 * lower * lower) * puff, Math.sin(a) * 76 - 4]);
-  }
-  // ears
-  shape(T(ell(-60, 4, 10, 16, 12)), { fill: skin, op: 210, line: INK, w: 1.0, id: id + 'e1', bleed: 0.03 });
-  shape(T(ell(60, 4, 10, 16, 12)), { fill: skin, op: 210, line: INK, w: 1.0, id: id + 'e2', bleed: 0.03 });
-  shape(T(head), { fill: skin, op: 215, bleed: 0.05, tex: 0.25, border: 0.12, line: INK, w: 1.5, curve: 0.5, id: id + 'head' });
-
-  // glowing jaw (phossy jaw) — green wash on the lower face
-  if (opt.jawGlow > 0) {
-    const jaw = [];
-    for (let i = 0; i <= 14; i++) { const a = Math.PI * 0.08 + Math.PI * 0.84 * i / 14; jaw.push([Math.cos(a) * 56 * (1 - 0.2 * Math.sin(a) * Math.sin(a)), Math.sin(a) * 70 - 4]); }
-    jaw.push([-30, 30], [30, 30]);
-    shape(T(jaw), { fill: '#59f08a', op: Math.round(80 + 150 * opt.jawGlow), bleed: 0.1, tex: 0.3, border: 0.2, curve: 0.5, id: id + 'jaw', boil: false });
-  }
-
-  // blush
-  if (opt.blush !== false) {
-    shape(T(ell(-34, 26, 13, 8, 12)), { fill: '#e48b7b', op: expr === 'blow' ? 150 : 70, bleed: 0.2, tex: 0.1, id: id + 'bl1', boil: false });
-    shape(T(ell(34, 26, 13, 8, 12)), { fill: '#e48b7b', op: expr === 'blow' ? 150 : 70, bleed: 0.2, tex: 0.1, id: id + 'bl2', boil: false });
-  }
-
-  // --- front hair
-  if (opt.hairStyle === 'bun' || opt.hairStyle === 'short' || opt.hairStyle === 'wavy') {
-    const fr = opt.hairStyle === 'bun'
-      ? [[-64, 10], [-66, -40], [-44, -78], [0, -88], [44, -78], [66, -40], [64, 10], [52, -30], [20, -56], [0, -50], [-20, -56], [-52, -30]]
-      : [[-64, -6], [-68, -46], [-40, -84], [8, -92], [50, -80], [68, -44], [64, -6], [54, -36], [30, -58], [-6, -62], [-40, -52], [-56, -30]];
-    shape(T(fr), { fill: hair, op: 225, bleed: 0.06, tex: 0.5, border: 0.3, line: INK, w: 1.3, curve: 0.5, id: id + 'hair' });
-    for (let i = 0; i < 5; i++) path(T([[-40 + i * 18, -70 + Math.abs(i - 2) * 4], [-46 + i * 20, -40]]), 'HB', INK, 0.7, { id: id + 'hs' + i });
-  } else if (opt.hairStyle === 'curly') {
-    shape(T([[-66, -10], [-70, -56], [-36, -96], [10, -102], [52, -88], [72, -50], [66, -10], [44, -50], [0, -64], [-42, -54]]), { fill: hair, op: 220, bleed: 0.08, tex: 0.6, line: INK, w: 1.2, curve: 0.6, id: id + 'hairf' });
-    const curls = [[-80, 20], [-92, 60], [-96, 100], [-88, 140], [-76, 176], [80, 20], [92, 60], [96, 100], [88, 140], [76, 176], [-60, -70], [-30, -96], [6, -100], [40, -92], [64, -66]];
-    curls.forEach((c, i) => {
-      const sp = []; for (let k = 0; k < 16; k++) { const a = k / 16 * TAU * 1.6 + i; const rr = 4 + k * 0.85; sp.push([c[0] + Math.cos(a) * rr, c[1] + Math.sin(a) * rr]); }
-      path(T(sp), 'HB', INK, 0.9, { id: id + 'curl' + i, curve: 0.8 });
-    });
-  } else if (opt.hairStyle === 'bald') {
-    shape(T([[-62, -10], [-66, -40], [-50, -46], [-48, 0]]), { fill: hair, op: 200, line: INK, w: 1.0, id: id + 'bh1', curve: 0.6 });
-    shape(T([[62, -10], [66, -40], [50, -46], [48, 0]]), { fill: hair, op: 200, line: INK, w: 1.0, id: id + 'bh2', curve: 0.6 });
-    path(T([[-30, -66], [-10, -74], [14, -72]]), 'HB', INK, 0.6, { id: id + 'shine' });
-  } else if (opt.hairStyle === 'scarf') {
-    shape(T([[-74, 10], [-78, -40], [-50, -92], [0, -108], [50, -92], [78, -40], [74, 10], [60, -40], [30, -64], [0, -68], [-30, -64], [-60, -40]]), { fill: opt.scarf || '#8a6f5a', op: 225, bleed: 0.06, tex: 0.45, line: INK, w: 1.3, curve: 0.55, id: id + 'scf' });
-    shape(T([[-30, -64], [0, -68], [30, -64], [24, -50], [0, -54], [-24, -50]]), { fill: hair, op: 200, id: id + 'scfh', curve: 0.5 });
-  }
-  if (opt.sideburns) {
-    shape(T([[-60, -10], [-58, 30], [-48, 34], [-50, -6]]), { fill: opt.sideburns, op: 210, line: INK, w: 0.9, id: id + 'sb1', curve: 0.4 });
-    shape(T([[60, -10], [58, 30], [48, 34], [50, -6]]), { fill: opt.sideburns, op: 210, line: INK, w: 0.9, id: id + 'sb2', curve: 0.4 });
-  }
-
-  // --- face features
-  const browY = expr === 'surprised' ? -34 : -24;
-  const tilt = expr === 'worry' ? -8 : expr === 'focus' ? 4 : 0;
-  path(T([[-38, browY + 2 + tilt * 0.3], [-26, browY - 2], [-12, browY + tilt]]), '2B', INK, 1.5, { id: id + 'br1' });
-  path(T([[12, browY + tilt], [26, browY - 2], [38, browY + 2 + tilt * 0.3]]), '2B', INK, 1.5, { id: id + 'br2' });
-  const eyeR = expr === 'surprised' ? 8 : 5.2;
-  for (const sx of [-1, 1]) {
-    const cx = sx * 24;
-    if (expr === 'blow') {
-      path(T([[cx - 10, -4], [cx, 0], [cx + 10, -4]]), 'HB', INK, 1.4, { id: id + 'eyc' + sx });
-    } else {
-      if (expr === 'surprised') shape(T(ell(cx, -4, 12, 11, 14)), { wash: '#fbf7ef', line: INK, w: 1.1, id: id + 'eyw' + sx });
-      shape(T(ell(cx + ex, -4, eyeR, eyeR * 1.1, 12)), { wash: '#2a1d18', id: id + 'eye' + sx, boil: false });
-      path(T([[cx - 12, -10], [cx, -15], [cx + 12, -10]]), 'HB', INK, 1.1, { id: id + 'lid' + sx });
-    }
-  }
-  path(T([[2, 2], [7, 22], [-2, 26]]), 'HB', INK, 1.2, { id: id + 'nose', curve: 0.6 });
-  if (opt.mustache) {
-    shape(T([[-30, 42], [-14, 32], [0, 36], [14, 32], [30, 42], [14, 40], [0, 42], [-14, 40]]), { fill: opt.mustache, op: 230, line: INK, w: 1.0, curve: 0.5, id: id + 'mst' });
-  }
-  if (opt.beard) {
-    shape(T([[-50, 30], [-36, 66], [0, 82], [36, 66], [50, 30], [30, 54], [0, 60], [-30, 54]]), { fill: opt.beard, op: 215, line: INK, w: 1.0, curve: 0.55, id: id + 'brd' });
-  }
-  if (expr === 'surprised') shape(T(ell(0, 50, 10, 13, 14)), { wash: '#5a2420', line: INK, w: 1.1, id: id + 'mo' });
-  else if (expr === 'blow') shape(T(ell(4, 48, 6, 6, 10)), { wash: '#5a2420', line: INK, w: 1.1, id: id + 'mo' });
-  else if (expr === 'worry') path(T([[-14, 50], [0, 46], [14, 50]]), 'HB', INK, 1.3, { id: id + 'mo' });
-  else if (expr === 'smile') path(T([[-16, 44], [0, 52], [16, 44]]), 'HB', INK, 1.3, { id: id + 'mo' });
-  else path(T([[-13, 48], [0, 50], [13, 47]]), 'HB', INK, 1.3, { id: id + 'mo' });
-}
-
-// Glass flask (Brand's) centred on bulb (x,y), scale s. `liquid` colour.
+// Glass flask (Brand's) centred on bulb (x,y), scale s.
 function flask(x, y, s, o = {}) {
   const T = (p) => xf(p, { x, y, s });
   const id = o.id || 'fk';
-  // liquid
-  const liq = []; for (let i = 0; i <= 20; i++) { const a = 0.1 * Math.PI + 0.8 * Math.PI * i / 20; liq.push([Math.cos(a) * 98, Math.sin(a) * 98]); }
-  liq.push([-85, 20]);
-  shape(T(liq), { fill: o.liquid || '#5df58c', op: o.lop ?? 200, bleed: 0.05, tex: 0.3, border: 0.5, curve: 0.5, id: id + 'liq', boil: false });
-  // glass outline: bulb + neck
+  const t = o.t ?? K.t;
+  // glass body tint
   const g = [];
-  for (let i = 0; i <= 30; i++) { const a = -Math.PI / 2 + 0.16 + (TAU - 0.32) * i / 30; g.push([Math.cos(a) * 104, Math.sin(a) * 104]); }
-  const outline = [[-20, -210], [-20, -102], ...g.slice(1, -1).reverse().map(([a, b]) => [a, b]), [20, -102], [20, -210]];
-  void outline;
-  path(T([[-18, -230], [-18, -104]]), '2B', INK, 1.6, { id: id + 'n1' });
-  path(T([[18, -230], [18, -104]]), '2B', INK, 1.6, { id: id + 'n2' });
-  path(T(g), '2B', INK, 1.7, { id: id + 'bulb', curve: 0.6 });
-  shape(T([[-26, -238], [26, -238], [26, -226], [-26, -226]]), { line: INK, w: 1.3, curve: 0, id: id + 'lip' });
-  // highlight
-  path(T(ell(0, 0, 76, 76, 10, -2.6, -1.9)), 'HB', '#ffffff', 2.5, { id: id + 'hl' });
+  for (let i = 0; i <= 30; i++) { const a = -Math.PI / 2 + 0.17 + (TAU - 0.34) * i / 30; g.push([Math.cos(a) * 104, Math.sin(a) * 104]); }
+  shape(T([[-18, -232], [18, -232], ...g.slice(0, 31), [-18, -232]].slice(0, 33)), { fill: '#bfe3ee', op: 70, bleed: 0.02, tex: 0.1, border: 0.6, curve: 0.5, id: id + 'gl', boil: false });
+  // liquid with a wobbling surface
+  const liq = [];
+  for (let i = 0; i <= 20; i++) { const a = 0.08 * Math.PI + 0.84 * Math.PI * i / 20; liq.push([Math.cos(a) * 99, Math.sin(a) * 99]); }
+  for (let i = 0; i <= 8; i++) { const xx = -96 + i * 24; liq.push([-xx, 14 + Math.sin(t * 3 + i) * 3]); }
+  shape(T(liq), { fill: o.liquid || '#2cf27a', op: o.lop ?? 225, bleed: 0.04, tex: 0.35, border: 0.55, curve: 0.5, id: id + 'liq', boil: false });
+  // bubbles
+  for (let i = 0; i < 7; i++) {
+    const ph = (t * 0.45 + i / 7) % 1;
+    const bx = -60 + (i * 37) % 120 + Math.sin(t * 4 + i) * 4, byy = 80 - ph * 64;
+    shape(T(ell(bx, byy, 3 + (i % 3) * 1.5, 3 + (i % 3) * 1.5, 10)), { line: '#e9fff0', w: 1.0, id: id + 'bb' + i });
+  }
+  // vapour inside the neck
+  for (let i = 0; i < 2; i++) {
+    const pts = []; for (let k = 0; k <= 6; k++) pts.push([-6 + i * 12 + Math.sin(k * 0.9 + t * 2.5 + i) * 6, -40 - k * 30]);
+    path(T(pts), 'HB', '#bff7d2', 1.0, { id: id + 'vp' + i, curve: 0.8 });
+  }
+  path(T([[-18, -232], [-18, -104]]), '2B', INK, 1.8, { id: id + 'n1' });
+  path(T([[18, -232], [18, -104]]), '2B', INK, 1.8, { id: id + 'n2' });
+  path(T(g), '2B', INK, 1.9, { id: id + 'bulb', curve: 0.6 });
+  shape(T([[-27, -244], [27, -244], [27, -230], [-27, -230]]), { wash: '#d9eef3', line: INK, w: 1.4, curve: 0.2, id: id + 'lip' });
+  path(T(ell(0, 0, 78, 78, 10, -2.7, -1.8)), 'HB', '#ffffff', 3.0, { id: id + 'hl' });
+  path(T([[-10, -220], [-10, -130]]), 'HB', '#ffffff', 2.0, { id: id + 'hl2' });
+  shape(T(ell(0, 104, 70, 8, 16)), { fill: '#000000', op: 60, bleed: 0.2, tex: 0.1, id: id + 'shd', boil: false });
 }
 
 // Paper grain texture generated once (used by the compositor).

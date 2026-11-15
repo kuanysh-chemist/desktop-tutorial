@@ -1,7 +1,7 @@
 // Timeline + compositor. Brush layer is redrawn 12 times a second ("on twos", hand-drawn feel),
 // overlays (glows, text, fades) are composited at full 24 fps.
 /* global brush, B, W, H, D, K, PAPER, SCENES, clamp, lerp, seg, ease, makeGrain, TAU */
-const FPS = 24, DFPS = 12;
+const FPS = 24, DFPS = 24;
 
 const Engine = {
   ready: false,
@@ -54,7 +54,7 @@ const Engine = {
     if (key === this.lastKey) return;
     this.lastKey = key;
     const tq = di / DFPS;
-    K.boil = di % 3; K.t = tq;
+    K.boil = Math.floor(di / 3) % 3; K.t = tq;
     const c = this.cam(scene, tq);
     brush.clear(scene.bg ? scene.bg(tq) : PAPER);
     brush.push();
@@ -75,7 +75,9 @@ const Engine = {
     const ctx = this.ctx;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
+    ctx.filter = scene.grade || 'saturate(1.28) contrast(1.07) brightness(1.02)';
     ctx.drawImage(this.cache, 0, 0);
+    ctx.filter = 'none';
     const O = makeOverlay(ctx, this._cam, this);
     if (scene.post) scene.post(t, this._tq, O);
     // paper grain + vignette
@@ -112,6 +114,7 @@ function makeOverlay(ctx, cam, eng) {
   const toS = (x, y) => [((x - cam.x) * cam.z + W / 2 + cam.sx) * D, ((y - cam.y) * cam.z + H / 2 + cam.sy) * D];
   const O = {
     toS,
+    z: () => cam.z,
     tint(color, alpha = 1, mode = 'multiply') {
       if (alpha <= 0) return;
       ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -132,6 +135,22 @@ function makeOverlay(ctx, cam, eng) {
     },
     glow(x, y, r, color, alpha = 0.6, mode = 'screen') { const [sx, sy] = toS(x, y); O.glowS(sx, sy, r * cam.z * D, color, alpha, mode); },
     flash(color, alpha) { O.tint(color, alpha, 'screen'); },
+    // light gradient (e.g. window light, lamp) in screen space
+    grad(c0, c1, alpha = 1, mode = 'multiply', vertical = true) {
+      ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalCompositeOperation = mode; ctx.globalAlpha = clamp(alpha);
+      const g = vertical ? ctx.createLinearGradient(0, 0, 0, H * D) : ctx.createLinearGradient(0, 0, W * D, 0);
+      g.addColorStop(0, c0); g.addColorStop(1, c1); ctx.fillStyle = g; ctx.fillRect(0, 0, W * D, H * D); ctx.restore();
+    },
+    // floating dust / embers: n particles drifting in a world-space box
+    motes(t, n, x0, y0, w, h, color, r = 2.2, alpha = 0.7, speed = 12, seed = 1) {
+      for (let i = 0; i < n; i++) {
+        const a = Math.sin(i * 91.7 + seed) * 43758.5453, b = Math.sin(i * 12.3 + seed * 7) * 24634.6345;
+        const fx = a - Math.floor(a), fy = b - Math.floor(b);
+        const px = x0 + ((fx * w + Math.sin(t * 0.7 + i) * 14) % w), py = y0 + (((fy * h - t * speed * (0.5 + fx)) % h) + h) % h;
+        const tw = 0.55 + 0.45 * Math.sin(t * 3 + i * 1.7);
+        O.glow(px, py, r * (1 + fx), color, alpha * tw, 'screen');
+      }
+    },
     // text in screen space (logical px)
     text(str, x, y, o = {}) {
       const a = o.alpha ?? 1; if (a <= 0) return;

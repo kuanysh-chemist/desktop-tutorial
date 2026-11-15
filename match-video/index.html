@@ -24,6 +24,7 @@
 </div>
 <script src="lib/brush.js"></script>
 <script src="src/kit.js"></script>
+<script src="src/people.js"></script>
 <script src="src/engine.js"></script>
 <script src="src/scenes.js"></script>
 <script>
@@ -34,7 +35,7 @@
   let T = 0, playing = false, t0 = 0, T0 = 0;
   const show = () => { const r = Engine.render(T); info.textContent = `${T.toFixed(2)} / ${Engine.total.toFixed(1)} c · ${SCENES[r.scene].name}`; scrub.value = Math.round(T / Engine.total * 1000); };
   // hooks for the offline renderer
-  window.renderAt = (t) => { T = t; Engine.render(t); return Engine.out.toDataURL('image/jpeg', 0.93); };
+  window.renderAt = (t) => { T = t; Engine.render(t); return Engine.out.toDataURL('image/jpeg', 0.95); };
   window.videoInfo = () => ({ total: Engine.total, fps: FPS, dfps: DFPS, scenes: SCENES.map((s, i) => ({ name: s.name, start: Engine.starts[i], dur: s.dur })) });
   const ui2 = document.getElementById('ui2');
   SCENES.forEach((s, i) => { const b = document.createElement('button'); b.textContent = i + 1; b.title = s.name; b.onclick = () => { T = Engine.starts[i] + 0.01; T0 = T; t0 = performance.now(); show(); }; ui2.appendChild(b); });

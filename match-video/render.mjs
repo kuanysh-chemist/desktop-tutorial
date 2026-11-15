@@ -49,7 +49,7 @@ if (args.stills) {
   const outFile = args.out ? path.resolve(args.out) : path.join(OUT, (args.from || args.to) ? `part_${from}-${to}.mp4` : 'siringke.mp4');
   const n = Math.round((to - from) * info.fps);
   const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(info.fps), '-c:v', 'mjpeg', '-i', '-',
-    '-c:v', 'libx264', '-preset', 'slow', '-crf', '18', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', outFile], { stdio: ['pipe', 'inherit', 'inherit'] });
+    '-c:v', 'libx264', '-preset', 'slow', '-crf', '16', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', outFile], { stdio: ['pipe', 'inherit', 'inherit'] });
   const t0 = Date.now();
   for (let f = 0; f < n; f++) {
     const T = from + f / info.fps;
