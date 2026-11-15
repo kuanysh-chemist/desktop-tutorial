@@ -504,6 +504,11 @@ h2 .ru{font-family:var(--body);font-size:.5em}
 #border.on text{opacity:.95}
 #border .tme{stroke:var(--metal);fill:var(--metal)} #border .tnm{stroke:var(--nonmetal);fill:var(--nonmetal)}
 
+/* Russian-only mode: Russian text takes the full size and style of the Kazakh text it replaces */
+#stage.l-ru .ru{display:inline;font-size:inherit!important;font-family:inherit!important;font-style:normal!important;font-weight:inherit;color:inherit;opacity:1!important;margin:0!important;letter-spacing:inherit}
+#stage.l-ru .ru::before{content:none!important}
+#stage.l-ru .mfact .ru,#stage.l-ru .pmc .ru,#stage.l-ru .facts .ru{display:inline}
+
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
@@ -570,7 +575,7 @@ h2 .ru{font-family:var(--body);font-size:.5em}
   <div class="phint"><span class="play">⤢</span><span class="kz">Күйді бас — үлкейіп ашылады. Суретті бассаң — сурет үлкейеді.</span><span class="ru">Нажми на состояние — оно откроется крупно. Нажми на фото — оно увеличится.</span></div>
   <div class="states">
     <div class="st rise" style="--d:1" data-state="s" role="button" tabindex="0">
-      <h3><span>Қатты</span><small>Твёрдые</small><span class="exp">⤢ <span class="kz">Ашу</span><span class="ru">Открыть</span></span></h3>
+      <h3><span class="kz">Қатты</span><small class="ru">Твёрдые</small><span class="exp">⤢ <span class="kz">Ашу</span><span class="ru">Открыть</span></span></h3>
       <div class="solid-grid">
         <div class="sg zb" data-zoom="s" style="background-image:url(img/s.jpg)"><b>S</b></div>
         <div class="sg zb" data-zoom="i" style="background-image:url(img/i.jpg)"><b>I<sub>2</sub></b></div>
@@ -580,13 +585,13 @@ h2 .ru{font-family:var(--body);font-size:.5em}
       <div class="chips" id="solidChips"></div>
     </div>
     <div class="st rise" style="--d:2" data-state="l" role="button" tabindex="0">
-      <h3><span>Сұйық</span><small>Жидкие</small><span class="exp">⤢ <span class="kz">Ашу</span><span class="ru">Открыть</span></span></h3>
+      <h3><span class="kz">Сұйық</span><small class="ru">Жидкие</small><span class="exp">⤢ <span class="kz">Ашу</span><span class="ru">Открыть</span></span></h3>
       <div class="brwrap zb" data-zoom="br"><div class="drop"></div></div>
       <div class="chips"><span class="chip n">Br<sub>2</sub></span></div>
       <div class="note"><span class="kz">Бром — бөлме температурасында сұйық болатын жалғыз бейметалл. Түсі қызыл-қоңыр, иісі өткір.</span><span class="ru">Бром — единственный неметалл, жидкий при комнатной температуре. Красно-бурый, с резким запахом.</span></div>
     </div>
     <div class="st rise" style="--d:3" data-state="g" role="button" tabindex="0">
-      <h3><span>Газ</span><small>Газы</small><span class="exp">⤢ <span class="kz">Ашу</span><span class="ru">Открыть</span></span></h3>
+      <h3><span class="kz">Газ</span><small class="ru">Газы</small><span class="exp">⤢ <span class="kz">Ашу</span><span class="ru">Открыть</span></span></h3>
       <canvas id="gas" width="900" height="460" aria-label="Газ молекулалары"></canvas>
       <div class="toggle" id="gasToggle">
         <button class="btn ghost" data-g="all" aria-pressed="true"><span class="kz">Барлығы</span><span class="ru">Все</span></button>
