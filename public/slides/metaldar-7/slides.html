@@ -1,0 +1,945 @@
+<title>Металдар және бейметалдар</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Nunito:ital,wght@0,500;0,700;0,800;1,600&display=swap">
+<style>
+/* Layout: fixed 1600×900 "lab bench" stage scaled to the screen; one slide at a time, nav strip at the bottom. */
+:root{
+  --bg:#0a0f24; --bg2:#121a3d; --panel:#16204a; --line:#2a3670;
+  --fg:#eef1ff; --muted:#a3acd6;
+  --metal:#6fb8ff; --nonmetal:#45dc9a; --metalloid:#c39bff; --unknown:#6b7396;
+  --accent:#ffb547; --danger:#ff6b7a;
+  --display:"Unbounded","Montserrat","Segoe UI",system-ui,sans-serif;
+  --body:"Nunito","Segoe UI",system-ui,sans-serif;
+  color-scheme:dark;
+}
+html,body{height:100%;overflow:hidden}
+#app,#frame{overflow:hidden}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);overflow:hidden;-webkit-font-smoothing:antialiased}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:0}
+#app{position:relative;z-index:1;height:100%;box-sizing:border-box;padding-block:8px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+#frame{position:relative;width:100%;height:100%}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:center center;transform:translate(-50%,-50%) scale(.5)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+/* bilingual */
+.ru{display:block;color:var(--muted);font-size:.62em;font-weight:600;font-style:italic;margin-top:.15em;letter-spacing:0}
+#stage.l-kz .ru{display:none!important}
+#stage.l-ru .kz{display:none!important}
+.l-ru .ru{display:inline;color:inherit;font-size:1em;font-style:normal;font-weight:inherit;margin:0}
+.inl .ru{display:inline;margin:0 0 0 .35em;font-size:.8em}
+.inl .ru::before{content:"/ ";}
+.l-ru .inl .ru{margin:0}
+.l-ru .inl .ru::before{content:""}
+
+/* slides */
+.slide{position:absolute;left:0;top:0;width:1600px;height:840px;box-sizing:border-box;padding:46px 64px 20px;opacity:0;visibility:hidden;transform:translateX(60px);transition:opacity .5s ease,transform .6s cubic-bezier(.2,.8,.2,1),visibility 0s .6s}
+.slide.active{opacity:1;visibility:visible;transform:none;transition:opacity .5s ease,transform .6s cubic-bezier(.2,.8,.2,1),visibility 0s}
+.slide.left{transform:translateX(-60px)}
+.eyebrow{font-family:var(--display);font-size:18px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.eyebrow .ru{display:inline;font-size:1em;margin-left:.6em;color:var(--muted);font-style:normal}
+.eyebrow .ru::before{content:"· "}
+.l-ru .eyebrow .ru::before{content:""}
+.l-ru .eyebrow .ru{margin:0;color:var(--accent)}
+h2{font-family:var(--display);font-weight:800;font-size:52px;line-height:1.1;margin:10px 0 0;text-wrap:balance}
+h2 .ru{font-family:var(--body);font-size:.5em}
+.lead{font-size:24px;line-height:1.45;color:var(--fg);max-width:60ch}
+
+/* animation helpers: visible resting state, animate only when slide is "in" */
+.in .pop{animation:pop .6s cubic-bezier(.2,1.4,.4,1) both;animation-delay:calc(var(--d,0) * 90ms + 150ms)}
+.in .rise{animation:rise .7s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--d,0) * 90ms + 100ms)}
+@keyframes pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+@keyframes rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(-14px) rotate(var(--r,0deg))}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-12px)}40%{transform:translateX(10px)}60%{transform:translateX(-7px)}80%{transform:translateX(5px)}}
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 6px currentColor)}50%{filter:drop-shadow(0 0 18px currentColor)}}
+
+/* element tile (shared) */
+.tile{--c:var(--metal);position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:12px;background:linear-gradient(160deg,color-mix(in srgb,var(--c) 30%,var(--panel)),color-mix(in srgb,var(--c) 10%,var(--bg)));border:2px solid color-mix(in srgb,var(--c) 70%,transparent);color:var(--fg);box-sizing:border-box}
+.tile.nm{--c:var(--nonmetal)} .tile.md{--c:var(--metalloid)} .tile.x{--c:var(--unknown)}
+.tile .z{position:absolute;left:8px;top:5px;font-size:13px;font-weight:800;color:color-mix(in srgb,var(--c) 60%,var(--fg))}
+.tile .sym{font-family:var(--display);font-weight:800;font-size:30px;line-height:1;color:var(--c)}
+.tile .nm-kz{font-size:12px;font-weight:700;margin-top:4px;text-align:center}
+#stage:not(.l-ru) .nm-kz .ru{display:none}
+#stage.l-ru .nm-kz .ru{color:inherit;font-style:normal;font-size:1em}
+.chip{display:inline-flex;align-items:center;justify-content:center;min-width:54px;height:46px;padding:0 10px;border-radius:10px;font-family:var(--display);font-weight:700;font-size:22px;box-sizing:border-box;border:2px solid currentColor;background:color-mix(in srgb,currentColor 14%,var(--bg))}
+.chip.m{color:var(--metal)} .chip.n{color:var(--nonmetal)} .chip.d{color:var(--metalloid)}
+.chip sub{font-size:.6em;vertical-align:-.25em}
+
+.btn{display:inline-flex;align-items:center;gap:10px;border:0;border-radius:999px;padding:14px 26px;font-weight:800;font-size:22px;cursor:pointer;background:var(--accent);color:#1d1300;box-shadow:0 8px 24px -8px color-mix(in srgb,var(--accent) 70%,transparent);transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:transparent;color:var(--fg);border:2px solid var(--line);box-shadow:none}
+.btn.ghost[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
+.btn .ru{display:inline;font-size:.75em;margin:0 0 0 .2em;color:inherit;opacity:.75}
+.btn .ru::before{content:"/ "}
+.l-ru .btn .ru{opacity:1;margin:0}
+.l-ru .btn .ru::before{content:""}
+
+/* ---------- S1 title ---------- */
+#s1{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center;padding-top:20px}
+#s1 h1{font-family:var(--display);font-weight:800;font-size:86px;line-height:1.02;margin:18px 0 0;text-wrap:balance}
+#s1 h1 .w1{color:var(--metal)} #s1 h1 .w2{color:var(--nonmetal)}
+#s1 .sub{font-size:34px;font-weight:700;color:var(--muted);font-style:italic;margin-top:14px}
+.l-kz #s1 .sub{display:none}
+.l-ru #s1 .h1kz{display:none}
+#s1 .h1ru{display:none}
+.l-ru #s1 .h1ru{display:block}
+.l-ru #s1 .sub{display:none}
+#s1 .lead{margin-top:26px}
+#s1 .cta{margin-top:36px;display:flex;gap:16px;align-items:center}
+.hero{position:relative;height:720px}
+.phw{position:absolute;width:220px}
+.ph{position:relative;border-radius:18px;overflow:hidden;background:var(--panel);border:2px solid color-mix(in srgb,var(--c,var(--metal)) 60%,transparent);box-shadow:0 30px 60px -20px rgba(0,0,0,.7);animation:floaty 6s ease-in-out infinite;animation-delay:var(--fd,0s)}
+.ph img{display:block;width:100%;height:170px;object-fit:cover}
+.ph .cap{display:flex;align-items:baseline;gap:10px;padding:10px 14px}
+.ph .cap b{font-family:var(--display);font-size:30px;color:var(--c,var(--metal))}
+.ph .cap span{font-weight:700;font-size:17px}
+
+/* ---------- S2 tree ---------- */
+#tree{position:absolute;inset:0}
+#tree svg{position:absolute;inset:0;width:1600px;height:840px;overflow:visible}
+#tree path{fill:none;stroke:var(--line);stroke-width:4;stroke-linecap:round;stroke-dasharray:600;stroke-dashoffset:600;transition:stroke-dashoffset .9s ease}
+#tree path.shown{stroke-dashoffset:0}
+#tree path.pm{stroke:color-mix(in srgb,var(--metal) 55%,var(--line))}
+#tree path.pn{stroke:color-mix(in srgb,var(--nonmetal) 55%,var(--line))}
+.node{position:absolute;transform:translate(-50%,-50%);text-align:center;transition:opacity .5s,transform .5s cubic-bezier(.2,1.4,.4,1)}
+.node[data-step]:not(.shown),.grp[data-step]:not(.shown){opacity:0;transform:translate(-50%,-50%) scale(.7);pointer-events:none}
+.node .box{display:inline-block;padding:12px 26px;border-radius:16px;font-family:var(--display);font-weight:700;font-size:26px;background:var(--panel);border:3px solid var(--c,var(--line));color:var(--fg);white-space:nowrap}
+.node .box .ru{font-family:var(--body);font-size:.6em}
+.node.root .box{font-size:34px;padding:16px 40px;border-color:var(--accent);box-shadow:0 0 40px -6px color-mix(in srgb,var(--accent) 60%,transparent)}
+.node.big .box{font-size:32px}
+.grp{position:absolute;transform:translate(-50%,0);display:flex;flex-wrap:wrap;gap:8px;justify-content:center;transition:opacity .5s .25s,transform .5s .25s}
+.grp[data-step]:not(.shown){transform:translate(-50%,10px) scale(.95)}
+.hint{position:absolute;right:64px;top:56px;font-size:18px;color:var(--muted);display:flex;gap:10px;align-items:center}
+.key{display:inline-block;border:2px solid var(--line);border-radius:8px;padding:2px 10px;font-weight:800;color:var(--fg)}
+
+/* ---------- S3 properties ---------- */
+#s3 h2{font-size:42px}
+#s3 .cols{display:grid;grid-template-columns:820px 1fr;gap:40px;margin-top:24px}
+.cmp{display:grid;grid-template-columns:180px 1fr 1fr;gap:8px;font-size:19px;line-height:1.28}
+.cmp > div{padding:10px 14px;border-radius:12px;background:var(--panel)}
+.cmp .hd{font-family:var(--display);font-weight:700;font-size:22px;text-align:center;background:none}
+.cmp .hd.m{color:var(--metal)} .cmp .hd.n{color:var(--nonmetal)}
+.cmp .pr{font-weight:800;color:var(--accent);background:none;padding-left:0}
+.cmp .vm{border-left:4px solid var(--metal)} .cmp .vn{border-left:4px solid var(--nonmetal)}
+.cmp .ru{font-size:.78em}
+.lab{background:var(--panel);border-radius:24px;padding:22px 26px;border:2px solid var(--line)}
+.lab h3{margin:0;font-family:var(--display);font-size:24px}
+.lab h3 .ru{font-family:var(--body)}
+#circuit{display:block;width:100%;height:auto;margin-top:6px}
+.samples{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.samples button{cursor:pointer;min-width:66px;height:56px;font-size:24px}
+.samples button[aria-pressed="true"]{background:currentColor}
+.samples button[aria-pressed="true"] span{color:var(--bg)}
+#verdict{min-height:84px;margin-top:14px;font-size:21px;line-height:1.35;font-weight:700}
+#verdict .ru{font-size:.8em}
+
+/* ---------- S4 metalloids ---------- */
+.traits{display:flex;gap:14px;margin-top:22px;flex-wrap:wrap}
+.trait{display:flex;align-items:center;gap:12px;padding:12px 20px;border-radius:14px;background:var(--panel);border:2px solid color-mix(in srgb,var(--metalloid) 45%,transparent);font-size:20px;font-weight:700;max-width:460px}
+.trait i{font-style:normal;font-family:var(--display);font-size:26px;color:var(--metalloid)}
+.trait .ru{font-size:.8em}
+.mcards{display:grid;grid-template-columns:repeat(7,1fr);gap:16px;margin-top:30px}
+.mcard{border-radius:18px;overflow:hidden;background:var(--panel);border:2px solid color-mix(in srgb,var(--metalloid) 55%,transparent);display:flex;flex-direction:column}
+.mcard .im{height:170px;background:#0c1330 center/cover no-repeat;position:relative}
+.mcard .im .s{position:absolute;left:10px;bottom:8px;font-family:var(--display);font-weight:800;font-size:40px;color:#fff;text-shadow:0 2px 12px #000}
+.mcard .im.nophoto{display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 40%,color-mix(in srgb,var(--metalloid) 35%,var(--bg2)),var(--bg))}
+.mcard .im.nophoto .s{position:static;font-size:64px;color:var(--metalloid);text-shadow:none}
+.mcard .tx{padding:14px 14px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.mcard .nm{font-weight:800;font-size:21px}
+.mcard .nm .ru{font-size:.78em}
+.mcard .use{font-size:16px;color:var(--muted);line-height:1.35}
+.mcard .use .ru{font-size:.9em}
+.l-ru .mcard .use .ru{color:var(--muted)}
+.radio{font-size:30px;margin-left:6px}
+
+/* ---------- S5 nonmetal states ---------- */
+.states{display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:24px;margin-top:26px}
+.st{background:var(--panel);border-radius:22px;padding:20px 22px;border:2px solid var(--line);display:flex;flex-direction:column;gap:14px;min-width:0}
+.st h3{margin:0;font-family:var(--display);font-size:26px;display:flex;align-items:baseline;gap:12px}
+.st h3 small{font-family:var(--body);font-size:16px;color:var(--muted);font-style:italic}
+.l-kz .st h3 small{display:none}
+.solid-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sg{position:relative;border-radius:12px;overflow:hidden;height:150px;background:#0c1330 center/cover}
+.sg b{position:absolute;left:8px;bottom:6px;font-family:var(--display);font-size:26px;color:#fff;text-shadow:0 2px 10px #000}
+.sg b sub{font-size:.6em}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips .chip{height:40px;font-size:19px;min-width:48px}
+.note{font-size:18px;line-height:1.4}
+.note .ru{font-size:.85em}
+.brwrap{position:relative;height:330px;border-radius:14px;overflow:hidden;background:#0c1330 url(img/br.jpg) center/cover}
+.drop{position:absolute;left:50%;top:-30px;width:22px;height:30px;margin-left:-11px;background:radial-gradient(circle at 40% 60%,#d06a3a,#7a1d0c);border-radius:50% 50% 50% 50%/60% 60% 40% 40%}
+.in .drop{animation:drip 2.6s ease-in infinite}
+@keyframes drip{0%{transform:translateY(0) scale(.6);opacity:0}15%{opacity:1;transform:translateY(0) scale(1)}80%{transform:translateY(330px);opacity:1}100%{transform:translateY(340px) scale(1.6,.3);opacity:0}}
+#gas{width:100%;height:auto;display:block;border-radius:14px;background:#0b1230}
+.toggle{display:flex;gap:8px;flex-wrap:wrap}
+.toggle button{padding:8px 16px;font-size:17px}
+
+/* ---------- S6 periodic table ---------- */
+#s6 .top{display:flex;flex-direction:column;gap:12px}
+#s6 .eyebrow{white-space:nowrap}
+.filters{display:flex;gap:10px;flex-wrap:wrap}
+.filters .btn{padding:8px 18px;font-size:18px}
+.ptwrap{position:relative;margin-top:16px;width:1525px}
+#pt{display:grid;grid-template-columns:repeat(18,80px);grid-template-rows:repeat(7,54px) 10px repeat(2,54px);gap:5px}
+#pt .tile{cursor:pointer;transition:opacity .3s,transform .15s,filter .3s}
+#pt .tile:hover{transform:scale(1.12);z-index:3}
+#pt .tile .sym{font-size:23px}
+#pt .tile .nm-kz{font-size:10px;margin-top:1px;white-space:nowrap;overflow:hidden;max-width:74px;text-overflow:ellipsis}
+#pt .tile .z{font-size:10px;left:5px;top:2px}
+#pt .tile.dim{opacity:.13;filter:grayscale(1)}
+#pt .tile.sel{outline:3px solid var(--accent);outline-offset:2px;z-index:4}
+.in #pt .tile{animation:pop .45s cubic-bezier(.2,1.4,.4,1) both;animation-delay:calc(var(--d) * 9ms)}
+#info{grid-row:1/4;grid-column:3/13;align-self:stretch;margin:0 6px;border-radius:16px;background:color-mix(in srgb,var(--panel) 85%,transparent);border:2px solid var(--line);padding:10px 16px;display:flex;gap:18px;align-items:center;box-sizing:border-box;z-index:2;overflow:hidden}
+#info .big{width:118px;height:146px;flex:none}
+#info .big .tile{width:100%;height:100%}
+#info .big .sym{font-size:54px}
+#info .big .z{font-size:18px}
+#info .big .nm-kz{font-size:15px}
+#info .txt{font-size:18px;line-height:1.45;min-width:0;flex:1}
+#info .txt h4{margin:0 0 4px;font-family:var(--display);font-size:26px}
+#info .txt h4 .ru{font-family:var(--body);font-size:.6em}
+#info .pic{width:190px;height:146px;border-radius:12px;object-fit:cover;flex:none}
+.legend{display:flex;gap:8px 18px;font-size:17px;font-weight:700;flex-wrap:wrap}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{width:18px;height:18px;border-radius:5px;display:inline-block}
+#border{position:absolute;left:0;top:0;width:1525px;height:546px;pointer-events:none;overflow:visible}
+#border path{fill:none;stroke:var(--accent);stroke-width:7;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1400;stroke-dashoffset:1400;transition:stroke-dashoffset 1.6s ease;filter:drop-shadow(0 0 8px var(--accent))}
+#border.on path{stroke-dashoffset:0}
+#border text{font-family:var(--display);font-weight:800;fill-opacity:.18;stroke-width:2.5;opacity:0;transition:opacity .8s .9s}
+#border.on text{opacity:.9}
+#border .tme{stroke:var(--metal);fill:var(--metal)} #border .tnm{stroke:var(--nonmetal);fill:var(--nonmetal)}
+
+/* ---------- S7 superlatives ---------- */
+#s7 .head{display:flex;align-items:baseline;gap:22px}
+.en{display:inline-block;color:var(--accent)}
+.in .en{animation:pop .6s cubic-bezier(.2,1.6,.4,1) both}
+.in .en:nth-child(2){animation-delay:.25s}.in .en:nth-child(3){animation-delay:.5s}
+.grid16{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px}
+.qc{position:relative;height:146px;perspective:900px;cursor:pointer;border:0;padding:0;background:none;text-align:left}
+.qc .in2{position:absolute;inset:0;transition:transform .7s cubic-bezier(.3,1.3,.4,1);transform-style:preserve-3d}
+.qc.done .in2{transform:rotateY(180deg)}
+.qc .f,.qc .b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;padding:14px 18px;box-sizing:border-box;display:flex;gap:14px;align-items:center}
+.qc .f{background:linear-gradient(140deg,var(--panel),var(--bg2));border:2px solid var(--line)}
+.qc:hover .f{border-color:var(--accent)}
+.qc .f .num{font-family:var(--display);font-weight:800;font-size:46px;color:transparent;-webkit-text-stroke:2px var(--accent);flex:none;width:72px;text-align:center}
+.qc .f .q{font-size:22px;font-weight:800;line-height:1.2}
+.qc .f .q .ru{font-size:.72em}
+.qc .f .q.long{font-size:18px}
+.qc .b{transform:rotateY(180deg);background:linear-gradient(140deg,color-mix(in srgb,var(--accent) 22%,var(--panel)),var(--bg2));border:2px solid var(--accent);justify-content:space-between}
+.qc .b .q{font-size:17px;font-weight:700;color:var(--muted);max-width:170px;line-height:1.2}
+.qc .b .ans{display:flex;gap:8px}
+.qc .b .ans .tile{width:66px;height:80px}
+.qc .b .ans .tile .sym{font-size:26px}
+.qc .b .ans .tile .nm-kz{font-size:10px}
+.qc .b .ans .tile .z{font-size:10px}
+
+/* modal */
+#modal{position:absolute;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;background:rgba(5,8,22,.78);backdrop-filter:blur(6px);opacity:0;visibility:hidden;transition:opacity .35s,visibility 0s .35s}
+#modal.open{opacity:1;visibility:visible;transition:opacity .35s}
+.mbox{position:relative;width:1380px;height:760px;border-radius:28px;background:linear-gradient(150deg,var(--bg2),var(--bg));border:2px solid var(--line);box-shadow:0 40px 120px -20px #000;display:grid;grid-template-columns:640px 1fr;gap:36px;padding:44px 48px;box-sizing:border-box;transform:scale(.92);transition:transform .45s cubic-bezier(.2,1.3,.4,1)}
+#modal.open .mbox{transform:none}
+.mbox .mq .num{font-family:var(--display);font-weight:800;font-size:22px;color:var(--accent);letter-spacing:.1em}
+.mbox .mq h3{font-family:var(--display);font-weight:800;font-size:46px;line-height:1.12;margin:10px 0 0;text-wrap:balance}
+.mbox .mq h3 .ru{font-family:var(--body);font-size:.52em}
+.mtiles{display:flex;gap:16px;margin-top:36px;flex-wrap:wrap}
+.mt{width:180px;height:210px;perspective:900px}
+.mt .flip{position:relative;width:100%;height:100%;transition:transform .8s cubic-bezier(.3,1.3,.4,1);transform-style:preserve-3d}
+.mt .flip > *{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.mt .qm{display:flex;align-items:center;justify-content:center;border-radius:16px;border:3px dashed var(--accent);font-family:var(--display);font-size:96px;color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--bg))}
+.mt .tile{transform:rotateY(180deg)}
+.mt .tile .sym{font-size:72px}
+.mt .tile .z{font-size:20px;left:12px;top:8px}
+.mt .tile .nm-kz{font-size:20px;margin-top:10px}
+.mt .tile .nm-ru{font-size:15px;color:var(--muted);font-style:italic;font-weight:600}
+.l-kz .mt .tile .nm-ru{display:none}
+.revealed .mt .flip{transform:rotateY(180deg)}
+.revealed .mt:nth-child(2) .flip{transition-delay:.2s}.revealed .mt:nth-child(3) .flip{transition-delay:.4s}
+.stat{margin-top:30px;font-family:var(--display);font-weight:800;font-size:44px;color:var(--accent);opacity:0;transform:translateY(16px);transition:.6s .5s}
+.stat .ru{font-family:var(--display);font-style:normal;font-size:.55em}
+.revealed .stat{opacity:1;transform:none}
+.mside{display:flex;flex-direction:column;gap:18px;min-width:0}
+.mpics{display:flex;gap:14px;height:360px}
+.mpics figure{margin:0;flex:1;min-width:0;position:relative;border-radius:18px;overflow:hidden;background:var(--panel)}
+.mpics img{width:100%;height:100%;object-fit:cover;display:block}
+.mpics figcaption{position:absolute;left:0;right:0;bottom:0;padding:22px 14px 10px;font-size:16px;font-weight:700;background:linear-gradient(transparent,rgba(0,0,0,.8))}
+.mpics figcaption .ru{color:#ccd3f0}
+.mfact{font-size:23px;line-height:1.45}
+.mfact .ru{font-size:.82em;margin-top:.5em}
+.mhide{opacity:0;transform:translateY(20px);transition:.6s .35s;filter:blur(8px)}
+.revealed .mhide{opacity:1;transform:none;filter:none}
+.mbar{position:absolute;left:48px;right:48px;bottom:30px;display:flex;justify-content:space-between;align-items:center}
+.mclose{position:absolute;right:20px;top:18px;width:52px;height:52px;border-radius:50%;border:2px solid var(--line);background:var(--panel);cursor:pointer;font-size:26px;line-height:1}
+.revealed .showans{visibility:hidden}
+
+/* ---------- S8 sort game ---------- */
+.score{display:flex;gap:16px;align-items:center;font-family:var(--display);font-size:24px}
+.score b{color:var(--accent);font-size:34px}
+.score .btn{white-space:nowrap}
+#pool{margin-top:22px;min-height:236px;display:flex;flex-wrap:wrap;gap:14px;align-content:flex-start;padding:18px;border-radius:20px;border:2px dashed var(--line)}
+.gt{width:104px;height:110px;cursor:grab;touch-action:none;user-select:none;transition:transform .2s,box-shadow .2s;--c:var(--accent)}
+.gt .sym{font-size:36px;color:var(--fg)}
+.gt.sel{box-shadow:0 0 0 4px var(--accent);transform:translateY(-6px)}
+.gt.drag{cursor:grabbing;transition:none;z-index:20;box-shadow:0 20px 40px -10px #000}
+.gt.bad{animation:shake .5s}
+.bins{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:22px}
+.bin{min-height:250px;border-radius:24px;padding:18px;box-sizing:border-box;border:3px solid var(--c);background:color-mix(in srgb,var(--c) 10%,var(--bg));display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .2s,background .2s}
+.bin.hot{transform:scale(1.03);background:color-mix(in srgb,var(--c) 22%,var(--bg))}
+.bin.flash{animation:binok .6s}
+@keyframes binok{50%{background:color-mix(in srgb,var(--c) 40%,var(--bg))}}
+.bin h3{margin:0;font-family:var(--display);font-size:30px;color:var(--c)}
+.bin h3 .ru{font-family:var(--body);font-size:.55em}
+.bin .got{display:flex;flex-wrap:wrap;gap:8px}
+.bin .got .chip{color:var(--c);height:44px}
+.bin.m{--c:var(--metal)} .bin.n{--c:var(--nonmetal)} .bin.d{--c:var(--metalloid)}
+.win{position:absolute;left:50%;top:330px;transform:translate(-50%,0);text-align:center;background:var(--bg2);border:3px solid var(--accent);border-radius:28px;padding:30px 50px;box-shadow:0 30px 80px -10px #000;z-index:10}
+.win h3{font-family:var(--display);font-size:44px;margin:0 0 8px;color:var(--accent)}
+.win p{font-size:24px;margin:0 0 20px}
+
+/* ---------- S9 quiz ---------- */
+.qtop{display:flex;justify-content:space-between;align-items:center;gap:20px}
+.teams{display:flex;gap:16px}
+.team{padding:12px 22px;border-radius:18px;background:var(--panel);border:3px solid var(--line);font-family:var(--display);font-size:22px;display:flex;gap:14px;align-items:center;transition:.3s}
+.team b{font-size:38px;color:var(--accent)}
+.team.turn{border-color:var(--accent);box-shadow:0 0 30px -6px var(--accent);transform:scale(1.05)}
+.qbody{display:grid;grid-template-columns:1fr 210px;gap:30px;margin-top:26px;align-items:start}
+.qtext{font-family:var(--display);font-weight:700;font-size:42px;line-height:1.2;min-height:150px;text-wrap:balance}
+.qtext .ru{font-family:var(--body);font-size:.55em}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:20px}
+.opt{display:flex;align-items:center;gap:22px;padding:14px 22px;min-height:116px;border-radius:22px;border:3px solid var(--line);background:var(--panel);cursor:pointer;text-align:left;font-size:26px;font-weight:800;transition:transform .15s,border-color .2s,background .2s}
+.opt:hover:not([disabled]){border-color:var(--accent);transform:translateY(-3px)}
+.opt .tile{width:84px;height:88px;flex:none}
+.opt .tile .sym{font-size:34px}
+.opt .let{font-family:var(--display);color:var(--accent);font-size:26px}
+.opt .ru{font-size:.75em}
+.opt.ok{border-color:var(--nonmetal);background:color-mix(in srgb,var(--nonmetal) 25%,var(--panel))}
+.opt.no{border-color:var(--danger);background:color-mix(in srgb,var(--danger) 22%,var(--panel));animation:shake .5s}
+.opt[disabled]{cursor:default}
+.timer{position:relative;width:200px;height:200px}
+.timer svg{width:200px;height:200px;transform:rotate(-90deg)}
+.timer circle{fill:none;stroke-width:14}
+.timer .tb{stroke:var(--line)}
+.timer .tf{stroke:var(--accent);stroke-linecap:round;stroke-dasharray:534;transition:stroke .3s}
+.timer .tf.low{stroke:var(--danger)}
+.timer span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:64px}
+.qnav{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+.qnav .btn{justify-content:center}
+#stage.l-both .qnav .ru{display:none}
+.qprog{font-family:var(--display);font-size:20px;color:var(--muted);text-align:center}
+
+/* ---------- S10 final ---------- */
+#s10 .wrap{display:grid;grid-template-columns:1fr 520px;gap:50px;margin-top:20px}
+.sum{display:flex;flex-direction:column;gap:16px}
+.sum div{display:flex;gap:18px;align-items:flex-start;padding:18px 22px;border-radius:18px;background:var(--panel);font-size:23px;line-height:1.4}
+.sum div > b{font-family:var(--display);font-size:24px;flex:none;width:92px;white-space:nowrap;padding-top:4px}
+.sum .ru{font-size:.82em}
+.credits{background:var(--panel);border-radius:18px;padding:18px 20px;font-size:14px;line-height:1.45;color:var(--muted);height:560px;overflow:auto}
+.credits h4{margin:0 0 8px;color:var(--fg);font-size:17px}
+.credits a{color:var(--metal)}
+
+/* ---------- nav ---------- */
+#nav{position:absolute;left:0;right:0;bottom:0;height:60px;display:flex;align-items:center;gap:18px;padding:0 28px;border-top:1px solid var(--line);background:color-mix(in srgb,var(--bg) 80%,transparent);z-index:40}
+#nav .brand{font-family:var(--display);font-weight:700;font-size:15px;color:var(--muted);letter-spacing:.08em;white-space:nowrap}
+#dots{flex:1;display:flex;gap:10px;justify-content:center}
+#dots button{width:16px;height:16px;border-radius:50%;border:2px solid var(--muted);background:none;cursor:pointer;padding:0;transition:.3s}
+#dots button.on{background:var(--accent);border-color:var(--accent);width:40px;border-radius:10px}
+.nb{height:42px;min-width:42px;padding:0 14px;border-radius:12px;border:2px solid var(--line);background:var(--panel);cursor:pointer;font-weight:800;font-size:16px;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.nb:hover{border-color:var(--accent)}
+.nb svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+#pnum{font-family:var(--display);font-size:16px;color:var(--muted);min-width:64px;text-align:center}
+#progress{position:absolute;left:0;top:0;height:4px;background:var(--accent);transition:width .5s;z-index:41}
+
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:100}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
+
+<canvas id="bg" aria-hidden="true"></canvas>
+<div id="app"><div id="frame"><div id="stage" class="l-both">
+<div id="progress"></div>
+
+<!-- S1 -->
+<section class="slide" id="s1" data-title="Кіріспе">
+  <div>
+    <div class="eyebrow rise" style="--d:0"><span class="kz">Химия · 7-сынып</span><span class="ru">Химия · 7 класс</span></div>
+    <h1 class="rise" style="--d:1"><span class="h1kz"><span class="w1">Металдар</span> және <span class="w2">бейметалдар</span></span><span class="h1ru"><span class="w1">Металлы</span> и <span class="w2">неметаллы</span></span></h1>
+    <div class="sub rise" style="--d:2">Металлы и неметаллы</div>
+    <p class="lead rise" style="--d:3"><span class="kz">118 элементтің басым бөлігі — металдар. Бүгін оларды бейметалдардан ажыратуды үйренеміз, «ең-ең» элементтермен танысамыз және ойын ойнаймыз!</span><span class="ru">Большинство из 118 элементов — металлы. Сегодня научимся отличать их от неметаллов, узнаем «самые-самые» элементы и сыграем в игру!</span></p>
+    <div class="cta rise" style="--d:4"><button class="btn" data-go="next"><span class="kz">Бастау</span><span class="ru">Начать</span> →</button><span style="color:var(--muted);font-size:18px;display:flex;gap:8px"><span class="key">→</span><span class="key">Space</span></span></div>
+  </div>
+  <div class="hero" id="hero"></div>
+</section>
+
+<!-- S2 -->
+<section class="slide" id="s2" data-steps="4">
+  <div class="eyebrow"><span class="kz">Жіктелуі</span><span class="ru">Классификация</span></div>
+  <h2><span class="kz">Элементтер қалай бөлінеді?</span><span class="ru">Как делятся элементы?</span></h2>
+  <div class="hint"><span class="key">→</span><span class="kz">келесі тармақ</span><span class="ru">следующая ветка</span></div>
+  <div id="tree"></div>
+</section>
+
+<!-- S3 -->
+<section class="slide" id="s3">
+  <div class="eyebrow"><span class="kz">Қасиеттері</span><span class="ru">Свойства</span></div>
+  <h2><span class="kz">Металл мен бейметалдың айырмашылығы</span><span class="ru">Чем металлы отличаются от неметаллов</span></h2>
+  <div class="cols">
+    <div class="cmp" id="cmp"></div>
+    <div class="lab">
+      <h3><span class="kz">Тәжірибе: тоқ өткізе ме?</span><span class="ru">Опыт: проводит ли ток?</span></h3>
+      <svg id="circuit" viewBox="0 0 640 400" aria-label="Электр тізбегі"></svg>
+      <div class="samples" id="samples"></div>
+      <div id="verdict"></div>
+    </div>
+  </div>
+</section>
+
+<!-- S4 -->
+<section class="slide" id="s4">
+  <div class="eyebrow"><span class="kz">Металлоидтар</span><span class="ru">Металлоиды</span></div>
+  <h2><span class="kz">Металлоидтар — шекарадағы элементтер</span><span class="ru">Металлоиды — элементы на границе</span></h2>
+  <div class="traits">
+    <div class="trait rise" style="--d:1"><i>✦</i><div><span class="kz">Сырты металға ұқсайды — жылтыр</span><span class="ru">Внешне похожи на металлы — блестят</span></div></div>
+    <div class="trait rise" style="--d:2"><i>✕</i><div><span class="kz">Бірақ морт, оңай сынады</span><span class="ru">Но хрупкие, легко ломаются</span></div></div>
+    <div class="trait rise" style="--d:3"><i>½</i><div><span class="kz">Тоқты жартылай өткізеді — жартылай өткізгіштер</span><span class="ru">Проводят ток частично — полупроводники</span></div></div>
+  </div>
+  <div class="mcards" id="mcards"></div>
+</section>
+
+<!-- S5 -->
+<section class="slide" id="s5">
+  <div class="eyebrow"><span class="kz">Бейметалдар</span><span class="ru">Неметаллы</span></div>
+  <h2><span class="kz">Бейметалдар: қатты, сұйық, газ</span><span class="ru">Неметаллы: твёрдые, жидкие, газы</span></h2>
+  <div class="states">
+    <div class="st rise" style="--d:1">
+      <h3><span>Қатты</span><small>Твёрдые</small></h3>
+      <div class="solid-grid">
+        <div class="sg" style="background-image:url(img/s.jpg)"><b>S</b></div>
+        <div class="sg" style="background-image:url(img/i.jpg)"><b>I<sub>2</sub></b></div>
+        <div class="sg" style="background-image:url(img/p.jpg)"><b>P</b></div>
+        <div class="sg" style="background-image:url(img/c.jpg)"><b>C</b></div>
+      </div>
+      <div class="chips" id="solidChips"></div>
+    </div>
+    <div class="st rise" style="--d:2">
+      <h3><span>Сұйық</span><small>Жидкие</small></h3>
+      <div class="brwrap"><div class="drop"></div></div>
+      <div class="chips"><span class="chip n">Br<sub>2</sub></span></div>
+      <div class="note"><span class="kz">Бром — бөлме температурасында сұйық болатын жалғыз бейметалл. Түсі қызыл-қоңыр, иісі өткір.</span><span class="ru">Бром — единственный неметалл, жидкий при комнатной температуре. Красно-бурый, с резким запахом.</span></div>
+    </div>
+    <div class="st rise" style="--d:3">
+      <h3><span>Газ</span><small>Газы</small></h3>
+      <canvas id="gas" width="900" height="440" aria-label="Газ молекулалары"></canvas>
+      <div class="toggle" id="gasToggle">
+        <button class="btn ghost" data-g="all" aria-pressed="true"><span class="kz">Барлығы</span><span class="ru">Все</span></button>
+        <button class="btn ghost" data-g="1" aria-pressed="false"><span class="kz">1 атомды</span><span class="ru">одноатомные</span></button>
+        <button class="btn ghost" data-g="2" aria-pressed="false"><span class="kz">2 атомды</span><span class="ru">двухатомные</span></button>
+      </div>
+      <div class="note inl"><div><b><span class="kz">1 атомды</span><span class="ru">одноатомные</span></b>: He, Ne, Ar, Kr, Xe, Rn</div><div><b><span class="kz">2 атомды</span><span class="ru">двухатомные</span></b>: H₂, N₂, O₂, F₂, Cl₂</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- S6 -->
+<section class="slide" id="s6">
+  <div class="top">
+    <div>
+      <div class="eyebrow"><span class="kz">Периодтық кесте</span><span class="ru">Периодическая таблица</span></div>
+      <h2 style="font-size:38px;margin-top:4px"><span class="kz">Me мен NON-Me қай жерде?</span><span class="ru">Где Me и NON-Me?</span></h2>
+    </div>
+    <div class="filters" id="filters">
+      <button class="btn ghost" data-f="all" aria-pressed="true"><span class="kz">Барлығы</span><span class="ru">Все</span></button>
+      <button class="btn ghost" data-f="m" aria-pressed="false" style="color:var(--metal)"><span class="kz">Металдар</span><span class="ru">Металлы</span></button>
+      <button class="btn ghost" data-f="n" aria-pressed="false" style="color:var(--nonmetal)"><span class="kz">Бейметалдар</span><span class="ru">Неметаллы</span></button>
+      <button class="btn ghost" data-f="d" aria-pressed="false" style="color:var(--metalloid)"><span class="kz">Металлоидтар</span><span class="ru">Металлоиды</span></button>
+      <button class="btn" id="bordBtn"><span class="kz">Шекара</span><span class="ru">Граница</span></button>
+    </div>
+  </div>
+  <div class="ptwrap">
+    <div id="pt"></div>
+    <svg id="border" viewBox="0 0 1525 546"></svg>
+  </div>
+</section>
+
+<!-- S7 -->
+<section class="slide" id="s7">
+  <div class="head">
+    <h2 style="font-size:60px;margin:0"><span class="en">Ең,</span> <span class="en">ең,</span> <span class="en">ең...</span></h2>
+    <div style="font-size:22px;color:var(--muted)"><span class="kz">Карточканы бас — алдымен болжап көр, сосын жауабын аш!</span><span class="ru">Нажми на карточку — сначала угадай, потом открой ответ!</span></div>
+  </div>
+  <div class="grid16" id="grid16"></div>
+  <div id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <div class="mbox" id="mbox">
+      <button class="mclose" id="mclose" aria-label="Жабу">✕</button>
+      <div class="mq">
+        <div class="num" id="mNum"></div>
+        <h3 id="mTitle"></h3>
+        <div class="mtiles" id="mTiles"></div>
+        <div class="stat" id="mStat"></div>
+      </div>
+      <div class="mside">
+        <div class="mpics mhide" id="mPics"></div>
+        <div class="mfact mhide" id="mFact"></div>
+      </div>
+      <div class="mbar">
+        <button class="btn showans" id="mShow"><span class="kz">Жауабын ашу</span><span class="ru">Показать ответ</span></button>
+        <button class="btn ghost" id="mNext"><span class="kz">Келесі сұрақ</span><span class="ru">Следующий</span> →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S8 -->
+<section class="slide" id="s8">
+  <div class="qtop">
+    <div>
+      <div class="eyebrow"><span class="kz">1-ойын</span><span class="ru">Игра 1</span></div>
+      <h2 style="font-size:44px"><span class="kz">Металл ма, бейметалл ма?</span><span class="ru">Металл или неметалл?</span></h2>
+    </div>
+    <div class="score inl">
+      <span><span class="kz">Дұрыс</span><span class="ru">Верно</span>: <b id="sgOk">0</b></span>
+      <span><span class="kz">Қате</span><span class="ru">Ошибки</span>: <b id="sgBad" style="color:var(--danger)">0</b></span>
+      <button class="btn ghost" id="sgReset" style="padding:10px 18px;font-size:18px">↻ <span class="kz">Қайта</span><span class="ru">Заново</span></button>
+    </div>
+  </div>
+  <div style="font-size:19px;color:var(--muted);margin-top:8px"><span class="kz">Элементті сәйкес себетке сүйреп апар (немесе элементті, сосын себетті бас).</span><span class="ru">Перетащи элемент в нужную корзину (или нажми на элемент, затем на корзину).</span></div>
+  <div id="pool"></div>
+  <div class="bins">
+    <div class="bin m" data-t="m"><h3><span class="kz">Металдар</span><span class="ru">Металлы</span></h3><div class="got"></div></div>
+    <div class="bin n" data-t="n"><h3><span class="kz">Бейметалдар</span><span class="ru">Неметаллы</span></h3><div class="got"></div></div>
+    <div class="bin d" data-t="d"><h3><span class="kz">Металлоидтар</span><span class="ru">Металлоиды</span></h3><div class="got"></div></div>
+  </div>
+  <div class="win" id="sgWin" hidden><h3><span class="kz">Керемет!</span><span class="ru">Отлично!</span></h3><p id="sgMsg"></p><button class="btn" id="sgAgain">↻ <span class="kz">Тағы ойнау</span><span class="ru">Ещё раз</span></button></div>
+</section>
+
+<!-- S9 -->
+<section class="slide" id="s9">
+  <div class="qtop">
+    <div>
+      <div class="eyebrow"><span class="kz">2-ойын · Викторина</span><span class="ru">Игра 2 · Викторина</span></div>
+      <div class="qprog inl" id="qprog" style="text-align:left;margin-top:8px"></div>
+    </div>
+    <div class="teams">
+      <div class="team" id="t0"><span><span class="kz">1-топ</span><span class="ru">Команда 1</span></span><b id="ts0">0</b></div>
+      <div class="team" id="t1"><span><span class="kz">2-топ</span><span class="ru">Команда 2</span></span><b id="ts1">0</b></div>
+    </div>
+  </div>
+  <div class="qbody">
+    <div>
+      <div class="qtext" id="qtext"></div>
+      <div class="opts" id="opts"></div>
+    </div>
+    <div>
+      <div class="timer"><svg viewBox="0 0 200 200"><circle class="tb" cx="100" cy="100" r="85"/><circle class="tf" id="tf" cx="100" cy="100" r="85"/></svg><span id="tsec">20</span></div>
+      <div class="qnav">
+        <button class="btn" id="qNext"><span class="kz">Келесі</span><span class="ru">Далее</span> →</button>
+        <button class="btn ghost" id="qPause" style="font-size:18px">⏸ <span class="kz">Тоқтату</span><span class="ru">Пауза</span></button>
+        <button class="btn ghost" id="qRestart" style="font-size:18px">↻ <span class="kz">Басынан</span><span class="ru">Сначала</span></button>
+      </div>
+    </div>
+  </div>
+  <div class="win" id="qWin" hidden><h3 id="qWinT"></h3><p id="qWinP"></p><button class="btn" id="qAgain">↻ <span class="kz">Тағы ойнау</span><span class="ru">Ещё раз</span></button></div>
+</section>
+
+<!-- S10 -->
+<section class="slide" id="s10">
+  <div class="eyebrow"><span class="kz">Қорытынды</span><span class="ru">Итоги</span></div>
+  <h2><span class="kz">Жарайсыңдар, 7-сынып!</span><span class="ru">Молодцы, 7 класс!</span></h2>
+  <div class="wrap">
+    <div class="sum">
+      <div class="rise" style="--d:1"><b style="color:var(--metal)">Me</b><span><span class="kz">Металдар жылтыр, иілгіш, тоқ пен жылуды жақсы өткізеді. Сынаптан басқасы — қатты.</span><span class="ru">Металлы блестят, пластичны, хорошо проводят ток и тепло. Все, кроме ртути, — твёрдые.</span></span></div>
+      <div class="rise" style="--d:2"><b style="color:var(--nonmetal)">NON</b><span><span class="kz">Бейметалдар қатты (S, P, C, I₂), сұйық (Br₂) немесе газ (O₂, N₂, He) болады; тоқты нашар өткізеді.</span><span class="ru">Неметаллы бывают твёрдыми (S, P, C, I₂), жидкими (Br₂) или газами (O₂, N₂, He); плохо проводят ток.</span></span></div>
+      <div class="rise" style="--d:3"><b style="color:var(--metalloid)">B–Po</b><span><span class="kz">Металлоидтар (B, Si, Ge, As, Sb, Te, Po) кестеде металдар мен бейметалдардың шекарасында орналасқан.</span><span class="ru">Металлоиды (B, Si, Ge, As, Sb, Te, Po) стоят в таблице на границе металлов и неметаллов.</span></span></div>
+      <div class="rise" style="--d:4"><b style="color:var(--accent)">?</b><span><span class="kz">Үйге тапсырма: «ең-ең» тізіміне тағы бір элемент тауып кел!</span><span class="ru">Домашнее задание: найди ещё один «самый-самый» элемент!</span></span></div>
+    </div>
+    <div class="credits" id="credits"></div>
+  </div>
+</section>
+
+<nav id="nav">
+  <div class="brand">ХИМИЯ · 7</div>
+  <button class="nb" id="prev" aria-label="Алдыңғы слайд"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <div id="pnum"></div>
+  <button class="nb" id="next" aria-label="Келесі слайд"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+  <div id="dots"></div>
+  <button class="nb" id="langBtn" title="Тіл / Язык">ҚАЗ + РУС</button>
+  <button class="nb" id="sndBtn" aria-label="Дыбыс" title="Дыбыс / Звук"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path id="sndWave" d="M16 8.5a5 5 0 010 7M18.5 6a8.5 8.5 0 010 12"/></svg></button>
+  <button class="nb" id="fsBtn" aria-label="Толық экран" title="Толық экран / Полный экран"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+</nav>
+</div></div></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<script>
+(function(){
+"use strict";
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const B=(kz,ru)=>kz===ru?kz:`<span class="kz">${kz}</span><span class="ru">${ru}</span>`;
+const stage=$('#stage');
+
+/* ================= ELEMENT DATA ================= */
+const RAW="H,Водород,1;He,Гелий,4;Li,Литий,7;Be,Бериллий,9;B,Бор,11;C,Углерод,12;N,Азот,14;O,Кислород,16;F,Фтор,19;Ne,Неон,20;Na,Натрий,23;Mg,Магний,24;Al,Алюминий,27;Si,Кремний,28;P,Фосфор,31;S,Сера,32;Cl,Хлор,35.5;Ar,Аргон,40;K,Калий,39;Ca,Кальций,40;Sc,Скандий,45;Ti,Титан,48;V,Ванадий,51;Cr,Хром,52;Mn,Марганец,55;Fe,Железо,56;Co,Кобальт,59;Ni,Никель,59;Cu,Медь,64;Zn,Цинк,65;Ga,Галлий,70;Ge,Германий,73;As,Мышьяк,75;Se,Селен,79;Br,Бром,80;Kr,Криптон,84;Rb,Рубидий,85.5;Sr,Стронций,88;Y,Иттрий,89;Zr,Цирконий,91;Nb,Ниобий,93;Mo,Молибден,96;Tc,Технеций,98;Ru,Рутений,101;Rh,Родий,103;Pd,Палладий,106;Ag,Серебро,108;Cd,Кадмий,112;In,Индий,115;Sn,Олово,119;Sb,Сурьма,122;Te,Теллур,128;I,Иод,127;Xe,Ксенон,131;Cs,Цезий,133;Ba,Барий,137;La,Лантан,139;Ce,Церий,140;Pr,Празеодим,141;Nd,Неодим,144;Pm,Прометий,145;Sm,Самарий,150;Eu,Европий,152;Gd,Гадолиний,157;Tb,Тербий,159;Dy,Диспрозий,162.5;Ho,Гольмий,165;Er,Эрбий,167;Tm,Тулий,169;Yb,Иттербий,173;Lu,Лютеций,175;Hf,Гафний,178.5;Ta,Тантал,181;W,Вольфрам,184;Re,Рений,186;Os,Осмий,190;Ir,Иридий,192;Pt,Платина,195;Au,Золото,197;Hg,Ртуть,201;Tl,Таллий,204;Pb,Свинец,207;Bi,Висмут,209;Po,Полоний,209;At,Астат,210;Rn,Радон,222;Fr,Франций,223;Ra,Радий,226;Ac,Актиний,227;Th,Торий,232;Pa,Протактиний,231;U,Уран,238;Np,Нептуний,237;Pu,Плутоний,244;Am,Америций,243;Cm,Кюрий,247;Bk,Берклий,247;Cf,Калифорний,251;Es,Эйнштейний,252;Fm,Фермий,257;Md,Менделевий,258;No,Нобелий,259;Lr,Лоуренсий,262;Rf,Резерфордий,267;Db,Дубний,268;Sg,Сиборгий,269;Bh,Борий,270;Hs,Хассий,269;Mt,Мейтнерий,278;Ds,Дармштадтий,281;Rg,Рентгений,282;Cn,Коперниций,285;Nh,Нихоний,286;Fl,Флеровий,289;Mc,Московий,290;Lv,Ливерморий,293;Ts,Теннессин,294;Og,Оганесон,294";
+const KZ={1:"Сутек",6:"Көміртек",8:"Оттек",16:"Күкірт",26:"Темір",29:"Мыс",30:"Мырыш",47:"Күміс",50:"Қалайы",51:"Сүрме",53:"Йод",79:"Алтын",80:"Сынап",82:"Қорғасын"};
+const NONMET=new Set([1,2,6,7,8,9,10,15,16,17,18,34,35,36,53,54,85,86]);
+const METALLOID=new Set([5,14,32,33,51,52,84]);
+const PHOTO={1:"h",3:"li",5:"b",6:"c",9:"f",10:"ne",13:"al",14:"si",15:"p",16:"s",17:"cl",24:"cr",29:"cu",31:"ga",32:"ge",33:"as",35:"br",47:"ag",48:"cd",51:"sb",53:"i",55:"cs",74:"w",76:"os",79:"au",80:"hg",82:"pb",83:"bi",98:"cf"};
+function pos(z){
+  if(z===1)return[1,1]; if(z===2)return[1,18];
+  if(z<=10)return[2,z<=4?z-2:z+8];
+  if(z<=18)return[3,z<=12?z-10:z];
+  if(z<=36)return[4,z-18]; if(z<=54)return[5,z-36];
+  if(z<=56)return[6,z-54]; if(z===57)return[6,3];
+  if(z<=71)return[9,z-54]; if(z<=86)return[6,z-68];
+  if(z<=88)return[7,z-86]; if(z===89)return[7,3];
+  if(z<=103)return[10,z-86]; return[7,z-100];
+}
+const EL=RAW.split(";").map((s,i)=>{const [sym,ru,m]=s.split(","),z=i+1;
+  const t=z>=113?"x":NONMET.has(z)?"n":METALLOID.has(z)?"d":"m";
+  return {z,sym,ru,kz:KZ[z]||ru.replace("Иод","Йод"),m,t,pos:pos(z)};});
+const BY={}; EL.forEach(e=>BY[e.sym]=e);
+const TCLS={m:"",n:"nm",d:"md",x:"x"};
+const TNAME={m:["Металл","Металл"],n:["Бейметалл","Неметалл"],d:["Металлоид","Металлоид"],x:["Қасиеті әлі зерттелуде","Свойства ещё изучаются"]};
+const NM=e=>B(e.kz,e.ru);
+function tileHTML(e,extra=""){return `<div class="tile ${TCLS[e.t]} ${extra}"><span class="z">${e.z}</span><span class="sym">${e.sym}</span><span class="nm-kz">${NM(e)}</span></div>`;}
+function chip(sym,sub){const e=BY[sym];const c={m:"m",n:"n",d:"d",x:"m"}[e.t];return `<span class="chip ${c}" title="${e.kz} / ${e.ru}">${sym}${sub?`<sub>${sub}</sub>`:""}</span>`;}
+
+/* ================= LANGUAGE ================= */
+const LANGS=[["l-both","ҚАЗ + РУС"],["l-kz","ҚАЗ"],["l-ru","РУС"]];
+let lang=0; try{lang=+localStorage.getItem("mb-lang")||0}catch(e){}
+function setLang(i){lang=i;stage.classList.remove("l-both","l-kz","l-ru");stage.classList.add(LANGS[i][0]);$('#langBtn').textContent=LANGS[i][1];try{localStorage.setItem("mb-lang",i)}catch(e){}}
+$('#langBtn').onclick=()=>setLang((lang+1)%3);
+
+/* ================= SOUND ================= */
+let muted=false,AC=null;
+function tone(seq){ if(muted)return; try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();let t=AC.currentTime;
+  seq.forEach(([f,d,type])=>{const o=AC.createOscillator(),g=AC.createGain();o.type=type||"sine";o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.22,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g).connect(AC.destination);o.start(t);o.stop(t+d+.02);t+=d*.8;});}catch(e){} }
+const sOK=()=>tone([[660,.12],[880,.12],[1175,.22]]), sBAD=()=>tone([[220,.18,"square"],[160,.28,"square"]]), sFLIP=()=>tone([[520,.08,"triangle"],[780,.14,"triangle"]]), sWIN=()=>tone([[523,.14],[659,.14],[784,.14],[1047,.4]]);
+$('#sndBtn').onclick=()=>{muted=!muted;$('#sndWave').style.display=muted?"none":"";};
+
+/* ================= FIT / FULLSCREEN ================= */
+let scale=1;
+function fit(){const f=$('#frame');scale=Math.min(f.clientWidth/1600,f.clientHeight/900);stage.style.transform=`translate(-50%,-50%) scale(${scale})`;}
+addEventListener("resize",fit);
+$('#fsBtn').onclick=()=>{try{if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen().catch(()=>{});}catch(e){}};
+
+/* ================= FX: background + confetti ================= */
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+(function bg(){const c=$('#bg'),x=c.getContext("2d");let W,H,P=[];const syms=["Fe","Au","Cu","O","H","S","Na","Br","Ag","C","N","Al","Si","Hg","Cl","Ne"];
+  function rs(){const d=devicePixelRatio||1;W=c.width=innerWidth*d;H=c.height=innerHeight*d;x.setTransform(1,0,0,1,0,0);
+    P=Array.from({length:34},(_,i)=>({x:Math.random()*W,y:Math.random()*H,v:(.15+Math.random()*.35)*d,s:(14+Math.random()*22)*d,t:syms[i%syms.length],a:.05+Math.random()*.07,dot:i%3===0}));}
+  function draw(){x.clearRect(0,0,W,H);const d=devicePixelRatio||1;
+    for(const p of P){ if(!reduce){p.y-=p.v;if(p.y<-40*d){p.y=H+40*d;p.x=Math.random()*W;}}
+      x.globalAlpha=p.a; if(p.dot){x.fillStyle="#6fb8ff";x.beginPath();x.arc(p.x,p.y,p.s*.18,0,7);x.fill();x.strokeStyle="#6fb8ff";x.lineWidth=d;x.beginPath();x.ellipse(p.x,p.y,p.s*.9,p.s*.35,p.y*.002,0,7);x.stroke();}
+      else{x.fillStyle="#c9d3ff";x.font=`800 ${p.s}px Unbounded, sans-serif`;x.fillText(p.t,p.x,p.y);} }
+    x.globalAlpha=1; if(!reduce)requestAnimationFrame(draw);}
+  rs();addEventListener("resize",rs);draw();})();
+const fx=$('#fx'),fctx=fx.getContext("2d");let parts=[],fxOn=false;
+function confetti(n=160,ox,oy){const d=devicePixelRatio||1;fx.width=innerWidth*d;fx.height=innerHeight*d;const cols=["#ffb547","#6fb8ff","#45dc9a","#c39bff","#ff6b7a","#fff"];
+  ox=ox??innerWidth/2;oy=oy??innerHeight*.45;
+  for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,sp=4+Math.random()*10;parts.push({x:ox*d,y:oy*d,vx:Math.cos(a)*sp*d,vy:(Math.sin(a)*sp-7)*d,r:Math.random()*6,vr:(Math.random()-.5)*.4,w:(6+Math.random()*7)*d,h:(4+Math.random()*5)*d,c:cols[i%cols.length],l:120+Math.random()*60});}
+  if(!fxOn){fxOn=true;requestAnimationFrame(fxTick);}}
+function fxTick(){const d=devicePixelRatio||1;fctx.clearRect(0,0,fx.width,fx.height);parts=parts.filter(p=>p.l-->0&&p.y<fx.height+50);
+  for(const p of parts){p.vy+=.28*d;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;fctx.save();fctx.translate(p.x,p.y);fctx.rotate(p.r);fctx.fillStyle=p.c;fctx.globalAlpha=Math.min(1,p.l/40);fctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);fctx.restore();}
+  if(parts.length)requestAnimationFrame(fxTick);else{fxOn=false;fctx.clearRect(0,0,fx.width,fx.height);}}
+function centerOf(el){const r=el.getBoundingClientRect();return [r.left+r.width/2,r.top+r.height/2];}
+
+/* ================= S1 HERO ================= */
+(function(){const items=[["au",79,250,0,"-3deg","0s"],["ne",10,10,70,"4deg","-1.5s"],["cu",29,490,80,"3deg","-3s"],["s",16,10,380,"-4deg","-2s"],["br",35,250,300,"2deg","-4s"],["si",14,490,390,"-3deg","-5s"]];
+  $('#hero').innerHTML=items.map(([img,z,l,t,r,fd],i)=>{const e=EL[z-1];const c={m:"var(--metal)",n:"var(--nonmetal)",d:"var(--metalloid)"}[e.t];
+    return `<div class="phw pop" style="left:${l}px;top:${t}px;--d:${i+2}"><div class="ph" style="--r:${r};--fd:${fd};--c:${c}"><img src="img/${img}.jpg" alt="${e.kz}"><div class="cap"><b>${e.sym}</b><span>${B(e.kz,e.ru)}</span></div></div></div>`}).join("");})();
+
+/* ================= S2 TREE ================= */
+(function(){
+  const N=[ // id,x,y,html,cls,step,color
+    ["root",800,190,B("Элемент","Элемент"),"root",0],
+    ["met",430,330,B("Металдар","Металлы"),"big",1,"var(--metal)"],
+    ["non",1170,330,B("Бейметалдар","Неметаллы"),"big",1,"var(--nonmetal)"],
+    ["mid",250,470,B("Металлоидтар","Металлоиды"),"",2,"var(--metalloid)"],
+    ["tr",610,470,B("Ауыспалы металдар","Переходные металлы"),"",2,"var(--metal)"],
+    ["sol",900,470,B("Қатты","Твёрдые"),"",3,"var(--nonmetal)"],
+    ["liq",1160,470,B("Сұйық","Жидкие"),"",3,"var(--nonmetal)"],
+    ["gas",1400,470,B("Газ","Газы"),"",3,"var(--nonmetal)"],
+    ["g1",1290,640,B("1 атомды","одноатомные"),"",4,"var(--nonmetal)"],
+    ["g2",1500,640,B("2 атомды","двухатомные"),"",4,"var(--nonmetal)"]];
+  const E=[["root","met",1,"pm"],["root","non",1,"pn"],["met","mid",2,"pm"],["met","tr",2,"pm"],["non","sol",3,"pn"],["non","liq",3,"pn"],["non","gas",3,"pn"],["gas","g1",4,"pn"],["gas","g2",4,"pn"]];
+  const G=[[250,520,2,"B Si Ge As Sb Te Po",260],[610,520,2,"Fe Cu Zn Cr Ag Au W Os",300],[900,520,3,"B C Si P I:2 S Se At",250],[1160,520,3,"Br:2",120],[1290,690,4,"He Ne Ar Kr Xe Rn",190],[1500,690,4,"H:2 N:2 O:2 F:2 Cl:2",190]];
+  const P=Object.fromEntries(N.map(n=>[n[0],n]));
+  let svg=`<svg viewBox="0 0 1600 840">`;
+  E.forEach(([a,b,st,c])=>{const A=P[a],Bn=P[b],y1=A[2]+30,y2=Bn[2]-30,my=(y1+y2)/2;svg+=`<path class="${c}" data-step="${st}" d="M${A[1]} ${y1} C${A[1]} ${my} ${Bn[1]} ${my} ${Bn[1]} ${y2}"/>`;});
+  svg+="</svg>";
+  let html=svg+N.map(([id,x,y,h,cls,st,col])=>`<div class="node ${cls}" ${st?`data-step="${st}"`:""} style="left:${x}px;top:${y}px;${col?`--c:${col}`:""}"><span class="box">${h}</span></div>`).join("");
+  html+=G.map(([x,y,st,list,w])=>`<div class="grp" data-step="${st}" style="left:${x}px;top:${y}px;width:${w}px">${list.split(" ").map(s=>{const [sy,sub]=s.split(":");return chip(sy,sub)}).join("")}</div>`).join("");
+  $('#tree').innerHTML=html;
+})();
+
+/* ================= S3 PROPERTIES + CIRCUIT ================= */
+(function(){
+  const rows=[
+    [B("Жылтыры","Блеск"),B("Металдық жылтыры бар","Металлический блеск"),B("Көбінде жылтыры жоқ","Обычно без блеска")],
+    [B("Күйі","Состояние"),B("Қатты (сынап — сұйық)","Твёрдые (ртуть — жидкая)"),B("Қатты, сұйық, газ","Твёрдые, жидкие, газы")],
+    [B("Тоқ, жылу","Ток, тепло"),B("Жақсы өткізеді","Хорошо проводят"),B("Нашар өткізеді (графиттен басқа)","Плохо проводят (кроме графита)")],
+    [B("Пішіні","Форма"),B("Иілгіш, созылғыш — соғуға болады","Пластичные, ковкие"),B("Морт, ұнтақталады","Хрупкие, крошатся")],
+    [B("Электрон","Электроны"),B("Сыртқы қабатта 1–3 e⁻, береді","1–3 e⁻ на внешнем слое, отдают"),B("Сыртқы қабатта 4–8 e⁻, қосып алады","4–8 e⁻ на внешнем слое, принимают")]];
+  let h=`<div class="hd"></div><div class="hd m">${B("Металдар","Металлы")}</div><div class="hd n">${B("Бейметалдар","Неметаллы")}</div>`;
+  rows.forEach((r,i)=>{h+=`<div class="pr rise" style="--d:${i*2}">${r[0]}</div><div class="vm rise" style="--d:${i*2+1}">${r[1]}</div><div class="vn rise" style="--d:${i*2+1}">${r[2]}</div>`;});
+  $('#cmp').innerHTML=h;
+  // circuit
+  const wire="M80 160 L80 50 L320 50 L560 50 L560 330 L420 330 M220 330 L80 330 L80 230";
+  $('#circuit').innerHTML=`
+   <defs><radialGradient id="glowG"><stop offset="0" stop-color="#fff6c8"/><stop offset=".35" stop-color="#ffd166" stop-opacity=".85"/><stop offset="1" stop-color="#ffb547" stop-opacity="0"/></radialGradient>
+   <clipPath id="sclip"><rect x="220" y="300" width="200" height="60" rx="10"/></clipPath></defs>
+   <path d="${wire}" fill="none" stroke="#3a4a8c" stroke-width="10" stroke-linecap="round"/>
+   <path id="wireCu" d="${wire}" fill="none" stroke="#d98b52" stroke-width="4" stroke-linecap="round"/>
+   <circle id="glow" cx="320" cy="50" r="110" fill="url(#glowG)" opacity="0"/>
+   <circle cx="320" cy="50" r="30" fill="#1b2450" stroke="#a3acd6" stroke-width="4"/>
+   <path id="fil" d="M306 58 q4 -18 8 0 q4 -18 8 0 q4 -18 8 0" fill="none" stroke="#7d86b3" stroke-width="3"/>
+   <rect x="300" y="78" width="40" height="16" rx="4" fill="#7d86b3"/>
+   <rect x="50" y="160" width="60" height="70" rx="8" fill="#26315f" stroke="#a3acd6" stroke-width="3"/>
+   <rect x="66" y="150" width="28" height="12" rx="3" fill="#a3acd6"/>
+   <text x="80" y="187" text-anchor="middle" fill="#ffb547" font-size="26" font-weight="800" font-family="Nunito">+</text>
+   <text x="80" y="218" text-anchor="middle" fill="#a3acd6" font-size="26" font-weight="800" font-family="Nunito">−</text>
+   <g id="edots"></g>
+   <rect x="220" y="300" width="200" height="60" rx="10" fill="#0c1330" stroke="#a3acd6" stroke-width="3" stroke-dasharray="8 6"/>
+   <image id="sImg" href="" x="220" y="300" width="200" height="60" preserveAspectRatio="xMidYMid slice" clip-path="url(#sclip)"/>
+   <text id="sLbl" x="320" y="338" text-anchor="middle" fill="#a3acd6" font-size="20" font-weight="800" font-family="Nunito">?</text>
+   <text x="320" y="390" text-anchor="middle" fill="#a3acd6" font-size="16" font-family="Nunito">үлгі / образец</text>`;
+  const S=[["Cu","cu",1,"m"],["Al","al",1,"m"],["Fe","meteorite",.9,"m"],["S","s",0,"n"],["I","i",0,"n"],["C","c",.8,"n"],["Si","si",.25,"d"]];
+  const V={
+    Cu:B("Мыс — металл: тоқты өте жақсы өткізеді. Шам жарқырап жанды!","Медь — металл: отлично проводит ток. Лампа ярко горит!"),
+    Al:B("Алюминий — металл: тоқты жақсы өткізеді. Шам жанды!","Алюминий — металл: хорошо проводит ток. Лампа горит!"),
+    Fe:B("Темір — металл: тоқты өткізеді. Шам жанды!","Железо — металл: проводит ток. Лампа горит!"),
+    S:B("Күкірт — бейметалл: тоқты өткізбейді. Шам жанбады.","Сера — неметалл: не проводит ток. Лампа не горит."),
+    I:B("Йод — бейметалл: тоқты өткізбейді. Шам жанбады.","Иод — неметалл: не проводит ток. Лампа не горит."),
+    C:B("Таңқаларлық! Графит (көміртек) — бейметалл, бірақ тоқ өткізеді. Ерекшелік!","Сюрприз! Графит (углерод) — неметалл, но проводит ток. Исключение!"),
+    Si:B("Кремний — металлоид: тоқты әлсіз өткізеді. Шам әрең жанды — бұл жартылай өткізгіш.","Кремний — металлоид: проводит ток слабо. Лампа еле светится — это полупроводник.")};
+  const sb=$('#samples');
+  sb.innerHTML=S.map(([s,,,t])=>`<button class="chip ${t==="m"?"m":t==="n"?"n":"d"}" data-s="${s}" aria-pressed="false"><span>${s==="I"?"I<sub>2</sub>":s}</span></button>`).join("");
+  const path=$('#wireCu'),L=path.getTotalLength(),g=$('#edots');const N=22;
+  g.innerHTML=Array.from({length:N},()=>`<circle r="5" fill="#ffe08a"/>`).join("");
+  const dots=$$('circle',g);dots.forEach(d=>d.style.display="none");
+  let cond=0,off=0,raf=0;
+  function tick(){off=(off+cond*3)%L;dots.forEach((d,i)=>{let l=(off+i*L/N)%L;const p=path.getPointAtLength(l);d.setAttribute("cx",p.x);d.setAttribute("cy",p.y);});if(cond>0)raf=requestAnimationFrame(tick);}
+  sb.onclick=e=>{const b=e.target.closest("button");if(!b)return;const [s,img,c]=S.find(x=>x[0]===b.dataset.s);
+    $$('button',sb).forEach(x=>x.setAttribute("aria-pressed",x===b));
+    $('#sImg').setAttribute("href",`img/${img}.jpg`);$('#sLbl').textContent="";
+    cond=c;$('#glow').setAttribute("opacity",c);$('#fil').setAttribute("stroke",c>.5?"#fff3b0":c>0?"#ffcf7a":"#7d86b3");
+    dots.forEach(d=>d.style.display=c>0?"":"none");cancelAnimationFrame(raf);if(c>0)tick();
+    $('#verdict').innerHTML=V[s];$('#verdict').style.color=c>.5?"var(--accent)":c>0?"var(--metalloid)":"var(--muted)";
+    if(c>.5)sOK();else if(c>0)sFLIP();else sBAD();};
+  $('#verdict').innerHTML=B("Үлгіні таңда да, шам жана ма — тексер!","Выбери образец и проверь, загорится ли лампа!");
+})();
+
+/* ================= S4 METALLOIDS ================= */
+(function(){
+  const M=[["B","b","Шыныдан жасалған ыстыққа төзімді ыдыс, тыңайтқыш","Жаропрочное стекло, удобрения"],["Si","si","Компьютер чиптері, күн батареялары","Микросхемы, солнечные батареи"],["Ge","ge","Транзисторлар, түнгі көру құралдары","Транзисторы, приборы ночного видения"],["As","as","Өте уытты! Жартылай өткізгіштер","Очень ядовит! Полупроводники"],["Sb","sb","Аккумулятор қорытпалары","Сплавы для аккумуляторов"],["Te","","Күн панельдері","Солнечные панели"],["Po","","Радиоактивті, өте сирек","Радиоактивен, очень редок"]];
+  $('#mcards').innerHTML=M.map(([s,img,kz,ru],i)=>{const e=BY[s];
+    return `<div class="mcard rise" style="--d:${i+3}"><div class="im ${img?"":"nophoto"}" ${img?`style="background-image:url(img/${img}.jpg)"`:""}><span class="s">${s}${s==="Po"?'<span class="radio">☢</span>':""}</span></div><div class="tx"><div class="nm">${B(e.kz,e.ru)}</div><div class="use">${B(kz,ru)}</div></div></div>`}).join("");
+})();
+
+/* ================= S5 GAS ================= */
+$('#solidChips').innerHTML=["B","C","Si","P","S","Se","I:2","At"].map(s=>{const[a,b]=s.split(":");return chip(a,b)}).join("");
+const gas=(function(){
+  const c=$('#gas'),x=c.getContext("2d"),W=900,H=440;let mode="all",run=false;
+  const M=[["He",1,"#ffd38a"],["Ne",1,"#ff7a59"],["Ar",1,"#c39bff"],["Kr",1,"#9ad0ff"],["Xe",1,"#7ff0d0"],["Rn",1,"#ff9fd0"],["H",2,"#ffffff"],["N",2,"#6fb8ff"],["O",2,"#ff6b7a"],["F",2,"#f4f08a"],["Cl",2,"#b8f05a"]];
+  const P=[];M.forEach(([s,n,col])=>{for(let k=0;k<2;k++)P.push({s,n,col,x:60+Math.random()*(W-120),y:60+Math.random()*(H-120),vx:(Math.random()-.5)*3,vy:(Math.random()-.5)*3,a:Math.random()*6,va:(Math.random()-.5)*.06})});
+  function draw(){x.clearRect(0,0,W,H);
+    for(const p of P){const show=mode==="all"||+mode===p.n; if(run&&!reduce){p.x+=p.vx;p.y+=p.vy;p.a+=p.va;if(p.x<40||p.x>W-40)p.vx*=-1;if(p.y<40||p.y>H-40)p.vy*=-1;}
+      x.globalAlpha=show?1:.08;
+      const R=p.n===1?36:30;
+      const atoms=p.n===1?[[0,0]]:[[-Math.cos(p.a)*R*.85,-Math.sin(p.a)*R*.85],[Math.cos(p.a)*R*.85,Math.sin(p.a)*R*.85]];
+      for(const [dx,dy] of atoms){const g=x.createRadialGradient(p.x+dx-R*.35,p.y+dy-R*.35,2,p.x+dx,p.y+dy,R);g.addColorStop(0,"#fff");g.addColorStop(.25,p.col);g.addColorStop(1,"#20284f");x.fillStyle=g;x.beginPath();x.arc(p.x+dx,p.y+dy,R,0,7);x.fill();}
+      x.fillStyle="#0a0f24";x.font="800 28px Nunito, sans-serif";x.textAlign="center";x.textBaseline="middle";
+      x.fillText(p.n===2?p.s+"₂":p.s,p.x,p.y+(p.n===2?0:1));}
+    x.globalAlpha=1;if(run&&!reduce)requestAnimationFrame(draw);}
+  $('#gasToggle').onclick=e=>{const b=e.target.closest("button");if(!b)return;mode=b.dataset.g;$$('#gasToggle button').forEach(z=>z.setAttribute("aria-pressed",z===b));if(!run||reduce)draw();};
+  draw();
+  return {start(){if(!run){run=true;draw();}},stop(){run=false;}};
+})();
+
+/* ================= S6 PERIODIC TABLE ================= */
+(function(){
+  const pt=$('#pt');
+  pt.innerHTML=EL.map(e=>`<button class="tile ${TCLS[e.t]}" data-z="${e.z}" data-t="${e.t}" style="grid-row:${e.pos[0]};grid-column:${e.pos[1]};--d:${e.z}" aria-label="${e.kz}"><span class="z">${e.z}</span><span class="sym">${e.sym}</span><span class="nm-kz">${NM(e)}</span></button>`).join("")+`<div id="info" class="inl"></div>`;
+  const cnt={m:0,n:0,d:0};EL.forEach(e=>{if(cnt[e.t]!==undefined)cnt[e.t]++});
+  const info=$('#info');
+  function legend(){info.innerHTML=`<div class="txt"><h4>${B("Элементті бас!","Нажми на элемент!")}</h4>
+    <div class="legend" style="margin-top:8px"><span><i style="background:var(--metal)"></i>${B("Металдар","Металлы")}: ${cnt.m}</span><span><i style="background:var(--nonmetal)"></i>${B("Бейметалдар","Неметаллы")}: ${cnt.n}</span><span><i style="background:var(--metalloid)"></i>${B("Металлоидтар","Металлоиды")}: ${cnt.d}</span><span><i style="background:var(--unknown)"></i>${B("Зерттелуде","Изучаются")}: 6</span></div></div>`;}
+  legend();
+  pt.onclick=e=>{const b=e.target.closest(".tile");if(!b)return;const el=EL[b.dataset.z-1];$$('#pt .tile.sel').forEach(x=>x.classList.remove("sel"));b.classList.add("sel");sFLIP();
+    const tn=TNAME[el.t];
+    info.innerHTML=`<div class="big">${tileHTML(el)}</div><div class="txt"><h4>${B(el.kz,el.ru)}</h4>
+      <div>${B("Түрі","Тип")}: <b style="color:${{m:"var(--metal)",n:"var(--nonmetal)",d:"var(--metalloid)",x:"var(--unknown)"}[el.t]}">${B(tn[0],tn[1])}</b></div>
+      <div>${B("Салыстырмалы атомдық масса","Относительная атомная масса")}: <b>A<sub>r</sub> = ${String(el.m).replace(".",",")}</b></div>
+      <div>${B("Период","Период")}: <b>${el.pos[0]>8?(el.pos[0]===9?6:7):el.pos[0]}</b></div></div>${PHOTO[el.z]?`<img class="pic" src="img/${PHOTO[el.z]}.jpg" alt="">`:""}`;};
+  $('#filters').onclick=e=>{const b=e.target.closest("[data-f]");if(!b)return;const f=b.dataset.f;$$('#filters [data-f]').forEach(x=>x.setAttribute("aria-pressed",x===b));
+    $$('#pt .tile').forEach(t=>t.classList.toggle("dim",f!=="all"&&t.dataset.t!==f));};
+  // border staircase through metalloid centers
+  const cx=c=>(c-1)*85+40, cy=r=>(r-1)*59+27;
+  let d=`M${cx(12.7)} ${cy(1.4)}`;
+  [[13,2],[14,3],[15,4],[16,5],[17,6],[17.5,6.7]].forEach(([c,r])=>{d+=` L${cx(c)} ${cy(r)}`});
+  $('#border').innerHTML=`<path d="${d}"/><text class="tme" x="18" y="532" font-size="104">Me</text><text class="tnm" x="1040" y="48" font-size="54">NON-Me</text>`;
+  $('#bordBtn').onclick=()=>{$('#border').classList.toggle("on");sFLIP();};
+})();
+
+/* ================= S7 SUPERLATIVES ================= */
+const QS=[
+ [["Ең жеңіл элемент","Самый лёгкий элемент"],["H"],["A<sub>r</sub> = 1","A<sub>r</sub> = 1"],["h"],["Сутек ауадан 14,5 есе жеңіл. Ғаламдағы атомдардың шамамен 90%-ы — сутек атомдары. Жұлдыздар мен Күн негізінен сутектен тұрады.","Водород в 14,5 раза легче воздуха. Около 90% всех атомов во Вселенной — водород. Звёзды и Солнце состоят в основном из водорода."],[["Сутегі бар разряд түтігі","Газоразрядная трубка с водородом"]]],
+ [["Ең жеңіл металл","Самый лёгкий металл"],["Li"],["ρ = 0,53 г/см³","ρ = 0,53 г/см³"],["li"],["Литий судан екі есе жеңіл — керосинде де батпай қалқиды. Телефон мен электромобиль батареялары литийсіз жұмыс істемейді.","Литий вдвое легче воды — не тонет даже в керосине. Без лития не работают батареи телефонов и электромобилей."],[["Парафинде қалқып жүрген литий","Литий плавает в парафине"]]],
+ [["Ең ауыр металл","Самый тяжёлый металл"],["Os"],["ρ = 22,6 г/см³","ρ = 22,6 г/см³"],["os"],["1 литр су — 1 кг, ал 1 литр осмий — 22,6 кг! Осмий қорытпаларынан қаламұштар мен дәл аспаптардың бөлшектерін жасайды.","1 литр воды — 1 кг, а 1 литр осмия — 22,6 кг! Из сплавов осмия делают перья ручек и детали точных приборов."],[["Осмий кристалдары","Кристаллы осмия"]]],
+ [["Ең қатты металл","Самый твёрдый металл"],["Cr"],["Моос шкаласы: 8,5","Шкала Мооса: 8,5"],["cr"],["Хром — металдардың ең қаттысы, ол шыныны сызып кесе алады. Хроммен қапталған бұйымдар жылтыр әрі тот баспайды.","Хром — самый твёрдый металл, он царапает и режет стекло. Хромированные изделия блестят и не ржавеют."],[["Хром кристалдары","Кристаллы хрома"]]],
+ [["Ең иілгіш металл","Самый пластичный металл"],["Au"],["1 г → 3 км сым","1 г → 3 км проволоки"],["au"],["1 грамм алтыннан ұзындығы 3 км-ге жуық сым созуға болады. Алтын жапырақтың қалыңдығы 0,0001 мм — ол арқылы жарық өтеді.","Из 1 грамма золота можно вытянуть проволоку длиной почти 3 км. Толщина золотого листа — 0,0001 мм, он просвечивает."],[["Алтын кристалдары","Кристаллы золота"]]],
+ [["Ең қымбат металл","Самый дорогой металл"],["Cf"],["1 г ≈ 27 млн $","1 г ≈ 27 млн $"],["cf"],["Калифорний табиғатта кездеспейді — оны тек ядролық реакторда алады. 1950 жылы АҚШ-тың Калифорния штатында ашылған, атауы содан шыққан.","Калифорний не встречается в природе — его получают только в ядерном реакторе. Открыт в 1950 году в Калифорнии (США), отсюда название."],[["Калифорний үлгісі","Образец калифорния"]]],
+ [["Ең қиын балқитын металл","Самый тугоплавкий металл"],["W"],["t<sub>балқу</sub> = 3422 °C","t<sub>пл</sub> = 3422 °C"],["w","bulb"],["Вольфрам тек 3422 °C-та балқиды. Сондықтан қыздыру шамының жарқырап тұратын қылын вольфрамнан жасайды.","Вольфрам плавится лишь при 3422 °C. Поэтому светящуюся нить лампы накаливания делают из вольфрама."],[["Вольфрам","Вольфрам"],["Вольфрам қылы бар шам","Лампа с вольфрамовой нитью"]]],
+ [["Қолда еритін металдар","Металлы, которые плавятся в руке"],["Ga","Cs"],["29,8 °C · 28,4 °C","29,8 °C · 28,4 °C"],["ga","cs"],["Адам денесінің температурасы — 36,6 °C. Галлий мен цезий одан төмен температурада балқиды, сондықтан алақанда ериді. Бірақ цезийді қолға ұстауға болмайды: ол ауада өздігінен тұтанады!","Температура тела — 36,6 °C. Галлий и цезий плавятся ниже, поэтому тают в ладони. Но цезий брать в руки нельзя: на воздухе он самовоспламеняется!"],[["Галлий","Галлий"],["Ампуладағы цезий","Цезий в ампуле"]]],
+ [["Ең уытты металдар","Самые ядовитые металлы"],["Hg","Pb","Cd"],["⚠ Hg · Pb · Cd","⚠ Hg · Pb · Cd"],["hg","pb"],["Сынап — бөлме температурасында сұйық болатын жалғыз металл, оның буы өте уытты. Қорғасын мен кадмий ағзада жиналып, денсаулыққа зиян келтіреді.","Ртуть — единственный металл, жидкий при комнатной температуре; её пары очень ядовиты. Свинец и кадмий накапливаются в организме и вредят здоровью."],[["Сынап","Ртуть"],["Қорғасын","Свинец"]]],
+ [["Электр және жылуөткізгіштігі ең жоғары металл","Металл с самой высокой электро- и теплопроводностью"],["Ag"],["1-орын: Ag · 2-орын: Cu","1 место: Ag · 2 место: Cu"],["ag","cu"],["Күміс электр мен жылуды бәрінен жақсы өткізеді. Екінші орында — мыс. Сымдарды мыстан жасайды, өйткені күміс тым қымбат.","Серебро лучше всех проводит электричество и тепло. На втором месте — медь. Провода делают из меди, потому что серебро слишком дорогое."],[["Күміс","Серебро"],["Мыс","Медь"]]],
+ [["Ақыл-ой элементі","Элемент мысли"],["P"],["Ми · сүйек · ДНҚ","Мозг · кости · ДНК"],["p"],["Академик А. Е. Ферсман фосфорды «тіршілік пен ой элементі» деп атаған. Ми мен жүйке жасушаларында, сүйек пен ДНҚ-да фосфор қосылыстары бар.","Академик А. Е. Ферсман назвал фосфор «элементом жизни и мысли». Соединения фосфора есть в клетках мозга и нервов, в костях и ДНК."],[["Фосфордың түрлері: ақ, қызыл, күлгін, қара","Белый, красный, фиолетовый и чёрный фосфор"]]],
+ [["Түсті металдар","Цветные металлы"],["Au","Cu","Cs"],["сары · қызыл · алтын-сары","жёлтый · красный · золотистый"],["au","cu","cs"],["Металдардың көбі күміс түстес ақ немесе сұр. Өз түсі бар металдар санаулы: алтын — сары, мыс — қызғылт-қызыл, цезий — алтын-сары.","Большинство металлов серебристо-белые или серые. Собственный цвет есть лишь у немногих: золото — жёлтое, медь — красная, цезий — золотисто-жёлтый."],[["Алтын","Золото"],["Мыс","Медь"],["Цезий","Цезий"]]],
+ [["Ең күшті тотықтырғыш","Самый сильный окислитель"],["F"],["Электртерістік: 4,0","Электроотрицательность: 4,0"],["f"],["Фтор — ең электртеріс элемент, ол барлық элементтерден электрон тартып алады. Фтор ағынында тіпті су мен шыны да жанады!","Фтор — самый электроотрицательный элемент, он отнимает электроны у всех. В струе фтора горит даже вода и стекло!"],[["Сұйық фтор, −188 °C","Жидкий фтор, −188 °C"]]],
+ [["Бактерицидтік металл","Бактерицидный металл"],["Ag"],["Ag⁺ → бактериялар ✕","Ag⁺ → бактерии ✕"],["ag"],["Күміс иондары бактерияларды жояды. Ертеде суды күміс ыдыста сақтаған, ал қазір күміс иондары бар таңғыштар мен су сүзгілерін жасайды.","Ионы серебра убивают бактерии. Раньше воду хранили в серебряной посуде, а сейчас делают повязки и фильтры для воды с ионами серебра."],[["Күміс кристалы","Кристалл серебра"]]],
+ [["Қанатты металл","Крылатый металл"],["Al"],["ρ = 2,7 г/см³","ρ = 2,7 г/см³"],["al","plane"],["Алюминий жеңіл, берік және тот баспайды. Ұшақ корпусының басым бөлігі алюминий қорытпаларынан жасалады, сондықтан оны «қанатты металл» дейді.","Алюминий лёгкий, прочный и не ржавеет. Корпус самолёта в основном делают из сплавов алюминия, поэтому его называют «крылатым металлом»."],[["Алюминий","Алюминий"],["Airbus A380","Airbus A380"]]],
+ [["Аспан тасы","Небесный камень"],["Fe"],["Уилламетт метеориті: 15,5 т","Метеорит Уилламетт: 15,5 т"],["meteorite"],["Адамдар темірді алғаш аспаннан түскен метеориттерден алған. Тутанхамон перғауынның қанжары да метеорит темірінен соғылған. Суреттегі метеорит 15,5 тонна, негізінен темір мен никельден тұрады.","Первое железо люди получили из упавших с неба метеоритов. Даже кинжал фараона Тутанхамона выкован из метеоритного железа. Метеорит на фото весит 15,5 тонны и состоит в основном из железа и никеля."],[["Уилламетт темір метеориті","Железный метеорит Уилламетт"]]]];
+const done=new Set(); let cur7=-1;
+function render16(){$('#grid16').innerHTML=QS.map((q,i)=>`<button class="qc rise ${done.has(i)?"done":""}" style="--d:${i}" data-i="${i}"><div class="in2"><div class="f"><span class="num">${i+1}</span><span class="q ${q[0][0].length>30?"long":""}">${B(q[0][0],q[0][1])}</span></div><div class="b"><span class="q">${B(q[0][0],q[0][1])}</span><span class="ans">${q[1].map(s=>tileHTML(BY[s])).join("")}</span></div></div></button>`).join("");}
+render16();
+$('#grid16').onclick=e=>{const b=e.target.closest(".qc");if(b)openQ(+b.dataset.i);};
+function openQ(i){cur7=i;const q=QS[i];const m=$('#modal'),box=$('#mbox');box.classList.remove("revealed");
+  $('#mNum').innerHTML=`№ ${i+1} / 16`;$('#mTitle').innerHTML=B(q[0][0],q[0][1]);
+  $('#mTiles').innerHTML=q[1].map(s=>{const e=BY[s];return `<div class="mt"><div class="flip"><div class="qm">?</div><div class="tile ${TCLS[e.t]}"><span class="z">${e.z}</span><span class="sym">${e.sym}</span><span class="nm-kz">${e.kz}</span><span class="nm-ru">${e.ru}</span></div></div></div>`}).join("");
+  $('#mStat').innerHTML=B(q[2][0],q[2][1]);
+  $('#mPics').innerHTML=q[3].map((im,k)=>`<figure><img src="img/${im}.jpg" alt="${q[5][k]?q[5][k][0]:""}"><figcaption>${q[5][k]?B(q[5][k][0],q[5][k][1]):""}</figcaption></figure>`).join("");
+  $('#mFact').innerHTML=B(q[4][0],q[4][1]);
+  m.classList.add("open");setTimeout(()=>$('#mShow').focus({preventScroll:true}),50);}
+function revealQ(){const box=$('#mbox');if(box.classList.contains("revealed"))return false;box.classList.add("revealed");sFLIP();setTimeout(sOK,450);
+  done.add(cur7);const card=$(`.qc[data-i="${cur7}"]`);if(card)card.classList.add("done");
+  setTimeout(()=>{const [x,y]=centerOf($('#mTiles'));confetti(90,x,y)},500);return true;}
+function closeQ(){$('#modal').classList.remove("open");cur7=-1;}
+function modalOpen(){return $('#modal').classList.contains("open");}
+$('#mShow').onclick=revealQ;$('#mclose').onclick=closeQ;
+$('#mNext').onclick=()=>{if(cur7<15)openQ(cur7+1);else closeQ();};
+$('#modal').onclick=e=>{if(e.target.id==="modal")closeQ();};
+
+/* ================= S8 SORT GAME ================= */
+const sortGame=(function(){
+  const POOL={m:["Na","K","Mg","Ca","Fe","Cu","Zn","Al","Ag","Au","Hg","Pb","Sn","Li","Cr","W"],n:["H","O","N","C","S","P","Cl","Br","I","F","He","Ne","Ar"],d:["B","Si","Ge","As","Te","Sb"]};
+  const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+  let ok=0,bad=0,sel=null,left=0;
+  function reset(){ok=0;bad=0;sel=null;$('#sgOk').textContent=0;$('#sgBad').textContent=0;$('#sgWin').hidden=true;$$('.bin .got').forEach(g=>g.innerHTML="");
+    const items=shuffle([...shuffle(POOL.m).slice(0,6),...shuffle(POOL.n).slice(0,6),...shuffle(POOL.d).slice(0,3)]);left=items.length;
+    $('#pool').innerHTML=items.map(s=>{const e=BY[s];return `<div class="tile gt" data-s="${s}" tabindex="0" role="button" aria-label="${e.kz}"><span class="z">${e.z}</span><span class="sym">${s}</span><span class="nm-kz">${NM(e)}</span></div>`}).join("");}
+  function drop(tile,bin){const e=BY[tile.dataset.s];
+    if(e.t===bin.dataset.t){ok++;$('#sgOk').textContent=ok;sOK();const[x,y]=centerOf(bin);confetti(30,x,y);
+      bin.classList.remove("flash");void bin.offsetWidth;bin.classList.add("flash");
+      $('.got',bin).insertAdjacentHTML("beforeend",`<span class="chip">${e.sym}</span>`);tile.remove();left--;sel=null;
+      if(left===0){setTimeout(()=>{$('#sgMsg').innerHTML=B(`Дұрыс: ${ok}, қате: ${bad}`,`Верно: ${ok}, ошибок: ${bad}`);$('#sgWin').hidden=false;sWIN();confetti(220);},400);}}
+    else{bad++;$('#sgBad').textContent=bad;sBAD();tile.style.transform="";tile.classList.remove("bad");void tile.offsetWidth;tile.classList.add("bad");}}
+  const pool=$('#pool');let drag=null;
+  pool.addEventListener("pointerdown",e=>{const t=e.target.closest(".gt");if(!t)return;e.preventDefault();drag={t,x:e.clientX,y:e.clientY,moved:false,id:e.pointerId};t.setPointerCapture(e.pointerId);});
+  pool.addEventListener("pointermove",e=>{if(!drag||e.pointerId!==drag.id)return;const dx=(e.clientX-drag.x)/scale,dy=(e.clientY-drag.y)/scale;
+    if(!drag.moved&&Math.hypot(dx,dy)>8){drag.moved=true;drag.t.classList.add("drag");}
+    if(drag.moved){drag.t.style.transform=`translate(${dx}px,${dy}px) scale(1.08)`;const bin=binAt(e.clientX,e.clientY);$$('.bin').forEach(b=>b.classList.toggle("hot",b===bin));}});
+  function end(e){if(!drag||e.pointerId!==drag.id)return;const {t,moved}=drag;drag=null;t.classList.remove("drag");$$('.bin').forEach(b=>b.classList.remove("hot"));
+    if(moved){const bin=binAt(e.clientX,e.clientY);t.style.transform="";if(bin)drop(t,bin);}
+    else{ $$('.gt.sel').forEach(x=>x!==t&&x.classList.remove("sel"));t.classList.toggle("sel");sel=t.classList.contains("sel")?t:null;}}
+  pool.addEventListener("pointerup",end);pool.addEventListener("pointercancel",e=>{if(drag){drag.t.style.transform="";drag.t.classList.remove("drag");drag=null;}});
+  pool.addEventListener("keydown",e=>{const t=e.target.closest(".gt");if(t&&(e.key==="Enter"||e.key===" ")){e.preventDefault();e.stopPropagation();$$('.gt.sel').forEach(x=>x!==t&&x.classList.remove("sel"));t.classList.toggle("sel");sel=t.classList.contains("sel")?t:null;}});
+  function binAt(x,y){return document.elementsFromPoint(x,y).map(el=>el.closest&&el.closest(".bin")).find(Boolean)||null;}
+  $$('.bin').forEach(b=>b.addEventListener("click",()=>{if(sel)drop(sel,b);}));
+  $('#sgReset').onclick=reset;$('#sgAgain').onclick=reset;reset();
+  return {reset};
+})();
+
+/* ================= S9 QUIZ ================= */
+const quiz=(function(){
+  const Q=[
+    [["Бөлме температурасында сұйық болатын бейметалл?","Неметалл, жидкий при комнатной температуре?"],"Br",["Hg","I","Cl"]],
+    [["Ең ауыр металл?","Самый тяжёлый металл?"],"Os",["Pb","Au","W"]],
+    [["Төмендегілердің қайсысы — металлоид?","Какой из них — металлоид?"],"Si",["S","Na","Ne"]],
+    [["Қай газдың молекуласы екі атомды?","Молекула какого газа двухатомна?"],"O",["He","Ne","Ar"],"₂"],
+    [["Шамның қылын қай металдан жасайды?","Из какого металла делают нить лампы?"],"W",["Cu","Al","Fe"]],
+    [["Ең жеңіл металл?","Самый лёгкий металл?"],"Li",["Na","H","Al"]],
+    [["«Қанатты металл» деп қайсысын атайды?","Какой металл называют «крылатым»?"],"Al",["Ti","Mg","Fe"]],
+    [["Электр тогын ең жақсы өткізетін металл?","Лучше всех проводит ток?"],"Ag",["Cu","Au","Al"]],
+    [["Тоқ өткізетін бейметалл (графит)?","Неметалл, проводящий ток (графит)?"],"C",["S","P","I"]],
+    [["Бөлме температурасында сұйық металл?","Металл, жидкий при комнатной температуре?"],"Hg",["Ga","Br","Cs"]],
+    [["Ең күшті тотықтырғыш?","Самый сильный окислитель?"],"F",["O","Cl","N"]],
+    [["Бір атомды газ?","Одноатомный газ?"],"Ne",["N","Cl","H"]]];
+  const T=20,CIRC=534;let i=0,sc=[0,0],team=0,answered=false,left=T,last=0,raf=0,paused=false,active=false;
+  const shuffle=a=>{a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.random()*(k+1)|0;[a[k],a[j]]=[a[j],a[k]]}return a};
+  let order=[];
+  function start(){i=0;sc=[0,0];team=0;order=shuffle(Q);$('#qWin').hidden=true;show();}
+  function show(){const q=order[i];answered=false;left=T;paused=false;$('#qPause').innerHTML=`⏸ ${B("Тоқтату","Пауза")}`;
+    $('#qprog').innerHTML=`${B("Сұрақ","Вопрос")} ${i+1} / ${order.length}`;
+    $('#qtext').innerHTML=B(q[0][0],q[0][1]);
+    const opts=shuffle([q[1],...q[2]]);
+    $('#opts').innerHTML=opts.map((s,k)=>{const e=BY[s];return `<button class="opt" data-s="${s}"><span class="let">${"ABCD"[k]}</span>${tileHTML(e).replace(`>${e.sym}<`,`>${e.sym}${q[3]&&e.t==="n"&&s!=="He"&&s!=="Ne"&&s!=="Ar"?`<sub style="font-size:.5em">2</sub>`:""}<`)}<span>${B(e.kz,e.ru)}</span></button>`}).join("");
+    $('#ts0').textContent=sc[0];$('#ts1').textContent=sc[1];$('#t0').classList.toggle("turn",team===0);$('#t1').classList.toggle("turn",team===1);
+    last=performance.now();cancelAnimationFrame(raf);if(active)raf=requestAnimationFrame(tick);drawT();}
+  function drawT(){const f=Math.max(0,left/T);$('#tf').style.strokeDashoffset=CIRC*(1-f);$('#tf').classList.toggle("low",left<=5);$('#tsec').textContent=Math.ceil(Math.max(0,left));}
+  function tick(now){const dt=(now-last)/1000;last=now;if(!paused&&!answered){left-=dt;if(left<=0){left=0;timeout();}drawT();}if(active&&!answered)raf=requestAnimationFrame(tick);}
+  function reveal(){const q=order[i];$$('#opts .opt').forEach(o=>{o.disabled=true;if(o.dataset.s===q[1])o.classList.add("ok");});}
+  function timeout(){answered=true;sBAD();reveal();}
+  $('#opts').onclick=e=>{const o=e.target.closest(".opt");if(!o||answered)return;answered=true;const q=order[i];
+    if(o.dataset.s===q[1]){sc[team]++;$(`#ts${team}`).textContent=sc[team];sOK();const[x,y]=centerOf(o);confetti(70,x,y);}
+    else{o.classList.add("no");sBAD();}
+    reveal();};
+  function next(){if(i<order.length-1){i++;team=1-team;show();return true;}
+    if(!$('#qWin').hidden)return false;
+    answered=true;const w=sc[0]===sc[1]?-1:sc[0]>sc[1]?0:1;
+    $('#qWinT').innerHTML=w<0?B("Тең түсті!","Ничья!"):B(`${w+1}-топ жеңді!`,`Победила команда ${w+1}!`);
+    $('#qWinP').innerHTML=B(`Ұпай — 1-топ: ${sc[0]}, 2-топ: ${sc[1]}`,`Счёт — команда 1: ${sc[0]}, команда 2: ${sc[1]}`);
+    $('#qWin').hidden=false;sWIN();confetti(260);return true;}
+  $('#qNext').onclick=next;$('#qRestart').onclick=start;$('#qAgain').onclick=start;
+  $('#qPause').onclick=()=>{paused=!paused;$('#qPause').innerHTML=paused?`▶ ${B("Жалғастыру","Продолжить")}`:`⏸ ${B("Тоқтату","Пауза")}`;};
+  start();
+  return {enter(){active=true;last=performance.now();cancelAnimationFrame(raf);if(!answered)raf=requestAnimationFrame(tick);},leave(){active=false;cancelAnimationFrame(raf);}};
+})();
+
+/* ================= S10 CREDITS ================= */
+(function(){const C=[["h","Hydrogen discharge tube.jpg","Alchemist-hp (www.pse-mendelejew.de)","FAL"],["li","Lithium paraffin.jpg","Tomihahndorf (de.wikipedia)","Public domain"],["os","Osmium crystals.jpg","Alchemist-hp","FAL"],["cr","Chromium crystals and 1cm3 cube.jpg","Alchemist-hp","FAL"],["au","Gold-crystals.jpg","Alchemist-hp","CC BY-SA 3.0 de"],["cf","Californium.jpg","U.S. Department of Energy","Public domain"],["w","Wolfram evaporated crystals and 1cm3 cube.jpg","Alchemist-hp","FAL"],["bulb","Incandescent light bulb.jpg","Le hollandais volant","CC BY 4.0"],["ga","Gallium crystals.jpg","en:user:foobar","CC BY-SA 3.0"],["cs","Cesium.jpg","Dnn87","CC BY-SA 3.0"],["hg","Pouring liquid mercury bionerd.jpg","Bionerd","CC BY 3.0"],["pb","Lead electrolytic and 1cm3 cube.jpg","Alchemist-hp","FAL"],["ag","Silver crystal.jpg","Alchemist-hp","CC BY-SA 3.0 de"],["p","PhosphComby.jpg","BXXXD, Tomihahndorf и др.","CC BY-SA 3.0"],["cu","NatCopper.jpg","Jonathan Zander (Digon3), derivative","CC BY-SA 3.0"],["f","Liquid fluorine tighter crop.jpg","Prof B. G. Mueller; derivative: TCO","CC BY-SA 3.0"],["al","Aluminium-4.jpg","Unknown author","CC BY 3.0"],["plane","Airbus A380 blue sky.jpg","Flickr user Axwel","CC BY 2.0"],["meteorite","Willamette Meteorite AMNH.jpg","User:Dante Alighieri","CC BY-SA 3.0"],["br","Bromine vial in acrylic cube.jpg","Alchemist-hp","CC BY-SA 3.0 de"],["s","Sulfur-sample.jpg","Ben Mills","Public domain"],["i","Iodine crystals, 99.9% purity.jpg","Dnn87","CC BY 3.0"],["si","SiliconCroda.jpg","Enricoros","Public domain"],["b","Boron R105.jpg","James L Marshall","CC BY-SA 3.0"],["ge","Polycrystalline-germanium.jpg","Jurii","CC BY 3.0"],["as","Arsen 1a.jpg","Tomihahndorf, derivative","CC BY-SA 3.0"],["sb","Antimony-4.jpg","Unknown author","CC BY 3.0"],["c","Graphite-and-diamond-with-scale.jpg","Robert M. Lavinsky","CC BY-SA 3.0"],["ne","NeTube.jpg","User:Pslawinski","CC BY-SA 2.5"],["cl","Chlorine ampoule.jpg","W. Oelen","CC BY-SA 3.0"],["bi","Bismuth crystals and 1cm3 cube.jpg","Alchemist-hp","FAL"],["cd","Cadmium-crystal bar.jpg","Alchemist-hp","FAL"]];
+  $('#credits').innerHTML=`<h4>${B("Суреттер: Wikimedia Commons","Фото: Wikimedia Commons")}</h4>`+C.map(([,f,a,l])=>`<div><a href="https://commons.wikimedia.org/wiki/File:${encodeURIComponent(f.replace(/ /g,"_"))}" target="_blank" rel="noopener">${f}</a> — ${a}, ${l}</div>`).join("");})();
+
+/* ================= NAVIGATION ================= */
+const slides=$$('.slide');let cur=0,step=0;
+$('#dots').innerHTML=slides.map((_,i)=>`<button aria-label="${i+1}-слайд"></button>`).join("");
+function maxStep(s){return +(s.dataset.steps||0);}
+function applySteps(){const s=slides[cur];$$('[data-step]',s).forEach(el=>el.classList.toggle("shown",+el.dataset.step<=step));}
+function go(n,st){if(n<0||n>=slides.length)return;const prevI=cur;cur=n;
+  slides.forEach((s,i)=>{s.classList.toggle("active",i===n);s.classList.toggle("left",i<n);if(i!==n)s.classList.remove("in");});
+  const s=slides[n];s.classList.remove("in");void s.offsetWidth;s.classList.add("in");
+  const ae=document.activeElement;if(ae&&ae!==document.body&&!s.contains(ae)&&!$('#nav').contains(ae))ae.blur();
+  step=st==="max"?maxStep(s):(st||0);applySteps();
+  $$('#dots button').forEach((d,i)=>d.classList.toggle("on",i===n));$('#pnum').textContent=`${n+1} / ${slides.length}`;
+  $('#progress').style.width=`${(n+1)/slides.length*100}%`;
+  if(s.id==="s5")gas.start();else gas.stop();
+  if(s.id==="s9")quiz.enter();else quiz.leave();
+  if(s.id!=="s7"&&modalOpen())closeQ();
+  try{history.replaceState(null,"","#slide-"+(n+1))}catch(e){}
+}
+function next(){if(slides[cur].id==="s7"&&modalOpen()){if(!revealQ())$('#mNext').click();return;}
+  if(step<maxStep(slides[cur])){step++;applySteps();sFLIP();return;}go(cur+1);}
+function prev(){if(slides[cur].id==="s7"&&modalOpen()){closeQ();return;}
+  if(step>0){step--;applySteps();return;}go(cur-1,"max");}
+$('#next').onclick=next;$('#prev').onclick=prev;
+$('#dots').onclick=e=>{const b=e.target.closest("button");if(b)go($$('#dots button').indexOf(b));};
+$$('[data-go="next"]').forEach(b=>b.onclick=next);
+addEventListener("keydown",e=>{if(e.target.closest&&e.target.closest("input,textarea"))return;
+  if(["ArrowRight","PageDown"].includes(e.key)||(e.key===" "&&!e.target.closest("button"))){e.preventDefault();next();}
+  else if(["ArrowLeft","PageUp"].includes(e.key)){e.preventDefault();prev();}
+  else if(e.key==="Escape"&&modalOpen())closeQ();
+  else if(e.key==="f"||e.key==="F")$('#fsBtn').click();
+  else if(e.key==="Home")go(0);else if(e.key==="End")go(slides.length-1);});
+// swipe on touch boards (not inside games)
+let sx=null;stage.addEventListener("touchstart",e=>{if(e.target.closest("#s8,#s6 #pt,.opt,#gas"))return;sx=e.touches[0].clientX},{passive:true});
+stage.addEventListener("touchend",e=>{if(sx==null)return;const dx=e.changedTouches[0].clientX-sx;sx=null;if(Math.abs(dx)>80)(dx<0?next:prev)();},{passive:true});
+
+function start(data){setLang(lang);fit();const h=(location.hash.match(/^#slide-(\d+)$/)||[])[1];const n=data&&typeof data.cur==="number"?data.cur:h?(+h-1):0;go(Math.min(Math.max(n,0),slides.length-1));}
+try{window.claude?.hot?.snapshot?.(()=>({cur}));}catch(e){}
+window.claude?.hot?.ready?window.claude.hot.ready(start):start(window.claude?.hot?.data??{});
+addEventListener("hashchange",()=>{const h=(location.hash.match(/^#slide-(\d+)$/)||[])[1];if(h&&+h-1!==cur)go(+h-1);});
+if(document.fonts)document.fonts.ready.then(fit);
+})();
+</script>
