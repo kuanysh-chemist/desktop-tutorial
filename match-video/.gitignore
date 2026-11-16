@@ -1,1 +1,5 @@
 out/
+# voice recordings and downloaded sound files stay local (personal voice, third-party licences)
+audio/voice/*.wav
+audio/voice/tts/
+audio/assets/
