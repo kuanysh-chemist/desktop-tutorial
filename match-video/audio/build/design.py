@@ -107,9 +107,9 @@ for k, lt in enumerate([0.75, 1.15, 1.5, 1.9, 2.35]):
     place.append({'sample': 'ob.bubble' if k % 2 == 0 else 'ob.bubble_hi', 'at': T(2, lt), 'gain_db': -10 - (2 if lt > 1.6 else 0), 'pan': 0.05})
 for k, lt in enumerate([4.6, 5.5, 5.95, 6.5, 7.0, 7.6]):
     place.append({'sample': 'ob.bubble' if k % 2 else 'ob.bubble_hi', 'at': T(12, lt), 'gain_db': -11, 'pan': -0.05})
-# the narration (Gemini TTS, line-placed by build/voice.py) rides on the music bus: there is no music
-samples['vo.narration'] = {'file': 'audio/out/audio/voice.wav', 'fade_in': 0.0, 'fade_out': 0.05}
-place.append({'sample': 'vo.narration', 'at': 0.0, 'align': 'start', 'bus': 'music', 'gain_db': 0.0})
+# the narration (Gemini TTS, line-placed by build/voice.py) rides on the sfx bus; the music bus carries the music
+samples['vo.narration'] = {'file': 'audio/out/audio/voice.wav', 'fade_in': 0.0, 'fade_out': 0.05, 'qa_ok': 'the narration is meant to sit above the music in the presence band'}
+place.append({'sample': 'vo.narration', 'at': 0.0, 'align': 'start', 'bus': 'sfx', 'gain_db': 0.0})
 
 NIGHT = A + 'ambience/mk-2414_night-forest-insects.wav'
 CRICK = A + 'ambience/mk-1789_summer-night-crickets-loop.wav'
@@ -135,12 +135,31 @@ ride = [[0, 0]]
 for s in plan['scenes']:
     a, b = s['voice_at'], s['voice_at'] + s['speech']
     ride += [[round(a - 0.25, 3), 0], [round(a, 3), -5], [round(b, 3), -5], [round(b + 0.35, 3), 0]]
+# music: Mixkit "Secret Garden" (string quartet, A minor, 100 BPM, bars of 2.4 s in phrases of 3 bars).
+# One bar-line splice keeps the phrase position (24 bars = 8 phrases): the soft intro carries scenes 1-5, the quartet
+# builds under Walker (film ~29.6), is full from Soria on, and the track's own ending resolves the last scene.
+SPLICE_FILM = 65.6           # source bar 28 (68.4 s) -> source bar 52 (126.0 s); film = src - 2.8, then src - 60.4
+music = {'file': 'audio/assets/music/mk-595_secret-garden.wav', 'src_bpm': 100.003, 'stretch': 'none', 'gain_db': -12.5,
+         'segments': [
+             {'label': 'src 2.8-68.4 (intro bars 1-27, the build at bar 13 lands under Walker): film = src - 2.8',
+              'src_from': 2.8, 'src_to': 68.406, 'at': 0.0, 'fade_in': 0.5, 'fade_out': 0.04},
+             {'label': 'src bars 52-61 (same phrase position, 24 bars later) to the final chord: film = src - 60.4',
+              'src_from': 126.006, 'src_to': 150.4, 'at': SPLICE_FILM + 0.006, 'fade_in': 0.012, 'fade_out': 0.3, 'tail_fade': 2.0},
+         ]}
+# the music dips 7 dB under each narration line, sits lower under the x-ray and the stamp, and opens up between lines
+mride = [[0, 0]]
+for s_ in plan['scenes']:
+    a, b = s_['voice_at'], s_['voice_at'] + s_['speech']
+    mride += [[round(a - 0.3, 3), 0], [round(a, 3), -6], [round(b, 3), -6], [round(b + 0.4, 3), 0]]
+x0, x1 = T(8, 3.6), T(9, 2.6)
+mride = [p for p in mride if not (x0 <= p[0] <= x1)] + [[round(x0, 3), -7], [round(x0 + 0.2, 3), -11], [round(x1 - 0.3, 3), -11], [round(x1, 3), -7]]
+mride.sort()
 design = {
     '_doc': 'Сіріңке тарихы: narration (Gemini TTS, Charon) + real Mixkit recordings only (no synthesis), placed on the picture cues computed in build/plan.py. Built by build/design.py; rendered by the real-sound skill mix.py.',
     'duration': round(plan['total'], 3), 'cues': 'audio/out/cues.json',
-    'samples': samples, 'pools': pools, 'rules': rules, 'place': place, 'ambience': amb,
-    '_buses_doc': 'ambience ducks 5 dB under every narration line; effects stay dry and centred',
-    'buses': {'amb': {'gain_db': 0.0, 'auto': ride}, 'sfx': {'gain_db': 0.0}, 'music': {'gain_db': 0.0}},
+    'samples': samples, 'pools': pools, 'rules': rules, 'place': place, 'ambience': amb, 'music': music,
+    '_buses_doc': 'ambience ducks 5 dB and the music 7 dB under every narration line (11 dB under the x-ray / stamp); effects and narration on the sfx bus stay dry and centred',
+    'buses': {'amb': {'gain_db': 0.0, 'auto': ride}, 'sfx': {'gain_db': 0.0}, 'music': {'gain_db': 0.0, 'auto': mride}},
     '_master_doc': '-14 LUFS for social; voice-led, so the compressor stays on to keep the narration even',
     'master': {'lufs': -14, 'ceiling': 0.77, 'no_glue': True},
 }

@@ -2,6 +2,8 @@
 
 Дикторлық мәтін: Google Gemini TTS (`gemini-3.8-flash-lite-tts`, «Charon» дауысы, kk-KZ, қазақша айтылу нұсқауымен).
 
+Музыка: «Secret Garden» — [Mixkit](https://mixkit.co/free-stock-music/) (ID 595), *Mixkit Stock Music Free License* (видеода тегін қолдануға болады, авторды көрсету міндетті емес; музыканы бөлек таратуға болмайды).
+
 Дыбыс эффектілері мен фондар — [Mixkit](https://mixkit.co) сайтындағы нақты жазбалар, *Mixkit Sound Effects Free License* бойынша
 (коммерциялық және коммерциялық емес жобаларға тегін, авторды көрсету міндетті емес). Синтезделген дыбыс жоқ.
 

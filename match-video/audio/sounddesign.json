@@ -293,7 +293,8 @@
   "vo.narration": {
    "file": "audio/out/audio/voice.wav",
    "fade_in": 0.0,
-   "fade_out": 0.05
+   "fade_out": 0.05,
+   "qa_ok": "the narration is meant to sit above the music in the presence band"
   }
  },
  "pools": {
@@ -767,7 +768,7 @@
    "sample": "vo.narration",
    "at": 0.0,
    "align": "start",
-   "bus": "music",
+   "bus": "sfx",
    "gain_db": 0.0
   }
  ],
@@ -972,7 +973,32 @@
    }
   }
  ],
- "_buses_doc": "ambience ducks 5 dB under every narration line; effects stay dry and centred",
+ "music": {
+  "file": "audio/assets/music/mk-595_secret-garden.wav",
+  "src_bpm": 100.003,
+  "stretch": "none",
+  "gain_db": -12.5,
+  "segments": [
+   {
+    "label": "src 2.8-68.4 (intro bars 1-27, the build at bar 13 lands under Walker): film = src - 2.8",
+    "src_from": 2.8,
+    "src_to": 68.406,
+    "at": 0.0,
+    "fade_in": 0.5,
+    "fade_out": 0.04
+   },
+   {
+    "label": "src bars 52-61 (same phrase position, 24 bars later) to the final chord: film = src - 60.4",
+    "src_from": 126.006,
+    "src_to": 150.4,
+    "at": 65.606,
+    "fade_in": 0.012,
+    "fade_out": 0.3,
+    "tail_fade": 2.0
+   }
+  ]
+ },
+ "_buses_doc": "ambience ducks 5 dB and the music 7 dB under every narration line (11 dB under the x-ray / stamp); effects and narration on the sfx bus stay dry and centred",
  "buses": {
   "amb": {
    "gain_db": 0.0,
@@ -1179,7 +1205,205 @@
    "gain_db": 0.0
   },
   "music": {
-   "gain_db": 0.0
+   "gain_db": 0.0,
+   "auto": [
+    [
+     0,
+     0
+    ],
+    [
+     0.3,
+     0
+    ],
+    [
+     0.6,
+     -6
+    ],
+    [
+     5.85,
+     -6
+    ],
+    [
+     6.25,
+     0
+    ],
+    [
+     6.3,
+     0
+    ],
+    [
+     6.6,
+     -6
+    ],
+    [
+     10.98,
+     -6
+    ],
+    [
+     11.08,
+     0
+    ],
+    [
+     11.38,
+     -6
+    ],
+    [
+     11.38,
+     0
+    ],
+    [
+     17.45,
+     -6
+    ],
+    [
+     17.85,
+     0
+    ],
+    [
+     18.48,
+     0
+    ],
+    [
+     18.78,
+     -6
+    ],
+    [
+     24.13,
+     -6
+    ],
+    [
+     24.42,
+     0
+    ],
+    [
+     24.53,
+     0
+    ],
+    [
+     24.72,
+     -6
+    ],
+    [
+     29.44,
+     -6
+    ],
+    [
+     29.84,
+     0
+    ],
+    [
+     30.83,
+     0
+    ],
+    [
+     31.13,
+     -6
+    ],
+    [
+     41.38,
+     -6
+    ],
+    [
+     41.59,
+     0
+    ],
+    [
+     41.78,
+     0
+    ],
+    [
+     41.89,
+     -6
+    ],
+    [
+     52.31,
+     -6
+    ],
+    [
+     52.71,
+     0
+    ],
+    [
+     54.53,
+     0
+    ],
+    [
+     54.83,
+     -6
+    ],
+    [
+     57.626,
+     -7
+    ],
+    [
+     57.826,
+     -11
+    ],
+    [
+     63.194,
+     -11
+    ],
+    [
+     63.494,
+     -7
+    ],
+    [
+     65.664,
+     -6
+    ],
+    [
+     66.064,
+     0
+    ],
+    [
+     66.244,
+     0
+    ],
+    [
+     66.544,
+     -6
+    ],
+    [
+     75.264,
+     -6
+    ],
+    [
+     75.664,
+     0
+    ],
+    [
+     76.038,
+     0
+    ],
+    [
+     76.338,
+     -6
+    ],
+    [
+     81.168,
+     -6
+    ],
+    [
+     81.568,
+     0
+    ],
+    [
+     81.918,
+     0
+    ],
+    [
+     82.218,
+     -6
+    ],
+    [
+     87.198,
+     -6
+    ],
+    [
+     87.598,
+     0
+    ]
+   ]
   }
  },
  "_master_doc": "-14 LUFS for social; voice-led, so the compressor stays on to keep the narration even",
