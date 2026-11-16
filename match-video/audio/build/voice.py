@@ -4,7 +4,7 @@ import json, os, subprocess, numpy as np, soundfile as sf
 
 here = os.path.dirname(os.path.abspath(__file__)); root = os.path.dirname(here)
 plan = json.load(open(os.path.join(root, 'out', 'plan.json')))
-src = os.path.join(root, 'voice', 'gem', 'full_31_orus.wav')
+src = os.path.join(root, plan.get('voice', 'voice/gem/full_31_orus.wav'))
 SR = 48000; PRE, POST = 0.06, 0.18
 total = int((plan['total'] + 1.0) * SR)
 mix = np.zeros(total, np.float32)

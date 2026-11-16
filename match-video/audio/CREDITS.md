@@ -1,6 +1,6 @@
 # Дыбыс авторлары / Sound credits
 
-Дикторлық мәтін: Google Gemini TTS (`gemini-3.1-flash-tts-preview`, «Orus» дауысы).
+Дикторлық мәтін: Google Gemini TTS (`gemini-3.8-flash-lite-tts`, «Charon» дауысы, kk-KZ, қазақша айтылу нұсқауымен).
 
 Дыбыс эффектілері мен фондар — [Mixkit](https://mixkit.co) сайтындағы нақты жазбалар, *Mixkit Sound Effects Free License* бойынша
 (коммерциялық және коммерциялық емес жобаларға тегін, авторды көрсету міндетті емес). Синтезделген дыбыс жоқ.

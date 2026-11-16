@@ -5,22 +5,24 @@
 import json, os
 
 FPS = 24
-ATEMPO = 1.05          # narration is played 5 % faster (Gemini reads slowly)
+VOICE = 'voice/gem/full_lite_charon_kk.wav'   # Gemini 3.8 flash lite TTS, voice Charon, kk-KZ, primed with a Kazakh
+# pronunciation instruction that the model reads aloud first (cut away: the script starts at 8.9 s)
+ATEMPO = 1.0
 OLD = [6.6, 5.0, 7.2, 6.2, 6.6, 11.0, 11.0, 7.4, 6.2, 8.2, 5.6, 8.4]
-# narration lines in voice/gem/full_31_orus.wav (source seconds, from silence detection)
-LINES = [(0.543, 6.832), (7.699, 13.108), (14.182, 21.443), (22.465, 28.994), (29.958, 36.024), (37.094, 49.795),
-         (50.833, 64.164), (65.212, 72.003), (72.965, 79.165), (80.249, 89.940), (90.879, 95.910), (97.066, 102.145)]
+# narration lines in VOICE (source seconds, from silence detection)
+LINES = [(8.92, 14.17), (14.72, 19.10), (19.68, 25.75), (26.00, 31.35), (31.95, 36.67), (37.28, 47.53),
+         (48.06, 58.48), (58.98, 63.85), (64.35, 68.96), (69.43, 78.15), (78.61, 83.44), (83.83, 88.81)]
 # (word offset inside the line in source seconds, scene-local picture time it belongs to)
 ANCHOR = {
-    3: (4.31, 3.55),   # "ұшқынды мүкке" -> the third spark lands on the moss
-    4: (0.09, 0.15),   # "1680" -> the year pops
-    5: (0.38, 0.14),   # "лап" -> the flame
-    6: (9.54, 7.30),   # "лап етіп жанды" -> Walker's stick ignites on the hearth stone
-    7: (9.56, 6.20),   # "Енді ... кез келген жерге" -> the boot / wall / table montage
-    9: (0.17, 0.25),   # "фосфорлы жақ" -> the stamp lands
-    10: (5.58, 4.35),  # "Швед" -> ШВЕЦИЯ
-    11: (3.66, 4.0),   # "қауіпсіз" -> the title
-    12: (0.69, 1.12),  # "тұтатқан" -> the match ignites
+    3: (3.60, 3.55),   # "ұшқынды мүкке" -> the third spark lands on the moss
+    4: (0.0, 0.15),   # "1680" -> the year pops
+    5: (0.25, 0.14),   # "лап" -> the flame
+    6: (7.60, 7.30),   # "лап етіп жанды" -> Walker's stick ignites on the hearth stone
+    7: (7.36, 6.20),   # "Енді ... кез келген жерге" -> the boot / wall / table montage
+    9: (0.09, 0.25),   # "фосфорлы жақ" -> the stamp lands
+    10: (5.15, 4.35),  # "Швед" -> ШВЕЦИЯ
+    11: (3.19, 4.0),   # "қауіпсіз" -> the title
+    12: (0.51, 1.12),  # "тұтатқан" -> the match ignites
 }
 F_MIN, F_MAX = 0.86, 1.32
 LEAD = 0.30            # voice starts this long after a cut when there is no anchor
@@ -40,6 +42,9 @@ def plan():
             # do not let the line start more than 0.6 s before the cut
             while e * f - w < -0.6 and f < F_MAX: f += 0.01
             lead = max(e * f - w, -0.55)   # when the anchor cannot be met, the picture event lands a little late
+            if lead > 0.6:                 # never leave a long silent head: start the line early, the event lands late
+                lead = 0.6
+                f = min(max((lead + s + TAIL) / d, F_MIN), F_MAX)
         else:
             lead = 0.6 if i == 1 else LEAD
             f = min(max((lead + s + TAIL) / d, F_MIN), F_MAX)
@@ -118,7 +123,7 @@ if __name__ == '__main__':
     here = os.path.dirname(os.path.abspath(__file__)); root = os.path.dirname(here)
     scenes, total = plan()
     os.makedirs(os.path.join(root, 'out'), exist_ok=True)
-    json.dump(dict(fps=FPS, atempo=ATEMPO, total=total, scenes=scenes), open(os.path.join(root, 'out/plan.json'), 'w'), indent=1)
+    json.dump(dict(fps=FPS, atempo=ATEMPO, voice=VOICE, total=total, scenes=scenes), open(os.path.join(root, 'out/plan.json'), 'w'), indent=1)
     ev = sorted(cues(scenes), key=lambda e: e['f'])
     acts = {f's{s["i"]}': dict(**{'from': round(s['new_start'] * FPS)}, dur=round(s['new_dur'] * FPS)) for s in scenes}
     json.dump(dict(fps=FPS, total=round(total * FPS), acts=acts, events=ev), open(os.path.join(root, 'out/cues.json'), 'w'), indent=1, ensure_ascii=False)

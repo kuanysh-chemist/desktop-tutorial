@@ -67,7 +67,7 @@ rules = [
     # a match / stick ignites: the real strike (its flare lands 0.38 s after the scratch) + the flame's breath
     {'name': 'ig.match.today', 'match': {'kind': 'ignite', 'id': 'today'}, 'pool': 'p.match', 'gain_db': -9, 'align': 'start', 'offset': -0.40, 'pan': 0},
     {'name': 'ig.match', 'match': {'kind': 'ignite', 'id': '^(?!s12)'}, 'pool': 'p.match', 'gain_db': -6, 'weight_db': 3, 'align': 'start', 'offset': -0.40, 'pan': 0},
-    {'name': 'ig.flare', 'match': {'kind': 'ignite', 'id': '^(?!s5:lap|s6:walker)'}, 'pool': 'p.flare', 'gain_db': -14, 'weight_db': 4, 'align': 'start', 'offset': -0.08, 'pan': 0},
+    {'name': 'ig.flare', 'match': {'kind': 'ignite', 'id': '^(?!s5:lap|s6:walker|s7:montage:[12])'}, 'pool': 'p.flare', 'gain_db': -14, 'weight_db': 4, 'align': 'start', 'offset': -0.08, 'pan': 0},
     {'name': 'ig.lap', 'match': {'kind': 'ignite', 'id': 'lap'}, 'pool': 'p.flare_big', 'gain_db': -9, 'align': 'start', 'offset': -0.12, 'pan': 0},
     {'name': 'ig.walker', 'match': {'kind': 'ignite', 'id': 'walker'}, 'pool': 'p.flare_big', 'gain_db': -13, 'align': 'start', 'offset': -0.12, 'pan': 0.1},
     {'name': 'em.crackle', 'match': {'kind': 'ember'}, 'pool': 'p.crackle', 'gain_db': -10, 'align': 'start', 'pan': 0.1},
@@ -83,7 +83,7 @@ rules = [
     {'name': 'wr.sand', 'match': {'kind': 'sand'}, 'pool': 'p.sand', 'gain_db': -10, 'align': 'start', 'pan': 0.1},
     {'name': 'wr.scratch', 'match': {'kind': 'scratch', 'variant': 'boot'}, 'pool': 'p.scratch', 'gain_db': -12, 'align': 'start', 'pan': 0.1},
     {'name': 'wr.scratch.wall', 'match': {'kind': 'scratch', 'variant': 'wall'}, 'pool': 'p.stone', 'gain_db': -8, 'align': 'start', 'pan': 0.1},
-    {'name': 'wr.scratch.table', 'match': {'kind': 'scratch', 'variant': 'table'}, 'pool': 'p.wood', 'gain_db': -10, 'align': 'start', 'pan': 0.1},
+    {'name': 'wr.scratch.table', 'match': {'kind': 'scratch', 'variant': 'table'}, 'pool': 'p.wood', 'gain_db': -4, 'align': 'start', 'pan': 0.1},
     {'name': 'wr.scratch.box', 'match': {'kind': 'scratch', 'variant': 'box'}, 'pool': 'p.scratch', 'gain_db': -13, 'align': 'start', 'pan': 0.05},
     {'name': 'st.scrape', 'match': {'kind': 'scrape'}, 'pool': 'p.stone', 'gain_db': -9, 'jitter_db': 1.5, 'align': 'start', 'pan': 0.05},
     {'name': 'wr.paint', 'match': {'kind': 'paint'}, 'pool': 'p.paper', 'gain_db': -18, 'align': 'start', 'pan': 0},
@@ -136,7 +136,7 @@ for s in plan['scenes']:
     a, b = s['voice_at'], s['voice_at'] + s['speech']
     ride += [[round(a - 0.25, 3), 0], [round(a, 3), -5], [round(b, 3), -5], [round(b + 0.35, 3), 0]]
 design = {
-    '_doc': 'Сіріңке тарихы: narration (Gemini TTS) + real Mixkit recordings only (no synthesis), placed on the picture cues computed in build/plan.py. Built by build/design.py; rendered by the real-sound skill mix.py.',
+    '_doc': 'Сіріңке тарихы: narration (Gemini TTS, Charon) + real Mixkit recordings only (no synthesis), placed on the picture cues computed in build/plan.py. Built by build/design.py; rendered by the real-sound skill mix.py.',
     'duration': round(plan['total'], 3), 'cues': 'audio/out/cues.json',
     'samples': samples, 'pools': pools, 'rules': rules, 'place': place, 'ambience': amb,
     '_buses_doc': 'ambience ducks 5 dB under every narration line; effects stay dry and centred',
