@@ -135,16 +135,17 @@ ride = [[0, 0]]
 for s in plan['scenes']:
     a, b = s['voice_at'], s['voice_at'] + s['speech']
     ride += [[round(a - 0.25, 3), 0], [round(a, 3), -5], [round(b, 3), -5], [round(b + 0.35, 3), 0]]
-# music: Mixkit "Secret Garden" (string quartet, A minor, 100 BPM, bars of 2.4 s in phrases of 3 bars).
-# One bar-line splice keeps the phrase position (24 bars = 8 phrases): the soft intro carries scenes 1-5, the quartet
-# builds under Walker (film ~29.6), is full from Soria on, and the track's own ending resolves the last scene.
-SPLICE_FILM = 65.6           # source bar 28 (68.4 s) -> source bar 52 (126.0 s); film = src - 2.8, then src - 60.4
-music = {'file': 'audio/assets/music/mk-595_secret-garden.wav', 'src_bpm': 100.003, 'stretch': 'none', 'gain_db': -12.5,
+# music: Mixkit "Classical 3" (solo piano, C major, 129.9 BPM, bars of 1.847 s in 4-bar phrases; a near-silent bar
+# closes each phrase). One splice at a phrase start removes the quieter middle (source bars 32-39, 8 bars = 2 phrases)
+# under the x-ray, where the music is already ducked 11 dB. The full section (source bars 24-30) lands on Soria (film
+# ~44.3) and the piece's own ending (bars 52-55) resolves the last scene.
+SPLICE_FILM = 59.11          # source bar 32 (59.56 s) -> source bar 40 (74.34 s); film = src - 0.45, then src - 15.23
+music = {'file': 'audio/assets/music2/mk-710_classical-3.wav', 'src_bpm': 129.913, 'stretch': 'none', 'gain_db': 2.5,
          'segments': [
-             {'label': 'src 2.8-68.4 (intro bars 1-27, the build at bar 13 lands under Walker): film = src - 2.8',
-              'src_from': 2.8, 'src_to': 68.406, 'at': 0.0, 'fade_in': 0.5, 'fade_out': 0.04},
-             {'label': 'src bars 52-61 (same phrase position, 24 bars later) to the final chord: film = src - 60.4',
-              'src_from': 126.006, 'src_to': 150.4, 'at': SPLICE_FILM + 0.006, 'fade_in': 0.012, 'fade_out': 0.3, 'tail_fade': 2.0},
+             {'label': 'src bars 0-31 (intro, build, full section on Soria): film = src - 0.45',
+              'src_from': 0.45, 'src_to': 59.56, 'at': 0.0, 'fade_in': 0.02, 'fade_out': 0.04},
+             {'label': 'src bars 40-57 (phrase start, 8 bars later) to the final chord: film = src - 15.23',
+              'src_from': 74.34, 'src_to': 105.1, 'at': SPLICE_FILM, 'fade_in': 0.012, 'fade_out': 0.4, 'tail_fade': 1.5},
          ]}
 # the music dips 7 dB under each narration line, sits lower under the x-ray and the stamp, and opens up between lines
 mride = [[0, 0]]

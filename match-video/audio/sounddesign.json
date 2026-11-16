@@ -974,27 +974,27 @@
   }
  ],
  "music": {
-  "file": "audio/assets/music/mk-595_secret-garden.wav",
-  "src_bpm": 100.003,
+  "file": "audio/assets/music2/mk-710_classical-3.wav",
+  "src_bpm": 129.913,
   "stretch": "none",
-  "gain_db": -12.5,
+  "gain_db": 2.5,
   "segments": [
    {
-    "label": "src 2.8-68.4 (intro bars 1-27, the build at bar 13 lands under Walker): film = src - 2.8",
-    "src_from": 2.8,
-    "src_to": 68.406,
+    "label": "src bars 0-31 (intro, build, full section on Soria): film = src - 0.45",
+    "src_from": 0.45,
+    "src_to": 59.56,
     "at": 0.0,
-    "fade_in": 0.5,
+    "fade_in": 0.02,
     "fade_out": 0.04
    },
    {
-    "label": "src bars 52-61 (same phrase position, 24 bars later) to the final chord: film = src - 60.4",
-    "src_from": 126.006,
-    "src_to": 150.4,
-    "at": 65.606,
+    "label": "src bars 40-57 (phrase start, 8 bars later) to the final chord: film = src - 15.23",
+    "src_from": 74.34,
+    "src_to": 105.1,
+    "at": 59.11,
     "fade_in": 0.012,
-    "fade_out": 0.3,
-    "tail_fade": 2.0
+    "fade_out": 0.4,
+    "tail_fade": 1.5
    }
   ]
  },
