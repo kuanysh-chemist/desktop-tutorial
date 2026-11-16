@@ -980,8 +980,6 @@ const SCENES = [
       if (fk > 0) O.motes(t, 22, 40, 150, 460, 700, '#b8ffcf', 2.6, 0.7 * fk, 14, 12);
       const p1 = pop(t, 5.4, 0.4);
       O.text('Пікір қалдырыңыз!', 270, 130, { font: 'rub', size: 44, scale: p1.s, alpha: p1.a, color: '#fff3d6', outline: '#1d2440', outlineW: 8 });
-      const words = ['Тұз?', 'Шыны?', 'Сабын?']; const xs = [170, 300, 390], ys = [760, 835, 910];
-      words.forEach((w, i) => { const p = pop(t, 6.0 + i * 0.35, 0.35); O.text(w, xs[i], ys[i], { size: 70, scale: p.s, alpha: p.a, color: '#c8ffd8', outline: '#1d2440', outlineW: 7, rot: (i - 1) * 0.06, glow: '#2dff70', glowSize: 18 }); });
     },
   },
 ];
