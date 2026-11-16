@@ -3,3 +3,5 @@ out/
 audio/voice/*.wav
 audio/voice/tts/
 audio/assets/
+audio/voice/gem/
+audio/voice/vc_test/

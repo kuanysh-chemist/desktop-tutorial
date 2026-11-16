@@ -1,0 +1,1191 @@
+{
+ "_doc": "Сіріңке тарихы: narration (Gemini TTS) + real Mixkit recordings only (no synthesis), placed on the picture cues computed in build/plan.py. Built by build/design.py; rendered by the real-sound skill mix.py.",
+ "duration": 99.394,
+ "cues": "audio/out/cues.json",
+ "samples": {
+  "fx.match": {
+   "file": "audio/assets/fire/mk-2590_fire-match-lighting.wav",
+   "start": 0.06,
+   "end": 1.3,
+   "mono": true,
+   "norm_peak_db": -3,
+   "fade_out": 0.35,
+   "eq": {
+    "hp": 120
+   },
+   "_doc": "scratch at 0.08, flare 0.44-0.92 (earshot find z +4.6 strong)"
+  },
+  "fx.flare": {
+   "file": "audio/assets/fire/mk-1346_soft-woosh-fire.wav",
+   "start": 0.1,
+   "end": 2.6,
+   "norm_peak_db": -6,
+   "fade_out": 0.6,
+   "eq": {
+    "hp": 90
+   },
+   "env": [
+    [
+     0,
+     -2
+    ],
+    [
+     0.6,
+     0
+    ],
+    [
+     1.4,
+     -3
+    ],
+    [
+     2.4,
+     -12
+    ]
+   ]
+  },
+  "fx.flare_big": {
+   "file": "audio/assets/fire/mk-1328_fire-swoosh-burning.wav",
+   "start": 0.62,
+   "end": 3.2,
+   "norm_peak_db": -4,
+   "fade_in": 0.05,
+   "fade_out": 0.8,
+   "eq": {
+    "hp": 70
+   },
+   "_doc": "the recording rises from silence until 0.8 s: trimmed to its last 0.2 s of build"
+  },
+  "fx.crackle": {
+   "file": "audio/assets/fire/mk-1329_campfire-burning-crackles.wav",
+   "start": 0.3,
+   "end": 2.0,
+   "mono": true,
+   "norm_peak_db": -10,
+   "fade_out": 0.5,
+   "eq": {
+    "hp": 300
+   }
+  },
+  "fl.scrape": {
+   "file": "audio/assets/foley/mk-809_metal-scrape.wav",
+   "start": 0.005,
+   "end": 0.4,
+   "mono": true,
+   "norm_peak_db": -6,
+   "fade_out": 0.08,
+   "eq": {
+    "hp": 400
+   }
+  },
+  "fl.spark.0": {
+   "file": "audio/assets/fire/mk-1816_gas-stove-spark-ignition.wav",
+   "start": 3.555,
+   "end": 3.7,
+   "mono": true,
+   "norm_peak_db": -8,
+   "fade_out": 0.04
+  },
+  "fl.spark.1": {
+   "file": "audio/assets/fire/mk-1816_gas-stove-spark-ignition.wav",
+   "start": 3.795,
+   "end": 3.94,
+   "mono": true,
+   "norm_peak_db": -8,
+   "fade_out": 0.04
+  },
+  "fl.spark.2": {
+   "file": "audio/assets/fire/mk-1816_gas-stove-spark-ignition.wav",
+   "start": 2.295,
+   "end": 2.45,
+   "mono": true,
+   "norm_peak_db": -8,
+   "fade_out": 0.04
+  },
+  "hu.blow": {
+   "file": "audio/assets/human/mk-2660_person-blows.wav",
+   "start": 0.0,
+   "end": 0.42,
+   "mono": true,
+   "norm_peak_db": -8,
+   "pitch": -2,
+   "fade_out": 0.12,
+   "eq": {
+    "hp": 150
+   }
+  },
+  "wr.pencil.0": {
+   "file": "audio/assets/foley/mk-3194_writing-pencil.wav",
+   "start": 0.5,
+   "end": 0.95,
+   "mono": true,
+   "norm_peak_db": -10,
+   "fade_out": 0.06
+  },
+  "wr.pencil.1": {
+   "file": "audio/assets/foley/mk-3194_writing-pencil.wav",
+   "start": 1.0,
+   "end": 1.5,
+   "mono": true,
+   "norm_peak_db": -10,
+   "fade_out": 0.06
+  },
+  "wr.scribble": {
+   "file": "audio/assets/foley/mk-2369_writing-scribble.wav",
+   "start": 0.0,
+   "end": 0.55,
+   "mono": true,
+   "norm_peak_db": -10,
+   "fade_out": 0.08
+  },
+  "wr.paper": {
+   "file": "audio/assets/foley/mk-1530_paper-slide.wav",
+   "start": 0.01,
+   "end": 0.47,
+   "mono": true,
+   "norm_peak_db": -10,
+   "fade_out": 0.08
+  },
+  "wr.sand": {
+   "file": "audio/assets/foley/mk-2369_writing-scribble.wav",
+   "start": 0.0,
+   "end": 1.0,
+   "mono": true,
+   "norm_peak_db": -7,
+   "pitch": -3,
+   "fade_out": 0.12,
+   "_doc": "coarse scribble pitched down = sandpaper under the match head"
+  },
+  "wr.scratch": {
+   "file": "audio/assets/foley/mk-2369_writing-scribble.wav",
+   "start": 0.55,
+   "end": 1.0,
+   "mono": true,
+   "norm_peak_db": -9,
+   "pitch": -2,
+   "fade_in": 0.03,
+   "fade_out": 0.08
+  },
+  "wd.scrape": {
+   "file": "audio/assets/foley/mk-3157_creaky-wooden-scrap.wav",
+   "start": 0.0,
+   "end": 0.55,
+   "mono": true,
+   "norm_peak_db": -9,
+   "fade_out": 0.1
+  },
+  "st.scrape": {
+   "file": "audio/assets/foley/mk-809_metal-scrape.wav",
+   "start": 0.005,
+   "end": 0.4,
+   "mono": true,
+   "norm_peak_db": -10,
+   "pitch": -6,
+   "fade_out": 0.1,
+   "eq": {
+    "hp": 200,
+    "lp": 6000
+   },
+   "_doc": "stick on the hearth stone: the metal scrape a fifth lower, top rolled off"
+  },
+  "ob.glass": {
+   "file": "audio/assets/foley/mk-2836_glasses-clinking.wav",
+   "start": 0.0,
+   "end": 0.6,
+   "mono": true,
+   "norm_peak_db": -12,
+   "fade_out": 0.2
+  },
+  "ob.coins": {
+   "file": "audio/assets/foley/mk-1993_clinking-coins.wav",
+   "start": 0.03,
+   "end": 1.02,
+   "mono": true,
+   "norm_peak_db": -8,
+   "fade_out": 0.2
+  },
+  "ob.plop": {
+   "file": "audio/assets/foley/mk-1317_water-bubble.wav",
+   "start": 0.0,
+   "end": 0.42,
+   "mono": true,
+   "norm_peak_db": -9,
+   "pitch": -3,
+   "fade_out": 0.08
+  },
+  "ob.squelch": {
+   "file": "audio/assets/foley/mk-3058_boot-stomp-mud.wav",
+   "start": 0.0,
+   "end": 0.6,
+   "mono": true,
+   "norm_peak_db": -12,
+   "pitch": 5,
+   "fade_out": 0.12,
+   "eq": {
+    "hp": 250
+   }
+  },
+  "ob.stamp": {
+   "file": "audio/assets/foley/mk-2182_wood-hard-hit.wav",
+   "start": 0.0,
+   "end": 0.36,
+   "mono": true,
+   "norm_peak_db": -3,
+   "pitch": -2,
+   "fade_out": 0.1
+  },
+  "ob.stamp_body": {
+   "file": "audio/assets/foley/mk-2934_bowl-put-in-table.wav",
+   "start": 0.0,
+   "end": 0.5,
+   "mono": true,
+   "norm_peak_db": -10,
+   "pitch": -4,
+   "fade_out": 0.15
+  },
+  "ob.tooth": {
+   "file": "audio/assets/foley/mk-2183_glass-hitting-metal.wav",
+   "start": 0.0,
+   "end": 0.3,
+   "mono": true,
+   "norm_peak_db": -16,
+   "pitch": 4,
+   "fade_out": 0.08
+  },
+  "ob.bubble": {
+   "file": "audio/assets/foley/mk-1317_water-bubble.wav",
+   "start": 0.0,
+   "end": 0.42,
+   "mono": true,
+   "norm_peak_db": -18,
+   "fade_out": 0.08
+  },
+  "ob.bubble_hi": {
+   "file": "audio/assets/foley/mk-1317_water-bubble.wav",
+   "start": 0.0,
+   "end": 0.42,
+   "mono": true,
+   "norm_peak_db": -20,
+   "pitch": 3,
+   "fade_out": 0.08
+  },
+  "hu.cough": {
+   "file": "audio/assets/human/mk-2218_sick-woman-coughing.wav",
+   "start": 0.16,
+   "end": 0.99,
+   "mono": true,
+   "norm_peak_db": -9,
+   "fade_out": 0.1
+  },
+  "mo.xray": {
+   "file": "audio/assets/motion/mk-677_cinematic-glass-hit-suspense.wav",
+   "start": 0.0,
+   "end": 3.6,
+   "norm_peak_db": -8,
+   "fade_out": 1.2
+  },
+  "mo.woosh": {
+   "file": "audio/assets/motion/mk-1489_air-woosh.wav",
+   "start": 0.0,
+   "end": 2.3,
+   "norm_peak_db": -12,
+   "fade_out": 0.4
+  },
+  "vo.narration": {
+   "file": "audio/out/audio/voice.wav",
+   "fade_in": 0.0,
+   "fade_out": 0.05
+  }
+ },
+ "pools": {
+  "p.match": [
+   "fx.match"
+  ],
+  "p.flare": [
+   "fx.flare"
+  ],
+  "p.flare_big": [
+   "fx.flare_big"
+  ],
+  "p.crackle": [
+   "fx.crackle"
+  ],
+  "p.scrape": [
+   "fl.scrape"
+  ],
+  "p.spark": [
+   "fl.spark.0",
+   "fl.spark.1",
+   "fl.spark.2"
+  ],
+  "p.blow": [
+   "hu.blow"
+  ],
+  "p.pencil": [
+   "wr.pencil.0",
+   "wr.scribble",
+   "wr.pencil.1"
+  ],
+  "p.paper": [
+   "wr.paper"
+  ],
+  "p.sand": [
+   "wr.sand"
+  ],
+  "p.scratch": [
+   "wr.scratch"
+  ],
+  "p.wood": [
+   "wd.scrape"
+  ],
+  "p.stone": [
+   "st.scrape"
+  ],
+  "p.glass": [
+   "ob.glass"
+  ],
+  "p.coins": [
+   "ob.coins"
+  ],
+  "p.plop": [
+   "ob.plop"
+  ],
+  "p.squelch": [
+   "ob.squelch"
+  ],
+  "p.stamp": [
+   "ob.stamp"
+  ],
+  "p.stamp_body": [
+   "ob.stamp_body"
+  ],
+  "p.tooth": [
+   "ob.tooth"
+  ],
+  "p.cough": [
+   "hu.cough"
+  ],
+  "p.xray": [
+   "mo.xray"
+  ],
+  "p.woosh": [
+   "mo.woosh"
+  ]
+ },
+ "rules": [
+  {
+   "name": "ig.match.today",
+   "match": {
+    "kind": "ignite",
+    "id": "today"
+   },
+   "pool": "p.match",
+   "gain_db": -9,
+   "align": "start",
+   "offset": -0.4,
+   "pan": 0
+  },
+  {
+   "name": "ig.match",
+   "match": {
+    "kind": "ignite",
+    "id": "^(?!s12)"
+   },
+   "pool": "p.match",
+   "gain_db": -6,
+   "weight_db": 3,
+   "align": "start",
+   "offset": -0.4,
+   "pan": 0
+  },
+  {
+   "name": "ig.flare",
+   "match": {
+    "kind": "ignite",
+    "id": "^(?!s5:lap|s6:walker)"
+   },
+   "pool": "p.flare",
+   "gain_db": -14,
+   "weight_db": 4,
+   "align": "start",
+   "offset": -0.08,
+   "pan": 0
+  },
+  {
+   "name": "ig.lap",
+   "match": {
+    "kind": "ignite",
+    "id": "lap"
+   },
+   "pool": "p.flare_big",
+   "gain_db": -9,
+   "align": "start",
+   "offset": -0.12,
+   "pan": 0
+  },
+  {
+   "name": "ig.walker",
+   "match": {
+    "kind": "ignite",
+    "id": "walker"
+   },
+   "pool": "p.flare_big",
+   "gain_db": -13,
+   "align": "start",
+   "offset": -0.12,
+   "pan": 0.1
+  },
+  {
+   "name": "em.crackle",
+   "match": {
+    "kind": "ember"
+   },
+   "pool": "p.crackle",
+   "gain_db": -10,
+   "align": "start",
+   "pan": 0.1
+  },
+  {
+   "name": "fl.scrape",
+   "match": {
+    "kind": "strike"
+   },
+   "pool": "p.scrape",
+   "gain_db": -10,
+   "weight_db": 3,
+   "align": "attack",
+   "offset": -0.03,
+   "pan": 0.05
+  },
+  {
+   "name": "fl.spark",
+   "match": {
+    "kind": "strike"
+   },
+   "pool": "p.spark",
+   "mode": "cycle",
+   "gain_db": -12,
+   "jitter_db": 1,
+   "align": "attack",
+   "pan": -0.05
+  },
+  {
+   "name": "hu.blow",
+   "match": {
+    "kind": "blow"
+   },
+   "pool": "p.blow",
+   "gain_db": -10,
+   "align": "start",
+   "pan": -0.1
+  },
+  {
+   "name": "hu.blow2",
+   "match": {
+    "kind": "blow",
+    "id": "blow:0"
+   },
+   "pool": "p.blow",
+   "gain_db": -13,
+   "align": "start",
+   "offset": 0.36,
+   "pan": -0.1
+  },
+  {
+   "name": "hu.blow3",
+   "match": {
+    "kind": "blow",
+    "id": "blow:0"
+   },
+   "pool": "p.blow",
+   "gain_db": -15,
+   "align": "start",
+   "offset": 0.72,
+   "pan": -0.1
+  },
+  {
+   "name": "wr.pencil",
+   "match": {
+    "kind": "pencil"
+   },
+   "pool": "p.pencil",
+   "mode": "cycle",
+   "gain_db": -16,
+   "jitter_db": 1,
+   "align": "start",
+   "pan": 0
+  },
+  {
+   "name": "wr.rub",
+   "match": {
+    "kind": "rub"
+   },
+   "pool": "p.paper",
+   "gain_db": -17,
+   "jitter_db": 1.5,
+   "weight_db": 2,
+   "align": "start",
+   "pan": 0
+  },
+  {
+   "name": "wr.sand",
+   "match": {
+    "kind": "sand"
+   },
+   "pool": "p.sand",
+   "gain_db": -10,
+   "align": "start",
+   "pan": 0.1
+  },
+  {
+   "name": "wr.scratch",
+   "match": {
+    "kind": "scratch",
+    "variant": "boot"
+   },
+   "pool": "p.scratch",
+   "gain_db": -12,
+   "align": "start",
+   "pan": 0.1
+  },
+  {
+   "name": "wr.scratch.wall",
+   "match": {
+    "kind": "scratch",
+    "variant": "wall"
+   },
+   "pool": "p.stone",
+   "gain_db": -8,
+   "align": "start",
+   "pan": 0.1
+  },
+  {
+   "name": "wr.scratch.table",
+   "match": {
+    "kind": "scratch",
+    "variant": "table"
+   },
+   "pool": "p.wood",
+   "gain_db": -10,
+   "align": "start",
+   "pan": 0.1
+  },
+  {
+   "name": "wr.scratch.box",
+   "match": {
+    "kind": "scratch",
+    "variant": "box"
+   },
+   "pool": "p.scratch",
+   "gain_db": -13,
+   "align": "start",
+   "pan": 0.05
+  },
+  {
+   "name": "st.scrape",
+   "match": {
+    "kind": "scrape"
+   },
+   "pool": "p.stone",
+   "gain_db": -9,
+   "jitter_db": 1.5,
+   "align": "start",
+   "pan": 0.05
+  },
+  {
+   "name": "wr.paint",
+   "match": {
+    "kind": "paint"
+   },
+   "pool": "p.paper",
+   "gain_db": -18,
+   "align": "start",
+   "pan": 0
+  },
+  {
+   "name": "ob.glass",
+   "match": {
+    "kind": "clink"
+   },
+   "pool": "p.glass",
+   "gain_db": -10,
+   "align": "attack",
+   "pan": -0.15,
+   "qa_ok": "the glass contact (attack) is on the vial landing frame; the measured peak is the ring after it"
+  },
+  {
+   "name": "ob.coins",
+   "match": {
+    "kind": "coins"
+   },
+   "pool": "p.coins",
+   "gain_db": -10,
+   "align": "attack",
+   "pan": 0.15,
+   "qa_ok": "a cascade of coins: the first coin is on the cue, the loudest lands later as the pan settles"
+  },
+  {
+   "name": "ob.plop",
+   "match": {
+    "kind": "plop"
+   },
+   "pool": "p.plop",
+   "gain_db": -10,
+   "align": "attack",
+   "pan": 0.1
+  },
+  {
+   "name": "ob.dip",
+   "match": {
+    "kind": "dip"
+   },
+   "pool": "p.squelch",
+   "gain_db": -14,
+   "align": "attack",
+   "pan": 0
+  },
+  {
+   "name": "hu.cough",
+   "match": {
+    "kind": "cough"
+   },
+   "pool": "p.cough",
+   "gain_db": -11,
+   "align": "attack",
+   "pan": -0.1
+  },
+  {
+   "name": "mo.xray",
+   "match": {
+    "kind": "xray"
+   },
+   "pool": "p.xray",
+   "gain_db": -10,
+   "align": "attack",
+   "pan": 0,
+   "qa_ok": "the hit lands on the cut to the x-ray; its long swell peaks later by design"
+  },
+  {
+   "name": "ob.tooth",
+   "match": {
+    "kind": "tooth"
+   },
+   "pool": "p.tooth",
+   "gain_db": -10,
+   "align": "attack",
+   "pan": 0.1
+  },
+  {
+   "name": "ob.stamp",
+   "match": {
+    "kind": "stamp"
+   },
+   "pool": "p.stamp",
+   "gain_db": -5,
+   "align": "attack",
+   "pan": 0
+  },
+  {
+   "name": "mo.woosh",
+   "match": {
+    "kind": "whoosh"
+   },
+   "pool": "p.woosh",
+   "gain_db": -14,
+   "align": "peak",
+   "offset": 0.6,
+   "pan": 0
+  }
+ ],
+ "place": [
+  {
+   "sample": "ob.bubble",
+   "at": 8.0,
+   "gain_db": -10,
+   "pan": 0.05
+  },
+  {
+   "sample": "ob.bubble_hi",
+   "at": 8.512,
+   "gain_db": -10,
+   "pan": 0.05
+  },
+  {
+   "sample": "ob.bubble",
+   "at": 8.96,
+   "gain_db": -10,
+   "pan": 0.05
+  },
+  {
+   "sample": "ob.bubble_hi",
+   "at": 9.472,
+   "gain_db": -12,
+   "pan": 0.05
+  },
+  {
+   "sample": "ob.bubble",
+   "at": 10.048,
+   "gain_db": -12,
+   "pan": 0.05
+  },
+  {
+   "sample": "ob.bubble_hi",
+   "at": 95.594,
+   "gain_db": -11,
+   "pan": -0.05
+  },
+  {
+   "sample": "ob.bubble",
+   "at": 96.494,
+   "gain_db": -11,
+   "pan": -0.05
+  },
+  {
+   "sample": "ob.bubble_hi",
+   "at": 96.944,
+   "gain_db": -11,
+   "pan": -0.05
+  },
+  {
+   "sample": "ob.bubble",
+   "at": 97.494,
+   "gain_db": -11,
+   "pan": -0.05
+  },
+  {
+   "sample": "ob.bubble_hi",
+   "at": 97.994,
+   "gain_db": -11,
+   "pan": -0.05
+  },
+  {
+   "sample": "ob.bubble",
+   "at": 98.594,
+   "gain_db": -11,
+   "pan": -0.05
+  },
+  {
+   "sample": "vo.narration",
+   "at": 0.0,
+   "align": "start",
+   "bus": "music",
+   "gain_db": 0.0
+  }
+ ],
+ "ambience": [
+  {
+   "name": "am.night1",
+   "file": "audio/assets/ambience/mk-2414_night-forest-insects.wav",
+   "src_start": 4.0,
+   "at": 0.0,
+   "until": 12.929,
+   "fade_in": 0.9,
+   "fade_out": 1.2,
+   "gain_db": -6,
+   "width": 0.8,
+   "eq": {
+    "hp": 200,
+    "lp": 11000
+   },
+   "auto": [
+    [
+     0,
+     0
+    ],
+    [
+     6.74,
+     0
+    ],
+    [
+     7.808,
+     -7
+    ]
+   ]
+  },
+  {
+   "name": "am.dusk",
+   "file": "audio/assets/ambience/mk-1789_summer-night-crickets-loop.wav",
+   "src_start": 2.0,
+   "at": 13.441,
+   "until": 20.641,
+   "fade_in": 0.4,
+   "fade_out": 0.3,
+   "gain_db": -12,
+   "width": 0.6,
+   "eq": {
+    "hp": 300,
+    "lp": 10000
+   }
+  },
+  {
+   "name": "am.hearth",
+   "file": "audio/assets/fire/mk-1330_campfire-crackles.wav",
+   "src_start": 2.0,
+   "at": 40.71,
+   "until": 47.028,
+   "fade_in": 0.15,
+   "fade_out": 0.8,
+   "gain_db": -9,
+   "width": 0.5,
+   "eq": {
+    "hp": 150
+   },
+   "auto": [
+    [
+     40.71,
+     0
+    ],
+    [
+     43.46,
+     0
+    ],
+    [
+     43.635,
+     -7
+    ]
+   ]
+  },
+  {
+   "name": "am.night9",
+   "file": "audio/assets/ambience/mk-2414_night-forest-insects.wav",
+   "src_start": 30.0,
+   "at": 71.611,
+   "until": 75.551,
+   "fade_in": 0.5,
+   "fade_out": 0.3,
+   "gain_db": -7,
+   "width": 0.8,
+   "eq": {
+    "hp": 200,
+    "lp": 11000
+   }
+  },
+  {
+   "name": "am.flame0",
+   "file": "audio/assets/fire/mk-1329_campfire-burning-crackles.wav",
+   "src_start": 1.0,
+   "at": 19.941,
+   "until": 20.641,
+   "fade_in": 0.12,
+   "fade_out": 0.35,
+   "gain_db": -15,
+   "width": 0.25,
+   "eq": {
+    "hp": 400
+   }
+  },
+  {
+   "name": "am.flame1",
+   "file": "audio/assets/fire/mk-1329_campfire-burning-crackles.wav",
+   "src_start": 2.3,
+   "at": 27.758,
+   "until": 29.458,
+   "fade_in": 0.12,
+   "fade_out": 0.35,
+   "gain_db": -15,
+   "width": 0.25,
+   "eq": {
+    "hp": 400
+   }
+  },
+  {
+   "name": "am.flame2",
+   "file": "audio/assets/fire/mk-1329_campfire-burning-crackles.wav",
+   "src_start": 3.6,
+   "at": 49.074,
+   "until": 50.724,
+   "fade_in": 0.12,
+   "fade_out": 0.35,
+   "gain_db": -15,
+   "width": 0.25,
+   "eq": {
+    "hp": 400
+   }
+  },
+  {
+   "name": "am.flame3",
+   "file": "audio/assets/fire/mk-1329_campfire-burning-crackles.wav",
+   "src_start": 4.9,
+   "at": 56.07,
+   "until": 57.324,
+   "fade_in": 0.12,
+   "fade_out": 0.35,
+   "gain_db": -15,
+   "width": 0.25,
+   "eq": {
+    "hp": 400
+   }
+  },
+  {
+   "name": "am.flame4",
+   "file": "audio/assets/fire/mk-1329_campfire-burning-crackles.wav",
+   "src_start": 6.2,
+   "at": 58.182,
+   "until": 59.436,
+   "fade_in": 0.12,
+   "fade_out": 0.35,
+   "gain_db": -15,
+   "width": 0.25,
+   "eq": {
+    "hp": 400
+   }
+  },
+  {
+   "name": "am.flame5",
+   "file": "audio/assets/fire/mk-1329_campfire-burning-crackles.wav",
+   "src_start": 7.5,
+   "at": 60.294,
+   "until": 61.548,
+   "fade_in": 0.12,
+   "fade_out": 0.35,
+   "gain_db": -15,
+   "width": 0.25,
+   "eq": {
+    "hp": 400
+   }
+  },
+  {
+   "name": "am.flame6",
+   "file": "audio/assets/fire/mk-1329_campfire-burning-crackles.wav",
+   "src_start": 8.8,
+   "at": 88.195,
+   "until": 90.994,
+   "fade_in": 0.12,
+   "fade_out": 0.35,
+   "gain_db": -15,
+   "width": 0.25,
+   "eq": {
+    "hp": 400
+   }
+  },
+  {
+   "name": "am.flame7",
+   "file": "audio/assets/fire/mk-1329_campfire-burning-crackles.wav",
+   "src_start": 10.1,
+   "at": 92.144,
+   "until": 94.594,
+   "fade_in": 0.12,
+   "fade_out": 0.35,
+   "gain_db": -15,
+   "width": 0.25,
+   "eq": {
+    "hp": 400
+   }
+  }
+ ],
+ "_buses_doc": "ambience ducks 5 dB under every narration line; effects stay dry and centred",
+ "buses": {
+  "amb": {
+   "gain_db": 0.0,
+   "auto": [
+    [
+     0,
+     0
+    ],
+    [
+     0.35,
+     0
+    ],
+    [
+     0.6,
+     -5
+    ],
+    [
+     6.59,
+     -5
+    ],
+    [
+     6.94,
+     0
+    ],
+    [
+     7.09,
+     0
+    ],
+    [
+     7.34,
+     -5
+    ],
+    [
+     12.491,
+     -5
+    ],
+    [
+     12.841,
+     0
+    ],
+    [
+     12.641,
+     0
+    ],
+    [
+     12.891,
+     -5
+    ],
+    [
+     19.806,
+     -5
+    ],
+    [
+     20.156,
+     0
+    ],
+    [
+     20.468,
+     0
+    ],
+    [
+     20.718,
+     -5
+    ],
+    [
+     26.937,
+     -5
+    ],
+    [
+     27.287,
+     0
+    ],
+    [
+     27.087,
+     0
+    ],
+    [
+     27.337,
+     -5
+    ],
+    [
+     33.114,
+     -5
+    ],
+    [
+     33.464,
+     0
+    ],
+    [
+     33.364,
+     0
+    ],
+    [
+     33.614,
+     -5
+    ],
+    [
+     45.71,
+     -5
+    ],
+    [
+     46.06,
+     0
+    ],
+    [
+     46.228,
+     0
+    ],
+    [
+     46.478,
+     -5
+    ],
+    [
+     59.175,
+     -5
+    ],
+    [
+     59.525,
+     0
+    ],
+    [
+     61.598,
+     0
+    ],
+    [
+     61.848,
+     -5
+    ],
+    [
+     68.316,
+     -5
+    ],
+    [
+     68.666,
+     0
+    ],
+    [
+     68.614,
+     0
+    ],
+    [
+     68.864,
+     -5
+    ],
+    [
+     74.769,
+     -5
+    ],
+    [
+     75.119,
+     0
+    ],
+    [
+     74.919,
+     0
+    ],
+    [
+     75.169,
+     -5
+    ],
+    [
+     84.399,
+     -5
+    ],
+    [
+     84.749,
+     0
+    ],
+    [
+     85.502,
+     0
+    ],
+    [
+     85.752,
+     -5
+    ],
+    [
+     90.544,
+     -5
+    ],
+    [
+     90.894,
+     0
+    ],
+    [
+     91.206,
+     0
+    ],
+    [
+     91.456,
+     -5
+    ],
+    [
+     96.294,
+     -5
+    ],
+    [
+     96.644,
+     0
+    ]
+   ]
+  },
+  "sfx": {
+   "gain_db": 0.0
+  },
+  "music": {
+   "gain_db": 0.0
+  }
+ },
+ "_master_doc": "-14 LUFS for social; voice-led, so the compressor stays on to keep the narration even",
+ "master": {
+  "lufs": -14,
+  "ceiling": 0.77,
+  "no_glue": true
+ }
+}
