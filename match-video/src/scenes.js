@@ -509,15 +509,15 @@ const SCENES = [
       for (let i = 0; i < nS; i++) line(168 + rnd(i, 7) * 40, 752 + i * 3, 290 + rnd(i, 8) * 20, 746 + i * 3, 'HB', '#8a7a2a', 0.8, 'scr' + i);
       by.drawArms();
       const a1 = ease.out(seg(t, 1.1, 1.6)), a2 = ease.out(seg(t, 1.9, 2.4));
-      if (a1 > 0) path(partial([[96, 880], [124, 846], [168, 806]], a1), '2B', INK, 1.6, { id: 'ar1' });
-      if (a2 > 0) path(partial([[420, 900], [380, 860], [tipX + 10, tipY + 18]], a2), '2B', INK, 1.6, { id: 'ar2' });
+      if (a1 > 0) path(partial([[92, 628], [112, 690], [150, 742]], a1), '2B', INK, 1.6, { id: 'ar1' });
+      if (a2 > 0) path(partial([[252, 628], [258, 680], [tipX - 2, tipY - 14]], a2), '2B', INK, 1.6, { id: 'ar2' });
     },
     post(t, tq, O) {
       O.grad('#fff4dc', '#d8b088', 0.35, 'multiply');
       O.glow(115, 160, 260, '#fff2c8', 0.35);
       const y = pop(t, 0.15); O.text('1680', 34, 92, { font: 'rub', size: 74, align: 'left', scale: y.s, alpha: y.a, color: '#fff3d6', outline: INK, outlineW: 8 });
-      const p1 = pop(t, 1.2); O.text('фосфор', 92, 905, { size: 48, scale: p1.s, alpha: p1.a, color: '#4a5a0a', rot: -0.06, outline: '#fdf8ec', outlineW: 6 });
-      const p2 = pop(t, 2.0); O.text('күкірт', 440, 925, { size: 48, scale: p2.s, alpha: p2.a, color: '#8a5a00', rot: 0.04, outline: '#fdf8ec', outlineW: 6 });
+      const p1 = pop(t, 1.2); O.text('фосфор', 88, 604, { size: 48, scale: p1.s, alpha: p1.a, color: '#4a5a0a', rot: -0.06, outline: '#fdf8ec', outlineW: 6 });
+      const p2 = pop(t, 2.0); O.text('күкірт', 262, 604, { size: 48, scale: p2.s, alpha: p2.a, color: '#8a5a00', rot: 0.04, outline: '#fdf8ec', outlineW: 6 });
       if (t > 3.0) O.glow(228, 760, 100, '#fffbb0', 0.18 + 0.12 * Math.sin(t * 20));
       O.motes(t, 14, 40, 60, 300, 400, '#fff6d8', 2.4, 0.5, 8, 4);
     },
