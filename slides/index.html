@@ -255,30 +255,21 @@ body.menu #menuShade{opacity:1;pointer-events:auto}
 #s-types .tr{fill:none;stroke-width:6;stroke-linecap:round;stroke-dasharray:var(--len,700);stroke-dashoffset:var(--len,700)}
 #s-types .tr.shown{animation:drawL 1s var(--ease) forwards}
 @keyframes drawL{to{stroke-dashoffset:0}}
-#s-types .bc{position:absolute;top:322px;width:800px;height:702px;padding:24px 36px 20px}
-#s-types .bc.l{left:96px;--accent:var(--red);--accent-s:var(--red-s)}
-#s-types .bc.r{left:1024px;--accent:var(--blue);--accent-s:var(--blue-s)}
+#s-types .bc{position:absolute;top:322px;width:860px;height:708px;padding:22px 30px 20px}
+#s-types .bc.l{left:70px;--accent:var(--red);--accent-s:var(--red-s)}
+#s-types .bc.r{left:990px;--accent:var(--blue);--accent-s:var(--blue-s)}
 #s-types .hd{display:flex;align-items:center;gap:20px;height:64px}
-#s-types .hd .nm{font-size:54px;font-weight:900;color:var(--accent);line-height:1}
-#s-types .hd .mdl{margin-left:auto;font-size:42px;font-weight:900;color:var(--ink);white-space:nowrap}
+#s-types .hd .nm{font-size:56px;font-weight:900;color:var(--accent);line-height:1}
+#s-types .hd .mdl{margin-left:auto;font-size:46px;font-weight:900;color:var(--ink);white-space:nowrap}
 #s-types .hd .mdl .ar{width:1.7em}
-#s-types .bc p{font-size:25px;line-height:1.34;color:var(--ink2);font-weight:700;margin-top:8px;height:68px}
-#s-types .bc p b{color:var(--ink)}
 #s-types .cA{color:#2DBE7E}#s-types .cB{color:#2F8CFF}#s-types .cC{color:#FF6B8B}
-#s-types canvas.rx{display:block;margin:10px auto 0}
-#s-types .cap{display:flex;align-items:center;gap:18px;height:72px;margin-top:8px}
-#s-types .cap .dots{flex:none;display:flex;flex-direction:column;gap:7px}
-#s-types .cap .dots i{display:block;width:34px;height:10px;border-radius:5px;background:#DCE6FB;transition:background .4s,transform .4s}
-#s-types .cap .dots i.on{background:var(--accent)}
-#s-types .cap .dots i.cur{transform:scaleX(1.2)}
-#s-types .cap .tx{flex:1;font-size:26px;line-height:1.28;font-weight:800;color:var(--ink);animation:capIn .5s var(--ease) both}
-#s-types .cap .tx b{color:var(--accent)}
-@keyframes capIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-#s-types .rp{flex:none;width:52px;height:52px;border-radius:50%;background:#fff;border:3px solid var(--line);display:grid;place-items:center;box-shadow:0 4px 0 var(--line);transition:.2s}
-#s-types .rp:hover{border-color:var(--accent);transform:rotate(-30deg)}
-#s-types .rp svg{width:26px;height:26px;fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-#s-types .ex{display:flex;align-items:center;gap:14px;margin-top:8px;background:var(--accent-s);border-radius:20px;padding:10px 24px;font-size:32px;font-weight:900;color:var(--ink);justify-content:center}
+#s-types canvas.rx{display:block;margin:12px auto 0}
+#s-types .exrow{display:flex;align-items:center;gap:14px;margin-top:12px}
+#s-types .ex{flex:1;display:flex;align-items:center;gap:14px;background:var(--accent-s);border-radius:22px;padding:10px 24px;font-size:36px;font-weight:900;color:var(--ink);justify-content:center;height:62px}
 #s-types .ex small{font-size:21px;font-weight:900;color:var(--accent);letter-spacing:.05em;text-transform:uppercase}
+#s-types .rp{flex:none;width:62px;height:62px;border-radius:50%;background:#fff;border:3px solid var(--line);display:grid;place-items:center;box-shadow:0 4px 0 var(--line);transition:.2s}
+#s-types .rp:hover{border-color:var(--accent);transform:rotate(-30deg)}
+#s-types .rp svg{width:30px;height:30px;fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 </style>
 <div class="top">
   <div class="chip rv pop"><b>1</b>Реакция түрлері</div>
@@ -294,17 +285,13 @@ body.menu #menuShade{opacity:1;pointer-events:auto}
 
 <div class="card bc l st l" data-st="1" id="cardIrr">
   <div class="hd"><span class="nm">Қайтымсыз</span><span class="mdl"><span class="f"><span class="cA">A</span> + <span class="cB">B</span> <svg class="ar" viewBox="0 0 64 28"><path class="fw" d="M5 14h52M45 4l12 10-12 10"/></svg> <span class="cC">C</span></span></span></div>
-  <p>Тек <b>тура бағытта</b> жүреді. Өнім жүйеден шығып кетеді (газ ↑, тұнба ↓, су) — <b>кері жүре алмайды</b>.</p>
   <canvas class="rx"></canvas>
-  <div class="cap"><span class="dots"><i></i><i></i><i></i></span><span class="tx"></span><button class="rp" title="Қайта көру"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v5h-5"/></svg></button></div>
-  <div class="ex"><small>мысал</small><span class="f">NaOH + HNO<sub>3</sub> <svg class="ar" viewBox="0 0 64 28"><path class="fw" d="M5 14h52M45 4l12 10-12 10"/></svg> NaNO<sub>3</sub> + H<sub>2</sub>O</span></div>
+  <div class="exrow"><div class="ex"><small>мысал</small><span class="f">NaOH + HNO<sub>3</sub> <svg class="ar" viewBox="0 0 64 28"><path class="fw" d="M5 14h52M45 4l12 10-12 10"/></svg> NaNO<sub>3</sub> + H<sub>2</sub>O</span></div><button class="rp" title="Қайта көру"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v5h-5"/></svg></button></div>
 </div>
 <div class="card bc r st r" data-st="2" id="cardRev">
   <div class="hd"><span class="nm">Қайтымды</span><span class="mdl"><span class="f"><span class="cA">A</span> + <span class="cB">B</span> <svg class="ar" viewBox="0 0 64 30"><path class="fw" d="M5 10h53M47 2l11 8"/><path class="bk" d="M59 21H6M17 29L6 21"/></svg> <span class="cC">C</span></span></span></div>
-  <p>Бір мезгілде <b>екі бағытта</b> жүреді: тура <span class="k-blue"><span class="f"><svg class="ar" viewBox="0 0 64 28"><path class="fw" d="M5 14h52M45 4l12 10-12 10"/></svg></span></span> және кері <span class="k-red"><span class="f"><svg class="ar" viewBox="0 0 64 28"><path class="bk" d="M59 14H7M19 4L7 14l12 10"/></svg></span></span>. Өнім жүйеде қалады, <b>қайта ыдырай алады</b>.</p>
   <canvas class="rx"></canvas>
-  <div class="cap"><span class="dots"><i></i><i></i><i></i></span><span class="tx"></span><button class="rp" title="Қайта көру"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v5h-5"/></svg></button></div>
-  <div class="ex"><small>мысал</small><span class="f">N<sub>2</sub> + 3H<sub>2</sub> <svg class="ar" viewBox="0 0 64 30"><path class="fw" d="M5 10h53M47 2l11 8"/><path class="bk" d="M59 21H6M17 29L6 21"/></svg> 2NH<sub>3</sub></span></div>
+  <div class="exrow"><div class="ex"><small>мысал</small><span class="f">N<sub>2</sub> + 3H<sub>2</sub> <svg class="ar" viewBox="0 0 64 30"><path class="fw" d="M5 10h53M47 2l11 8"/><path class="bk" d="M59 21H6M17 29L6 21"/></svg> 2NH<sub>3</sub></span></div><button class="rp" title="Қайта көру"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v5h-5"/></svg></button></div>
 </div>
 </section>
 
@@ -2032,27 +2019,26 @@ Deck.slide('s-plan', ctx => {
   });
 });
 
-// ---- 3. Реакция түрлері: екі колба (қайтымсыз / қайтымды) ----
+// ---- 3. Реакция түрлері: екі үлкен колба (қайтымсыз / қайтымды) ----
 const RXC = { A: '#2DBE7E', B: '#2F8CFF', C: '#FF6B8B' };
 class MiniRx {
-  constructor(ctx, cv, mode, ui) {
-    this.mode = mode; this.ui = ui; this.g = ctx.canvas(cv, 700, 330);
-    this.R = { x0: 20, x1: 420, top: 42, bot: 254, surf: 96 };
+  constructor(ctx, cv, mode) {
+    this.mode = mode; this.W = 800; this.H = 500; this.g = ctx.canvas(cv, this.W, this.H);
+    this.R = { x0: 24, x1: 506, top: 62, bot: 404, surf: 134 };
     this.running = false; this.reset();
   }
-  region() { const R = this.R; return { x0: R.x0 + 30, x1: R.x1 - 30, y0: R.surf + 30, y1: R.bot - 28 }; }
+  region() { const R = this.R; return { x0: R.x0 + 38, x1: R.x1 - 38, y0: R.surf + 34, y1: R.bot - 36 }; }
   spawn(k, x, y, o = {}) {
-    const q = this.region(), an = rnd(0, 6.28), sp = rnd(40, 80);
+    const q = this.region(), an = rnd(0, 6.28), sp = rnd(50, 95);
     const p = { k, x: x ?? rnd(q.x0, q.x1), y: y ?? rnd(q.y0, q.y1), vx: Math.cos(an) * sp, vy: Math.sin(an) * sp, a: rnd(0, 6.28), vr: rnd(-1, 1), s: o.s ?? 1, al: 1, st: o.st || 0, t: 0, ph: rnd(0, 6) };
     if (o.vx !== undefined) { p.vx = o.vx; p.vy = o.vy; }
     this.parts.push(p); return p;
   }
   reset() {
     this.t = 0; this.parts = []; this.groups = []; this.fx = []; this.puffs = [];
-    this.nF = 0; this.nB = 0; this.cum = 0; this.evT = 1.2; this.done = 0; this.fl = [0, 0]; this.phase = -1;
+    this.nF = 0; this.nB = 0; this.cum = 0; this.evT = 1.2; this.done = 0; this.fl = [0, 0];
     this.bh = { A: 10, B: 10, C: 0 };
     for (let i = 0; i < 10; i++) { this.spawn('A'); this.spawn('B'); }
-    this.setPhase(0);
   }
   cnt(k, sts = [0]) { let n = 0; for (const p of this.parts) if (p.k === k && sts.includes(p.st)) n++; return n; }
   pair() {
@@ -2062,11 +2048,11 @@ class MiniRx {
     for (const q of Bs) { const d = Math.hypot(q.x - a.x, q.y - a.y); if (d < bd) { bd = d; b = q; } }
     a.st = b.st = 1;
     const r = this.region(), tx = clamp((a.x + b.x) / 2, r.x0, r.x1), ty = clamp((a.y + b.y) / 2, r.y0, r.y1);
-    this.groups.push({ kind: 'm', a, b, tx, ty, sa: [a.x, a.y], sb: [b.x, b.y], t: 0, dur: .6 }); return true;
+    this.groups.push({ kind: 'm', a, b, tx, ty, sa: [a.x, a.y], sb: [b.x, b.y], t: 0, dur: .65 }); return true;
   }
   split() {
     const Cs = this.parts.filter(p => p.k === 'C' && p.st === 0); if (!Cs.length) return false;
-    const c = Cs[Math.floor(Math.random() * Cs.length)]; c.st = 4; this.groups.push({ kind: 's', c, bx: c.x, t: 0, dur: .45 }); return true;
+    const c = Cs[Math.floor(Math.random() * Cs.length)]; c.st = 4; this.groups.push({ kind: 's', c, bx: c.x, t: 0, dur: .5 }); return true;
   }
   flash(x, y, col) { this.fx.push({ x, y, t: 0, c: col }); }
   update(dt) {
@@ -2074,7 +2060,7 @@ class MiniRx {
     this.t += dt; const R = this.R, q = this.region();
     for (let i = 0; i < 2; i++) this.fl[i] = Math.max(0, this.fl[i] - dt * 1.6);
     // оқиғалар
-    if (this.mode === 'irr') { this.evT -= dt; if (this.evT <= 0) { this.evT = this.pair() ? rnd(.55, .9) : .3; } }
+    if (this.mode === 'irr') { this.evT -= dt; if (this.evT <= 0) { this.evT = this.pair() ? rnd(.6, .95) : .3; } }
     else if (this.t > 1.2) {
       const nA = this.cnt('A'), nB = this.cnt('B'), nC = this.cnt('C');
       if (Math.random() < 3.2 * nA * nB / 100 * dt) this.pair();
@@ -2084,18 +2070,18 @@ class MiniRx {
     for (let i = this.groups.length - 1; i >= 0; i--) {
       const g = this.groups[i]; g.t += dt; const u = clamp(g.t / g.dur, 0, 1);
       if (g.kind === 'm') {
-        const e = ease.io(u); g.a.x = lerp(g.sa[0], g.tx - 11, e); g.a.y = lerp(g.sa[1], g.ty, e); g.b.x = lerp(g.sb[0], g.tx + 11, e); g.b.y = lerp(g.sb[1], g.ty, e); g.a.a += dt * 8; g.b.a -= dt * 8;
+        const e = ease.io(u); g.a.x = lerp(g.sa[0], g.tx - 16, e); g.a.y = lerp(g.sa[1], g.ty, e); g.b.x = lerp(g.sb[0], g.tx + 16, e); g.b.y = lerp(g.sb[1], g.ty, e); g.a.a += dt * 8; g.b.a -= dt * 8;
         if (u >= 1) {
           this.parts.splice(this.parts.indexOf(g.a), 1); this.parts.splice(this.parts.indexOf(g.b), 1);
           this.flash(g.tx, g.ty, '#2F6BFF'); this.nF++; this.fl[0] = 1; Snd.merge();
-          if (this.mode === 'irr') { const c = this.spawn('C', g.tx, g.ty, { st: 2, s: .35, vx: 0, vy: 0 }); } else this.spawn('C', g.tx, g.ty, { s: .35 });
+          if (this.mode === 'irr') this.spawn('C', g.tx, g.ty, { st: 2, s: .35, vx: 0, vy: 0 }); else this.spawn('C', g.tx, g.ty, { s: .35 });
           this.groups.splice(i, 1);
         }
       } else {
-        g.c.x = g.bx + Math.sin(u * 46) * 4; g.c.a += dt * 3;
+        g.c.x = g.bx + Math.sin(u * 46) * 5; g.c.a += dt * 3;
         if (u >= 1) {
           const c = g.c; this.parts.splice(this.parts.indexOf(c), 1); this.flash(c.x, c.y, '#F43F5E'); this.nB++; this.fl[1] = 1; Snd.split();
-          const a = this.spawn('A', c.x - 14, c.y, { vx: -85, vy: rnd(-40, 40), s: .4 }), b = this.spawn('B', c.x + 14, c.y, { vx: 85, vy: rnd(-40, 40), s: .4 });
+          this.spawn('A', c.x - 20, c.y, { vx: -115, vy: rnd(-50, 50), s: .4 }); this.spawn('B', c.x + 20, c.y, { vx: 115, vy: rnd(-50, 50), s: .4 });
           this.groups.splice(i, 1);
         }
       }
@@ -2106,102 +2092,90 @@ class MiniRx {
       if (p.s < 1) p.s = Math.min(1, p.s + dt * 3.2);
       if (p.st === 1 || p.st === 4) continue;
       if (p.st === 2) {
-        p.t += dt; p.vy = -(80 + p.t * 40); p.x += Math.sin(p.t * 6 + p.ph) * 34 * dt; p.y += p.vy * dt; p.a += dt * 2; p.x = clamp(p.x, this.R.x0 + 24, this.R.x1 - 24);
+        p.t += dt; p.vy = -(100 + p.t * 50); p.x += Math.sin(p.t * 6 + p.ph) * 44 * dt; p.y += p.vy * dt; p.a += dt * 2; p.x = clamp(p.x, R.x0 + 34, R.x1 - 34);
         if (!p.out && p.y < R.surf) {
           p.out = true; this.cum++; this.fx.push({ x: p.x, y: R.surf, t: 0, c: '#fff', ring: true }); Snd.pop();
-          for (let k = 0; k < 4; k++) this.puffs.push({ x: p.x + rnd(-12, 12), y: p.y, vx: rnd(-18, 18), vy: -rnd(40, 80), t: 0, life: rnd(.9, 1.5), r: rnd(8, 15) });
+          for (let k = 0; k < 5; k++) this.puffs.push({ x: p.x + rnd(-16, 16), y: p.y, vx: rnd(-24, 24), vy: -rnd(50, 100), t: 0, life: rnd(.9, 1.6), r: rnd(11, 20) });
         }
-        if (p.out && p.y < 70) p.al = clamp((p.y + 30) / 100, 0, 1);
-        if (p.y < -34) this.parts.splice(i, 1);
+        if (p.out && p.y < 90) p.al = clamp((p.y + 40) / 130, 0, 1);
+        if (p.y < -44) this.parts.splice(i, 1);
         continue;
       }
-      const want = 62, cur = Math.hypot(p.vx, p.vy) || 1, k = 1 + (want / cur - 1) * Math.min(1, dt * 2);
-      p.vx = p.vx * k + rnd(-70, 70) * dt; p.vy = p.vy * k + rnd(-70, 70) * dt; p.x += p.vx * dt; p.y += p.vy * dt; p.a += p.vr * dt;
+      const want = 78, cur = Math.hypot(p.vx, p.vy) || 1, k = 1 + (want / cur - 1) * Math.min(1, dt * 2);
+      p.vx = p.vx * k + rnd(-80, 80) * dt; p.vy = p.vy * k + rnd(-80, 80) * dt; p.x += p.vx * dt; p.y += p.vy * dt; p.a += p.vr * dt;
       if (p.x < q.x0) { p.x = q.x0; p.vx = Math.abs(p.vx); } else if (p.x > q.x1) { p.x = q.x1; p.vx = -Math.abs(p.vx); }
       if (p.y < q.y0) { p.y = q.y0; p.vy = Math.abs(p.vy); } else if (p.y > q.y1) { p.y = q.y1; p.vy = -Math.abs(p.vy); }
     }
     this.fx = this.fx.filter(f => (f.t += dt) < .6); this.puffs = this.puffs.filter(f => (f.t += dt) < f.life);
     for (const f of this.puffs) { f.x += f.vx * dt; f.y += f.vy * dt; }
     // бағандар
-    const tgt = { A: this.cnt('A', [0, 1]), B: this.cnt('B', [0, 1]), C: this.mode === 'irr' ? this.cum + this.cnt('C', [2]) - this.parts.filter(p => p.k === 'C' && p.st === 2 && p.out).length : this.cnt('C', [0, 4]) };
+    const gasIn = this.parts.filter(p => p.k === 'C' && p.st === 2 && !p.out).length;
+    const tgt = { A: this.cnt('A', [0, 1]), B: this.cnt('B', [0, 1]), C: this.mode === 'irr' ? this.cum + gasIn : this.cnt('C', [0, 4]) };
     for (const k in tgt) this.bh[k] += (tgt[k] - this.bh[k]) * Math.min(1, dt * 7);
-    // кезеңдер
-    let ph;
-    if (this.mode === 'irr') { const left = this.cnt('A', [0, 1]) + this.cnt('B', [0, 1]); ph = this.nF === 0 ? 0 : (left === 0 && !this.groups.length) ? 2 : 1; if (ph === 2) { this.done += dt; if (this.done > 6) { this.reset(); return; } } }
-    else ph = this.nF === 0 ? 0 : (this.t < 7 ? 1 : 2);
-    if (ph !== this.phase) this.setPhase(ph);
-  }
-  setPhase(p) {
-    this.phase = p; const T = this.mode === 'irr'
-      ? ['<b>1.</b> Колбада тек <b>A</b> және <b>B</b> бар. Өнім әлі жоқ.', '<b>2.</b> A + B → C: түзілген <b>C газ</b> болып колбадан ұшып кетеді. Кері қайтуға жол жоқ!', '<b>3.</b> A мен B <b>толық жұмсалды</b>: реакция <b>соңына дейін</b> жүрді.']
-      : ['<b>1.</b> Басында тек <b>A</b> және <b>B</b> бар. Өнім жоқ.', '<b>2.</b> Тура реакция <b>C</b> түзеді, ал C ыдырап, <b>кері реакция</b> да басталады.', '<b>3.</b> Екі бағыт <b>бір мезгілде</b> жүріп жатыр: A, B және C бірге тұр.'];
-    const tx = this.ui.tx; tx.style.animation = 'none'; void tx.offsetWidth; tx.style.animation = ''; tx.innerHTML = F(T[p].replace(/→/g, '->'));
-    this.ui.dots.forEach((d, i) => { d.classList.toggle('on', i <= p); d.classList.toggle('cur', i === p); });
+    // қайтымсыз реакция біткенде біраз тұрып, басынан басталады
+    if (this.mode === 'irr' && this.nF > 0 && this.cnt('A', [0, 1]) + this.cnt('B', [0, 1]) === 0 && !this.groups.length) { this.done += dt; if (this.done > 6) this.reset(); }
   }
   draw() {
-    const g = this.g, R = this.R, irr = this.mode === 'irr', acc = irr ? '#F43F5E' : '#2F6BFF', t = this.t;
-    g.clearRect(0, 0, 700, 330);
-    rr(g, 0, 0, 700, 330, 26); g.fillStyle = irr ? '#FFEFF2' : '#EAF1FF'; g.fill();
+    const g = this.g, R = this.R, W = this.W, H = this.H, irr = this.mode === 'irr', t = this.t;
+    g.clearRect(0, 0, W, H);
+    rr(g, 0, 0, W, H, 30); g.fillStyle = irr ? '#FFEFF2' : '#EAF1FF'; g.fill();
     // колба
-    const glass = () => { g.beginPath(); g.moveTo(R.x0, R.top); g.lineTo(R.x0, R.bot - 28); g.quadraticCurveTo(R.x0, R.bot, R.x0 + 28, R.bot); g.lineTo(R.x1 - 28, R.bot); g.quadraticCurveTo(R.x1, R.bot, R.x1, R.bot - 28); g.lineTo(R.x1, R.top); };
+    const glass = () => { g.beginPath(); g.moveTo(R.x0, R.top); g.lineTo(R.x0, R.bot - 38); g.quadraticCurveTo(R.x0, R.bot, R.x0 + 38, R.bot); g.lineTo(R.x1 - 38, R.bot); g.quadraticCurveTo(R.x1, R.bot, R.x1, R.bot - 38); g.lineTo(R.x1, R.top); };
     g.save(); glass(); g.closePath(); g.clip(); g.fillStyle = 'rgba(255,255,255,.75)'; g.fillRect(R.x0, R.top, R.x1 - R.x0, R.bot - R.top);
-    g.beginPath(); g.moveTo(R.x0 - 4, R.bot + 4); g.lineTo(R.x0 - 4, R.surf); for (let x = R.x0; x <= R.x1 + 4; x += 8) g.lineTo(x, R.surf + Math.sin(x * .05 + t * 3) * 2.6); g.lineTo(R.x1 + 4, R.bot + 4); g.closePath(); g.fillStyle = '#CFE6FF'; g.fill();
+    g.beginPath(); g.moveTo(R.x0 - 4, R.bot + 4); g.lineTo(R.x0 - 4, R.surf); for (let x = R.x0; x <= R.x1 + 4; x += 8) g.lineTo(x, R.surf + Math.sin(x * .045 + t * 3) * 3.4); g.lineTo(R.x1 + 4, R.bot + 4); g.closePath(); g.fillStyle = '#CFE6FF'; g.fill();
     g.restore();
-    // бөлшектер (сұйық ішіндегілер)
+    // бөлшектер
+    const S = 1.18;
     for (const p of this.parts) {
       if (p.st === 2) {
         g.save(); g.globalAlpha = p.al;
-        if (!p.out) { g.fillStyle = 'rgba(255,255,255,.4)'; g.strokeStyle = 'rgba(255,255,255,.95)'; g.lineWidth = 3; g.beginPath(); g.arc(p.x, p.y, 27 * p.s, 0, 7); g.fill(); g.stroke(); }
-        drawMol(g, 'C', p.x, p.y, 0, .95 * p.s, 1); g.restore(); continue;
+        if (!p.out) { g.fillStyle = 'rgba(255,255,255,.4)'; g.strokeStyle = 'rgba(255,255,255,.95)'; g.lineWidth = 3.5; g.beginPath(); g.arc(p.x, p.y, 36 * p.s, 0, 7); g.fill(); g.stroke(); g.fillStyle = 'rgba(255,255,255,.9)'; g.beginPath(); g.arc(p.x - 13, p.y - 13, 5, 0, 7); g.fill(); }
+        drawMol(g, 'C', p.x, p.y, 0, S * p.s, 1); g.restore(); continue;
       }
-      drawMol(g, p.k, p.x, p.y, p.a, .95 * p.s, p.al, true);
+      drawMol(g, p.k, p.x, p.y, p.a, S * p.s, p.al, true);
     }
-    for (const f of this.puffs) { const u = f.t / f.life; g.fillStyle = `rgba(255,107,139,${.28 * (1 - u)})`; g.beginPath(); g.arc(f.x, f.y, f.r * (1 + u), 0, 7); g.fill(); }
-    for (const f of this.fx) { const u = f.t / .6; g.strokeStyle = f.ring ? `rgba(255,255,255,${1 - u})` : rgba(f.c, 1 - u); g.lineWidth = 5; g.beginPath(); if (f.ring) g.ellipse(f.x, f.y, 10 + u * 34, 4 + u * 10, 0, 0, 7); else { g.arc(f.x, f.y, 12 + u * 48, 0, 7); } g.stroke(); if (!f.ring) { g.fillStyle = `rgba(255,255,255,${.85 * (1 - u)})`; g.beginPath(); g.arc(f.x, f.y, 8 + u * 22, 0, 7); g.fill(); } }
+    for (const f of this.puffs) { const u = f.t / f.life; g.fillStyle = `rgba(255,107,139,${.3 * (1 - u)})`; g.beginPath(); g.arc(f.x, f.y, f.r * (1 + u), 0, 7); g.fill(); }
+    for (const f of this.fx) { const u = f.t / .6; g.strokeStyle = f.ring ? `rgba(255,255,255,${1 - u})` : rgba(f.c, 1 - u); g.lineWidth = 6; g.beginPath(); if (f.ring) g.ellipse(f.x, f.y, 14 + u * 48, 5 + u * 14, 0, 0, 7); else g.arc(f.x, f.y, 16 + u * 66, 0, 7); g.stroke(); if (!f.ring) { g.fillStyle = `rgba(255,255,255,${.85 * (1 - u)})`; g.beginPath(); g.arc(f.x, f.y, 10 + u * 30, 0, 7); g.fill(); } }
     // шыны контур
-    g.save(); g.strokeStyle = '#9AB6EA'; g.lineWidth = 8; g.lineCap = 'round'; g.lineJoin = 'round'; glass(); g.stroke(); g.beginPath(); g.moveTo(R.x0 - 12, R.top - 2); g.lineTo(R.x0 + 6, R.top); g.moveTo(R.x1 + 12, R.top - 2); g.lineTo(R.x1 - 6, R.top); g.stroke();
-    g.strokeStyle = 'rgba(255,255,255,.8)'; g.lineWidth = 6; g.beginPath(); g.moveTo(R.x0 + 18, R.top + 40); g.lineTo(R.x0 + 18, R.bot - 50); g.stroke(); g.restore();
-    // газ бөліну белгісі
-    if (irr && this.cum > 0) { const w = 120; rr(g, R.x0 + 6, 6, w, 30, 15); g.fillStyle = '#FF6B8B'; g.fill(); g.fillStyle = '#fff'; g.font = "900 20px 'Nunito Variable',sans-serif"; g.textAlign = 'center'; g.fillText('газ', R.x0 + 6 + 44, 27); this.arrow(R.x0 + 6 + 92, 21, 10, 'up', '#fff', 3.4); }
+    g.save(); g.strokeStyle = '#9AB6EA'; g.lineWidth = 10; g.lineCap = 'round'; g.lineJoin = 'round'; glass(); g.stroke(); g.beginPath(); g.moveTo(R.x0 - 16, R.top - 3); g.lineTo(R.x0 + 8, R.top); g.moveTo(R.x1 + 16, R.top - 3); g.lineTo(R.x1 - 8, R.top); g.stroke();
+    g.strokeStyle = 'rgba(255,255,255,.8)'; g.lineWidth = 8; g.beginPath(); g.moveTo(R.x0 + 24, R.top + 50); g.lineTo(R.x0 + 24, R.bot - 64); g.stroke(); g.restore();
+    // «газ ↑» белгісі
+    if (irr && this.cum > 0) { rr(g, R.x0 + 8, 8, 132, 38, 19); g.fillStyle = '#FF6B8B'; g.fill(); g.fillStyle = '#fff'; g.font = "900 26px 'Nunito Variable',sans-serif"; g.textAlign = 'center'; g.fillText('газ', R.x0 + 8 + 48, 36); this.arrow(R.x0 + 8 + 106, 27, 12, 'up', '#fff', 4.4); }
     // реакция санауыштары
     const chip = (x, w, col, on, label, n, dir, dead) => {
-      g.save(); rr(g, x, 276, w, 46, 23);
-      if (dead) { g.fillStyle = 'rgba(140,150,185,.14)'; g.fill(); g.setLineDash([8, 7]); g.strokeStyle = 'rgba(140,150,185,.8)'; g.lineWidth = 3; g.stroke(); g.setLineDash([]); }
+      const y = 430, h = 60, cy = y + h / 2; g.save(); rr(g, x, y, w, h, 30);
+      if (dead) { g.fillStyle = 'rgba(140,150,185,.14)'; g.fill(); g.setLineDash([10, 8]); g.strokeStyle = 'rgba(140,150,185,.85)'; g.lineWidth = 3.5; g.stroke(); g.setLineDash([]); }
       else { g.fillStyle = rgba(col, .16 + .84 * on); g.fill(); }
       const fg = dead ? '#8D9AC4' : (on > .5 ? '#fff' : col);
-      this.arrow(x + 30, 299, 16, dir, fg, 4.2);
-      g.fillStyle = fg; g.font = "900 22px 'Nunito Variable',sans-serif"; g.textAlign = 'left'; g.fillText(label, x + 58, 307);
-      g.textAlign = 'right'; g.font = "900 26px 'Nunito Variable',sans-serif"; g.fillText(dead ? '✕' : n, x + w - 20, 308);
-      if (dead) { g.strokeStyle = 'rgba(244,63,94,.9)'; g.lineWidth = 4.5; g.lineCap = 'round'; g.beginPath(); g.moveTo(x + 18, 290); g.lineTo(x + 42, 308); g.moveTo(x + 42, 290); g.lineTo(x + 18, 308); g.stroke(); }
+      this.arrow(x + 40, cy, 21, dir, fg, 5.2);
+      g.fillStyle = fg; g.font = "900 30px 'Nunito Variable',sans-serif"; g.textAlign = 'left'; g.fillText(label, x + 78, cy + 11);
+      g.textAlign = 'right'; g.font = "900 38px 'Nunito Variable',sans-serif"; g.fillText(dead ? '' : n, x + w - 26, cy + 14);
+      if (dead) { g.strokeStyle = 'rgba(244,63,94,.92)'; g.lineWidth = 6; g.lineCap = 'round'; g.beginPath(); const cx = x + w - 48; g.moveTo(cx - 13, cy - 13); g.lineTo(cx + 13, cy + 13); g.moveTo(cx + 13, cy - 13); g.lineTo(cx - 13, cy + 13); g.stroke(); g.beginPath(); g.moveTo(x + 18, cy); g.lineTo(x + 62, cy); g.strokeStyle = 'rgba(244,63,94,.0)'; g.stroke(); }
       g.restore();
     };
-    chip(20, 196, '#2F6BFF', this.fl[0], 'тура', this.nF, 'r', false);
-    chip(226, 196, '#F43F5E', this.fl[1], 'кері', this.nB, 'l', irr);
+    chip(24, 236, '#2F6BFF', this.fl[0], 'тура', this.nF, 'r', false);
+    chip(278, 236, '#F43F5E', this.fl[1], 'кері', this.nB, 'l', irr);
     // бағандар
-    const bx = [488, 560, 632], keys = ['A', 'B', 'C'], base = 244, H = 190;
-    g.fillStyle = '#6B7AAE'; g.font = "900 20px 'Nunito Variable',sans-serif"; g.textAlign = 'center'; g.fillText('мөлшері', 580, 24);
+    const bx = [548, 636, 724], keys = ['A', 'B', 'C'], base = 392, BH = 310, BW = 64;
     keys.forEach((k, i) => {
-      const x = bx[i]; rr(g, x, base - H, 52, H, 20); g.fillStyle = 'rgba(255,255,255,.75)'; g.fill();
-      const h = Math.max(this.bh[k] / 10 * H, 0); if (h > 1) { g.save(); rr(g, x, base - H, 52, H, 20); g.clip(); const gr = g.createLinearGradient(0, base - h, 0, base); gr.addColorStop(0, RXC[k]); gr.addColorStop(1, mixc(RXC[k], '#0b1440', .2)); g.fillStyle = gr; g.fillRect(x, base - h, 52, h); g.restore(); }
-      const v = Math.round(this.bh[k]); g.fillStyle = RXC[k]; g.font = "900 26px 'Nunito Variable',sans-serif"; g.textAlign = 'center'; g.fillText(v, x + 26, base - Math.max(h, 18) - 8 < base - H - 4 ? base - H + 22 : base - Math.max(h, 0) - 10);
-      drawAtom(g, x + 26, base + 24, RXC[k], 15, 1); g.fillStyle = '#fff'; g.font = "900 20px 'Nunito Variable',sans-serif"; g.fillText(k, x + 26, base + 31);
+      const x = bx[i]; rr(g, x, base - BH, BW, BH, 24); g.fillStyle = 'rgba(255,255,255,.78)'; g.fill();
+      const h = Math.max(this.bh[k] / 10 * BH, 0); if (h > 1) { g.save(); rr(g, x, base - BH, BW, BH, 24); g.clip(); const gr = g.createLinearGradient(0, base - h, 0, base); gr.addColorStop(0, RXC[k]); gr.addColorStop(1, mixc(RXC[k], '#0b1440', .2)); g.fillStyle = gr; g.fillRect(x, base - h, BW, h); g.restore(); }
+      const v = Math.round(this.bh[k]); g.fillStyle = RXC[k]; g.font = "900 34px 'Nunito Variable',sans-serif"; g.textAlign = 'center';
+      g.fillText(v, x + BW / 2, h > BH - 46 ? base - BH + 38 : base - h - 12);
+      if (h > BH - 46) { g.fillStyle = '#fff'; g.fillText(v, x + BW / 2, base - BH + 38); }
+      drawAtom(g, x + BW / 2, base + 40, RXC[k], 21, 1); g.fillStyle = '#fff'; g.font = "900 28px 'Nunito Variable',sans-serif"; g.fillText(k, x + BW / 2, base + 50);
     });
-    // күй белгісі
-    const done = this.phase === 2; let lbl = 'жүріп жатыр', col = '#8D9AC4';
-    if (done) { lbl = irr ? 'реагент қалмады' : 'реагент те, өнім де бар'; col = irr ? '#12B76A' : '#2F6BFF'; }
-    let fs = 20; g.font = `900 ${fs}px 'Nunito Variable',sans-serif`; while (g.measureText(lbl).width + 28 > 206 && fs > 13) { fs--; g.font = `900 ${fs}px 'Nunito Variable',sans-serif`; }
-    const w = g.measureText(lbl).width + 28; rr(g, 580 - w / 2, 282, w, 38, 19); g.fillStyle = rgba(col, done ? 1 : .18); g.fill(); g.fillStyle = done ? '#fff' : col; g.textAlign = 'center'; g.fillText(lbl, 580, 307);
   }
   arrow(x, y, len, dir, col, lw) {
-    const g = this.g; g.save(); g.strokeStyle = col; g.lineWidth = lw; g.lineCap = 'round'; g.lineJoin = 'round'; g.beginPath();
-    if (dir === 'r') { g.moveTo(x - len, y); g.lineTo(x + len, y); g.moveTo(x + len - 9, y - 8); g.lineTo(x + len, y); g.lineTo(x + len - 9, y + 8); }
-    else if (dir === 'l') { g.moveTo(x + len, y); g.lineTo(x - len, y); g.moveTo(x - len + 9, y - 8); g.lineTo(x - len, y); g.lineTo(x - len + 9, y + 8); }
-    else { g.moveTo(x, y + len); g.lineTo(x, y - len); g.moveTo(x - 7, y - len + 9); g.lineTo(x, y - len); g.lineTo(x + 7, y - len + 9); }
+    const g = this.g, hd = 13; g.save(); g.strokeStyle = col; g.lineWidth = lw; g.lineCap = 'round'; g.lineJoin = 'round'; g.beginPath();
+    if (dir === 'r') { g.moveTo(x - len, y); g.lineTo(x + len, y); g.moveTo(x + len - hd, y - hd + 3); g.lineTo(x + len, y); g.lineTo(x + len - hd, y + hd - 3); }
+    else if (dir === 'l') { g.moveTo(x + len, y); g.lineTo(x - len, y); g.moveTo(x - len + hd, y - hd + 3); g.lineTo(x - len, y); g.lineTo(x - len + hd, y + hd - 3); }
+    else { g.moveTo(x, y + len); g.lineTo(x, y - len); g.moveTo(x - hd + 3, y - len + hd); g.lineTo(x, y - len); g.lineTo(x + hd - 3, y - len + hd); }
     g.stroke(); g.restore();
   }
 }
 Deck.slide('s-types', ctx => {
-  const mk = (id, mode) => { const card = ctx.q(id), m = new MiniRx(ctx, card.querySelector('canvas'), mode, { tx: card.querySelector('.tx'), dots: Array.from(card.querySelectorAll('.dots i')) }); ctx.on(card.querySelector('.rp'), 'click', () => { m.reset(); m.running = true; Snd.click(); }); return m; };
+  const mk = (id, mode) => { const card = ctx.q(id), m = new MiniRx(ctx, card.querySelector('canvas'), mode); ctx.on(card.querySelector('.rp'), 'click', () => { m.reset(); m.running = true; Snd.click(); }); return m; };
   const A = mk('#cardIrr', 'irr'), B = mk('#cardRev', 'rev');
   A.draw(); B.draw();
   ctx.raf(dt => { A.update(dt); B.update(dt); A.draw(); B.draw(); });
