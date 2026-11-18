@@ -265,7 +265,7 @@ body.menu #menuShade{opacity:1;pointer-events:auto}
 #s-types .cA{color:#2DBE7E}#s-types .cB{color:#2F8CFF}#s-types .cC{color:#FF6B8B}
 #s-types canvas.rx{display:block;margin:12px auto 0}
 #s-types .exrow{display:flex;align-items:center;gap:14px;margin-top:12px}
-#s-types .ex{flex:1;display:flex;align-items:center;gap:14px;background:var(--accent-s);border-radius:22px;padding:10px 24px;font-size:36px;font-weight:900;color:var(--ink);justify-content:center;height:62px}
+#s-types .ex{flex:1;display:flex;align-items:center;gap:12px;background:var(--accent-s);border-radius:22px;padding:10px 18px;font-size:30px;white-space:nowrap;font-weight:900;color:var(--ink);justify-content:center;height:62px}
 #s-types .ex small{font-size:21px;font-weight:900;color:var(--accent);letter-spacing:.05em;text-transform:uppercase}
 #s-types .rp{flex:none;width:62px;height:62px;border-radius:50%;background:#fff;border:3px solid var(--line);display:grid;place-items:center;box-shadow:0 4px 0 var(--line);transition:.2s}
 #s-types .rp:hover{border-color:var(--accent);transform:rotate(-30deg)}
@@ -284,9 +284,9 @@ body.menu #menuShade{opacity:1;pointer-events:auto}
 </svg>
 
 <div class="card bc l st l" data-st="1" id="cardIrr">
-  <div class="hd"><span class="nm">Қайтымсыз</span><span class="mdl"><span class="f"><span class="cA">A</span> + <span class="cB">B</span> <svg class="ar" viewBox="0 0 64 28"><path class="fw" d="M5 14h52M45 4l12 10-12 10"/></svg> <span class="cC">C</span></span></span></div>
+  <div class="hd"><span class="nm">Қайтымсыз</span><span class="mdl"><span class="f"><span class="cA">A</span> + <span class="cB">B</span> <svg class="ar" viewBox="0 0 64 28"><path class="fw" d="M5 14h52M45 4l12 10-12 10"/></svg> <span class="cC">C</span><svg class="ar v" viewBox="0 0 24 40"><path d="M12 4v30M3 25l9 10 9-10"/></svg></span></span></div>
   <canvas class="rx"></canvas>
-  <div class="exrow"><div class="ex"><small>мысал</small><span class="f">NaOH + HNO<sub>3</sub> <svg class="ar" viewBox="0 0 64 28"><path class="fw" d="M5 14h52M45 4l12 10-12 10"/></svg> NaNO<sub>3</sub> + H<sub>2</sub>O</span></div><button class="rp" title="Қайта көру"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v5h-5"/></svg></button></div>
+  <div class="exrow"><div class="ex"><small>мысал</small><span class="f">Ba(NO<sub>3</sub>)<sub>2</sub> + H<sub>2</sub>SO<sub>4</sub> <svg class="ar" viewBox="0 0 64 28"><path class="fw" d="M5 14h52M45 4l12 10-12 10"/></svg> BaSO<sub>4</sub><svg class="ar v" viewBox="0 0 24 40"><path d="M12 4v30M3 25l9 10 9-10"/></svg> + 2HNO<sub>3</sub></span></div><button class="rp" title="Қайта көру"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v5h-5"/></svg></button></div>
 </div>
 <div class="card bc r st r" data-st="2" id="cardRev">
   <div class="hd"><span class="nm">Қайтымды</span><span class="mdl"><span class="f"><span class="cA">A</span> + <span class="cB">B</span> <svg class="ar" viewBox="0 0 64 30"><path class="fw" d="M5 10h53M47 2l11 8"/><path class="bk" d="M59 21H6M17 29L6 21"/></svg> <span class="cC">C</span></span></span></div>
@@ -373,62 +373,61 @@ body.menu #menuShade{opacity:1;pointer-events:auto}
 <div class="info rv z" style="--d:.8s" id="ginfo"><div class="fm" id="gfm">?</div><div class="nm" id="gnm">Көпіршікті бас<small>газдың атын көрсетеді</small></div></div>
 </section>
 
-<!-- ===== 6. ҚАЙТЫМДЫ РЕАКЦИЯ (A+B <=> C+D) ===== -->
+<!-- ===== 6. ҚАЙТЫМДЫ РЕАКЦИЯ (A+B <=> C+D): жылдамдық спидометрлері ===== -->
 <section class="slide a-blue" id="s-rev" data-title="Қайтымды реакция" data-sec="1 · Қайтымсыз және қайтымды реакциялар">
 <style>
-#s-rev canvas#revCv{position:absolute;left:70px;top:226px}
-#s-rev .side{position:absolute;left:880px;top:150px;width:950px}
-#s-rev .def{font-size:36px;line-height:1.35;color:var(--ink2);font-weight:700}
+#s-rev canvas#revCv{position:absolute;left:44px;top:132px}
+#s-rev .evr{position:absolute;left:44px;top:846px;width:820px;display:flex;gap:18px}
+#s-rev .ev{flex:1;display:flex;align-items:center;gap:14px;padding:8px 28px;border-radius:99px;font-size:36px;white-space:nowrap;font-weight:900;background:var(--c-s);color:var(--c);transition:background .15s,color .15s,transform .15s}
+#s-rev .ev b{margin-left:auto;font-size:48px;font-variant-numeric:tabular-nums}
+#s-rev .ev .ar{width:1.5em}
+#s-rev .ev.f{--c:var(--blue);--c-s:var(--blue-s)} #s-rev .ev.b{--c:var(--red);--c-s:var(--red-s)}
+#s-rev .ev.hit{background:var(--c);color:#fff;transform:scale(1.04)}
+#s-rev .ev.hit .ar path{stroke:#fff}
+#s-rev .spr{position:absolute;left:44px;top:944px;width:820px;display:flex;justify-content:center;gap:16px}
+#s-rev .spr .lg b{min-width:34px;display:inline-block;text-align:right;font-variant-numeric:tabular-nums}
+#s-rev .rs{position:absolute;left:900px;top:126px;width:960px}
+#s-rev .def{font-size:31px;line-height:1.3;color:var(--ink2);font-weight:700}
 #s-rev .def b{color:var(--ink)}
-#s-rev .bigeq{margin-top:20px;display:flex;align-items:center;justify-content:center;gap:16px;background:#fff;border-radius:34px;padding:26px 30px;box-shadow:var(--shadow);font-size:84px;font-weight:900;color:var(--ink)}
-#s-rev .bigeq .L{display:inline-grid;place-items:center;width:104px;height:104px;border-radius:50%;color:#fff;font-size:62px;background:var(--c);box-shadow:inset -10px -12px 0 rgba(0,0,0,.12),0 10px 20px color-mix(in srgb,var(--c) 40%,transparent)}
-#s-rev .bigeq .pl{color:var(--ink3);font-size:62px}
+#s-rev .bigeq{margin-top:14px;display:flex;align-items:center;justify-content:center;gap:16px;background:#fff;border-radius:34px;padding:16px 30px;box-shadow:var(--shadow);font-size:84px;font-weight:900;color:var(--ink)}
+#s-rev .bigeq .L{display:inline-grid;place-items:center;width:96px;height:96px;border-radius:50%;color:#fff;font-size:58px;background:var(--c);box-shadow:inset -10px -12px 0 rgba(0,0,0,.12),0 10px 20px color-mix(in srgb,var(--c) 40%,transparent)}
+#s-rev .bigeq .pl{color:var(--ink3);font-size:58px}
 #s-rev .arw{position:relative;width:190px;height:96px;margin:0 8px}
-#s-rev .arw svg{position:absolute;left:0;width:100%;overflow:visible}
-#s-rev .arw .f{top:6px;height:42px}
-#s-rev .arw .b{top:50px;height:42px}
+#s-rev .arw svg{position:absolute;left:0;width:100%;overflow:visible;transition:opacity .15s}
+#s-rev .arw .f{top:6px;height:42px} #s-rev .arw .b{top:50px;height:42px}
 #s-rev .arw path{fill:none;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}
 #s-rev .arw .f path{stroke:var(--blue)} #s-rev .arw .b path{stroke:var(--red)}
-#s-rev .lbls{display:flex;justify-content:center;gap:40px;margin-top:8px;font-size:26px;font-weight:900}
-#s-rev .lbls span{padding:6px 24px;border-radius:99px}
-#s-rev .rates{margin-top:20px;background:#fff;border-radius:30px;padding:22px 30px;box-shadow:var(--shadow);display:grid;gap:14px}
-#s-rev .rt{display:grid;grid-template-columns:150px 1fr 76px;gap:18px;align-items:center;font-size:30px;font-weight:900}
-#s-rev .rt .bar{height:30px;border-radius:99px;background:#EEF3FF;overflow:hidden}
-#s-rev .rt .bar i{display:block;height:100%;width:0;border-radius:99px;background:var(--c);transition:width .12s linear}
-#s-rev .rt .val{text-align:right;color:var(--ink2);font-size:26px}
-#s-rev .phases{margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-#s-rev .ph{border-radius:26px;padding:16px 20px;background:#fff;box-shadow:0 6px 18px rgba(40,70,170,.1);border:4px solid transparent;font-size:23px;line-height:1.25;color:var(--ink2);font-weight:800;opacity:.55;transition:.4s var(--ease)}
-#s-rev .ph b{display:block;font-size:30px;color:var(--ink);margin-bottom:4px}
-#s-rev .ph.on2{opacity:1;border-color:var(--accent);transform:translateY(-6px);box-shadow:0 14px 28px rgba(47,107,255,.25)}
-#s-rev .bars{position:absolute;left:70px;top:820px;width:760px;display:flex;justify-content:center;gap:18px}
-#s-rev .bars b{min-width:34px;text-align:right;font-variant-numeric:tabular-nums}
-#s-rev .restart{position:absolute;left:305px;top:908px}
+#s-rev .arw svg.hit{animation:arHit .5s ease-out}
+@keyframes arHit{0%{transform:scaleY(1)}30%{transform:scaleY(1.6);filter:drop-shadow(0 0 12px currentColor)}100%{transform:scaleY(1)}}
+#s-rev canvas#gaugeCv{display:block;margin-top:10px}
+#s-rev .phases{margin-top:6px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+#s-rev .ph{border-radius:26px;padding:14px 20px;background:#fff;box-shadow:0 6px 18px rgba(40,70,170,.1);border:4px solid transparent;font-size:23px;line-height:1.22;color:var(--ink2);font-weight:800;opacity:.5;transition:.4s var(--ease)}
+#s-rev .ph b{display:block;font-size:29px;color:var(--ink);margin-bottom:3px}
+#s-rev .ph.on2{opacity:1;border-color:var(--accent);transform:translateY(-5px);box-shadow:0 14px 28px rgba(47,107,255,.25)}
+#s-rev .ctl{position:absolute;right:96px;top:62px;display:flex;gap:14px}
 </style>
 <div class="top">
   <div class="chip rv pop"><b>1</b>Қайтымды реакция</div>
   <h1 class="t1 rv" style="--d:.15s">Екі бағытта <em>бір мезгілде</em></h1>
 </div>
+<div class="ctl rv" style="--d:.9s"><button class="btn sm2" id="revSpeed" style="--c:#7B4DFF">⏩ ×2</button><button class="btn sm2" id="revRestart" style="--c:#2F6BFF">↻ Қайта бастау</button></div>
 <canvas id="revCv" class="rv z" style="--d:.4s"></canvas>
-<div class="abs" style="left:880px;top:150px;width:950px">
+<div class="evr rv" style="--d:.8s"><span class="ev f" id="evFw"><span class="f"><svg class="ar" viewBox="0 0 64 28"><path class="fw" d="M5 14h52M45 4l12 10-12 10"/></svg></span> тура <b id="evF">0</b></span><span class="ev b" id="evBk"><span class="f"><svg class="ar" viewBox="0 0 64 28"><path class="bk" d="M59 14H7M19 4L7 14l12 10"/></svg></span> кері <b id="evB">0</b></span></div>
+<div class="spr rv" style="--d:.9s"><span class="lg" style="--c:#2DBE7E">A <b id="sA">16</b></span><span class="lg" style="--c:#2F8CFF">B <b id="sB">16</b></span><span class="lg" style="--c:#FF6B8B">C <b id="sC">0</b></span><span class="lg" style="--c:#8B5CF6">D <b id="sD">0</b></span></div>
+<div class="rs">
   <div class="def rv" style="--d:.35s"><b>Қайтымды реакция</b> — бір мезгілде екі қарама-қарсы бағытта жүретін реакция.</div>
   <div class="bigeq rv z" style="--d:.55s">
     <span class="L" style="--c:#2DBE7E">A</span><span class="pl">+</span><span class="L" style="--c:#2F8CFF">B</span>
     <div class="arw"><svg class="f" id="arF" viewBox="0 0 190 42"><path d="M6 21H176M156 6l20 15-20 15"/></svg><svg class="b" id="arB" viewBox="0 0 190 42"><path d="M184 21H14M34 6L14 21l20 15"/></svg></div>
     <span class="L" style="--c:#FF6B8B">C</span><span class="pl">+</span><span class="L" style="--c:#8B5CF6">D</span>
   </div>
-  <div class="lbls rv" style="--d:.7s"><span style="background:var(--blue-s);color:var(--blue)">тура реакция →</span><span style="background:var(--red-s);color:var(--red)">← кері реакция</span></div>
-  <div class="rates rv" style="--d:.85s">
-    <div class="rt" style="--c:var(--blue)"><span class="k-blue">υ тура</span><div class="bar"><i id="bF"></i></div><span class="val" id="vF">0</span></div>
-    <div class="rt" style="--c:var(--red)"><span class="k-red">υ кері</span><div class="bar"><i id="bB"></i></div><span class="val" id="vB">0</span></div>
-  </div>
+  <canvas id="gaugeCv" class="rv" style="--d:.7s"></canvas>
   <div class="phases rv" style="--d:1s">
-    <div class="ph" id="ph1"><b>① Басы</b>Тек A және B бар, өнім жоқ</div>
-    <div class="ph" id="ph2"><b>② Жүріп жатыр</b>C, D көбейеді, кері реакция басталады</div>
-    <div class="ph" id="ph3"><b>③ Тепе-теңдік</b>Екі бағыт та жүреді, құрам өзгермейді</div>
+    <div class="ph" id="ph1"><b>① Басы</b>Тек A және B бар. υ кері = 0</div>
+    <div class="ph" id="ph2"><b>② Жүріп жатыр</b>υ тура азаяды, υ кері өседі</div>
+    <div class="ph" id="ph3"><b>③ Тепе-теңдік</b>υ тура = υ кері</div>
   </div>
 </div>
-<div class="bars rv" style="--d:1s"><span class="lg" style="--c:#2DBE7E">A <b id="cA">14</b></span><span class="lg" style="--c:#2F8CFF">B <b id="cB">14</b></span><span class="lg" style="--c:#FF6B8B">C <b id="cC">0</b></span><span class="lg" style="--c:#8B5CF6">D <b id="cD">0</b></span></div>
-<button class="btn restart rv" id="revRestart" style="--d:1.2s;--c:#2F6BFF">↻ Қайта бастау</button>
 </section>
 
 <!-- ===== 7. ТУРА ЖӘНЕ КЕРІ РЕАКЦИЯ: АТОМДАР ===== -->
@@ -1725,7 +1724,7 @@ class Sim {
     this.L = O.L; this.R = O.R;
     this.nu = {}; this.L.forEach(([k, n]) => this.nu[k] = -n); this.R.forEach(([k, n]) => this.nu[k] = n);
     this.base = {}; this.keys.forEach(k => this.base[k] = O.n0[k] || 0);
-    this.parts = []; this.groups = []; this.flashes = []; this.sparks = []; this.rings = [];
+    this.parts = []; this.groups = []; this.flashes = []; this.sparks = []; this.rings = []; this.arrFx = [];
     this.xi = 0; this.xiShown = 0; this.V = 1; this.Vt = 1; this.T = 0; this.Tt = 0; this.cat = O.cat; this.time = 0; this.evT = 0; this.shift = 0;
     this.rf = 0; this.rrv = 0; this.ph = [Math.random() * 6, Math.random() * 6]; this.catA = 0; this.flame = 0;
     this.c0L = this.prod(this.L, k => Math.max(this.base[k], 1) / 1);
@@ -1733,7 +1732,7 @@ class Sim {
     this.keys.forEach(k => { for (let i = 0; i < this.base[k]; i++) this.spawn(k); });
   }
   reset() {
-    this.parts.length = 0; this.groups.length = 0; this.flashes.length = 0; this.sparks.length = 0; this.rings.length = 0;
+    this.parts.length = 0; this.groups.length = 0; this.flashes.length = 0; this.sparks.length = 0; this.rings.length = 0; this.arrFx.length = 0;
     this.keys.forEach(k => this.base[k] = this.o.n0[k] || 0); this.xi = 0; this.xiShown = 0; this.V = this.Vt = 1; this.T = this.Tt = 0; this.time = 0; this.evT = 0;
     this.keys.forEach(k => { for (let i = 0; i < this.base[k]; i++) this.spawn(k); });
   }
@@ -1748,6 +1747,14 @@ class Sim {
     this.L.forEach(([k, v]) => hi = Math.min(hi, this.base[k] / v));
     this.R.forEach(([k, v]) => lo = Math.max(lo, -this.base[k] / v));
     return [lo, hi];
+  }
+  // Шын кездейсоқ (стохастикалық) режим: оқиғалар жылдамдыққа сәйкес нақты санмен жүреді
+  stochStep(dt) {
+    const O = this.o; this.xi = this.xiShown;
+    const K = this.K(), cL = this.prod(this.L, k => Math.max(this.c(k), 1e-9)), cR = this.prod(this.R, k => Math.max(this.c(k), 1e-9));
+    this.rf = O.kf * this.cat * cL / this.c0L; this.rrv = O.kf * this.cat * (cR / K) / this.c0L;
+    if (Math.random() < 1 - Math.exp(-this.rf * dt) && this.doEvent(1)) { this.xiShown++; this.xi = this.xiShown; if (this.onEvent) this.onEvent(1); }
+    if (Math.random() < 1 - Math.exp(-this.rrv * dt) && this.doEvent(-1)) { this.xiShown--; this.xi = this.xiShown; if (this.onEvent) this.onEvent(-1); }
   }
   integrate(dt) {
     const [lo, hi] = this.xiRange(), K = this.K(), cat = this.cat, kf = this.o.kf;
@@ -1821,6 +1828,8 @@ class Sim {
       const out = (O.exo > 0) === (g.dir > 0); // жылу бөлінді ме
       for (let i = 0; i < 5; i++) { const an = rnd(0, 6.28); this.sparks.push({ x: g.tx + (out ? 0 : Math.cos(an) * 90), y: g.ty + (out ? 0 : Math.sin(an) * 90), tx: g.tx, ty: g.ty, an, out, t: 0, life: rnd(.7, 1.1) }); }
     }
+    if (O.evArrows) this.arrFx.push({ x: g.tx, y: g.ty, t: 0, dir: g.dir });
+    if (this.onFinish) this.onFinish(g.dir);
     if (!O.quiet) (g.dir > 0 ? Snd.merge() : Snd.split());
   }
   // --- Жаңарту ---
@@ -1829,9 +1838,10 @@ class Sim {
     this.V += (this.Vt - this.V) * Math.min(1, dt * 7);
     this.T += (this.Tt - this.T) * Math.min(1, dt * 3);
     this.catA += (((this.cat > 1.5 || O.bedAlways) ? 1 : 0) - this.catA) * Math.min(1, dt * 4);
-    this.integrate(dt);
+    if (O.stoch) this.stochStep(dt); else this.integrate(dt);
     const tot = this.rf + this.rrv + 1e-9;
     this.shift += ((this.rf - this.rrv) / tot - this.shift) * Math.min(1, dt * 5);
+    if (!O.stoch) {
     // шу + оқиғалар
     const [lo, hi] = this.xiRange();
     const gate = clamp(1 - Math.abs(this.rf - this.rrv) / tot * 8, 0, 1) * clamp(tot / .6, 0, 1);
@@ -1841,6 +1851,7 @@ class Sim {
     if (q !== this.xiShown && this.evT <= 0) {
       const d = q > this.xiShown ? 1 : -1;
       if (this.doEvent(d)) { this.xiShown += d; this.evT = .13 / clamp(Math.abs(q - this.xiShown) + 1, 1, 3); if (this.onEvent) this.onEvent(d); } else this.evT = .12;
+    }
     }
     // топтар
     for (let i = this.groups.length - 1; i >= 0; i--) {
@@ -1881,6 +1892,7 @@ class Sim {
     this.flashes = this.flashes.filter(f => (f.t += dt) < .6);
     this.rings = this.rings.filter(f => (f.t += dt) < .5);
     this.sparks = this.sparks.filter(s => (s.t += dt) < s.life);
+    this.arrFx = this.arrFx.filter(f => (f.t += dt) < 1.1);
   }
   // --- Сурет ---
   draw() {
@@ -1930,6 +1942,15 @@ class Sim {
       g.fillStyle = rgba('#FFD27A', .7 * (s.out ? 1 - u : 1)); g.beginPath(); g.arc(x, y, 3, 0, 7); g.fill();
     }
     g.restore();
+    // тура (→) және кері (←) реакция оқиғаларының белгісі
+    for (const f of this.arrFx) {
+      const u = f.t / 1.1, y = f.y - 38 - 52 * ease.out(u), a = u < .12 ? u / .12 : 1 - (u - .12) / .88, col = f.dir > 0 ? '#2F6BFF' : '#F43F5E';
+      g.save(); g.globalAlpha = clamp(a, 0, 1); rr(g, f.x - 42, y - 23, 84, 46, 23); g.fillStyle = col; g.fill();
+      g.strokeStyle = '#fff'; g.lineWidth = 6.5; g.lineCap = 'round'; g.lineJoin = 'round'; g.beginPath();
+      if (f.dir > 0) { g.moveTo(f.x - 22, y); g.lineTo(f.x + 22, y); g.moveTo(f.x + 9, y - 12); g.lineTo(f.x + 23, y); g.lineTo(f.x + 9, y + 12); }
+      else { g.moveTo(f.x + 22, y); g.lineTo(f.x - 22, y); g.moveTo(f.x - 9, y - 12); g.lineTo(f.x - 23, y); g.lineTo(f.x - 9, y + 12); }
+      g.stroke(); g.restore();
+    }
     // ыдыс қабырғалары (алдында)
     g.save(); g.strokeStyle = '#B9C8F0'; g.lineWidth = 9; g.lineJoin = 'round'; g.lineCap = 'round';
     g.beginPath(); g.moveTo(O.bx - 5, fullTop - 4); g.lineTo(O.bx - 5, O.by + 5); g.lineTo(O.bx + O.bw + 5, O.by + 5); g.lineTo(O.bx + O.bw + 5, fullTop - 4); g.stroke();
@@ -2027,7 +2048,7 @@ class MiniRx {
     this.R = { x0: 24, x1: 506, top: 62, bot: 404, surf: 134 };
     this.running = false; this.reset();
   }
-  region() { const R = this.R; return { x0: R.x0 + 38, x1: R.x1 - 38, y0: R.surf + 34, y1: R.bot - 36 }; }
+  region() { const R = this.R; return { x0: R.x0 + 38, x1: R.x1 - 38, y0: R.surf + 34, y1: R.bot - 36 - (this.mode === 'irr' ? 54 : 0) }; }
   spawn(k, x, y, o = {}) {
     const q = this.region(), an = rnd(0, 6.28), sp = rnd(50, 95);
     const p = { k, x: x ?? rnd(q.x0, q.x1), y: y ?? rnd(q.y0, q.y1), vx: Math.cos(an) * sp, vy: Math.sin(an) * sp, a: rnd(0, 6.28), vr: rnd(-1, 1), s: o.s ?? 1, al: 1, st: o.st || 0, t: 0, ph: rnd(0, 6) };
@@ -2036,7 +2057,7 @@ class MiniRx {
   }
   reset() {
     this.t = 0; this.parts = []; this.groups = []; this.fx = []; this.puffs = [];
-    this.nF = 0; this.nB = 0; this.cum = 0; this.evT = 1.2; this.done = 0; this.fl = [0, 0];
+    this.nF = 0; this.nB = 0; this.cum = 0; this.evT = 1.2; this.done = 0; this.fl = [0, 0]; this.slots = new Array(10).fill(false);
     this.bh = { A: 10, B: 10, C: 0 };
     for (let i = 0; i < 10; i++) { this.spawn('A'); this.spawn('B'); }
   }
@@ -2074,7 +2095,7 @@ class MiniRx {
         if (u >= 1) {
           this.parts.splice(this.parts.indexOf(g.a), 1); this.parts.splice(this.parts.indexOf(g.b), 1);
           this.flash(g.tx, g.ty, '#2F6BFF'); this.nF++; this.fl[0] = 1; Snd.merge();
-          if (this.mode === 'irr') this.spawn('C', g.tx, g.ty, { st: 2, s: .35, vx: 0, vy: 0 }); else this.spawn('C', g.tx, g.ty, { s: .35 });
+          if (this.mode === 'irr') { const c = this.spawn('C', g.tx, g.ty, { st: 2, s: .35, vx: 0, vy: 0 }); const free = this.slots.map((u, i) => u ? -1 : i).filter(i => i >= 0), sl = free.length ? free[Math.floor(Math.random() * free.length)] : Math.floor(Math.random() * 10); this.slots[sl] = true; c.tx = this.R.x0 + 44 + sl * (this.R.x1 - this.R.x0 - 88) / 9; } else this.spawn('C', g.tx, g.ty, { s: .35 });
           this.groups.splice(i, 1);
         }
       } else {
@@ -2091,14 +2112,10 @@ class MiniRx {
       const p = this.parts[i];
       if (p.s < 1) p.s = Math.min(1, p.s + dt * 3.2);
       if (p.st === 1 || p.st === 4) continue;
+      if (p.st === 5) continue;
       if (p.st === 2) {
-        p.t += dt; p.vy = -(100 + p.t * 50); p.x += Math.sin(p.t * 6 + p.ph) * 44 * dt; p.y += p.vy * dt; p.a += dt * 2; p.x = clamp(p.x, R.x0 + 34, R.x1 - 34);
-        if (!p.out && p.y < R.surf) {
-          p.out = true; this.cum++; this.fx.push({ x: p.x, y: R.surf, t: 0, c: '#fff', ring: true }); Snd.pop();
-          for (let k = 0; k < 5; k++) this.puffs.push({ x: p.x + rnd(-16, 16), y: p.y, vx: rnd(-24, 24), vy: -rnd(50, 100), t: 0, life: rnd(.9, 1.6), r: rnd(11, 20) });
-        }
-        if (p.out && p.y < 90) p.al = clamp((p.y + 40) / 130, 0, 1);
-        if (p.y < -44) this.parts.splice(i, 1);
+        p.t += dt; p.vy = Math.min(p.vy + 380 * dt, 190); p.y += p.vy * dt; p.x += (p.tx - p.x) * Math.min(1, dt * 2.5) + Math.sin(p.t * 6 + p.ph) * 12 * dt; p.a += dt * 1.5;
+        if (p.y >= R.bot - 28) { p.y = R.bot - 28; p.x = p.tx; p.st = 5; p.a = 0; this.cum++; this.flash(p.x, p.y, '#FF6B8B'); Snd.pop(); }
         continue;
       }
       const want = 78, cur = Math.hypot(p.vx, p.vy) || 1, k = 1 + (want / cur - 1) * Math.min(1, dt * 2);
@@ -2106,11 +2123,9 @@ class MiniRx {
       if (p.x < q.x0) { p.x = q.x0; p.vx = Math.abs(p.vx); } else if (p.x > q.x1) { p.x = q.x1; p.vx = -Math.abs(p.vx); }
       if (p.y < q.y0) { p.y = q.y0; p.vy = Math.abs(p.vy); } else if (p.y > q.y1) { p.y = q.y1; p.vy = -Math.abs(p.vy); }
     }
-    this.fx = this.fx.filter(f => (f.t += dt) < .6); this.puffs = this.puffs.filter(f => (f.t += dt) < f.life);
-    for (const f of this.puffs) { f.x += f.vx * dt; f.y += f.vy * dt; }
+    this.fx = this.fx.filter(f => (f.t += dt) < .6);
     // бағандар
-    const gasIn = this.parts.filter(p => p.k === 'C' && p.st === 2 && !p.out).length;
-    const tgt = { A: this.cnt('A', [0, 1]), B: this.cnt('B', [0, 1]), C: this.mode === 'irr' ? this.cum + gasIn : this.cnt('C', [0, 4]) };
+    const tgt = { A: this.cnt('A', [0, 1]), B: this.cnt('B', [0, 1]), C: this.mode === 'irr' ? this.cum + this.cnt('C', [2]) : this.cnt('C', [0, 4]) };
     for (const k in tgt) this.bh[k] += (tgt[k] - this.bh[k]) * Math.min(1, dt * 7);
     // қайтымсыз реакция біткенде біраз тұрып, басынан басталады
     if (this.mode === 'irr' && this.nF > 0 && this.cnt('A', [0, 1]) + this.cnt('B', [0, 1]) === 0 && !this.groups.length) { this.done += dt; if (this.done > 6) this.reset(); }
@@ -2127,20 +2142,16 @@ class MiniRx {
     // бөлшектер
     const S = 1.18;
     for (const p of this.parts) {
-      if (p.st === 2) {
-        g.save(); g.globalAlpha = p.al;
-        if (!p.out) { g.fillStyle = 'rgba(255,255,255,.4)'; g.strokeStyle = 'rgba(255,255,255,.95)'; g.lineWidth = 3.5; g.beginPath(); g.arc(p.x, p.y, 36 * p.s, 0, 7); g.fill(); g.stroke(); g.fillStyle = 'rgba(255,255,255,.9)'; g.beginPath(); g.arc(p.x - 13, p.y - 13, 5, 0, 7); g.fill(); }
-        drawMol(g, 'C', p.x, p.y, 0, S * p.s, 1); g.restore(); continue;
-      }
+      if (p.st === 2) { g.fillStyle = 'rgba(255,255,255,.6)'; g.strokeStyle = 'rgba(255,107,139,.55)'; g.lineWidth = 3.5; g.beginPath(); g.arc(p.x, p.y, 33 * p.s, 0, 7); g.fill(); g.stroke(); drawMol(g, 'C', p.x, p.y, 0, S * p.s, 1); continue; }
+      if (p.st === 5) { g.fillStyle = 'rgba(255,255,255,.92)'; g.beginPath(); g.arc(p.x, p.y, 23, 0, 7); g.fill(); g.strokeStyle = 'rgba(255,107,139,.6)'; g.lineWidth = 3; g.stroke(); drawMol(g, 'C', p.x, p.y, 0, S * .82, 1, false); continue; }
       drawMol(g, p.k, p.x, p.y, p.a, S * p.s, p.al, true);
     }
-    for (const f of this.puffs) { const u = f.t / f.life; g.fillStyle = `rgba(255,107,139,${.3 * (1 - u)})`; g.beginPath(); g.arc(f.x, f.y, f.r * (1 + u), 0, 7); g.fill(); }
     for (const f of this.fx) { const u = f.t / .6; g.strokeStyle = f.ring ? `rgba(255,255,255,${1 - u})` : rgba(f.c, 1 - u); g.lineWidth = 6; g.beginPath(); if (f.ring) g.ellipse(f.x, f.y, 14 + u * 48, 5 + u * 14, 0, 0, 7); else g.arc(f.x, f.y, 16 + u * 66, 0, 7); g.stroke(); if (!f.ring) { g.fillStyle = `rgba(255,255,255,${.85 * (1 - u)})`; g.beginPath(); g.arc(f.x, f.y, 10 + u * 30, 0, 7); g.fill(); } }
     // шыны контур
     g.save(); g.strokeStyle = '#9AB6EA'; g.lineWidth = 10; g.lineCap = 'round'; g.lineJoin = 'round'; glass(); g.stroke(); g.beginPath(); g.moveTo(R.x0 - 16, R.top - 3); g.lineTo(R.x0 + 8, R.top); g.moveTo(R.x1 + 16, R.top - 3); g.lineTo(R.x1 - 8, R.top); g.stroke();
     g.strokeStyle = 'rgba(255,255,255,.8)'; g.lineWidth = 8; g.beginPath(); g.moveTo(R.x0 + 24, R.top + 50); g.lineTo(R.x0 + 24, R.bot - 64); g.stroke(); g.restore();
     // «газ ↑» белгісі
-    if (irr && this.cum > 0) { rr(g, R.x0 + 8, 8, 132, 38, 19); g.fillStyle = '#FF6B8B'; g.fill(); g.fillStyle = '#fff'; g.font = "900 26px 'Nunito Variable',sans-serif"; g.textAlign = 'center'; g.fillText('газ', R.x0 + 8 + 48, 36); this.arrow(R.x0 + 8 + 106, 27, 12, 'up', '#fff', 4.4); }
+    if (irr && this.cum > 0) { rr(g, R.x0 + 8, 8, 176, 38, 19); g.fillStyle = '#FF6B8B'; g.fill(); g.fillStyle = '#fff'; g.font = "900 26px 'Nunito Variable',sans-serif"; g.textAlign = 'center'; g.fillText('тұнба', R.x0 + 8 + 66, 36); this.arrow(R.x0 + 8 + 146, 27, 12, 'dn', '#fff', 4.4); }
     // реакция санауыштары
     const chip = (x, w, col, on, label, n, dir, dead) => {
       const y = 430, h = 60, cy = y + h / 2; g.save(); rr(g, x, y, w, h, 30);
@@ -2170,6 +2181,7 @@ class MiniRx {
     const g = this.g, hd = 13; g.save(); g.strokeStyle = col; g.lineWidth = lw; g.lineCap = 'round'; g.lineJoin = 'round'; g.beginPath();
     if (dir === 'r') { g.moveTo(x - len, y); g.lineTo(x + len, y); g.moveTo(x + len - hd, y - hd + 3); g.lineTo(x + len, y); g.lineTo(x + len - hd, y + hd - 3); }
     else if (dir === 'l') { g.moveTo(x + len, y); g.lineTo(x - len, y); g.moveTo(x - len + hd, y - hd + 3); g.lineTo(x - len, y); g.lineTo(x - len + hd, y + hd - 3); }
+    else if (dir === 'dn') { g.moveTo(x, y - len); g.lineTo(x, y + len); g.moveTo(x - hd + 3, y + len - hd); g.lineTo(x, y + len); g.lineTo(x + hd - 3, y + len - hd); }
     else { g.moveTo(x, y + len); g.lineTo(x, y - len); g.moveTo(x - hd + 3, y - len + hd); g.lineTo(x, y - len); g.lineTo(x + hd - 3, y - len + hd); }
     g.stroke(); g.restore();
   }
@@ -2367,32 +2379,75 @@ Deck.slide('s-gases', ctx => {
   ctx.every(1050, () => { const g = all[Math.floor(Math.random() * all.length)]; spawn(g.slice(0, 3), g[3]); });
 });
 
-// ============ 6. Қайтымды реакция: A + B ⇌ C + D ============
+// ============ 6. Қайтымды реакция: A + B ⇌ C + D, жылдамдық спидометрлері ============
 Deck.slide('s-rev', ctx => {
-  const mk = () => new Sim(ctx, ctx.q('#revCv'), { W: 760, H: 640, sp: { A: 1, B: 1, C: 1, D: 1 }, L: [['A', 1], ['B', 1]], R: [['C', 1], ['D', 1]], n0: { A: 14, B: 14, C: 0, D: 0 }, K0: 4, kf: 3.6, noise: .6, H: 620, by: 560, bh: 480, ms: 1.05, quiet: false });
-  let sim = mk(), maxR = 3.6;
-  // canvas қайта құрылмайды: бір-ақ Sim, қайта бастағанда күйін тастаймыз
-  const reset = () => {
-    sim.parts.length = 0; sim.groups.length = 0; sim.flashes.length = 0; sim.sparks.length = 0; sim.rings.length = 0;
-    sim.base = { A: 14, B: 14, C: 0, D: 0 }; sim.xi = 0; sim.xiShown = 0; sim.time = 0;
-    sim.keys.forEach(k => { for (let i = 0; i < sim.base[k]; i++) sim.spawn(k); });
+  const sim = new Sim(ctx, ctx.q('#revCv'), { W: 820, H: 700, bx: 30, bw: 760, by: 660, bh: 600, sp: { A: 1, B: 1, C: 1, D: 1 }, L: [['A', 1], ['B', 1]], R: [['C', 1], ['D', 1]], n0: { A: 16, B: 16, C: 0, D: 0 }, K0: .25, kf: 3.2, stoch: true, evArrows: true, ms: 1.25 });
+  const gg = ctx.canvas(ctx.q('#gaugeCv'), 940, 420);
+  const evF = ctx.q('#evF'), evB = ctx.q('#evB'), evFw = ctx.q('#evFw'), evBk = ctx.q('#evBk'), arF = ctx.q('#arF'), arB = ctx.q('#arB');
+  const sp = { A: ctx.q('#sA'), B: ctx.q('#sB'), C: ctx.q('#sC'), D: ctx.q('#sD') }, ph = [ctx.q('#ph1'), ctx.q('#ph2'), ctx.q('#ph3')];
+  const MAX = 4;
+  let nF = 0, nB = 0, vF = 0, vB = 0, dF = 0, dB = 0, mF = 0, mB = 0, tt = 0, eqT = 0, eq = false, speed = 1, hist = [], acc = 0, pulse = 0;
+  const hit = (el, cls) => { el.classList.remove(cls); void el.getBoundingClientRect(); el.classList.add(cls); };
+  sim.onFinish = d => {
+    if (d > 0) { nF++; evF.textContent = nF; hit(evFw, 'hit'); hit(arF, 'hit'); ctx.after(260, () => evFw.classList.remove('hit')); }
+    else { nB++; evB.textContent = nB; hit(evBk, 'hit'); hit(arB, 'hit'); ctx.after(260, () => evBk.classList.remove('hit')); }
   };
-  const $c = { A: ctx.q('#cA'), B: ctx.q('#cB'), C: ctx.q('#cC'), D: ctx.q('#cD') };
-  const bF = ctx.q('#bF'), bB = ctx.q('#bB'), vF = ctx.q('#vF'), vB = ctx.q('#vB'), arF = ctx.q('#arF'), arB = ctx.q('#arB');
-  const ph = [ctx.q('#ph1'), ctx.q('#ph2'), ctx.q('#ph3')];
-  ctx.on(ctx.q('#revRestart'), 'click', () => { reset(); Snd.click(); });
-  let acc = 0;
-  ctx.raf(dt => {
+  const restart = () => { sim.reset(); nF = nB = 0; evF.textContent = evB.textContent = '0'; vF = vB = dF = dB = mF = mB = 0; tt = 0; eqT = 0; eq = false; hist = []; };
+  ctx.on(ctx.q('#revRestart'), 'click', () => { restart(); Snd.click(); });
+  const bs = ctx.q('#revSpeed'); ctx.on(bs, 'click', () => { speed = speed === 1 ? 2 : 1; bs.textContent = speed === 1 ? '⏩ ×2' : '▶ ×1'; Snd.click(); });
+  const fmt = v => v.toFixed(1).replace('.', ',');
+  function gauge(g, cx, cy, R, val, col, label, dir, trend) {
+    g.save(); g.lineCap = 'round';
+    g.beginPath(); g.arc(cx, cy, R, Math.PI, 2 * Math.PI); g.strokeStyle = '#E6ECFB'; g.lineWidth = 34; g.stroke();
+    const a = Math.PI + clamp(val / MAX, 0, 1) * Math.PI;
+    if (val > .03) { g.beginPath(); g.arc(cx, cy, R, Math.PI, a); g.strokeStyle = col; g.lineWidth = 34; g.stroke(); }
+    g.strokeStyle = '#8D9CC9'; g.lineWidth = 3.5; g.fillStyle = '#6B7AAE'; g.font = "900 22px 'Nunito Variable',sans-serif"; g.textAlign = 'center';
+    for (let i = 0; i <= MAX; i++) { const an = Math.PI + i / MAX * Math.PI, c = Math.cos(an), s = Math.sin(an); g.beginPath(); g.moveTo(cx + c * (R + 26), cy + s * (R + 26)); g.lineTo(cx + c * (R + 38), cy + s * (R + 38)); g.stroke(); g.fillText(i, cx + c * (R + 54), cy + s * (R + 54) + 8); }
+    // тілше
+    g.save(); g.translate(cx, cy); g.rotate(a); g.strokeStyle = '#14214D'; g.lineWidth = 10; g.beginPath(); g.moveTo(-6, 0); g.lineTo(R - 10, 0); g.stroke(); g.restore();
+    g.fillStyle = '#14214D'; g.beginPath(); g.arc(cx, cy, 22, 0, 7); g.fill(); g.fillStyle = col; g.beginPath(); g.arc(cx, cy, 9, 0, 7); g.fill();
+    // атау
+    g.font = "900 32px 'Nunito Variable',sans-serif"; const w = g.measureText(label).width + 80; rr(g, cx - w / 2, 4, w, 48, 24); g.fillStyle = col; g.fill();
+    g.strokeStyle = '#fff'; g.lineWidth = 5.5; g.beginPath(); const ax = cx - w / 2 + 34;
+    if (dir > 0) { g.moveTo(ax - 14, 33); g.lineTo(ax + 14, 33); g.moveTo(ax + 4, 24); g.lineTo(ax + 15, 33); g.lineTo(ax + 4, 42); } else { g.moveTo(ax + 14, 33); g.lineTo(ax - 14, 33); g.moveTo(ax - 4, 24); g.lineTo(ax - 15, 33); g.lineTo(ax - 4, 42); }
+    g.stroke(); g.fillStyle = '#fff'; g.textAlign = 'left'; g.fillText(label, ax + 26, 44);
+    // мән
+    g.fillStyle = col; g.textAlign = 'center'; g.font = "900 64px 'Nunito Variable',sans-serif"; g.fillText(fmt(val), cx - 24, cy + 82);
+    g.fillStyle = '#6B7AAE'; g.font = "900 24px 'Nunito Variable',sans-serif"; g.textAlign = 'left'; g.fillText('рет/с', cx + 54, cy + 80);
+    // өсу / кему белгісі
+    const tc = trend > .12 ? '#12B76A' : trend < -.12 ? '#FF8A1F' : '#8D9CC9', tl = trend > .12 ? 'өсуде' : trend < -.12 ? 'кемуде' : 'тұрақты';
+    g.font = "900 26px 'Nunito Variable',sans-serif"; const tw = g.measureText(tl).width + 64; rr(g, cx - tw / 2, cy + 104, tw, 42, 21); g.fillStyle = tc; g.fill();
+    g.strokeStyle = '#fff'; g.lineWidth = 4.5; g.beginPath(); const tx = cx - tw / 2 + 26;
+    if (trend > .12) { g.moveTo(tx, cy + 136); g.lineTo(tx, cy + 114); g.moveTo(tx - 8, cy + 122); g.lineTo(tx, cy + 114); g.lineTo(tx + 8, cy + 122); }
+    else if (trend < -.12) { g.moveTo(tx, cy + 114); g.lineTo(tx, cy + 136); g.moveTo(tx - 8, cy + 128); g.lineTo(tx, cy + 136); g.lineTo(tx + 8, cy + 128); }
+    else { g.moveTo(tx - 9, cy + 125); g.lineTo(tx + 9, cy + 125); }
+    g.stroke(); g.fillStyle = '#fff'; g.textAlign = 'left'; g.fillText(tl, tx + 18, cy + 134);
+    g.restore();
+  }
+  ctx.raf(rdt => {
+    const dt = rdt * speed; tt += dt;
     sim.update(dt); sim.draw();
-    acc += dt; if (acc < .08) return; acc = 0;
-    const cn = sim.counts(); for (const k in $c) $c[k].textContent = Math.round(sim.n(k));
-    const rf = sim.rf, rb = sim.rrv;
-    bF.style.width = clamp(rf / maxR * 100, 0, 100) + '%'; bB.style.width = clamp(rb / maxR * 100, 0, 100) + '%';
-    vF.textContent = rf.toFixed(1).replace('.', ','); vB.textContent = rb.toFixed(1).replace('.', ',');
-    arF.style.opacity = .25 + .75 * clamp(rf / maxR * 1.2, 0, 1); arB.style.opacity = .25 + .75 * clamp(rb / maxR * 1.2, 0, 1);
-    arF.style.strokeWidth = arB.style.strokeWidth = '';
-    const p = sim.xi < .6 ? 0 : sim.xi < 8.4 ? 1 : 2;
-    ph.forEach((e, i) => e.classList.toggle('on2', i === p));
+    // тегістелген жылдамдықтар
+    vF += (sim.rf - vF) * Math.min(1, dt * 3); vB += (sim.rrv - vB) * Math.min(1, dt * 3);
+    mF += (sim.rf - mF) * Math.min(1, dt * .75); mB += (sim.rrv - mB) * Math.min(1, dt * .75);
+    dF += (vF - dF) * Math.min(1, rdt * 7); dB += (vB - dB) * Math.min(1, rdt * 7);
+    acc += dt; if (acc > .25) { acc = 0; hist.push([vF, vB]); if (hist.length > 6) hist.shift(); for (const k in sp) sp[k].textContent = Math.round(sim.n(k)); }
+    const tF = hist.length > 3 ? vF - hist[0][0] : 0, tB = hist.length > 3 ? vB - hist[0][1] : 0;
+    // тепе-теңдік анықтау
+    const diff = Math.abs(mF - mB), tol = Math.max(.12 * Math.max(mF, mB), .12);
+    if (!eq && tt > 2.5) { if (diff < tol) { eqT += dt; if (eqT > 1.2) { eq = true; Snd.good(); pulse = 1; } } else eqT = 0; }
+    pulse = Math.max(0, pulse - rdt * .8);
+    // спидометрлер
+    const g = gg; g.clearRect(0, 0, 940, 420);
+    gauge(g, 235, 262, 140, dF, '#2F6BFF', 'υ тура', 1, tF);
+    gauge(g, 705, 262, 140, dB, '#F43F5E', 'υ кері', -1, tB);
+    g.save(); g.textAlign = 'center'; g.font = "900 110px 'Nunito Variable',sans-serif"; g.fillStyle = eq ? '#12B76A' : '#C3CCE6';
+    if (eq) { g.shadowColor = 'rgba(18,183,106,.6)'; g.shadowBlur = 24 * (.4 + pulse); }
+    g.translate(470, 232); g.scale(1 + .08 * Math.sin(tt * 4) * (eq ? 1 : 0), 1); g.fillText('=', 0, 0); g.restore();
+    if (eq) { g.font = "900 30px 'Nunito Variable',sans-serif"; const lb = 'тең!', w = g.measureText(lb).width + 40; rr(g, 470 - w / 2, 142, w, 46, 23); g.fillStyle = '#12B76A'; g.fill(); g.fillStyle = '#fff'; g.textAlign = 'center'; g.fillText(lb, 470, 175); }
+    // көрсеткілер жарқылы (жылдамдыққа қарай)
+    arF.style.opacity = .3 + .7 * clamp(vF / MAX * 1.1, 0, 1); arB.style.opacity = .3 + .7 * clamp(vB / MAX * 1.1, 0, 1);
+    const p = tt < 1.2 ? 0 : eq ? 2 : 1; ph.forEach((e, i) => e.classList.toggle('on2', i === p));
   });
 });
 
