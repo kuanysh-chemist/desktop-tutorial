@@ -2629,7 +2629,16 @@ Deck.slide('s-kmean', ctx => {
   const W = 960, H = 540, g = ctx.canvas(ctx.q('#kCv'), W, H);
   const sl = ctx.q('#kSl'), N = 60, cols = 12;
   const order = Array.from({ length: N }, (_, i) => i).sort(() => Math.random() - .5), rank = []; order.forEach((o, r) => rank[o] = r);
-  const dots = Array.from({ length: N }, (_, i) => ({ c: i % cols, r: Math.floor(i / cols), m: 0, ph: rnd(0, 6), pop: 0 }));
+  // әр бөлшектің өз түсі: реагенттер — суық, өнімдер — жылы реңдер
+  const COOL = ['#12B8A6', '#2DBE7E', '#2F8CFF', '#22A6F2', '#5B7CFA', '#6CCB3E'], WARM = ['#FF6B8B', '#FF8A1F', '#F5B000', '#E8458B', '#FF5C5C', '#B05CFF'];
+  const mixOrder = arr => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const cA = mixOrder(Array.from({ length: N }, (_, i) => COOL[i % COOL.length])), cC = mixOrder(Array.from({ length: N }, (_, i) => WARM[i % WARM.length]));
+  const dots = Array.from({ length: N }, (_, i) => ({ c: i % cols, r: Math.floor(i / cols), m: 0, ph: rnd(0, 6), pop: 0, ca: cA[i], cc: cC[i] }));
+  const dot = (g, x, y, col, ch, s, a) => {
+    if (a <= .01) return; g.save(); g.globalAlpha = a; g.translate(x, y); g.scale(s, s);
+    g.fillStyle = rgba(col, .2); g.beginPath(); g.arc(0, 0, 21, 0, 7); g.fill(); g.strokeStyle = rgba(col, .45); g.lineWidth = 1.5; g.stroke();
+    drawAtom(g, 0, 0, col, 15, 1); g.fillStyle = '#fff'; g.font = "900 19px 'Nunito Variable',sans-serif"; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(ch, 0, 1.5); g.restore();
+  };
   let K = 4, fA = .2, fC = .8, vis = 0;
   const fmt = k => (k >= 100 ? Math.round(k).toString() : k >= 10 ? k.toFixed(1) : k >= 1 ? k.toFixed(2) : k >= .1 ? k.toFixed(3) : k.toFixed(4)).replace('.', ',');
   const nEl = ctx.q('#kNum'), lEl = ctx.q('#kLbl'), vEl = ctx.q('#kVerd'), nd = ctx.q('#kNeedle'), p1 = ctx.q('#kPct'), p2 = ctx.q('#kPct2');
@@ -2656,14 +2665,14 @@ Deck.slide('s-kmean', ctx => {
     dots.forEach((d, i) => { const want = rank[i] < target ? 1 : 0; if (Math.abs(d.m - want) > .01) { d.m += Math.sign(want - d.m) * dt * 5; d.pop = 1; } else d.m = want; d.pop = Math.max(0, d.pop - dt * 3); });
     dots.forEach(d => {
       const x = 76 + d.c * 55 + Math.sin(t * 1.4 + d.ph) * 7, y = 100 + d.r * 86 + Math.cos(t * 1.1 + d.ph * 1.3) * 7, s = 1.25 + Math.sin(d.pop * Math.PI) * .35;
-      drawMol(g, 'A', x, y, 0, s, 1 - d.m); drawMol(g, 'C', x, y, 0, s, d.m);
+      dot(g, x, y, d.ca, 'A', s, 1 - d.m); dot(g, x, y, d.cc, 'C', s, d.m);
     });
     // бағандар
     vis += (1 - vis) * dt * 3;
     const bw = 66, bx = [790, 880], hh = 400, y0 = 490, cs = ['#2DBE7E', '#FF6B8B'], vals = [fA, fC], nm = ['A', 'C'];
     for (let i = 0; i < 2; i++) {
       rr(g, bx[i], y0 - hh, bw, hh, 22); g.fillStyle = '#EEF3FF'; g.fill();
-      const h = Math.max(vals[i] * hh, 6); g.save(); rr(g, bx[i], y0 - hh, bw, hh, 22); g.clip(); const gr = g.createLinearGradient(0, y0 - h, 0, y0); gr.addColorStop(0, cs[i]); gr.addColorStop(1, mixc(cs[i], '#0b1440', .2)); g.fillStyle = gr; g.fillRect(bx[i], y0 - h, bw, h); g.restore();
+      const h = Math.max(vals[i] * hh, 6); g.save(); rr(g, bx[i], y0 - hh, bw, hh, 22); g.clip(); const gr = g.createLinearGradient(0, y0 - hh, 0, y0), pal = i ? WARM : COOL; pal.forEach((c, j) => gr.addColorStop(j / (pal.length - 1), c)); g.fillStyle = gr; g.fillRect(bx[i], y0 - h, bw, h); g.restore();
       g.fillStyle = '#14214D'; g.font = "900 28px 'Nunito Variable',sans-serif"; g.textAlign = 'center'; g.fillText(nm[i], bx[i] + bw / 2, y0 + 36);
       g.fillStyle = cs[i]; g.font = "900 24px 'Nunito Variable',sans-serif"; g.fillText(Math.round(vals[i] * 100) + '%', bx[i] + bw / 2, y0 - h - 10);
     }
