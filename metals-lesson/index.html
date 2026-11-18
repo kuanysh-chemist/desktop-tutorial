@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Металдар және қорытпалар</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app"><div id="stage">
+  <div class="blob b1"></div><div class="blob b2"></div>
+
+  <header id="top">
+    <div class="logo" id="logo">
+      <svg viewBox="0 0 32 32"><polygon points="16,2 28,9 28,23 16,30 4,23 4,9" fill="#3b82f6"/><ellipse cx="16" cy="16" rx="11" ry="4.5" fill="none" stroke="#fff" stroke-width="1.6" transform="rotate(-30 16 16)"/><circle cx="24" cy="11" r="2.6" fill="#ff8a1f"/></svg>
+      <span class="kk">Металдар</span><span class="ru">Металлы</span>
+    </div>
+    <div id="prog"></div>
+    <div class="tb">
+      <div id="lang" role="group" aria-label="Тіл / Язык"><button data-l="kk" class="on">ҚАЗ</button><button data-l="ru">РУС</button></div>
+      <button class="ib" id="bSound" title="Дыбыс / Звук"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="w" d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12"/></svg></button>
+      <button class="ib" id="bTheme" title="Тақырып / Тема"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/></svg></button>
+      <button class="ib" id="bMenu" title="Мәзір / Меню (M)"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1.5"/><rect x="14" y="4" width="6" height="6" rx="1.5"/><rect x="4" y="14" width="6" height="6" rx="1.5"/><rect x="14" y="14" width="6" height="6" rx="1.5"/></svg></button>
+      <button class="ib" id="bFull" title="Толық экран / На весь экран (F)"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+    </div>
+  </header>
+
+  <main id="slides"></main>
+
+  <footer id="bot">
+    <button id="ustaBtn" title="Мұғалімге: Ұста кеңесі / Подсказка учителю (T)" aria-label="Ұста"></button>
+    <button class="nv" id="bPrev" aria-label="←"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <div id="cnt">1 / 1</div>
+    <div id="bridge"><button id="bridgeBtn"></button></div>
+    <button id="factTab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 00-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0012 3z"/></svg><span class="kk">Сен білесің бе?</span><span class="ru">А вы знали?</span></button>
+    <button class="nv" id="bNext" aria-label="→"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+  </footer>
+
+  <aside id="fact" aria-live="polite"><button class="x" id="factX" aria-label="×">✕</button><div class="fh"><span class="kk">Сен білесің бе?</span><span class="ru">А вы знали?</span></div><div class="fb" id="factBody"></div></aside>
+
+  <aside id="teacher" aria-label="Ұста">
+    <div class="th"><div id="ustaFace"></div><div><b><span class="kk">Ұста — мұғалімге көмекші</span><span class="ru">Ұста — помощник учителя</span></b><span class="kk">Мына панельді тек мұғалім көреді</span><span class="ru">Эту панель видит только учитель</span></div></div>
+    <div class="tt"><button data-t="note" class="on"><span class="kk">Жазба</span><span class="ru">Заметки</span></button><button data-t="ans"><span class="kk">Жауаптар</span><span class="ru">Ответы</span></button><button data-t="gloss"><span class="kk">Сөздік</span><span class="ru">Словарь</span></button></div>
+    <div class="tb2" id="tBody"></div>
+  </aside>
+
+  <div id="menu"><div class="mb"><h3><span class="kk">Сабақ мазмұны</span><span class="ru">Содержание урока</span></h3><div id="menuBody"></div></div></div>
+  <canvas id="fx" width="1280" height="720"></canvas>
+</div></div>
+<div id="rot"><span class="kk">📱 Телефонды көлденең бұрыңыз</span><span class="ru">📱 Поверните телефон горизонтально</span></div>
+
+<script src="js/core.js"></script>
+<script src="js/data.js"></script>
+<script src="js/data-map.js"></script>
+<script src="js/s-intro.js"></script>
+<script src="js/s-structure.js"></script>
+<script src="js/s-physical.js"></script>
+<script src="js/s-physical2.js"></script>
+<script src="js/s-chemical.js"></script>
+<script src="js/s-alloys.js"></script>
+<script src="js/s-production.js"></script>
+<script src="js/s-kazakhstan.js"></script>
+<script src="js/s-final.js"></script>
+<script src="js/boot.js"></script>
+</body>
+</html>
