@@ -1536,7 +1536,7 @@ Deck.goId = id => { const i = Deck.indexOf(id); if (i >= 0) Deck.go(i); };
 
 function toggleFull() {
   const d = document, e = d.documentElement;
-  if (!d.fullscreenElement) (e.requestFullscreen || e.webkitRequestFullscreen || function () { }).call(e); else (d.exitFullscreen || d.webkitExitFullscreen || function () { }).call(d);
+  try { const r = !d.fullscreenElement ? (e.requestFullscreen || e.webkitRequestFullscreen || function () { }).call(e) : (d.exitFullscreen || d.webkitExitFullscreen || function () { }).call(d); if (r && r.catch) r.catch(() => { }); } catch (err) { }
 }
 function toggleMenu(v) { document.body.classList.toggle('menu', v === undefined ? !document.body.classList.contains('menu') : v); }
 
