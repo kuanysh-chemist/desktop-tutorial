@@ -20,7 +20,7 @@ Deck.add({
     </div>
     <div class="card" data-a style="--d:.5s;margin-top:14px"><div class="r ctr sb2" style="margin-bottom:8px"><span class="lbl">${L('Металдардың белсенділік қатары', 'Электрохимический ряд активности металлов')}</span><span class="sm">${L('тотықсыздандыру қабілеті кемиді →', 'восстановительная способность убывает →')}</span></div>
       <div class="r" id="rdSeries" style="gap:6px;justify-content:space-between"></div>
-      <div class="r" style="margin-top:8px;gap:10px"><span class="chip k">${L('H₂-ден сол жақтағы металдар қышқылдан сутекті ығыстырады', 'Металлы левее H₂ вытесняют водород из кислот')}</span><span class="chip">${L('Әр металл өзінен оң жақтағыны тұз ерітіндісінен ығыстырады', 'Каждый металл вытесняет из солей те, что правее него')}</span></div></div>`,
+      <div class="r" style="margin-top:8px;gap:10px"><span class="chip k">${L('H₂-ден сол жақтағы металдар қышқылдан сутекті ығыстырады', 'Металлы левее H₂ вытесняют водород из кислот')}</span><span class="chip">${L('Әр металл тұз ерітіндісінен өзінен оң жақтағы металды ығыстырады', 'Каждый металл вытесняет из солей те, что правее него')}</span></div></div>`,
   init(root) {
     const A = [{ s: 'Na', z: 11, sh: [2, 8, 1] }, { s: 'Mg', z: 12, sh: [2, 8, 2] }, { s: 'Al', z: 13, sh: [2, 8, 3] }];
     const ca = D.cv($('#rdA', root), 590, 214), cs = D.cv($('#rdS', root), 606, 322);
@@ -45,7 +45,7 @@ Deck.add({
         x.lineWidth = 2; x.strokeStyle = D.col.line; R.forEach(r => { x.beginPath(); x.arc(cx, cy, r, 0, 6.283); x.stroke(); });
         const lost = outs.filter(o => o.p > .02).length;
         const done = outs.length && outs.every(o => o.p >= 1);
-        G.ball(x, cx, cy, 15, done ? '#60a5fa' : '#ef4444'); G.txt(x, '+' + (a.z - (done ? a.sh[2] : 0)), cx, cy + 1, { size: 12, color: '#fff', weight: 900 });
+        G.ball(x, cx, cy, 15, done ? '#60a5fa' : '#ef4444'); G.txt(x, '+' + (a.z - (done ? a.sh[2] : 0)), cx, cy + 1, { size: 14, color: '#fff', weight: 900 });
         a.sh.forEach((n, ring) => {
           for (let k = 0; k < n; k++) {
             const ang = k / n * 6.283 + t * (1.5 - ring * .5) * (ring % 2 ? -1 : 1);
@@ -59,7 +59,7 @@ Deck.add({
         G.txt(x, a.s + (done ? ['⁺', '²⁺', '³⁺'][a.sh[2] - 1] : '⁰'), cx, 186, { size: 28, color: done ? D.col.ion : D.col.ink, weight: 900 });
         G.txt(x, T('Тотығу дәрежесі:', 'Степень окисления:'), 340, 70, { size: 17, color: D.col.ink2, weight: 800, align: 'left' });
         G.txt(x, '0' + (lost ? '  →  ' + eqs[cur][1] : ''), 340, 112, { size: 44, color: lost ? '#f97316' : D.col.ink, weight: 900, align: 'left' });
-        G.txt(x, lost ? T('электрон берді = ТОТЫҚТЫ', 'отдал электроны = ОКИСЛИЛСЯ') : T('сыртқы электрон: ' + a.sh[2], 'внешних электронов: ' + a.sh[2]), 340, 156, { size: 16, color: D.col.ink2, weight: 900, align: 'left' });
+        G.txt(x, lost ? T('электрон беру = тотығу', 'отдал электроны = окислился') : T('сыртқы электрон: ' + a.sh[2], 'внешних электронов: ' + a.sh[2]), 340, 156, { size: 17, color: D.col.ink2, weight: 900, align: 'left' });
         /* таразы */
         x = cs.begin(); const px = 303, py = 190, th = lerp(0, .2, clamp(tseesaw, 0, 1.2));
         x.fillStyle = '#64748b'; x.beginPath(); x.moveTo(px, py - 6); x.lineTo(px - 34, py + 66); x.lineTo(px + 34, py + 66); x.closePath(); x.fill();
@@ -74,7 +74,7 @@ Deck.add({
         x.restore();
         G.txt(x, T('Беру: 1–3 e⁻', 'Отдать: 1–3 e⁻'), 130, 36, { size: 20, color: '#16a34a', weight: 900 }); G.txt(x, T('оңай', 'легко'), 130, 62, { size: 17, color: '#16a34a', weight: 800 });
         G.txt(x, T('Қабылдау: 5–7 e⁻', 'Принять: 5–7 e⁻'), 480, 36, { size: 20, color: '#ef4444', weight: 900 }); G.txt(x, T('қиын', 'трудно'), 480, 62, { size: 17, color: '#ef4444', weight: 800 });
-        G.txt(x, T('Сондықтан металдарда теріс тотығу дәрежесі болмайды', 'Поэтому у металлов нет отрицательных степеней окисления'), 303, 306, { size: 16, color: D.col.ink, weight: 900 });
+        G.txt(x, T('Сондықтан металдарда теріс тотығу дәрежесі болмайды', 'Поэтому у металлов нет отрицательных степеней окисления'), 303, 306, { size: 17, color: D.col.ink, weight: 900 });
       }
     };
   }
@@ -162,13 +162,13 @@ Deck.add({
           x.restore(); x.strokeStyle = D.col.ink2; x.lineWidth = 5; x.lineJoin = 'round'; x.beginPath(); x.moveTo(fx - 26, 70); x.lineTo(fx - 26, 130); x.lineTo(fx - 110, 300); x.lineTo(fx + 110, 300); x.lineTo(fx + 26, 130); x.lineTo(fx + 26, 70); x.stroke();
           G.txt(x, 'Cl₂', fx, 150, { size: 20, color: 'rgba(100,130,0,.9)', weight: 900 });
           /* натрий */
-          let ny = S.run ? lerp(-30, 258, ease.out(clamp(p / .12, 0, 1))) : 18; if (!(S.run && p > .2)) { G.ball(x, fx, ny, 15, MET.Na); G.txt(x, 'Na', fx, ny, { size: 13, color: '#14213d', weight: 900 }); }
+          let ny = S.run ? lerp(-30, 258, ease.out(clamp(p / .12, 0, 1))) : 18; if (!(S.run && p > .2)) { G.ball(x, fx, ny, 15, MET.Na); G.txt(x, 'Na', fx, ny, { size: 15, color: '#14213d', weight: 900 }); }
           if (S.run && p > .12 && p < .8) { for (let i = 0; i < 4; i++) parts.push({ x: fx + rnd(-40, 40), y: 270 + rnd(-10, 10), vx: rnd(-50, 50), vy: rnd(-160, -40), l: .8, c: pick(['#fde047', '#fb923c', '#fff']) }); }
           /* NaCl кристалдары */
           const cr = clamp((p - .3) / .5, 0, 1);
           for (let i = 0; i < 36 * cr; i++) { x.fillStyle = '#f8fafc'; x.strokeStyle = '#cbd5e1'; x.lineWidth = 1; const q = fx - 70 + (i * 29 % 140), r = 290 - Math.floor(i / 12) * 8; x.fillRect(q, r, 8, 8); x.strokeRect(q, r, 8, 8); }
           /* тор */
-          if (cr > .4) { x.globalAlpha = clamp((cr - .4) * 2, 0, 1); G.rr(x, 470, 80, 150, 168, 18); x.fillStyle = D.col.card; x.fill(); x.strokeStyle = D.col.line; x.lineWidth = 3; x.stroke(); for (let j = 0; j < 4; j++) for (let i = 0; i < 4; i++) { const px = 500 + i * 38, py = 120 + j * 36; (i + j) % 2 ? G.ball(x, px, py, 13, '#22c55e') : G.ball(x, px, py, 9, '#3b82f6'); } G.txt(x, T('NaCl торы', 'решётка NaCl'), 545, 232, { size: 15, color: D.col.ink, weight: 900 }); x.globalAlpha = 1; }
+          if (cr > .4) { x.globalAlpha = clamp((cr - .4) * 2, 0, 1); G.rr(x, 470, 80, 150, 168, 18); x.fillStyle = D.col.card; x.fill(); x.strokeStyle = D.col.line; x.lineWidth = 3; x.stroke(); for (let j = 0; j < 4; j++) for (let i = 0; i < 4; i++) { const px = 500 + i * 38, py = 120 + j * 36; (i + j) % 2 ? G.ball(x, px, py, 13, '#22c55e') : G.ball(x, px, py, 9, '#3b82f6'); } G.txt(x, T('NaCl торы', 'решётка NaCl'), 545, 232, { size: 17, color: D.col.ink, weight: 900 }); x.globalAlpha = 1; }
           G.txt(x, !S.run ? T('Хлор газына натрий саламыз', 'Опустим натрий в хлор') : p < .8 ? '2Na + Cl₂ → 2NaCl' : T('Ақ кристалдар: NaCl', 'Белые кристаллы: NaCl'), 300, 36, { size: 21, color: S.run && p < .8 ? '#ea580c' : D.col.ink2, weight: 900 });
         } else {
           /* стакан */
@@ -184,7 +184,7 @@ Deck.add({
             if (S.drop < 1) { S.drop = Math.min(1, S.drop + dt * 2.2); S.y = lerp(20, sy - 8, ease.out(S.drop)); S.x = 320; }
             else { S.vx += rnd(-1, 1) * 900 * dt; S.vx = clamp(S.vx, -260, 260) * .985; S.x += S.vx * dt; if (S.x < bx + 24 || S.x > bx + bw - 24) S.vx *= -1; S.x = clamp(S.x, bx + 24, bx + bw - 24); S.y = sy - 8 + Math.sin(t * 20) * 1.6; S.pink = Math.min(1, S.pink + dt * .11); S.trail.push({ x: S.x, y: S.y + 10, a: 1 }); if (S.trail.length > 30) S.trail.shift(); S.trail.forEach(tp => tp.a *= .985); for (let i = 0; i < 2; i++) parts.push({ x: S.x + rnd(-8, 8), y: S.y + 10, vx: rnd(-20, 20), vy: rnd(-120, -40), l: .6, c: 'rgba(255,255,255,.9)' }); }
             const sz = 14 * (1 - clamp((p - .5) / .35, 0, 1) * .8); G.ball(x, S.x, S.y, sz, MET.Na);
-          } else if (!S.run) { G.ball(x, 320, 20, 14, MET.Na); G.txt(x, 'Na', 320, 20, { size: 12, color: '#14213d', weight: 900 }); }
+          } else if (!S.run) { G.ball(x, 320, 20, 14, MET.Na); G.txt(x, 'Na', 320, 20, { size: 14, color: '#14213d', weight: 900 }); }
           if (S.pink > .3) G.txt(x, T('Фенолфталеин қызыл-күлгін → сілті (NaOH)', 'Фенолфталеин малиновый → щёлочь (NaOH)'), 320, 336, { size: 17, color: '#be185d', weight: 900 });
           else G.txt(x, !S.run ? T('Суға фенолфталеин тамызылған', 'В воду добавлен фенолфталеин') : '2Na + 2H₂O → 2NaOH + H₂↑', 320, 40, { size: 20, color: S.run ? '#ea580c' : D.col.ink2, weight: 900 });
         }
@@ -209,15 +209,15 @@ Deck.add({
         <div class="card" data-a="l"><div class="lbl" style="margin-bottom:6px">${L('1. Металл', '1. Металл')}</div><div class="tabs sm noswipe" id="lbM"></div>
           <div class="lbl" style="margin:12px 0 6px">${L('2. Ерітінді', '2. Раствор')}</div><div class="tabs sm noswipe" id="lbS"></div>
           <div style="margin-top:14px"><button class="btn" id="lbGo" style="width:100%;justify-content:center">${L('⬇ Металды салу', '⬇ Опустить металл')}</button></div></div>
-        <div class="card tint" data-a="l" style="--d:.2s"><div class="lbl" style="margin-bottom:6px">${L('Тексер өзіңді', 'Проверь себя')}</div><div class="t2" style="font-size:17px">${L('Қай пробиркада реакция жүреді?', 'В какой пробирке пойдёт реакция?')}</div>
+        <div class="card tint" data-a="l" style="--d:.2s"><div class="lbl" style="margin-bottom:6px">${L('Өзіңді тексер', 'Проверь себя')}</div><div class="t2" style="font-size:17px">${L('Қай пробиркада реакция жүреді?', 'В какой пробирке пойдёт реакция?')}</div>
           <div class="r" style="gap:8px;margin-top:8px"><button class="btn sm ghost" data-ch="1">Zn → CuSO₄</button><button class="btn sm ghost" data-ch="2">Cu → ZnSO₄</button></div></div>
       </div>
       <div class="panel" style="width:360px;height:462px" data-a="z"><div id="lbHost"></div></div>
       <div class="c f1" style="gap:10px">
         <div class="card" data-a="r" style="--d:.2s;min-height:178px"><div class="lbl" style="margin-bottom:6px">${L('Нәтиже', 'Результат')}</div><div id="lbRes"></div></div>
         <div class="card" data-a="r" style="--d:.35s"><div class="lbl" style="margin-bottom:6px">${L('Ерекше жағдайлар', 'Особые случаи')}</div>
-          <div class="eq" style="display:block;font-size:15px;padding:5px 10px;margin:3px 0">${F('Cu + 4HNO3(конц) → Cu(NO3)2 + 2NO2↑ + 2H2O')}</div>
-          <div class="eq" style="display:block;font-size:15px;padding:5px 10px;margin:3px 0">${F('2Al + 2NaOH + 6H2O → 2Na[Al(OH)4] + 3H2↑')}</div></div>
+          <div class="eq" style="display:block;font-size:17px;padding:5px 10px;margin:3px 0">${F('Cu + 4HNO3(конц) → Cu(NO3)2 + 2NO2↑ + 2H2O')}</div>
+          <div class="eq" style="display:block;font-size:17px;padding:5px 10px;margin:3px 0">${F('2Al + 2NaOH + 6H2O → 2Na[Al(OH)4] + 3H2↑')}</div></div>
       </div>
     </div>`,
   init(root) {
@@ -242,7 +242,7 @@ Deck.add({
       $$('button', tm).forEach(b => b.onclick = () => { met = b.dataset.m; clear(); draw(); });
       $$('button', ts).forEach(b => b.onclick = () => { sol = b.dataset.s; clear(); draw(); });
     };
-    const clear = () => { run = false; p = 0; strip = 0; shown = false; parts.length = 0; res.innerHTML = '<p class="t2" style="margin:0">' + T('Металл мен ерітіндіні таңдап, «Салу» бас.', 'Выбери металл и раствор и нажми «Опустить».') + '</p>'; };
+    const clear = () => { run = false; p = 0; strip = 0; shown = false; parts.length = 0; res.innerHTML = '<p class="t2" style="margin:0">' + T('Металл мен ерітіндіні таңдап, «Металды салу» батырмасын бас.', 'Выбери металл и раствор и нажми «Опустить».') + '</p>'; };
     const showRes = () => {
       const e = eqOf(met, sol), nm = SOL[sol].name;
       res.innerHTML = e ? `<div class="ok" style="font-size:19px;margin-bottom:6px">✓ ${T('Реакция жүреді', 'Реакция идёт')}</div><div class="eq" style="display:block;font-size:19px;padding:6px 10px">${F(e.eq)}</div><div class="t2" style="margin-top:8px;font-size:17px"><div><b class="eo">${e.ox}</b></div><div><b class="io">${e.rd}</b></div></div>`
@@ -281,8 +281,8 @@ Deck.add({
         x.strokeStyle = D.col.ink2; x.lineWidth = 5; x.lineJoin = 'round'; x.lineCap = 'round'; x.beginPath(); x.moveTo(tx - 6, top); x.lineTo(tx, top); x.lineTo(tx, bot - tw / 2); x.arc(tx + tw / 2, bot - tw / 2, tw / 2, Math.PI, 0, true); x.lineTo(tx + tw, top); x.lineTo(tx + tw + 6, top); x.stroke();
         G.txt(x, SOL[sol].name, tx + tw / 2, 448, { size: 20, color: D.col.ink, weight: 900 }); G.txt(x, met, tx + tw / 2, 30, { size: 26, color: D.col.ink, weight: 900 });
         if (!run) { G.txt(x, '⬇', tx + tw / 2, 56, { size: 22, color: D.col.ink2 }); }
-        if (r && run && sol === 'CuSO4' && pr > .5) G.txt(x, T('Cu бөлінді', 'выделилась Cu'), 300, 260, { size: 14, color: '#b45309', weight: 900 });
-        if (r && run && sol === 'AgNO3' && pr > .5) G.txt(x, T('Ag бөлінді', 'выделилось Ag'), 300, 260, { size: 14, color: '#64748b', weight: 900 });
+        if (r && run && sol === 'CuSO4' && pr > .5) G.txt(x, T('Cu бөлінді', 'выделилась Cu'), 300, 260, { size: 16, color: '#b45309', weight: 900 });
+        if (r && run && sol === 'AgNO3' && pr > .5) G.txt(x, T('Ag бөлінді', 'выделилось Ag'), 300, 260, { size: 16, color: '#64748b', weight: 900 });
       }
     };
   }

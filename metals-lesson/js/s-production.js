@@ -6,9 +6,9 @@ Deck.add({
   t: ['Рудадан металға: төрт қадам', 'От руды к металлу: четыре шага'],
   note: ['Мақсат 9.4.2.6. Руда — металл қосылыстары (оксидтер, сульфидтер, карбонаттар) бар тау жынысы. 1) Өндіру; 2) Байыту: бос жынысты бөлу (флотация, магниттік сепарация) → концентрат; 3) Тотықсыздандыру: Mⁿ⁺ + ne⁻ → M⁰; 4) Рафинирлеу: қоспалардан тазарту, көбіне электролизбен. Өздігінен кесек (самородок) түрінде тек аз белсенді металдар кездеседі: Au, Pt, кейде Ag және Cu. Металл неғұрлым белсенді болса, оны тотықсыздандыру соғұрлым қиын: сілтілік металдар мен алюминийді тек балқымаларды электролиздеп алады. Ақпарат бойынша әдістерді қатарға байланыстырыңыз.',
     'Цель 9.4.2.6. Руда — горная порода с соединениями металла (оксиды, сульфиды, карбонаты). 1) Добыча; 2) Обогащение: отделение пустой породы (флотация, магнитная сепарация) → концентрат; 3) Восстановление: Mⁿ⁺ + ne⁻ → M⁰; 4) Рафинирование: очистка от примесей, часто электролизом. Самородками встречаются только малоактивные металлы: Au, Pt, иногда Ag и Cu. Чем активнее металл, тем труднее его восстановить: щелочные металлы и алюминий получают только электролизом расплавов. Свяжите методы с рядом активности.'],
-  bridge: ['Ең үлкен металлургиялық «шеф»: домна пеші', 'Главная металлургическая «кухня»: доменная печь'],
+  bridge: ['Металлургияның басты пеші — домна', 'Главная металлургическая «кухня»: доменная печь'],
   html: () => `
-    <div class="r" style="gap:12px">${[['Өндіру', 'Добыча', 'mine'], ['Байыту', 'Обогащение', 'flot'], ['Тотықсыздану', 'Восстановление', 'red'], ['Тазарту', 'Рафинирование', 'ref']].map((s, i) => `<div class="card" data-a="pop" style="--d:${.08 + i * .1}s;width:293px;padding:10px 12px"><div class="r ctr" style="gap:8px;margin-bottom:4px"><span class="sn" style="margin:0;width:32px;height:32px;font-size:16px">${i + 1}</span><b style="font-size:20px">${L(s[0], s[1])}</b></div><div class="cvh oc" data-k="${s[2]}"></div></div>`).join('')}</div>
+    <div class="r" style="gap:12px">${[['Өндіру', 'Добыча', 'mine'], ['Байыту', 'Обогащение', 'flot'], ['Тотықсыздану', 'Восстановление', 'red'], ['Тазарту', 'Рафинирование', 'ref']].map((s, i) => `<div class="card" data-a="pop" style="--d:${.08 + i * .1}s;width:293px;padding:10px 12px"><div class="r ctr" style="gap:8px;margin-bottom:4px"><span class="sn" style="margin:0;width:32px;height:32px;font-size:17px">${i + 1}</span><b style="font-size:20px">${L(s[0], s[1])}</b></div><div class="cvh oc" data-k="${s[2]}"></div></div>`).join('')}</div>
     <div class="r" style="gap:14px;margin-top:12px">
       <div class="card" data-a="l" style="--d:.5s;width:318px"><div class="lbl" style="margin-bottom:8px">${L('Тотықсыздандыру тәсілдері', 'Способы восстановления')}</div><div class="c" id="orM" style="gap:6px"></div></div>
       <div class="c f1" style="gap:10px"><div class="card tint" data-a="r" style="--d:.6s" id="orInfo"></div>
@@ -28,12 +28,12 @@ Deck.add({
     let cur = 0, t = 0;
     const M = $('#orM', root), info = $('#orInfo', root), lad = $('#orL', root);
     const render = () => {
-      M.innerHTML = METH.map((m, i) => `<button class="chip btn2 ${i === cur ? 'on' : ''}" data-i="${i}" style="justify-content:flex-start;font-size:16px;border-radius:14px">${T(m.n[0], m.n[1])}</button>`).join('');
+      M.innerHTML = METH.map((m, i) => `<button class="chip btn2 ${i === cur ? 'on' : ''}" data-i="${i}" style="justify-content:flex-start;font-size:17px;border-radius:14px">${T(m.n[0], m.n[1])}</button>`).join('');
       $$('button', M).forEach(b => b.onclick = () => { cur = +b.dataset.i; render(); D.beep('pop'); });
       const m = METH[cur];
       info.innerHTML = `<div class="r ctr sb2"><h3 style="font-size:22px">${T(m.n[0], m.n[1])}</h3><span class="chip k">${T('Тотықсыздандырғыш', 'Восстановитель')}: ${T(m.red[0], m.red[1])}</span></div><div class="eq" style="margin-top:8px;font-size:21px;white-space:normal">${F(m.eq)}</div>`;
       lad.innerHTML = LAD.map(e => `<span class="ladc ${m.m.includes(e) ? 'on' : ''}" style="--lc:${MET[e] || '#94a3b8'}">${e}</span>`).join('');
-      $('#orZ', root).innerHTML = [['Электролиз', 'Электролиз', 6, '#ef4444'], ['Пиро-/металлотермия', 'Пиро-/металлотермия', 6, '#f97316'], ['Өздігінен / оңай', 'Самородные / легко', 4, '#16a34a']].map(z => `<span class="sm" style="flex:${z[2]};text-align:center;border-top:5px solid ${z[3]};padding-top:3px;font-size:13px">${T(z[0], z[1])}</span>`).join('');
+      $('#orZ', root).innerHTML = [['Электролиз', 'Электролиз', 6, '#ef4444'], ['Пиро-/металлотермия', 'Пиро-/металлотермия', 6, '#f97316'], ['Өздігінен / оңай', 'Самородные / легко', 4, '#16a34a']].map(z => `<span class="sm" style="flex:${z[2]};text-align:center;border-top:5px solid ${z[3]};padding-top:3px;font-size:15px">${T(z[0], z[1])}</span>`).join('');
     };
     render();
     const draw = {
@@ -46,12 +46,12 @@ Deck.add({
         x.fillStyle = D.col.ink2; x.font = '800 13px Nunito,sans-serif'; x.textAlign = 'center'; x.fillText(T('пайдалы минерал көбікке жабысады', 'нужный минерал всплывает с пеной'), 134, 14); },
       red(x, s, dt) { s.n = s.n || 0; s.e = s.e || []; s.pop = s.pop || 0; s.sp = (s.sp || 0) + dt; if (s.sp > .55 && s.n < 2) { s.sp = 0; s.e.push({ x: 20, y: rnd(40, 90) }); } s.e.forEach(e => { e.x += 130 * dt; e.y += (64 - e.y) * dt * 3; }); const hit = s.e.filter(e => e.x > 118); if (hit.length) { s.n += hit.length; s.e = s.e.filter(e => e.x <= 118); }
         if (s.n >= 2) { s.pop += dt; if (s.pop > 1.4) { s.n = 0; s.pop = 0; } }
-        const atom = s.n >= 2; atom ? G.ball(x, 134, 64, 24, '#94a3b8') : G.ion(x, 134, 64, 24, '+'); G.txt(x, atom ? 'M⁰' : 'Mⁿ⁺', 134, 64, { size: 16, color: atom ? '#14213d' : '#fff', weight: 900 });
-        s.e.forEach(e => G.e(x, e.x, e.y, 5)); G.txt(x, 'Mⁿ⁺ + n e⁻ → M⁰', 134, 112, { size: 17, color: D.col.ink, weight: 900 }); G.txt(x, T('ион + электрон → атом', 'ион + электроны → атом'), 134, 14, { size: 13, color: D.col.ink2, weight: 800 }); },
+        const atom = s.n >= 2; atom ? G.ball(x, 134, 64, 24, '#94a3b8') : G.ion(x, 134, 64, 24, '+'); G.txt(x, atom ? 'M⁰' : 'Mⁿ⁺', 134, 64, { size: 17, color: atom ? '#14213d' : '#fff', weight: 900 });
+        s.e.forEach(e => G.e(x, e.x, e.y, 5)); G.txt(x, 'Mⁿ⁺ + n e⁻ → M⁰', 134, 112, { size: 17, color: D.col.ink, weight: 900 }); G.txt(x, T('ион + электрон → атом', 'ион + электроны → атом'), 134, 14, { size: 15, color: D.col.ink2, weight: 800 }); },
       ref(x, s, dt) { s.p = s.p || Array.from({ length: 14 }, (_, i) => ({ u: i / 14 })); s.g = ((s.g || 0) + dt * .12) % 1;
         G.rr(x, 18, 30, 233, 88, 8); x.fillStyle = 'rgba(56,167,240,.25)'; x.fill(); G.rr(x, 30, 22, 26, 96, 4); x.fillStyle = '#9a6b3a'; x.fill(); G.rr(x, 213 - s.g * 14, 22, 8 + s.g * 14, 96, 4); x.fillStyle = '#d98324'; x.fill();
         s.p.forEach(p => { p.u = (p.u + dt * .25) % 1; const px = lerp(62, 208 - s.g * 14, p.u), py = 40 + ((p.u * 7 + s.p.indexOf(p) * .37) % 1) * 70; x.fillStyle = '#3b82f6'; x.beginPath(); x.arc(px, py, 4.4, 0, 6.28); x.fill(); });
-        G.txt(x, T('анод (қоспалы)', 'анод (с примесями)'), 44, 14, { size: 12, color: D.col.ink2, weight: 800 }); G.txt(x, T('катод: таза Cu', 'катод: чистая Cu'), 214, 14, { size: 12, color: D.col.ink2, weight: 800 }); G.txt(x, 'Cu²⁺ + 2e⁻ → Cu⁰  (99,99 %)', 134, 122, { size: 14, color: D.col.ink, weight: 900 }); }
+        G.txt(x, T('анод (қоспалы)', 'анод (с примесями)'), 44, 14, { size: 14, color: D.col.ink2, weight: 800 }); G.txt(x, T('катод: таза Cu', 'катод: чистая Cu'), 214, 14, { size: 14, color: D.col.ink2, weight: 800 }); G.txt(x, 'Cu²⁺ + 2e⁻ → Cu⁰  (99,99 %)', 134, 122, { size: 16, color: D.col.ink, weight: 900 }); }
     };
     return {
       lang: render, enter() { cur = 0; render(); },
@@ -92,9 +92,9 @@ Deck.add({
     for (let i = 0; i < 50; i++) gas.push({ u: rnd(-.8, .8), y: rnd(40, 380), v: rnd(60, 110) });
     const zl = $('#bfZ', root), go = $('#bfGo', root);
     const renderZ = () => {
-      if (tab === 'f') zl.innerHTML = Z.map((z, i) => `<div class="card bfz ${i === sel ? 'sel' : ''}" data-i="${i}" style="padding:8px 14px;cursor:pointer;border-left:8px solid ${z.c}"><div class="r ctr sb2"><b style="font-size:18px">${T(z.n[0], z.n[1])}</b></div><div class="t2" style="font-size:15px;line-height:1.25">${T(z.d[0], z.d[1])}</div>${z.eq && i === sel ? `<div class="eq" style="margin-top:6px;font-size:16px;white-space:normal;padding:4px 8px">${F(z.eq)}</div>` : ''}</div>`).join('');
+      if (tab === 'f') zl.innerHTML = Z.map((z, i) => `<div class="card bfz ${i === sel ? 'sel' : ''}" data-i="${i}" style="padding:8px 14px;cursor:pointer;border-left:8px solid ${z.c}"><div class="r ctr sb2"><b style="font-size:18px">${T(z.n[0], z.n[1])}</b></div><div class="t2" style="font-size:17px;line-height:1.25">${T(z.d[0], z.d[1])}</div>${z.eq && i === sel ? `<div class="eq" style="margin-top:6px;font-size:17px;white-space:normal;padding:4px 8px">${F(z.eq)}</div>` : ''}</div>`).join('');
       else zl.innerHTML = `<div class="card tint"><h3 style="font-size:22px">${T('Оттек конвертері', 'Кислородный конвертер')}</h3><div class="t2" style="margin-top:6px">${T('Шойынды оттегімен үрлейді: артық көміртек жанады, Si, Mn, P қожға өтеді. Нәтиже — болат.', 'Чугун продувают кислородом: лишний углерод сгорает, Si, Mn, P переходят в шлак. Получается сталь.')}</div></div>
-        <div class="card"><div class="eq" style="display:block;font-size:22px">${F('2C + O2 → 2CO↑')}</div><div class="t2" style="margin-top:8px;font-size:16px">${T('Si, Mn, P → қожға', 'Si, Mn, P → в шлак')}</div></div>
+        <div class="card"><div class="eq" style="display:block;font-size:22px">${F('2C + O2 → 2CO↑')}</div><div class="t2" style="margin-top:8px;font-size:17px">${T('Si, Mn, P → қожға', 'Si, Mn, P → в шлак')}</div></div>
         <div class="card"><div class="lbl" style="margin-bottom:6px">${T('Көміртек құрамы', 'Содержание углерода')}</div><div class="bar" style="height:22px"><i id="bfC" style="background:linear-gradient(90deg,#16a34a,#475569)"></i></div><div class="r sb2 sm" style="margin-top:4px"><span>${T('болат', 'сталь')} ≤ 2,14 %</span><b class="num" id="bfCv"></b></div></div>
         <div class="key"><span class="lb">${T('Қорытынды', 'Итог')}</span><span class="t" style="font-size:18px">${T('Шойын (көп C, морт) → <b>болат</b> (аз C, берік).', 'Чугун (много C, хрупкий) → <b>сталь</b> (мало C, прочная).')}</span></div>`;
       $$('.bfz', zl).forEach(c => c.onclick = () => { sel = sel === +c.dataset.i ? -1 : +c.dataset.i; renderZ(); D.beep('pop'); });
@@ -125,16 +125,16 @@ Deck.add({
           x.strokeStyle = '#64748b'; x.lineWidth = 7; x.lineJoin = 'round'; x.beginPath(); x.moveTo(cx - hw(44), 44); for (let y = 52; y <= 452; y += 8) x.lineTo(cx - hw(y), y); x.moveTo(cx + hw(44), 44); for (let y = 52; y <= 452; y += 8) x.lineTo(cx + hw(y), y); x.stroke();
           /* фурмалар */
           [-1, 1].forEach(s => { x.fillStyle = '#334155'; x.fillRect(cx + s * hw(380) - (s > 0 ? 0 : 36), 372, 36, 14); for (let k = 0; k < 3; k++) { const ax = cx + s * (hw(380) + 30 + k * 18 + ((t * 40) % 18)); G.arrow(x, ax + s * 20, 379, ax, 379, 'rgba(96,165,250,.9)', 3); } });
-          G.txt(x, T('ыстық ауа', 'горячий воздух'), cx - hw(380) - 70, 398, { size: 13, color: '#3b82f6', weight: 900 }); G.txt(x, T('ыстық ауа', 'горячий воздух'), cx + hw(380) + 70, 398, { size: 13, color: '#3b82f6', weight: 900 });
+          G.txt(x, T('ыстық ауа', 'горячий воздух'), cx - hw(380) - 70, 398, { size: 15, color: '#3b82f6', weight: 900 }); G.txt(x, T('ыстық ауа', 'горячий воздух'), cx + hw(380) + 70, 398, { size: 15, color: '#3b82f6', weight: 900 });
           /* жоғарғы бөлік */
-          x.fillStyle = '#475569'; G.rr(x, cx - 50, 26, 100, 20, 6); x.fill(); G.txt(x, T('шихта ↓', 'шихта ↓'), cx, 17, { size: 13, color: D.col.ink2, weight: 900 }); for (let k = 0; k < 4; k++) { const ay = 20 + k * 6 - ((t * 24) % 24); x.fillStyle = 'rgba(148,163,184,.55)'; x.beginPath(); x.arc(cx + 80 + k * 2, 10 + ay * .4, 6 + k, 0, 6.28); x.fill(); }
-          G.txt(x, T('газ ↑', 'газ ↑'), cx + 100, 24, { size: 13, color: D.col.ink2, weight: 900, align: 'left' });
+          x.fillStyle = '#475569'; G.rr(x, cx - 50, 26, 100, 20, 6); x.fill(); G.txt(x, T('шихта ↓', 'шихта ↓'), cx, 17, { size: 15, color: D.col.ink2, weight: 900 }); for (let k = 0; k < 4; k++) { const ay = 20 + k * 6 - ((t * 24) % 24); x.fillStyle = 'rgba(148,163,184,.55)'; x.beginPath(); x.arc(cx + 80 + k * 2, 10 + ay * .4, 6 + k, 0, 6.28); x.fill(); }
+          G.txt(x, T('газ ↑', 'газ ↑'), cx + 100, 24, { size: 15, color: D.col.ink2, weight: 900, align: 'left' });
           /* лётка және науа */
           tap = (tap + dt) % 9; const pouring = tap > 5.8; x.fillStyle = '#334155'; x.fillRect(cx + 90, 436, 40, 10);
           if (pouring) { x.strokeStyle = '#f97316'; x.lineWidth = 6; x.beginPath(); x.moveTo(cx + 130, 441); x.lineTo(cx + 166, 441); x.lineTo(cx + 166, 470); x.stroke(); }
           G.rr(x, cx + 140, 460, 60, 24, 6); x.fillStyle = '#475569'; x.fill(); if (pouring) { x.fillStyle = '#f97316'; x.fillRect(cx + 146, 466 - clamp((tap - 5.8) * 3, 0, 6), 48, 8); }
-          if (sel >= 0) { const z = Z[sel]; x.fillStyle = 'rgba(255,255,255,.16)'; x.fillRect(cx - 180, z.y0, 360, z.y1 - z.y0); x.strokeStyle = '#fff'; x.lineWidth = 3; x.setLineDash([8, 6]); x.strokeRect(cx - 180, z.y0, 360, z.y1 - z.y0); x.setLineDash([]); G.txt(x, T(z.n[0], z.n[1]), cx - 190, (z.y0 + z.y1) / 2, { size: 15, color: D.col.ink, weight: 900, align: 'right' }); }
-          if (sel < 0) { G.txt(x, T('← аймақты таңда', 'выбери зону →'), 70, 250, { size: 14, color: D.col.ink2, weight: 800 }); }
+          if (sel >= 0) { const z = Z[sel]; x.fillStyle = 'rgba(255,255,255,.16)'; x.fillRect(cx - 180, z.y0, 360, z.y1 - z.y0); x.strokeStyle = '#fff'; x.lineWidth = 3; x.setLineDash([8, 6]); x.strokeRect(cx - 180, z.y0, 360, z.y1 - z.y0); x.setLineDash([]); G.txt(x, T(z.n[0], z.n[1]), cx - 190, (z.y0 + z.y1) / 2, { size: 17, color: D.col.ink, weight: 900, align: 'right' }); }
+          if (sel < 0) { G.txt(x, T('← аймақты таңда', 'выбери зону →'), 70, 250, { size: 16, color: D.col.ink2, weight: 800 }); }
         } else {
           /* конвертер */
           if (blow) carb = Math.max(.4, carb - dt * .6);
@@ -149,7 +149,7 @@ Deck.add({
           x.strokeStyle = '#94a3b8'; x.lineWidth = 10; x.beginPath(); x.moveTo(cx, 36); x.lineTo(cx, blow ? cy - 40 : cy - 110); x.stroke();
           if (blow) { for (let k = 0; k < 6; k++) { x.strokeStyle = 'rgba(96,165,250,.8)'; x.lineWidth = 3; x.beginPath(); x.moveTo(cx - 12 + k * 5, cy - 40); x.lineTo(cx - 40 + k * 16, cy + 10 + ((t * 150 + k * 20) % 30)); x.stroke(); } if (Math.random() < .9) sparks.push({ x: cx + rnd(-20, 20), y: cy - 190, vx: rnd(-90, 90), vy: -rnd(120, 280), l: 1 }); G.txt(x, 'CO↑', cx + 90, 70, { size: 18, color: '#ea580c', weight: 900 }); }
           for (let i = sparks.length - 1; i >= 0; i--) { const p = sparks[i]; p.l -= dt; p.vy += 520 * dt; p.x += p.vx * dt; p.y += p.vy * dt; if (p.l <= 0) { sparks.splice(i, 1); continue; } x.globalAlpha = clamp(p.l, 0, 1); x.fillStyle = '#fbbf24'; x.beginPath(); x.arc(p.x, p.y, 2.6, 0, 6.28); x.fill(); x.globalAlpha = 1; }
-          G.txt(x, T('оттек түтігі', 'кислородная фурма'), cx + 70, 52, { size: 13, color: D.col.ink2, weight: 900, align: 'left' }); G.txt(x, carb > 2.14 ? T('шойын', 'чугун') : T('болат!', 'сталь!'), cx, cy + 60, { size: 26, color: '#fff', weight: 900, stroke: 'rgba(0,0,0,.35)' });
+          G.txt(x, T('оттек түтігі', 'кислородная фурма'), cx + 70, 52, { size: 15, color: D.col.ink2, weight: 900, align: 'left' }); G.txt(x, carb > 2.14 ? T('шойын', 'чугун') : T('болат!', 'сталь!'), cx, cy + 60, { size: 26, color: '#fff', weight: 900, stroke: 'rgba(0,0,0,.35)' });
           const cb = $('#bfC', root), cv_ = $('#bfCv', root); if (cb) { cb.style.width = clamp(carb / 4.3 * 100, 4, 100) + '%'; cv_.textContent = 'C = ' + carb.toFixed(1).replace('.', ',') + ' %'; }
         }
       }

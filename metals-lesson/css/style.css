@@ -307,3 +307,26 @@ input[type=range].plain{background:var(--line)}
 .gck .bx{flex:none;width:24px;height:24px;border-radius:8px;border:3px solid var(--ink3);display:grid;place-items:center;color:#fff;font-weight:900;font-size:15px}
 .gck.on{background:color-mix(in srgb,var(--ok) 14%,var(--card));border-color:var(--ok)}.gck.on .bx{background:var(--ok);border-color:var(--ok)}
 .step .t2{font-size:17px;line-height:1.3}
+
+.dnc.l{border-color:#3b82f6;background:rgba(59,130,246,.16)}.dnc.r{border-color:#f97316;background:rgba(249,115,22,.16)}.dnc.l.r{border-color:#8b5cf6}
+.ftt{aspect-ratio:1;border-radius:16px;border:3px solid var(--line);background:var(--card2);color:var(--tc);display:grid;place-items:center;transition:transform .15s,background .15s}
+.ftt:hover{transform:translateY(-3px)}
+.ftt.on{background:var(--tc);color:#fff;border-color:transparent;transform:scale(1.12)}
+.fcard{position:relative;background:#dff1fd;border-radius:10px;box-shadow:var(--shadow);padding:18px 26px;min-height:492px;display:flex;flex-direction:column;gap:10px;color:#14213d}
+:root[data-theme="dark"] .fcard{background:#1b3555;color:#eaf4ff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .fcard{background:#1b3555;color:#eaf4ff}}
+.fh2{align-self:flex-start;background:#2bb5e8;color:#fff;font-weight:900;font-size:22px;padding:8px 42px 8px 22px;margin-left:-14px;clip-path:polygon(0 0,calc(100% - 20px) 0,100% 50%,calc(100% - 20px) 100%,0 100%)}
+.fti{margin:4px 0 2px;font-size:34px;font-weight:900;line-height:1.12;color:var(--ac)}
+.ftx{font-size:23px;line-height:1.4;font-weight:600}.ftx p{margin:0 0 8px}.ftx .src{font-size:16px;opacity:.8}
+.swap{animation:swapIn .55s cubic-bezier(.2,.8,.2,1)}
+@keyframes swapIn{from{opacity:0;transform:translateX(50px) rotate(1.5deg)}}
+.gen{position:relative;display:grid;place-items:center;color:var(--ac)}
+.gen i{position:absolute;width:200px;height:200px;border:4px dashed var(--ac);border-radius:50%;opacity:.45;animation:spin 14s linear infinite}
+.gen i+i{width:150px;height:150px;animation-direction:reverse;animation-duration:9s}
+.gen span{width:120px;height:120px;border-radius:50%;background:var(--ac);color:#fff;display:grid;place-items:center;animation:floaty 3s ease-in-out infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ftx.lg{font-size:18.5px;line-height:1.38}
+
+/* ---- оқылу: қаріптерді үлкейту ---- */
+.t2{font-size:20px}.sm{font-size:17.5px}.chip{font-size:17px}.lbl{font-size:15px}.key .t{font-size:21px}.kick{font-size:15px}
+#bridge button{font-size:17px}#teacher .tb2{font-size:18px}.card .t{font-size:23px}

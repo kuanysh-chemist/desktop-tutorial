@@ -134,7 +134,7 @@ D.Sea = function (o) {
   for (let j = 0; j < this.rows; j++) for (let i = 0; i < this.cols; i++)
     this.ions.push({ bx: this.x0 + dx * (i + .5), by: this.y0 + dy * (j + .5), ph: rnd(0, 6.28), on: true });
   for (let k = 0; k < this.n; k++) this.es.push({ x: rnd(this.x0, this.x0 + this.w), y: rnd(this.y0, this.y0 + this.h), vx: 0, vy: 0, a: 1 });
-  this.t = 0; this.temp = .25; this.field = 0; this.speed = 55;
+  this.t = 0; this.temp = .25; this.field = 0; this.fk = 1; this.speed = 55;
   this.avgDrift = 0;
 };
 D.Sea.prototype.update = function (dt) {
@@ -142,7 +142,7 @@ D.Sea.prototype.update = function (dt) {
   const nu = 1.2 + this.temp * 7;               // соқтығысу жиілігі (Друде)
   let sum = 0, n = 0;
   for (const e of this.es) {
-    e.vx += this.field * dt * 260;
+    e.vx += this.field * this.fk * dt * 260;
     if (Math.random() < nu * dt) {
       const a = rnd(0, 6.28), s = this.speed * (.55 + this.temp * 1.2) * rnd(.5, 1.3);
       e.vx = Math.cos(a) * s; e.vy = Math.sin(a) * s;

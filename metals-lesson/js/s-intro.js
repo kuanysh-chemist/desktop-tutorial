@@ -11,7 +11,7 @@ Deck.add({
     <div class="abs" style="left:58px;top:58px;width:650px">
       <span class="chip k" data-a="pop" style="--d:.1s;font-size:17px">${L('ХИМИЯ · 9-СЫНЫП', 'ХИМИЯ · 9 КЛАСС')}</span>
       <h1 class="tt1" data-a style="--d:.2s">${L('Металдар.<br>Қорытпалар', 'Металлы.<br>Сплавы')}</h1>
-      <p class="t2" data-a style="--d:.45s;max-width:560px;margin:0 0 18px">${L('Бір электрон газынан Қазақстан металлургиясына дейінгі жол', 'Путь от электронного газа до металлургии Казахстана')}</p>
+      <p class="t2" data-a style="--d:.45s;max-width:560px;margin:0 0 18px">${L('Электрондық газдан Қазақстан металлургиясына дейінгі жол', 'Путь от электронного газа до металлургии Казахстана')}</p>
       <div class="r wrap" data-a style="--d:.6s;gap:10px;max-width:600px">
         <span class="chip">${ico('atom', 20)} ${L('Құрылым', 'Строение')}</span><span class="chip">${ico('bolt', 20)} ${L('Қасиеттер', 'Свойства')}</span>
         <span class="chip">${ico('layers', 20)} ${L('Қорытпалар', 'Сплавы')}</span><span class="chip">${ico('factory', 20)} ${L('Металл алу', 'Получение')}</span>
