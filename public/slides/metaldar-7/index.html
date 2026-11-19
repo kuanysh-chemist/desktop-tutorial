@@ -514,6 +514,37 @@ h2 .ru{font-family:var(--body);font-size:.5em}
 #border.on text{opacity:.95}
 #border .tme{stroke:var(--metal);fill:var(--metal)} #border .tnm{stroke:var(--nonmetal);fill:var(--nonmetal)}
 
+/* ---------- light (paper) periodic table ---------- */
+#s6 .lightpt{margin-top:10px;background:#f7f9fd;border-radius:18px;padding:8px 12px 10px;box-shadow:0 20px 50px -20px #000;width:1448px;margin-left:-12px}
+#s6 .lightpt .sptwrap{margin-top:0}
+#s6 .lightpt #spt{grid-template-rows:28px repeat(11,41px) 27px 27px}
+#s6 .lightpt #fblk{grid-auto-rows:37px;margin-top:6px}
+#s6 .lightpt .sh{color:#4a5680}
+#s6 .lightpt .sh.gh{background:#dfe5f2;color:#c2410c}
+#s6 .lightpt .pcell{background:#dfe5f2;color:#1b2450}
+#s6 .lightpt .rcell{background:#e9edf6;color:#4a5680}
+#s6 .lightpt .cell{background:#eef1f8}
+#s6 .lightpt .cell.po{background:#e6eaf4}
+#s6 .lightpt .cell.trio{background:none}
+#s6 .lightpt .ox{background:#e9edf6;color:#1b2450}
+#s6 .lightpt .oxl,#s6 .lightpt #fblk .fl{color:#4a5680}
+#s6 .lightpt .hh{color:#8a93b5;opacity:1}
+#s6 .lightpt .el[data-t="m"]{--c:#1f6fd1!important}
+#s6 .lightpt .el[data-t="n"]{--c:#0f8a55!important}
+#s6 .lightpt .el[data-t="d"]{--c:#7a45d6!important}
+#s6 .lightpt .el[data-t="x"]{--c:#7a83a6!important}
+#s6 .lightpt .el{background:color-mix(in srgb,var(--c) 13%,#fff);border-color:color-mix(in srgb,var(--c) 45%,#fff);color:#1b2450}
+#s6 .lightpt .el:hover{background:color-mix(in srgb,var(--c) 26%,#fff)}
+#s6 .lightpt .el .zz{color:#5b6690}
+#s6 .lightpt .el .nm{color:#2a3560}
+#s6 .lightpt .el .sym sup{color:#c2410c}
+#s6.f-t .lightpt .el.hl{--hc:#ea6a1f}
+#s6 .lightpt #spt .el.hl,#s6 .lightpt #fblk .el.hl{background:var(--hc,var(--c));border-color:var(--hc,var(--c));box-shadow:0 6px 16px -6px var(--hc,var(--c))}
+#s6 .lightpt #spt .el.hl .sym,#s6 .lightpt #spt .el.hl .zz,#s6 .lightpt #spt .el.hl .nm,#s6 .lightpt #fblk .el.hl .sym,#s6 .lightpt #fblk .el.hl .zz,#s6 .lightpt #fblk .el.hl .nm,#s6 .lightpt .el.hl .sym sup{color:#fff}
+#s6 .lightpt #spt .el.dim,#s6 .lightpt #fblk .el.dim{opacity:.22}
+#s6 .lightpt #border .tme{stroke:#1f6fd1;fill:#1f6fd1} #s6 .lightpt #border .tnm{stroke:#0f8a55;fill:#0f8a55}
+#s6 .lightpt #border path{stroke:#ea6a1f;filter:drop-shadow(0 0 6px rgba(234,106,31,.6))}
+
 /* Russian-only mode: Russian text takes the full size and style of the Kazakh text it replaces */
 #stage.l-ru .ru{display:inline;font-size:inherit!important;font-family:inherit!important;font-style:normal!important;font-weight:inherit;color:inherit;opacity:1!important;margin:0!important;letter-spacing:inherit}
 #stage.l-ru .ru::before{content:none!important}
@@ -629,11 +660,13 @@ h2 .ru{font-family:var(--body);font-size:.5em}
       <button class="btn" id="bordBtn"><span class="kz">Шекара</span><span class="ru">Граница</span></button>
     </div>
   </div>
+  <div class="lightpt">
   <div class="sptwrap">
     <div id="spt"></div>
     <svg id="border"></svg>
   </div>
   <div id="fblk"></div>
+  </div>
 </section>
 
 <!-- S7 -->
@@ -999,7 +1032,7 @@ const SP={},ROM=["","I","II","III","IV","V","VI","VII","VIII"],RP=[0,1,2,3,4,4,5
   per(19,4,5);per(37,6,7);per2(55,8,9,"f1");per2(87,10,11,"f2");
   const COL={m:"var(--metal)",n:"var(--nonmetal)",d:"var(--metalloid)",x:"var(--unknown)"};
   const elBtn=(e,cls)=>{const sym=`<span class="sym">${e.sym}${e.z===57?"<sup>*</sup>":e.z===89?"<sup>**</sup>":""}</span>`,meta=`<span class="meta"><span class="zz">${e.z}</span><span class="nm">${NM(e)}</span></span>`;
-    return `<button class="el ${cls}" data-z="${e.z}" data-t="${e.t}" data-tr="${SP[e.z]&&SP[e.z].sub==="b"?1:0}" style="--c:${COL[e.t]};--d:${e.z}" aria-label="${e.kz}">${cls==="b"?meta+sym:sym+meta}</button>`;};
+    return `<button class="el ${cls}" data-z="${e.z}" data-t="${e.t}" data-tr="${SP[e.z]&&(SP[e.z].sub==="b"||SP[e.z].sub==="f")?1:0}" style="--c:${COL[e.t]};--d:${e.z}" aria-label="${e.kz}">${cls==="b"?meta+sym:sym+meta}</button>`;};
   let h=`<div class="sh" style="grid-row:1;grid-column:1">${B("Период","Период")}</div><div class="sh" style="grid-row:1;grid-column:2">${B("Қатар","Ряд")}</div>`;
   for(let g=1;g<=8;g++)h+=`<div class="sh gh" style="grid-row:1;grid-column:${g+2}">${ROM[g]}</div>`;
   [[1,1,1],[2,2,2],[3,3,3],[4,4,5],[5,6,7],[6,8,9],[7,10,11]].forEach(([p,a,b])=>h+=`<div class="pcell" style="grid-row:${a+1}/${b+2};grid-column:1">${p}</div>`);
@@ -1017,7 +1050,7 @@ const SP={},ROM=["","I","II","III","IV","V","VI","VII","VIII"],RP=[0,1,2,3,4,4,5
     Object.keys(SP).map(Number).filter(z=>SP[z].r===fr).sort((a,b)=>a-b).forEach(z=>f+=elBtn(EL[z-1],"a"));});
   $('#fblk').innerHTML=f;
   const cnt={m:0,n:0,d:0};EL.forEach(e=>{if(cnt[e.t]!==undefined)cnt[e.t]++});
-  cnt.t=Object.values(SP).filter(v=>v.sub==="b").length;
+  cnt.t=Object.values(SP).filter(v=>v.sub==="b"||v.sub==="f").length;
   ["m","t","n","d"].forEach(t=>$(`#filters [data-f="${t}"]`).insertAdjacentHTML("beforeend",`<span class="cnt">${cnt[t]}</span>`));
   $('#s6').addEventListener("click",e=>{const b=e.target.closest(".el");if(b){sFLIP();openEl(+b.dataset.z);}});
   $('#filters').onclick=e=>{const b=e.target.closest("[data-f]");if(!b)return;const fl=b.dataset.f;$$('#filters [data-f]').forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
