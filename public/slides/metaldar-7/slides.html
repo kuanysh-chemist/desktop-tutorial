@@ -8,7 +8,7 @@
 :root{
   --bg:#0a0f24; --bg2:#121a3d; --panel:#16204a; --line:#2a3670;
   --fg:#eef1ff; --muted:#a3acd6;
-  --metal:#6fb8ff; --nonmetal:#45dc9a; --metalloid:#c39bff; --unknown:#6b7396;
+  --metal:#6fb8ff; --nonmetal:#45dc9a; --metalloid:#c39bff; --unknown:#6b7396; --trans:#ff9566;
   --accent:#ffb547; --danger:#ff6b7a;
   --display:"Unbounded","Montserrat","Segoe UI",system-ui,sans-serif;
   --body:"Nunito","Segoe UI",system-ui,sans-serif;
@@ -183,7 +183,8 @@ h2 .ru{font-family:var(--body);font-size:.5em}
 #s6 .top{display:flex;flex-direction:column;gap:12px}
 #s6 .eyebrow{white-space:nowrap}
 .filters{display:flex;gap:10px;flex-wrap:wrap}
-.filters .btn{padding:8px 18px;font-size:18px}
+.filters .btn{padding:8px 13px;font-size:16px;gap:6px;white-space:nowrap}
+#s6 .filters{gap:8px}
 .ptwrap{position:relative;margin-top:16px;width:1525px}
 #pt{display:grid;grid-template-columns:repeat(18,80px);grid-template-rows:repeat(7,54px) 10px repeat(2,54px);gap:5px}
 #pt .tile{cursor:pointer;transition:opacity .3s,transform .15s,filter .3s}
@@ -459,7 +460,8 @@ h2 .ru{font-family:var(--body);font-size:.5em}
 
 /* ---------- short-form (old) periodic table ---------- */
 #s6 .top{display:flex;flex-direction:row;justify-content:space-between;align-items:flex-end;gap:20px}
-#s6 .top > div:first-child{max-width:600px}
+#s6 .top > div:first-child{max-width:470px}
+#s6 .top .eyebrow{font-size:14px}
 #s6 .eyebrow{white-space:normal}
 #s6 .filters{flex-wrap:nowrap}
 #stage.l-both .filters .ru{display:none}
@@ -487,7 +489,12 @@ h2 .ru{font-family:var(--body);font-size:.5em}
 #stage:not(.l-ru) .el .nm .ru{display:none}
 #stage.l-ru .el .nm .ru{font-size:1em;color:inherit;font-style:normal}
 .el:hover{transform:scale(1.07);z-index:3;background:color-mix(in srgb,var(--c) 28%,var(--bg))}
-.el.dim{opacity:.12}
+#s6 #spt .el.dim,#s6 #fblk .el.dim{opacity:.14;animation:none;filter:grayscale(.6)}
+#s6 #spt .el.hl,#s6 #fblk .el.hl{background:var(--hc,var(--c));border-color:#fff;box-shadow:0 0 16px -2px var(--hc,var(--c));animation:hlpop .5s cubic-bezier(.2,1.5,.4,1) both;animation-delay:calc(var(--d) * 4ms)}
+#s6 .el.hl .sym,#s6 .el.hl .zz,#s6 .el.hl .nm,#s6 .el.hl .sym sup{color:#0a0f24}
+#s6.f-t .el.hl{--hc:var(--trans)}
+@keyframes hlpop{0%{transform:scale(.8)}60%{transform:scale(1.12)}100%{transform:none}}
+.filters .btn.ghost[aria-pressed="true"]{background:color-mix(in srgb,currentColor 20%,transparent);border-color:currentColor}
 .in #spt .el,.in #fblk .el{animation:pop .45s cubic-bezier(.2,1.4,.4,1) both;animation-delay:calc(var(--d) * 7ms)}
 .hh{position:absolute;inset:0;display:flex;align-items:center;justify-content:flex-start;padding-left:10px;font-family:var(--display);font-size:18px;color:var(--muted);opacity:.55}
 .ox{display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;background:var(--panel);border-radius:6px;color:var(--fg)}
@@ -604,11 +611,12 @@ h2 .ru{font-family:var(--body);font-size:.5em}
   <div class="top">
     <div>
       <div class="eyebrow"><span class="kz">Менделеевтің периодтық жүйесі</span><span class="ru">Периодическая система Менделеева</span></div>
-      <h2 style="font-size:32px;margin-top:4px;white-space:nowrap"><span class="kz">Me мен NON-Me қай жерде?</span><span class="ru">Где Me и NON-Me?</span></h2>
+      <h2 style="font-size:27px;margin-top:4px;white-space:nowrap"><span class="kz">Me мен NON-Me қай жерде?</span><span class="ru">Где Me и NON-Me?</span></h2>
     </div>
     <div class="filters" id="filters">
       <button class="btn ghost" data-f="all" aria-pressed="true"><span class="kz">Барлығы</span><span class="ru">Все</span></button>
       <button class="btn ghost" data-f="m" aria-pressed="false" style="color:var(--metal)"><span class="kz">Металдар</span><span class="ru">Металлы</span></button>
+      <button class="btn ghost" data-f="t" aria-pressed="false" style="color:var(--trans)"><span class="kz">Ауыспалы металдар</span><span class="ru">Переходные металлы</span></button>
       <button class="btn ghost" data-f="n" aria-pressed="false" style="color:var(--nonmetal)"><span class="kz">Бейметалдар</span><span class="ru">Неметаллы</span></button>
       <button class="btn ghost" data-f="d" aria-pressed="false" style="color:var(--metalloid)"><span class="kz">Металлоидтар</span><span class="ru">Металлоиды</span></button>
       <button class="btn" id="bordBtn"><span class="kz">Шекара</span><span class="ru">Граница</span></button>
@@ -984,7 +992,7 @@ const SP={},ROM=["","I","II","III","IV","V","VI","VII","VIII"],RP=[0,1,2,3,4,4,5
   per(19,4,5);per(37,6,7);per2(55,8,9,"f1");per2(87,10,11,"f2");
   const COL={m:"var(--metal)",n:"var(--nonmetal)",d:"var(--metalloid)",x:"var(--unknown)"};
   const elBtn=(e,cls)=>{const sym=`<span class="sym">${e.sym}${e.z===57?"<sup>*</sup>":e.z===89?"<sup>**</sup>":""}</span>`,meta=`<span class="meta"><span class="zz">${e.z}</span><span class="nm">${NM(e)}</span></span>`;
-    return `<button class="el ${cls}" data-z="${e.z}" data-t="${e.t}" style="--c:${COL[e.t]};--d:${e.z}" aria-label="${e.kz}">${cls==="b"?meta+sym:sym+meta}</button>`;};
+    return `<button class="el ${cls}" data-z="${e.z}" data-t="${e.t}" data-tr="${SP[e.z]&&SP[e.z].sub==="b"?1:0}" style="--c:${COL[e.t]};--d:${e.z}" aria-label="${e.kz}">${cls==="b"?meta+sym:sym+meta}</button>`;};
   let h=`<div class="sh" style="grid-row:1;grid-column:1">${B("Период","Период")}</div><div class="sh" style="grid-row:1;grid-column:2">${B("Қатар","Ряд")}</div>`;
   for(let g=1;g<=8;g++)h+=`<div class="sh gh" style="grid-row:1;grid-column:${g+2}">${ROM[g]}</div>`;
   [[1,1,1],[2,2,2],[3,3,3],[4,4,5],[5,6,7],[6,8,9],[7,10,11]].forEach(([p,a,b])=>h+=`<div class="pcell" style="grid-row:${a+1}/${b+2};grid-column:1">${p}</div>`);
@@ -1002,10 +1010,12 @@ const SP={},ROM=["","I","II","III","IV","V","VI","VII","VIII"],RP=[0,1,2,3,4,4,5
     Object.keys(SP).map(Number).filter(z=>SP[z].r===fr).sort((a,b)=>a-b).forEach(z=>f+=elBtn(EL[z-1],"a"));});
   $('#fblk').innerHTML=f;
   const cnt={m:0,n:0,d:0};EL.forEach(e=>{if(cnt[e.t]!==undefined)cnt[e.t]++});
-  ["m","n","d"].forEach(t=>$(`#filters [data-f="${t}"]`).insertAdjacentHTML("beforeend",`<span class="cnt">${cnt[t]}</span>`));
+  cnt.t=Object.values(SP).filter(v=>v.sub==="b").length;
+  ["m","t","n","d"].forEach(t=>$(`#filters [data-f="${t}"]`).insertAdjacentHTML("beforeend",`<span class="cnt">${cnt[t]}</span>`));
   $('#s6').addEventListener("click",e=>{const b=e.target.closest(".el");if(b){sFLIP();openEl(+b.dataset.z);}});
   $('#filters').onclick=e=>{const b=e.target.closest("[data-f]");if(!b)return;const fl=b.dataset.f;$$('#filters [data-f]').forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
-    $$('#s6 .el').forEach(t=>t.classList.toggle("dim",fl!=="all"&&t.dataset.t!==fl));};
+    $('#s6').classList.toggle("f-t",fl==="t");sFLIP();
+    $$('#s6 .el').forEach(t=>{const hit=fl!=="all"&&(fl==="t"?t.dataset.tr==="1":t.dataset.t===fl);t.classList.toggle("hl",hit);t.classList.toggle("dim",fl!=="all"&&!hit);});};
   const bsvg=$('#border');
   function drawBorder(){const wrap=$('.sptwrap'),wr=wrap.getBoundingClientRect(),W=wr.width/scale,H=wr.height/scale;
     const cen=el=>{const r=el.getBoundingClientRect();return [(r.left+r.width/2-wr.left)/scale,(r.top+r.height/2-wr.top)/scale];};
