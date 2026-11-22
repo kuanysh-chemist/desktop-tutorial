@@ -1214,44 +1214,46 @@ body.menu #menuShade{opacity:1;pointer-events:auto}
 </div>
 </section>
 
-<!-- ===== 24. ҚОРЫТЫНДЫ КЕСТЕ ===== -->
-<section class="slide a-orange" id="s-sum" data-steps="4" data-title="Қорытынды кесте" data-sec="4 · Ле-Шателье принципі және факторлар">
+<!-- ===== 24. ҚОРЫТЫНДЫ: ЕСТЕ САҚТА (ШПАРГАЛКА) ===== -->
+<section class="slide a-orange" id="s-sum" data-steps="4" data-title="Есте сақта: қысқа ережелер" data-sec="4 · Ле-Шателье принципі және факторлар">
 <style>
-#s-sum .ex{position:absolute;right:96px;top:44px;font-size:38px;font-weight:900;color:var(--ink);background:#fff;border-radius:24px;padding:6px 28px;box-shadow:var(--shadow)}
-#s-sum .gr{position:absolute;left:96px;right:96px;top:170px;bottom:46px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:22px}
+#s-sum .ex{margin-left:auto;display:flex;align-items:center;gap:14px;font-size:28px;font-weight:800;color:var(--ink);background:#fff;border-radius:24px;padding:10px 26px;box-shadow:var(--shadow)}
+#s-sum .ex i{font-style:normal;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--gold,#E39A00);color:#fff;font-weight:900;font-size:24px}
+#s-sum .ex b{color:var(--green)}
+#s-sum .gr{position:absolute;left:96px;right:96px;top:168px;bottom:44px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1.12fr 1fr;gap:22px}
 #s-sum .bk{padding:0;overflow:hidden;border-left:14px solid var(--c);display:flex;flex-direction:column}
-#s-sum .bk h3{display:flex;align-items:center;gap:14px;padding:16px 24px 10px;font-size:38px;font-weight:900;color:var(--c)}
-#s-sum .bk h3 small{font-size:21px;color:var(--ink3);font-weight:800;margin-left:auto}
-#s-sum .ln{flex:1;display:grid;grid-template-columns:250px 84px 1fr;gap:10px;align-items:center;padding:6px 24px;border-top:2px dashed var(--line);font-size:27px;font-weight:800;color:var(--ink2);line-height:1.2}
-#s-sum .ln .pl{padding:6px 16px;border-radius:99px;background:color-mix(in srgb,var(--c) 14%,#fff);color:var(--c);font-weight:900;font-size:27px;text-align:center;white-space:nowrap}
+#s-sum .bk h3{display:flex;align-items:center;gap:14px;padding:14px 26px 10px;font-size:38px;font-weight:900;color:var(--c)}
+#s-sum .bk h3 small{font-size:22px;color:var(--ink3);font-weight:800;margin-left:auto}
+#s-sum .ln{flex:1;display:grid;grid-template-columns:250px 56px 1fr;gap:12px;align-items:center;padding:6px 26px;border-top:2px dashed var(--line);font-size:30px;font-weight:800;color:var(--ink);line-height:1.2}
+#s-sum .ln .pl{padding:8px 14px;border-radius:18px;background:color-mix(in srgb,var(--c) 14%,#fff);color:var(--c);font-weight:900;font-size:28px;text-align:center;line-height:1.15}
+#s-sum .bk.cc .ln{grid-template-columns:300px 56px 1fr}
+#s-sum .ln .pl.n{background:#EEF1F8;color:#6B7AAE}
 #s-sum .ln .dr{display:flex;justify-content:center}
-#s-sum .ln .dr svg{width:62px;height:34px}
-#s-sum .ln .dr.f svg path{stroke:var(--blue)} #s-sum .ln .dr.b svg path{stroke:var(--red)} #s-sum .ln .dr.n svg path{stroke:var(--ink3)}
-#s-sum .ln .dr svg path{fill:none;stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
-#s-sum .ln b{color:var(--ink)}
+#s-sum .ln .dr svg{width:56px;height:30px}
+#s-sum .ln .dr svg path{fill:none;stroke:var(--c);stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+#s-sum .ln .r{color:var(--blue)} #s-sum .ln .l{color:var(--red)} #s-sum .ln .z{color:#6B7AAE}
 #s-sum .st.shown .ln .dr svg{animation:pk .8s var(--ease) both}
 @keyframes pk{0%{transform:scale(.3);opacity:0}100%{transform:none;opacity:1}}
 </style>
 <div class="top">
-  <div class="chip rv pop"><b>4</b>Қорытынды кесте</div>
-  <h1 class="t1 rv" style="--d:.15s">Бәрі <em>бір кестеде</em></h1>
-  <div class="ex rv z" style="--d:.5s"><span class="f">N<sub>2</sub> + 3H<sub>2</sub> <svg class="ar" viewBox="0 0 64 30"><path class="fw" d="M5 10h53M47 2l11 8"/><path class="bk" d="M59 21H6M17 29L6 21"/></svg> 2NH<sub>3</sub> + Q</span></div>
+  <div class="chip rv pop"><b>4</b>Қорытынды</div>
+  <h1 class="t1 rv" style="--d:.15s">Есте <em>сақта!</em></h1>
+  <div class="ex rv z" style="--d:.5s"><i>!</i><span>Жүйе сыртқы әсерді <b>әлсірететін</b> жаққа ығысады</span></div>
 </div>
 <div class="gr">
-  <div class="card bk st z" data-st="1" style="--c:#2F6BFF"><h3>Концентрация<small>реагент ↔ өнім</small></h3>
-    <div class="ln"><span class="pl">C(N₂) ↑ , C(H₂) ↑</span><span class="dr f"><svg viewBox="0 0 62 34"><path d="M5 17h50M43 6l12 11-12 11"/></svg></span><span><b>оңға</b> — реагент жұмсалады</span></div>
-    <div class="ln"><span class="pl">C(NH₃) ↑</span><span class="dr b"><svg viewBox="0 0 62 34"><path d="M57 17H7M19 6L7 17l12 11"/></svg></span><span><b>солға</b> — өнім жұмсалады</span></div>
-    <div class="ln"><span class="pl">C(NH₃) ↓</span><span class="dr f"><svg viewBox="0 0 62 34"><path d="M5 17h50M43 6l12 11-12 11"/></svg></span><span><b>оңға</b> — өнім қайта түзіледі</span></div></div>
+  <div class="card bk cc st z" data-st="1" style="--c:#2F6BFF"><h3>Концентрация<small>қосылған зат жұмсалады</small></h3>
+    <div class="ln"><span class="pl">реагент ↑<br>немесе өнім ↓</span><span class="dr"><svg viewBox="0 0 56 30"><path d="M4 15h46M39 5l11 10-11 10"/></svg></span><span><b class="r">оңға</b> (өнім жаққа)</span></div>
+    <div class="ln"><span class="pl">өнім ↑<br>немесе реагент ↓</span><span class="dr"><svg viewBox="0 0 56 30"><path d="M4 15h46M39 5l11 10-11 10"/></svg></span><span><b class="l">солға</b> (реагент жаққа)</span></div></div>
   <div class="card bk st z" data-st="2" style="--c:#7B4DFF"><h3>Қысым<small>тек газдар үшін</small></h3>
-    <div class="ln"><span class="pl">p ↑</span><span class="dr f"><svg viewBox="0 0 62 34"><path d="M5 17h50M43 6l12 11-12 11"/></svg></span><span><b>оңға</b> — 4 көлем → 2 көлем (молекула аз жаққа)</span></div>
-    <div class="ln"><span class="pl">p ↓</span><span class="dr b"><svg viewBox="0 0 62 34"><path d="M57 17H7M19 6L7 17l12 11"/></svg></span><span><b>солға</b> — 2 көлем → 4 көлем (молекула көп жаққа)</span></div>
-    <div class="ln"><span class="pl" style="background:#EEF1F8;color:#6B7AAE">көлем тең</span><span class="dr n"><svg viewBox="0 0 62 34"><path d="M8 17h46"/></svg></span><span><b>ығыспайды</b> — көлем тең немесе қатты зат: қысым әсер етпейді</span></div></div>
-  <div class="card bk st z" data-st="3" style="--c:#FF6A2B"><h3>Температура<small>жылу, Q</small></h3>
-    <div class="ln"><span class="pl">T ↑</span><span class="dr b"><svg viewBox="0 0 62 34"><path d="M57 17H7M19 6L7 17l12 11"/></svg></span><span><b>солға</b> — эндотермиялық (−Q) бағытқа</span></div>
-    <div class="ln"><span class="pl">T ↓</span><span class="dr f"><svg viewBox="0 0 62 34"><path d="M5 17h50M43 6l12 11-12 11"/></svg></span><span><b>оңға</b> — экзотермиялық (+Q) бағытқа</span></div></div>
-  <div class="card bk st z" data-st="4" style="--c:#E39A00"><h3>Катализатор<small>әсер етпейді!</small></h3>
-    <div class="ln"><span class="pl">катализатор</span><span class="dr n"><svg viewBox="0 0 62 34"><path d="M8 17h46"/></svg></span><span><b>ығыспайды</b> — екі бағытты бірдей жылдамдатады, тепе-теңдікке тезірек жеткізеді</span></div>
-    <div class="ln"><span class="pl">K</span><span class="dr n"><svg viewBox="0 0 62 34"><path d="M8 17h46"/></svg></span><span><b>K тек температураға</b> тәуелді</span></div></div>
+    <div class="ln"><span class="pl">p ↑</span><span class="dr"><svg viewBox="0 0 56 30"><path d="M4 15h46M39 5l11 10-11 10"/></svg></span><span>газ молекулалары <b>аз</b> жаққа</span></div>
+    <div class="ln"><span class="pl">p ↓</span><span class="dr"><svg viewBox="0 0 56 30"><path d="M4 15h46M39 5l11 10-11 10"/></svg></span><span>газ молекулалары <b>көп</b> жаққа</span></div>
+    <div class="ln"><span class="pl n">молекула саны тең</span><span class="dr"><svg viewBox="0 0 56 30"><path d="M4 15h46M39 5l11 10-11 10"/></svg></span><span><b class="z">ығыспайды</b></span></div></div>
+  <div class="card bk st z" data-st="3" style="--c:#FF6A2B"><h3>Температура<small>жылу (Q)</small></h3>
+    <div class="ln"><span class="pl">T ↑</span><span class="dr"><svg viewBox="0 0 56 30"><path d="M4 15h46M39 5l11 10-11 10"/></svg></span><span><b>эндотермиялық (−Q)</b> жаққа</span></div>
+    <div class="ln"><span class="pl">T ↓</span><span class="dr"><svg viewBox="0 0 56 30"><path d="M4 15h46M39 5l11 10-11 10"/></svg></span><span><b>экзотермиялық (+Q)</b> жаққа</span></div></div>
+  <div class="card bk st z" data-st="4" style="--c:#E39A00"><h3>Катализатор және K</h3>
+    <div class="ln"><span class="pl">катализатор</span><span class="dr"><svg viewBox="0 0 56 30"><path d="M4 15h46M39 5l11 10-11 10"/></svg></span><span><b class="z">ығыспайды</b>, тепе-теңдік тез орнайды</span></div>
+    <div class="ln"><span class="pl">K</span><span class="dr"><svg viewBox="0 0 56 30"><path d="M4 15h46M39 5l11 10-11 10"/></svg></span><span>тек <b>температураға</b> тәуелді</span></div></div>
 </div>
 </section>
 
@@ -1371,6 +1373,56 @@ body.menu #menuShade{opacity:1;pointer-events:auto}
 <div class="topts"></div>
 <div class="texp"></div>
 <button class="btn tnext" style="--c:#12B76A">Келесі →</button>
+</section>
+
+<!-- ===== 29. ӨЗІҢДІ ТЕКСЕР: ФАКТОРЛАР, 10 СҰРАҚ ===== -->
+<section class="slide a-violet tst" id="s-quiz" data-title="Өзіңді тексер: 10 сұрақ" data-sec="5 · Тәжірибе және тест">
+<style>
+#s-quiz .qzd{margin-left:auto;display:flex;align-items:center;gap:9px}
+#s-quiz .qzd i{width:22px;height:22px;border-radius:50%;background:#fff;border:4px solid var(--line);transition:.3s}
+#s-quiz .qzd i.cur{border-color:var(--violet);transform:scale(1.25)}
+#s-quiz .qzd i.ok{background:var(--green);border-color:var(--green)}
+#s-quiz .qzd i.no{background:var(--red);border-color:var(--red)}
+#s-quiz .qzs{margin-left:18px;padding:8px 22px;border-radius:99px;background:var(--violet);color:#fff;font-size:26px;font-weight:900;box-shadow:0 8px 18px rgba(123,77,255,.35)}
+#s-quiz .qzc{position:absolute;left:96px;top:150px;width:880px;padding:28px 38px 32px}
+#s-quiz .qzc .qn{display:inline-block;padding:5px 18px;border-radius:99px;background:var(--violet-s,#EEE8FF);color:var(--violet);font-size:25px;font-weight:900;margin-bottom:12px}
+#s-quiz .qzc .eqline{font-size:46px;margin-bottom:12px;white-space:normal}
+#s-quiz .qzc .eqline:empty{display:none}
+#s-quiz .qzc p{font-size:37px;line-height:1.34;font-weight:800;color:var(--ink)}
+#s-quiz .qzc p b{color:var(--violet)}
+#s-quiz .qzo{position:absolute;left:1010px;top:150px;width:814px;display:flex;flex-direction:column;gap:20px}
+#s-quiz .qzo .to{min-height:146px;font-size:37px}
+#s-quiz .qzo.done .to{pointer-events:none}
+#s-quiz .qzo.done .to:not(.good):not(.bad){opacity:.5}
+#s-quiz .qzx{position:absolute;left:96px;width:880px;display:none;align-items:flex-start;gap:18px;padding:22px 28px;border-radius:28px;background:#fff;box-shadow:var(--shadow);font-size:30px;line-height:1.35;font-weight:700;color:var(--ink);border-left:12px solid var(--green);animation:exIn2 .5s var(--ease) both}
+#s-quiz .qzx.show{display:flex}
+#s-quiz .qzx.no{border-left-color:var(--red)}
+#s-quiz .qzx .ic{flex:none;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--green);color:#fff;font-size:30px;font-weight:900}
+#s-quiz .qzx.no .ic{background:var(--red)}
+#s-quiz .qzx .hd{display:block;font-weight:900;font-size:33px;margin-bottom:6px}
+#s-quiz .qzx.ok .hd{color:var(--green)} #s-quiz .qzx.no .hd{color:var(--red)}
+@keyframes exIn2{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+#s-quiz .qznx{position:absolute;left:1010px;top:872px;width:814px;font-size:32px;padding:20px;display:none}
+#s-quiz .qzr{position:absolute;left:50%;top:54%;width:900px;transform:translate(-50%,-50%) scale(.85);opacity:0;pointer-events:none;padding:44px 60px;text-align:center;transition:.5s var(--ease);z-index:6}
+#s-quiz .qzr.show{opacity:1;pointer-events:auto;transform:translate(-50%,-50%)}
+#s-quiz .qzr .stars{font-size:84px;letter-spacing:12px;color:#E5E9F5;line-height:1}
+#s-quiz .qzr .stars b{color:#FFC21A;text-shadow:0 6px 16px rgba(255,170,0,.45)}
+#s-quiz .qzr h2{font-size:64px;font-weight:900;color:var(--ink);margin:14px 0 6px}
+#s-quiz .qzr h2 em{font-style:normal;color:var(--violet)}
+#s-quiz .qzr p{font-size:30px;font-weight:800;color:var(--ink2);line-height:1.35}
+#s-quiz .qzr .btn{margin-top:26px;font-size:28px;padding:16px 34px}
+#s-quiz.fin .qzc,#s-quiz.fin .qzo,#s-quiz.fin .qzx,#s-quiz.fin .qznx{visibility:hidden}
+</style>
+<div class="top">
+  <div class="chip rv pop"><b>✎</b>Өзіңді тексер</div>
+  <h1 class="t1 rv" style="--d:.15s">Факторлар: <em>10 сұрақ</em></h1>
+  <div class="qzd rv" style="--d:.3s" id="qzDots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><span class="qzs" id="qzSc">Ұпай: 0</span></div>
+</div>
+<div class="card qzc rv l" style="--d:.3s" id="qzCard"><span class="qn" id="qzN">1-сұрақ / 10</span><div class="eqline" id="qzEq"></div><p id="qzQ"></p></div>
+<div class="qzo" id="qzOpts"></div>
+<div class="qzx" id="qzEx"><span class="ic">✓</span><span><span class="hd"></span><span class="tx"></span></span></div>
+<button class="btn qznx" id="qzNext" style="--c:#7B4DFF">Келесі сұрақ →</button>
+<div class="card qzr" id="qzRes"><div class="stars" id="qzStars"></div><h2>Нәтиже: <em id="qzScore">0</em> / 10</h2><p id="qzMsg"></p><button class="btn" id="qzAgain" style="--c:#7B4DFF">↻ Қайта тапсыру</button></div>
 </section>
 
 <!-- ===== 29. ҚОРЫТЫНДЫ ===== -->
@@ -3578,6 +3630,72 @@ Deck.slide('s-kform', ctx => {
       prev = n;
     }
   };
+});
+
+/* ==== 54-quiz.js ==== */
+// ============ Өзіңді тексер: факторлардың әсері, 10 сұрақ ============
+const QUIZ = [
+  { eq: '2SO2 + O2 <=> 2SO3 + Q', q: 'Тепе-теңдікті <b>оңға</b> ығыстыру үшін не істеу керек?', opts: ['температураны арттыру', 'қысымды арттыру', 'SO₃ қосу', 'катализатор қосу'], ans: 1,
+    why: 'Сол жақта 3 газ молекуласы, оң жақта 2. Қысым артса, тепе-теңдік молекула саны <b>аз</b> жаққа — оңға ығысады.' },
+  { eq: 'N2 + 3H2 <=> 2NH3 + Q', q: 'Түзілген аммиакты жүйеден үздіксіз <b>шығарып</b> отырса, тепе-теңдік:', opts: ['оңға ығысады', 'солға ығысады', 'ығыспайды', 'K мәні артады'], ans: 0,
+    why: 'Өнім азайса, жүйе оны қайта түзеді → тепе-теңдік <b>оңға</b> ығысады. K тек температураға тәуелді.' },
+  { eq: 'CaCO3(қ) <=> CaO(қ) + CO2(г) - Q', q: 'CO₂ шығымын <b>арттыру</b> үшін:', opts: ['қысымды арттыру', 'CO₂ қосу', 'температураны арттыру', 'катализатор қосу'], ans: 2,
+    why: 'Тура реакция эндотермиялық (−Q). Қыздырса, тепе-теңдік эндотермиялық жаққа — <b>оңға</b> ығысады.' },
+  { eq: 'H2(г) + I2(г) <=> 2HI(г)', q: 'Қай әсер тепе-теңдікті <b>ығыстырмайды</b>?', opts: ['H₂ қосу', 'HI-ды шығару', 'қысымды арттыру', 'I₂ қосу'], ans: 2,
+    why: 'Екі жақта да 2 газ молекуласы (1 + 1 = 2). Молекула саны тең болса, қысым тепе-теңдікті <b>ығыстырмайды</b>.' },
+  { eq: '', q: 'Тепе-теңдіктегі жүйеге <b>катализатор</b> қосқанда не болады?', opts: ['тепе-теңдік оңға ығысады', 'тепе-теңдік солға ығысады', 'K мәні артады', 'ығыспайды, тепе-теңдік тезірек орнайды'], ans: 3,
+    why: 'Катализатор тура және кері реакцияны <b>бірдей</b> жылдамдатады: тепе-теңдік ығыспайды, тек тезірек орнайды.' },
+  { eq: '2NO2 <=> N2O4 + Q', q: 'NO₂ — қоңыр газ, N₂O₄ — түссіз. Ыдысты мұзды суға салып <b>суытса</b>, түсі:', opts: ['қоюланады', 'бозарады', 'өзгермейді', 'жасыл түске енеді'], ans: 1,
+    why: 'Суытса, тепе-теңдік экзотермиялық (+Q) жаққа — <b>оңға</b> ығысады: түссіз N₂O₄ көбейіп, қоңыр NO₂ азаяды.' },
+  { eq: '', q: 'Тепе-теңдік константасы <b>K</b> неге байланысты өзгереді?', opts: ['концентрацияға', 'қысымға', 'температураға', 'катализаторға'], ans: 2,
+    why: 'K <b>тек температураға</b> тәуелді. Концентрация мен қысым тепе-теңдікті ығыстыруы мүмкін, бірақ K-ны өзгертпейді.' },
+  { eq: 'CO(г) + H2O(г) <=> CO2(г) + H2(г) + Q', q: 'Сутектің (H₂) шығымын <b>арттыру</b> үшін:', opts: ['қысымды арттыру', 'су буын қосу', 'температураны арттыру', 'CO₂ қосу'], ans: 1,
+    why: 'H₂O — реагент. Реагентті қосса, тепе-теңдік <b>оңға</b> ығысады. Қысым әсер етпейді (2 = 2).' },
+  { eq: '4HCl(г) + O2(г) <=> 2Cl2(г) + 2H2O(г) + Q', q: 'Тепе-теңдікті <b>солға</b> ығыстыратын әсер:', opts: ['қысымды арттыру', 'O₂ қосу', 'су буын шығару', 'температураны арттыру'], ans: 3,
+    why: 'Тура реакция экзотермиялық (+Q). Қыздырса, эндотермиялық (кері) жаққа — <b>солға</b> ығысады. Қалған үшеуі оңға ығыстырады.' },
+  { eq: 'PCl5(г) <=> PCl3(г) + Cl2(г) - Q', q: 'Тепе-теңдікті <b>оңға</b> ығыстыратын шарттар:', opts: ['T ↑ және p ↓', 'T ↓ және p ↑', 'T ↑ және p ↑', 'T ↓ және p ↓'], ans: 0,
+    why: 'Тура реакция эндотермиялық (−Q) → T↑ оңға. Сол жақта 1, оң жақта 2 газ молекуласы → p↓ молекула көп жаққа, яғни оңға.' }
+];
+Deck.slide('s-quiz', ctx => {
+  const sec = ctx.el, card = ctx.q('#qzCard'), qN = ctx.q('#qzN'), qE = ctx.q('#qzEq'), qQ = ctx.q('#qzQ'), oEl = ctx.q('#qzOpts'), ex = ctx.q('#qzEx'), nx = ctx.q('#qzNext');
+  const dots = ctx.qa('#qzDots i'), sc = ctx.q('#qzSc'), res = ctx.q('#qzRes');
+  let i = 0, score = 0, answered = false;
+  function show() {
+    const it = QUIZ[i]; answered = false;
+    qN.textContent = (i + 1) + '-сұрақ / ' + QUIZ.length; qE.innerHTML = it.eq ? F(it.eq) : ''; qQ.innerHTML = it.q;
+    dots.forEach((d, k) => d.classList.toggle('cur', k === i));
+    ex.className = 'qzx'; nx.style.display = 'none'; oEl.className = 'qzo'; oEl.innerHTML = '';
+    it.opts.forEach((o, k) => {
+      const b = document.createElement('button'); b.className = 'to'; b.innerHTML = `<span class="le">${'ABCD'[k]}</span><span>${F(o)}</span>`;
+      b.animate([{ opacity: 0, transform: 'translateX(40px)' }, { opacity: 1, transform: 'none' }], { duration: 420, delay: k * 80, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' });
+      ctx.on(b, 'click', () => pick(k, b)); oEl.appendChild(b);
+    });
+    card.animate([{ opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'none' }], { duration: 400, easing: 'ease-out' });
+  }
+  function pick(k, b) {
+    if (answered) return; answered = true;
+    const it = QUIZ[i], ok = k === it.ans, btns = Array.from(oEl.children);
+    oEl.classList.add('done'); btns[it.ans].classList.add('good'); if (!ok) b.classList.add('bad');
+    dots[i].classList.add(ok ? 'ok' : 'no'); if (ok) { score++; Snd.good(); const r = b.getBoundingClientRect(); Fx.confetti(r.left + r.width / 2, r.top + 20, 60); } else Snd.bad();
+    sc.textContent = 'Ұпай: ' + score;
+    ex.className = 'qzx show ' + (ok ? 'ok' : 'no'); ex.querySelector('.ic').textContent = ok ? '✓' : '✗';
+    ex.querySelector('.hd').textContent = ok ? 'Дұрыс!' : 'Қате. Дұрыс жауап: ' + 'ABCD'[it.ans];
+    ex.querySelector('.tx').innerHTML = it.why;
+    ex.style.top = (card.offsetTop + card.offsetHeight + 22) + 'px';
+    nx.textContent = i < QUIZ.length - 1 ? 'Келесі сұрақ →' : 'Нәтижені көру →'; ctx.after(600, () => { nx.style.display = 'block'; });
+  }
+  function finish() {
+    sec.classList.add('fin'); res.classList.add('show');
+    const st = score >= 9 ? 3 : score >= 7 ? 2 : score >= 5 ? 1 : 0;
+    ctx.q('#qzStars').innerHTML = [0, 1, 2].map(k => k < st ? '<b>★</b>' : '★').join('');
+    ctx.q('#qzScore').textContent = score;
+    ctx.q('#qzMsg').innerHTML = score === 10 ? 'Керемет! Сен — тепе-теңдік шеберісің!' : score >= 8 ? 'Өте жақсы! Ережелерді жақсы білесің.' : score >= 5 ? 'Жақсы! Бірақ «Есте сақта» кестесін тағы бір рет қарап шық.' : '«Есте сақта» кестесін қайта оқып, тағы тапсырып көр!';
+    if (score >= 7) { Snd.good(); Fx.confetti(innerWidth / 2, innerHeight * .35, 160); }
+  }
+  ctx.on(nx, 'click', () => { Snd.click(); if (i < QUIZ.length - 1) { i++; show(); } else finish(); });
+  ctx.on(ctx.q('#qzAgain'), 'click', () => { Snd.click(); i = 0; score = 0; sc.textContent = 'Ұпай: 0'; dots.forEach(d => d.className = ''); sec.classList.remove('fin'); res.classList.remove('show'); show(); });
+  sec.classList.remove('fin'); res.classList.remove('show'); dots.forEach(d => d.className = ''); sc.textContent = 'Ұпай: 0';
+  show();
 });
 
 })();
