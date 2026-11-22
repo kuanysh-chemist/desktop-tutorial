@@ -852,14 +852,15 @@ html[data-theme="dark"] .dcard{background:linear-gradient(160deg,#1d2852,#151d3c
    30. HOMEWORK
    ========================================================= */
 .hw-layout{display:grid;place-items:center}
-.notebook{width:1120px;position:relative;border-radius:14px 26px 26px 14px;color:#1f2937;box-shadow:0 26px 60px rgba(0,0,0,.35);
-  background:repeating-linear-gradient(#fffdf6 0 55px,rgba(59,130,246,.22) 55px 57px);}
+.notebook{--band:62px;--rl:44px;width:1260px;position:relative;border-radius:14px 26px 26px 14px;color:#1f2937;box-shadow:0 26px 60px rgba(0,0,0,.35);
+  background-color:#fffdf6;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent var(--rl),#b7cff0 var(--rl),#b7cff0 calc(var(--rl) + 2px),transparent calc(var(--rl) + 2px),transparent var(--band))}
 .notebook::before{content:"";position:absolute;left:92px;top:0;bottom:0;width:3px;background:rgba(239,68,68,.55)}
 .nb-rings{position:absolute;left:-20px;top:36px;bottom:36px;display:flex;flex-direction:column;justify-content:space-around}
 .nb-rings i{width:44px;height:20px;border-radius:12px;border:5px solid #94a3b8;background:var(--bg)}
-.hw-list{list-style:none;padding:46px 56px 46px 122px;display:flex;flex-direction:column;gap:30px;font-size:29px;line-height:1.4}
-.hw-list li{display:flex;gap:20px;align-items:flex-start}
-.hw-i{font-size:42px;line-height:1}
+.hw-list{list-style:none;padding:var(--band) 60px var(--band) 120px;display:flex;flex-direction:column;gap:0;font-size:31px;line-height:var(--band)}
+.hw-list li{display:flex;gap:16px;align-items:flex-start}
+.hw-list li > div{line-height:var(--band)}
+.hw-i{font-size:34px;line-height:var(--band);height:var(--band);width:48px;text-align:center;flex-shrink:0}
 
 /* =========================================================
    31. THANKS
@@ -895,8 +896,18 @@ html[data-theme="dark"] .i-sun,html[data-theme="light"] .i-moon{display:none}
 .mini-scores{display:flex;gap:4px}
 .mini-scores:empty{display:none}
 .ms{font:850 13px var(--font);padding:2px 7px;border-radius:8px;color:#fff;font-variant-numeric:tabular-nums}
-.prog{height:6px;border-radius:3px;background:var(--card-2);overflow:hidden}
-.prog-fill{height:100%;width:0;background:linear-gradient(90deg,#ffb02e,#ff5a3d,#a98bff,#3cc4ff);transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.dots-nav{display:flex;align-items:center;justify-content:center;height:44px;min-width:0}
+.dn{flex:1 1 0;max-width:24px;min-width:0;height:42px;border:0;background:transparent;cursor:pointer;display:grid;place-items:center;padding:0}
+.dn i{display:block;width:11px;max-width:82%;aspect-ratio:1/1;border-radius:50%;background:var(--line);transition:transform .2s,background .3s,width .3s,box-shadow .3s}
+html[data-theme="dark"] .dn i{background:rgba(255,255,255,.22)}
+html[data-theme="light"] .dn i{background:#c9d3e6}
+.dn:hover i{transform:scale(1.5)}
+html[data-theme="dark"] .dn.done i{background:rgba(169,139,255,.8)}
+html[data-theme="light"] .dn.done i{background:rgba(114,71,245,.55)}
+.dn.opt i{background:transparent!important;box-shadow:inset 0 0 0 2px rgba(163,178,214,.8)}
+.dn.opt.done i{box-shadow:inset 0 0 0 2px rgba(169,139,255,.95)}
+.dn.cur i,.dn.cur.opt i{width:17px;max-width:none;background:linear-gradient(135deg,#ffb02e,#ff5a3d 40%,#a98bff 70%,#3cc4ff)!important;box-shadow:0 0 0 3px rgba(169,139,255,.28),0 0 14px rgba(169,139,255,.85)}
+.dn.sep{margin-left:12px}
 .count{font:750 16px var(--font);color:var(--muted);white-space:nowrap;padding:0 6px}
 .count b{color:var(--ink)}
 .nb{width:50px;height:44px;border-radius:12px;border:1px solid var(--line);background:var(--card-2);color:var(--ink);cursor:pointer;display:grid;place-items:center;transition:transform .15s,opacity .2s}
@@ -904,7 +915,14 @@ html[data-theme="dark"] .i-sun,html[data-theme="light"] .i-moon{display:none}
 .nb svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}
 .nb-next{width:68px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;border-color:transparent;box-shadow:0 6px 16px rgba(109,93,252,.4)}
 .nb[disabled]{opacity:.35;pointer-events:none}
-@media (max-width:900px){.bar-c{display:none}}
+@media (max-width:1240px){
+  #bar{gap:8px;padding:0 8px}.bar-l,.bar-r{gap:5px}
+  .ib{min-width:36px;height:40px;padding:0 6px}.ib svg{width:19px;height:19px}
+  .langs button{padding:8px 8px;font-size:13px}
+  .nb{width:44px}.nb-next{width:56px}.count{font-size:15px;padding:0 2px}
+  .dn.sep{margin-left:5px}.dn i{width:8px}.dn.cur i,.dn.cur.opt i{width:13px}
+}
+@media (max-width:760px){.bar-c{display:none}}
 @media (max-width:700px){#bar{gap:6px;padding:0 6px}.bar-l,.bar-r{gap:4px}.ib{min-width:36px;height:38px;padding:0 6px}.langs button{padding:8px 7px;font-size:12px}#bMenu,#bFull,.count{display:none}.nb{width:42px}.nb-next{width:52px}}
 @media (max-width:480px){#bNotes,#bSound{display:none}}
 
@@ -977,6 +995,98 @@ html[data-theme="dark"] .i-sun,html[data-theme="light"] .i-moon{display:none}
 @media (prefers-reduced-motion: reduce){
   .blob,.snow-big,.spin-slow{animation:none!important}
 }
+
+/* =========================================================
+   13. CALORIMETER (v2)
+   ========================================================= */
+.cal2{display:grid;grid-template-columns:830px 1fr;gap:24px}
+.cal2-fig{padding:6px 10px;display:flex;align-items:center;justify-content:center;min-height:0;position:relative}
+.cal2-svg{width:100%;height:100%;max-height:610px}
+.cal-toggle{position:absolute;left:18px;bottom:16px}
+.cal-toggle .seg{font-size:19px;padding:9px 18px}
+.cal-outer{fill:url(#gMetal);stroke:#64748b;stroke-width:2}
+.cal-gap{fill:#eef4fb}
+.air-dot{fill:#9fb4cc}
+.cal-innerv{fill:#cbd4e1;stroke:#8a97ab;stroke-width:2}
+.cal-sup{fill:#c48b57;stroke:#8a5a32;stroke-width:1.5}
+.cal-water{transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(0);transition:transform 1.8s cubic-bezier(.4,0,.2,1)}
+.cal-tint{transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(0);opacity:0;fill:#ff7a2f;transition:transform 1.8s cubic-bezier(.4,0,.2,1),opacity 4.5s ease}
+.cal2.mode-endo .cal-tint{fill:#f2fcff}
+.cal2.cs1 .cal-water,.cal2.cs1 .cal-tint{transform:none}
+.cal2.cs2 .cal-tint{opacity:.42}
+.cal2.mode-endo.cs2 .cal-tint{opacity:.55}
+.cal-ch{fill:rgba(255,255,255,.4);stroke:#64748b;stroke-width:3}
+.cal-react{fill:#c4b5fd;transition:fill 1s}
+.cal2.cs2.mode-exo .cal-react{fill:#ff9a3d}
+.cal2.cs2.mode-endo .cal-react{fill:#7dd3fc}
+.cal-glow{opacity:0;fill:#ff7a1f;transition:opacity 1s}
+.cal2.mode-endo .cal-glow{fill:#38bdf8}
+.cal2.cs2 .cal-glow{opacity:.8}
+.cal-chb circle{fill:rgba(255,255,255,.95);opacity:0;transform-box:fill-box}
+.cal2.cs2 .cal-chb circle{animation:bubble 1.4s ease-in infinite}
+.cal2.cs2 .cal-chb circle:nth-child(2){animation-delay:.35s}
+.cal2.cs2 .cal-chb circle:nth-child(3){animation-delay:.7s}
+.cal2.cs2 .cal-chb circle:nth-child(4){animation-delay:1.05s}
+.cal-heat-out,.cal-heat-in{opacity:0;transition:opacity .6s}
+.cal-heat-out path{stroke:#ff6a2b;stroke-width:6;fill:none;stroke-linecap:round}
+.cal-heat-in path{stroke:#2fb4ff;stroke-width:6;fill:none;stroke-linecap:round}
+.cal-heat-in .ar{animation-name:arIn}
+.cal2.cs2.mode-exo .cal-heat-out,.cal2.cs2.mode-endo .cal-heat-in{opacity:1}
+.cal-swirl{opacity:0;transition:opacity .6s}
+.cal2.cs3 .cal-swirl{opacity:1}
+.cal-swirl path{stroke:#a98bff;stroke-width:5;fill:none;stroke-linecap:round}
+.st-rod{fill:#94a3b8;stroke:#64748b;stroke-width:1}
+.cal2.cs3 .cal-stir2{animation:stir2 .55s ease-in-out infinite alternate}
+@keyframes stir2{to{transform:translateY(34px)}}
+.cal-shield{opacity:0;transition:opacity .6s}
+.cal2.cs4 .cal-shield{opacity:1}
+.cal-shield > rect{fill:none;stroke:#2dd4bf;stroke-width:7;stroke-dasharray:16 12;filter:url(#fGlow);animation:dash2 1.2s linear infinite}
+@keyframes dash2{to{stroke-dashoffset:-56}}
+.blk path{stroke:#ff6a2b;stroke-width:6;fill:none;stroke-linecap:round}
+.blk path.in{stroke:#2fb4ff}
+.blk circle{fill:rgba(255,93,108,.18);stroke:#ff5d6c;stroke-width:3}
+.blk .xx{stroke:#ff5d6c;stroke-width:4;stroke-linecap:round}
+.cal2.mode-exo .bn,.cal2.mode-endo .bx,.cal2.mode-endo .bnc{display:none}
+.cal2.cs4 .blk{animation:pulse 1.2s ease-in-out infinite}
+.bnc path{stroke:#ff6a2b;stroke-width:6;fill:none;stroke-linecap:round}
+.cal2.cs4 .bnc.l{animation:bncL 1.1s ease-in-out infinite}
+.cal2.cs4 .bnc.r{animation:bncR 1.1s ease-in-out infinite}
+@keyframes bncL{0%,100%{transform:translateX(0)}50%{transform:translateX(-12px)}}
+@keyframes bncR{0%,100%{transform:translateX(0)}50%{transform:translateX(12px)}}
+.cal-lid{fill:#1e3a8a;stroke:#172554;stroke-width:2}
+.cth-glass{fill:rgba(255,255,255,.6);stroke:#64748b;stroke-width:2.5}
+.cth-liq,.cth-bulb{fill:#ef4444}
+.cth-bulb{stroke:#64748b;stroke-width:2.5}
+.cth-ticks line{stroke:var(--muted);stroke-width:2}
+.cth-ticks text{font:800 15px var(--font);fill:var(--muted)}
+.cth-tag-bg{fill:var(--card-solid);stroke:#ef4444;stroke-width:2.5}
+.cth-val{font:850 18px var(--font);fill:var(--ink)}
+.cal2.cs5 .cth-tag-bg{stroke-width:4;filter:url(#fGlow)}
+.cl{font:800 21px var(--font);fill:var(--ink)}
+.cl-sub{font:650 16px var(--font);fill:var(--muted)}
+.cl-ln{stroke:var(--muted);stroke-width:2;fill:none;stroke-dasharray:4 4}
+.cal-panel{display:flex;flex-direction:column;gap:12px;min-width:0}
+.cal-steps{list-style:none;display:flex;flex-direction:column;gap:8px}
+.cal-steps li{display:flex;gap:12px;align-items:flex-start;font-size:20px;line-height:1.3;padding:9px 14px;border-radius:14px;background:var(--card);border:1px solid var(--glass-border)}
+.cal-steps .sn{width:30px;height:30px;font-size:16px}
+.cal-steps .frag:not(.on){opacity:.3;transform:none;pointer-events:none}
+.cal-steps .frag.on{border-color:rgba(169,139,255,.55);animation:popIn .45s both}
+.cal2.mode-exo .mn,.cal2.mode-endo .mx{display:none}
+.cal-read2{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.cr{background:var(--card);border:1px solid var(--glass-border);border-radius:14px;padding:6px 10px;text-align:center}
+.cr small{display:block;font-size:16px;color:var(--muted);font-weight:800}
+.cr b{font-size:25px;font-variant-numeric:tabular-nums}
+.cr-dt.up{color:var(--exo)} .cr-dt.down{color:var(--endo)}
+.cal-q{padding:12px 16px;border-radius:16px;background:linear-gradient(150deg,rgba(169,139,255,.22),var(--card));border:2px solid rgba(169,139,255,.5)}
+.cq-h{font-weight:850;font-size:17px;color:var(--muted)}
+.cq-f{font-size:22px;font-weight:850;margin:4px 0}
+.cq-l{font-size:15.5px;color:var(--muted)}
+.cq-r{font-size:19px;font-weight:700;margin-top:6px}
+.cq-r.exo b{color:var(--exo)} .cq-r.endo b{color:var(--endo)}
+.cal-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto}
+.cal-btns .step-btn{align-self:auto;margin-top:0}
+.factors-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 24px;border-radius:20px;background:var(--card);border:1px solid var(--glass-border);font-size:22px}
+.factors-row .chip{font-size:21px;font-weight:600}
 
 </style>
 </head>
@@ -1557,40 +1667,108 @@ html[data-theme="dark"] .i-sun,html[data-theme="light"] .i-moon{display:none}
       <div class="callout c-std frag" data-fx="teqHl" data-hl="std"><b>③</b> <span data-l="kk"><b>Стандартты жағдай</b></span><span data-l="ru"><b>Стандартные условия</b></span><span data-l="en"><b>Standard conditions</b></span><small class="f">T = 298 K (25 °C), p = 101,3 <span data-l="kk">кПа</span><span data-l="ru">кПа</span><span data-l="en">kPa</span></small></div>
     </div>
     <div class="teq-row second frag" data-fx="teqHl" data-hl="none"><span class="teq-l"><span data-l="kk">Эндотермиялық мысал</span><span data-l="ru">Эндотермический пример</span><span data-l="en">Endothermic example</span></span><span class="f teq-e">N2(<span data-l="kk">г</span><span data-l="ru">г</span><span data-l="en">g</span>) + O2(<span data-l="kk">г</span><span data-l="ru">г</span><span data-l="en">g</span>) → 2NO(<span data-l="kk">г</span><span data-l="ru">г</span><span data-l="en">g</span>) <span class="p-q endo">− 180 <span data-l="kk">кДж</span><span data-l="ru">кДж</span><span data-l="en">kJ</span></span></span></div>
+    <div class="factors-row frag"><b><span data-l="kk">Жылу эффектісінің шамасы тәуелді:</span><span data-l="ru">Тепловой эффект зависит от:</span><span data-l="en">The heat effect depends on:</span></b><span class="chip">🧬 <span data-l="kk">заттардың <b>табиғатына</b></span><span data-l="ru"><b>природы</b> веществ</span><span data-l="en">the <b>nature</b> of substances</span></span><span class="chip">🌡️ <span data-l="kk"><b>температураға</b></span><span data-l="ru"><b>температуры</b></span><span data-l="en"><b>temperature</b></span></span><span class="chip">🧊 <span data-l="kk"><b>агрегаттық күйлеріне</b></span><span data-l="ru"><b>агрегатных состояний</b></span><span data-l="en"><b>physical states</b></span></span></div>
   </div>
   <aside class="notes"><div data-l="kk"><p>§22-дегі 5-сұрақ: «Химиялық теңдеудің термохимиялық теңдеуден айырмашылығы неде?» — агрегаттық күй мен жылу эффектісі көрсетіледі.</p><p>Оқулықта жылу эффектісін теңдеудің екінші жағына көшіру де көрсетілген: H₂ + Cl₂ − 184 кДж = 2HCl.</p></div><div data-l="ru"><p>Вопрос 5 из §22: «Чем химическое уравнение отличается от термохимического?» — указаны агрегатные состояния и тепловой эффект.</p><p>В учебнике показан и перенос теплового эффекта в другую часть: H₂ + Cl₂ − 184 кДж = 2HCl.</p></div><div data-l="en"><p>Textbook §22, question 5: “How does a chemical equation differ from a thermochemical one?” — states and the heat effect are shown.</p><p>The textbook also shows moving the heat term across: H₂ + Cl₂ − 184 kJ = 2HCl.</p></div></aside>
 </section>
 
 <!-- ===================== 13. КАЛОРИМЕТР ===================== -->
 <section class="slide" data-id="calor" data-stage="4" data-t="Калориметр|Калориметр|Calorimeter">
-  <header class="sh a"><h2><span class="h-ico">🧪</span><span data-l="kk">Жылу эффектісін қалай өлшейді?</span><span data-l="ru">Как измеряют тепловой эффект?</span><span data-l="en">How is the heat effect measured?</span></h2><p class="lead"><span data-l="kk"><b>Калориметр</b> — реакцияның жылу эффектісін өлшейтін құрал (41-сурет).</span><span data-l="ru"><b>Калориметр</b> — прибор для измерения теплового эффекта реакции (рис. 41).</span><span data-l="en">A <b>calorimeter</b> measures the heat effect of a reaction (Fig. 41).</span></p></header>
-  <div class="body cal-layout">
-    <div class="cal-stage card a" style="--d:.15">
-      <svg class="cal-svg" viewBox="0 0 420 420" aria-hidden="true">
-        <path d="M70 120h280v240a30 30 0 0 1-30 30H100a30 30 0 0 1-30-30z" fill="url(#gMetal)"/>
-        <path d="M96 150h228v196a20 20 0 0 1-20 20H116a20 20 0 0 1-20-20z" class="cal-inner"/>
-        <path d="M100 196h220v150a16 16 0 0 1-16 16H116a16 16 0 0 1-16-16z" fill="url(#gWater)"/>
-        <g class="cal-bub"><circle cx="190" cy="320" r="5"/><circle cx="210" cy="300" r="4"/><circle cx="200" cy="340" r="3.5"/><circle cx="290" cy="330" r="4"/></g>
-        <rect x="60" y="104" width="300" height="22" rx="10" fill="#1d4ed8"/><rect x="112" y="96" width="70" height="12" rx="5" fill="#2563eb"/>
-        <rect x="96" y="150" width="228" height="6" fill="#000" opacity=".15"/>
-        <g class="cal-stir"><rect x="246" y="40" width="7" height="250" rx="3" fill="#94a3b8"/><rect x="226" y="282" width="48" height="7" rx="3" fill="#94a3b8"/><rect x="238" y="30" width="24" height="14" rx="4" fill="#ef4444"/></g>
-        <g class="cal-th"><rect x="150" y="24" width="18" height="290" rx="9" class="th-glass-mini"/><rect class="cal-th-liq" x="155" y="200" width="8" height="114" rx="4"/><circle cx="159" cy="318" r="13" fill="#ef4444"/></g>
+  <header class="sh a"><h2><span class="h-ico">🧪</span><span data-l="kk">Жылу эффектісін қалай өлшейді? Калориметр</span><span data-l="ru">Как измеряют тепловой эффект? Калориметр</span><span data-l="en">How is the heat effect measured? The calorimeter</span></h2><p class="lead"><span data-l="kk">Реакция жылуы <b>суға</b> беріледі → судың <b>температурасы</b> өзгереді → жылу мөлшерін <b>есептейміз</b> (41-сурет).</span><span data-l="ru">Теплота реакции передаётся <b>воде</b> → меняется <b>температура</b> воды → <b>рассчитываем</b> количество теплоты (рис. 41).</span><span data-l="en">The reaction's heat goes into the <b>water</b> → the water's <b>temperature</b> changes → we <b>calculate</b> the heat (Fig. 41).</span></p></header>
+  <div class="body cal2 mode-exo">
+    <div class="cal2-fig card a" style="--d:.1">
+      <svg class="cal2-svg" viewBox="0 0 820 600" aria-hidden="true">
+        <defs><pattern id="pAir" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="7" cy="7" r="1.8" class="air-dot"/></pattern></defs>
+        <!-- outer vessel, air gap, inner vessel -->
+        <rect class="cal-outer" x="250" y="200" width="320" height="360" rx="26"/>
+        <rect class="cal-gap" x="266" y="200" width="288" height="344" rx="18"/>
+        <rect class="cal-gap-dots" x="266" y="200" width="288" height="344" rx="18" fill="url(#pAir)"/>
+        <rect class="cal-sup" x="320" y="512" width="34" height="32" rx="4"/><rect class="cal-sup" x="466" y="512" width="34" height="32" rx="4"/>
+        <rect class="cal-innerv" x="292" y="214" width="236" height="298" rx="16"/>
+        <!-- water (rises at step 1) + heat tint -->
+        <rect class="cal-water" x="300" y="262" width="220" height="242" rx="12" fill="url(#gWater)"/>
+        <rect class="cal-tint" x="300" y="262" width="220" height="242" rx="12"/>
+        <!-- mixing swirls (step 3) -->
+        <g class="cal-swirl"><g class="sw" transform="translate(372 312)"><path d="M-30 0A30 30 0 1 1 0 30" marker-end="url(#mViolet)"><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="2.2s" repeatCount="indefinite"/></path></g><g class="sw r" transform="translate(462 312)"><path d="M30 0A30 30 0 1 0 0 30" marker-end="url(#mViolet)"><animateTransform attributeName="transform" type="rotate" from="360" to="0" dur="2.2s" repeatCount="indefinite"/></path></g></g>
+        <!-- reaction vessel with glow, bubbles, heat arrows -->
+        <circle class="cal-glow" cx="410" cy="430" r="78" filter="url(#fSoft)"/>
+        <g class="cal-heat-out">
+          <g transform="translate(410 430) rotate(-150)"><g class="ar"><path d="M66 0h44" marker-end="url(#mExo)"/></g></g>
+          <g transform="translate(410 430) rotate(-110)"><g class="ar d1"><path d="M66 0h44" marker-end="url(#mExo)"/></g></g>
+          <g transform="translate(410 430) rotate(-70)"><g class="ar d2"><path d="M66 0h44" marker-end="url(#mExo)"/></g></g>
+          <g transform="translate(410 430) rotate(-30)"><g class="ar d1"><path d="M66 0h44" marker-end="url(#mExo)"/></g></g>
+          <g transform="translate(410 430) rotate(180)"><g class="ar d2"><path d="M66 0h36" marker-end="url(#mExo)"/></g></g>
+          <g transform="translate(410 430) rotate(0)"><g class="ar"><path d="M66 0h36" marker-end="url(#mExo)"/></g></g>
+        </g>
+        <g class="cal-heat-in">
+          <g transform="translate(410 430) rotate(-150)"><g class="ar"><path d="M112 0H70" marker-end="url(#mEndo)"/></g></g>
+          <g transform="translate(410 430) rotate(-110)"><g class="ar d1"><path d="M112 0H70" marker-end="url(#mEndo)"/></g></g>
+          <g transform="translate(410 430) rotate(-70)"><g class="ar d2"><path d="M112 0H70" marker-end="url(#mEndo)"/></g></g>
+          <g transform="translate(410 430) rotate(-30)"><g class="ar d1"><path d="M112 0H70" marker-end="url(#mEndo)"/></g></g>
+          <g transform="translate(410 430) rotate(180)"><g class="ar d2"><path d="M104 0H70" marker-end="url(#mEndo)"/></g></g>
+          <g transform="translate(410 430) rotate(0)"><g class="ar"><path d="M104 0H70" marker-end="url(#mEndo)"/></g></g>
+        </g>
+        <rect class="cal-ch" x="362" y="384" width="96" height="94" rx="16"/>
+        <rect class="cal-react" x="368" y="420" width="84" height="52" rx="11"/>
+        <g class="cal-chb"><circle cx="390" cy="462" r="4"/><circle cx="410" cy="452" r="5"/><circle cx="430" cy="464" r="3.5"/><circle cx="400" cy="440" r="3"/></g>
+        <!-- insulation (step 4): glowing gap + blocked heat -->
+        <g class="cal-shield">
+          <rect x="270" y="204" width="280" height="336" rx="16"/>
+          <g class="blk bx l"><path d="M244 360h-46" marker-end="url(#mExo)"/><circle cx="222" cy="360" r="17"/><path class="xx" d="M212 350l20 20M232 350l-20 20"/></g>
+          <g class="blk bx r"><path d="M576 360h46" marker-end="url(#mExo)"/><circle cx="598" cy="360" r="17"/><path class="xx" d="M588 350l20 20M608 350l-20 20"/></g>
+          <g class="blk bn l"><path class="in" d="M178 360h46" marker-end="url(#mEndo)"/><circle cx="232" cy="360" r="17"/><path class="xx" d="M222 350l20 20M242 350l-20 20"/></g>
+          <g class="blk bn r"><path class="in" d="M642 360h-46" marker-end="url(#mEndo)"/><circle cx="588" cy="360" r="17"/><path class="xx" d="M578 350l20 20M598 350l-20 20"/></g>
+          <g class="bnc l"><path d="M330 400h-28" marker-end="url(#mExo)"/></g><g class="bnc r"><path d="M490 400h28" marker-end="url(#mExo)"/></g>
+        </g>
+        <!-- lid -->
+        <rect class="cal-lid" x="236" y="176" width="348" height="30" rx="12"/>
+        <!-- stirrer -->
+        <g class="cal-stir2"><rect x="336" y="44" width="7" height="292" rx="3" class="st-rod"/><rect x="304" y="330" width="72" height="8" rx="4" class="st-rod"/><rect x="326" y="32" width="27" height="17" rx="5" fill="#ef4444"/></g>
+        <!-- thermometer -->
+        <g class="cal-th2">
+          <g class="cth-ticks"></g>
+          <rect class="cth-glass" x="492" y="34" width="20" height="424" rx="10"/>
+          <rect class="cth-liq" x="497.5" y="106" width="9" height="350" rx="4.5"/>
+          <circle class="cth-bulb" cx="502" cy="458" r="14"/>
+          <g class="cth-tag"><rect class="cth-tag-bg" x="522" y="92" width="86" height="30" rx="9"/><text class="cth-val" x="565" y="113" text-anchor="middle">20,0 °C</text></g>
+        </g>
+        <!-- labels (text filled by script, per language) -->
+        <g class="cal-lbls">
+          <path class="cl-ln" d="M230 64H333"/><text class="cl" data-k="stir" x="224" y="71" text-anchor="end"></text>
+          <path class="cl-ln" d="M230 191H252"/><text class="cl" data-k="lid" x="224" y="198" text-anchor="end"></text>
+          <path class="cl-ln" d="M230 290H276"/><text class="cl" data-k="gap" x="224" y="290" text-anchor="end"></text><text class="cl-sub" data-k="gapS" x="224" y="314" text-anchor="end"></text>
+          <path class="cl-ln" d="M230 420H254"/><text class="cl" data-k="outer" x="224" y="427" text-anchor="end"></text>
+          <path class="cl-ln" d="M230 490L318 478"/><text class="cl" data-k="water" x="224" y="497" text-anchor="end"></text>
+          <path class="cl-ln" d="M590 170H514"/><text class="cl" data-k="therm" x="596" y="177" text-anchor="start"></text>
+          <path class="cl-ln" d="M590 236H529"/><text class="cl" data-k="inner" x="596" y="243" text-anchor="start"></text>
+          <path class="cl-ln" d="M590 430H459"/><text class="cl" data-k="ch" x="596" y="428" text-anchor="start"></text><text class="cl-sub" data-k="chS" x="596" y="452" text-anchor="start"></text>
+          <path class="cl-ln" d="M590 536H501"/><text class="cl" data-k="sup" x="596" y="543" text-anchor="start"></text>
+        </g>
       </svg>
-      <div class="cal-read"><span class="f"><b class="cal-t">20,0</b> °C</span><button class="btn sm" data-cal>▶ <span data-l="kk">Өлшеу</span><span data-l="ru">Измерить</span><span data-l="en">Measure</span></button></div>
+      <div class="qv-toggle cal-toggle"><button class="seg exo on" data-calmode="exo">🔥 <span data-l="kk">Экзо</span><span data-l="ru">Экзо</span><span data-l="en">Exo</span></button><button class="seg endo" data-calmode="endo">❄️ <span data-l="kk">Эндо</span><span data-l="ru">Эндо</span><span data-l="en">Endo</span></button></div>
     </div>
-    <div class="cal-right">
-      <div class="card a a-right" style="--d:.3">
-        <h4><span data-l="kk">Жылу эффектісінің шамасы тәуелді:</span><span data-l="ru">Величина теплового эффекта зависит от:</span><span data-l="en">The size of the heat effect depends on:</span></h4>
-        <ul class="factors">
-          <li class="a" style="--d:.5"><span class="fi">🧬</span><span data-l="kk">бастапқы заттар мен реакция өнімдерінің <b>табиғатына</b></span><span data-l="ru"><b>природы</b> исходных веществ и продуктов реакции</span><span data-l="en">the <b>nature</b> of the reactants and products</span></li>
-          <li class="a" style="--d:.65"><span class="fi">🌡️</span><span data-l="kk"><b>температураға</b></span><span data-l="ru"><b>температуры</b></span><span data-l="en">the <b>temperature</b></span></li>
-          <li class="a" style="--d:.8"><span class="fi">🧊</span><span data-l="kk">реагенттер мен өнімдердің <b>агрегаттық күйлеріне</b></span><span data-l="ru"><b>агрегатных состояний</b> реагентов и продуктов</span><span data-l="en">the <b>physical states</b> of reactants and products</span></li>
-        </ul>
+    <div class="cal-panel a a-right" style="--d:.3" data-steps>
+      <ol class="cal-steps">
+        <li class="frag" data-fx="cal" data-s="1"><span class="sn">1</span><span><span data-l="kk">Су құйып, <b>бастапқы</b> температураны өлшейміз — <b>t₁</b></span><span data-l="ru">Наливаем воду и измеряем <b>начальную</b> температуру — <b>t₁</b></span><span data-l="en">Pour in water and measure the <b>starting</b> temperature — <b>t₁</b></span></span></li>
+        <li class="frag" data-fx="cal" data-s="2"><span class="sn">2</span><span><span class="mx"><span data-l="kk">Реакция жүреді: бөлінген жылу <b>суға өтеді</b></span><span data-l="ru">Идёт реакция: выделившаяся теплота <b>переходит в воду</b></span><span data-l="en">The reaction runs: the heat released <b>goes into the water</b></span></span><span class="mn"><span data-l="kk">Реакция жүреді: реакция <b>судан жылу алады</b></span><span data-l="ru">Идёт реакция: реакция <b>забирает теплоту у воды</b></span><span data-l="en">The reaction runs: it <b>takes heat from the water</b></span></span></span></li>
+        <li class="frag" data-fx="cal" data-s="3"><span class="sn">3</span><span><span data-l="kk">Араластырғыш жылуды бүкіл суға <b>біркелкі</b> таратады</span><span data-l="ru">Мешалка <b>равномерно</b> распределяет теплоту по воде</span><span data-l="en">The stirrer spreads the heat <b>evenly</b> through the water</span></span></li>
+        <li class="frag" data-fx="cal" data-s="4"><span class="sn">4</span><span><span data-l="kk">Қос қабырға мен ауа қабаты жылуды <b>сыртқа шығармайды</b></span><span data-l="ru">Двойные стенки и воздушная прослойка <b>не выпускают</b> теплоту наружу</span><span data-l="en">Double walls and the air gap <b>keep the heat inside</b></span></span></li>
+        <li class="frag" data-fx="cal" data-s="5"><span class="sn">5</span><span><span data-l="kk">Термометр <b>соңғы</b> температураны көрсетеді — <b>t₂</b></span><span data-l="ru">Термометр показывает <b>конечную</b> температуру — <b>t₂</b></span><span data-l="en">The thermometer shows the <b>final</b> temperature — <b>t₂</b></span></span></li>
+      </ol>
+      <div class="cal-read2">
+        <div class="cr"><small>t₁</small><b class="cr-t1">—</b></div>
+        <div class="cr"><small>t₂</small><b class="cr-t2">—</b></div>
+        <div class="cr cr-d"><small>Δt</small><b class="cr-dt">—</b></div>
       </div>
-      <div class="card tipcard a a-right" style="--d:.9">💡 <span data-l="kk">Калориметр ішіндегі судың температурасы қаншаға өзгерсе, реакцияда соншалықты көп жылу бөлінді (немесе сіңірілді).</span><span data-l="ru">Чем сильнее меняется температура воды в калориметре, тем больше теплоты выделилось (или поглотилось).</span><span data-l="en">The more the water temperature in the calorimeter changes, the more heat was released (or absorbed).</span></div>
+      <div class="cal-q frag" data-fx="cal" data-s="6"></div>
+      <div class="cal-btns">
+        <button class="btn sm step-btn" data-step><span data-l="kk">Келесі қадам</span><span data-l="ru">Следующий шаг</span><span data-l="en">Next step</span> ▸</button>
+        <button class="btn ghost sm" data-calplay>▶▶ <span data-l="kk">Бәрін көрсету</span><span data-l="ru">Показать всё</span><span data-l="en">Play all</span></button>
+        <button class="btn ghost sm" data-calreset>↺</button>
+      </div>
     </div>
   </div>
-  <aside class="notes"><div data-l="kk"><p>⭐ <b>Қосымша слайд.</b> «Өлшеу» батырмасы: араластырғыш қозғалады, су жылиды. Калориметрдің қос қабырғасы жылуды сыртқа шығармайды.</p></div><div data-l="ru"><p>⭐ <b>Дополнительный слайд.</b> Кнопка «Измерить»: мешалка движется, вода нагревается. Двойные стенки калориметра не выпускают теплоту наружу.</p></div><div data-l="en"><p>⭐ <b>Optional slide.</b> “Measure”: the stirrer moves and the water warms up. The double wall keeps heat from escaping.</p></div></aside>
+  <aside class="notes"><div data-l="kk"><p>⭐ <b>Қосымша слайд.</b> → немесе «Келесі қадам»: 1) су құйылады, t₁ = 20 °C; 2) реакция — жылу суға өтеді; 3) араластырғыш; 4) оқшаулау (ауа қабаты, қақпақ, тығын тіреуіштер); 5) t₂; 6) Q = c·m·Δt (физика, 8 сынып). «Эндо» батырмасы — су суиды.</p><p>Негізгі ой: температура <b>көтерілсе</b> — экзо, <b>төмендесе</b> — эндо.</p></div><div data-l="ru"><p>⭐ <b>Дополнительный слайд.</b> → или «Следующий шаг»: 1) наливаем воду, t₁ = 20 °C; 2) реакция — теплота переходит в воду; 3) мешалка; 4) теплоизоляция (воздушная прослойка, крышка, пробковые подставки); 5) t₂; 6) Q = c·m·Δt (физика, 8 класс). Кнопка «Эндо» — вода охлаждается.</p><p>Главное: температура <b>выросла</b> — экзо, <b>упала</b> — эндо.</p></div><div data-l="en"><p>⭐ <b>Optional slide.</b> → or “Next step”: 1) water in, t₁ = 20 °C; 2) the reaction’s heat goes into the water; 3) stirrer; 4) insulation (air gap, lid, cork supports); 5) t₂; 6) Q = c·m·Δt (Grade 8 physics). “Endo” shows the water cooling.</p><p>Key idea: temperature <b>up</b> — exo, <b>down</b> — endo.</p></div></aside>
 </section>
 
 <!-- ===================== 14. СЕН БІЛЕСІҢ БЕ? ===================== -->
@@ -1982,7 +2160,7 @@ html[data-theme="dark"] .i-sun,html[data-theme="light"] .i-moon{display:none}
     <button class="ib" id="bMenu" data-tip="menu"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></button>
     <button class="ib" id="bFull" data-tip="full"><svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></button>
   </div>
-  <div class="bar-c"><div class="prog"><div class="prog-fill"></div></div></div>
+  <div class="bar-c"><div class="dots-nav" aria-label="slides"></div></div>
   <div class="bar-r">
     <span class="count"><b class="c-cur">1</b> / <span class="c-all">1</span></span>
     <button class="nb" id="bPrev" data-tip="prev"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button>
@@ -2442,6 +2620,7 @@ function later(s, fn, ms) { var id = setTimeout(fn, ms); (s._timers = s._timers 
 function go(n, first) {
   n = clamp(n, 0, N - 1);
   var nw = slides[n], old = slides[S.i];
+  if (old && old !== nw) { var oid = old.getAttribute('data-id'); if (SL[oid] && SL[oid].leave) SL[oid].leave(old); }
   slides.forEach(function (s, k) { s.classList.toggle('before', k < n); if (k !== n) s.classList.remove('active'); });
   (nw._timers || []).forEach(clearTimeout); nw._timers = [];
   $$('.frag', nw).forEach(function (f) { f.classList.remove('on'); });
@@ -2492,7 +2671,7 @@ function updateStepBtns(s) {
 
 /* ================= chrome: bar, notes, menu ================= */
 function updateChrome() {
-  $('.prog-fill').style.width = ((S.i + 1) / N * 100) + '%';
+  $$('.dn').forEach(function (b, k) { b.classList.toggle('cur', k === S.i); b.classList.toggle('done', k < S.i); });
   $('.c-cur').textContent = S.i + 1;
   $('.c-all').textContent = N;
   $('#bPrev').disabled = S.i === 0;
@@ -2526,6 +2705,28 @@ function buildMenu() {
       '<span class="mst">' + ROMAN[st] + ' · ' + STAGE_MIN[st] + ' ' + (S.lang === 'en' ? 'min' : 'мин') + (opt ? ' · ⭐ ' + L(UI.optional) : '') + '</span></span>';
     b.addEventListener('click', function () { closeAll(); go(k); });
     g.appendChild(b);
+  });
+}
+function buildDots() {
+  var box = $('.dots-nav'), prevSt = 0;
+  box.innerHTML = '';
+  slides.forEach(function (s, k) {
+    var b = document.createElement('button');
+    b.className = 'dn'; b.innerHTML = '<i></i>';
+    var st = +s.getAttribute('data-stage');
+    if (k && st !== prevSt) b.classList.add('sep');
+    prevSt = st;
+    if ((($('.notes', s) || {}).textContent || '').indexOf('⭐') >= 0) b.classList.add('opt');
+    b.addEventListener('click', function () { go(k); });
+    box.appendChild(b);
+  });
+  dotsTitles();
+}
+function dotsTitles() {
+  $$('.dn').forEach(function (b, k) {
+    var opt = b.classList.contains('opt') ? ' (⭐ ' + L(UI.optional) + ')' : '';
+    var t = (k + 1) + '. ' + slideTitle(slides[k]) + opt;
+    b.title = t; b.setAttribute('aria-label', t);
   });
 }
 function openPanel(id) {
@@ -2742,22 +2943,115 @@ FX.teqHl = function (f, s) {
 };
 SL.thermoeq = { reset: function (s) { $('.teq', s).classList.remove('hl-st', 'hl-q', 'hl-std'); } };
 
-// calorimeter
-SL.calor = {
-  reset: function (s) { $('.cal-stage', s).classList.remove('run'); $('.cal-t', s).textContent = fmtNum(20, 1); if (s._calRaf) cancelAnimationFrame(s._calRaf); }
+// calorimeter (v2): steps 1–6, exo / endo modes
+var CAL = { mode: 'exo' };
+var CAL_T2 = { exo: 31.5, endo: 12 };
+var CAL_L = {
+  stir: T3('Араластырғыш', 'Мешалка', 'Stirrer'),
+  lid: T3('Қақпақ', 'Крышка', 'Lid'),
+  gap: T3('Ауа қабаты', 'Воздушная прослойка', 'Air gap'),
+  gapS: T3('жылуды өткізбейді', 'не пропускает тепло', 'keeps the heat in'),
+  outer: T3('Сыртқы ыдыс', 'Внешний сосуд', 'Outer vessel'),
+  water: T3('Су', 'Вода', 'Water'),
+  therm: T3('Термометр', 'Термометр', 'Thermometer'),
+  inner: T3('Ішкі ыдыс', 'Внутренний сосуд', 'Inner vessel'),
+  ch: T3('Реакциялық ыдыс', 'Реакционный сосуд', 'Reaction vessel'),
+  chS: T3('реакция осында жүреді', 'здесь идёт реакция', 'the reaction happens here'),
+  sup: T3('Тығын тіреуіш', 'Пробковая подставка', 'Cork support')
 };
-function calRun(s) {
-  var st = $('.cal-stage', s), out = $('.cal-t', s);
-  st.classList.remove('run'); void st.offsetWidth; st.classList.add('run');
-  sfx('reveal');
-  var t0 = performance.now(), dur = 4200;
+var JU = T3('Дж', 'Дж', 'J'), KGU = T3('кг', 'кг', 'kg');
+function calSlide() { return $('[data-id="calor"]'); }
+function calTy(T) { return 166 - T * 3; }
+function calTherm(s, T) {
+  s._calT = T;
+  var y = calTy(T), liq = $('.cth-liq', s);
+  liq.setAttribute('y', y); liq.setAttribute('height', 458 - y);
+  $('.cth-tag', s).setAttribute('transform', 'translate(0 ' + (y - 106) + ')');
+  $('.cth-val', s).textContent = fmtNum(T, 1) + ' °C';
+}
+function calTween(s, to, dur, cb) {
+  if (s._calRaf) cancelAnimationFrame(s._calRaf);
+  var from = s._calT, t0 = performance.now();
   function step(t) {
-    var k = clamp((t - t0) / dur, 0, 1), e = 1 - Math.pow(1 - k, 2);
-    out.textContent = fmtNum(20 + 11.5 * e, 1);
-    if (k < 1) s._calRaf = requestAnimationFrame(step); else sfx('ok');
+    var k = clamp((t - t0) / dur, 0, 1), e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+    calTherm(s, from + (to - from) * e);
+    if (k < 1) s._calRaf = requestAnimationFrame(step); else { s._calRaf = 0; if (cb) cb(); }
   }
   s._calRaf = requestAnimationFrame(step);
 }
+function calTicks(s) {
+  var h = '';
+  for (var T = 0; T <= 40; T += 5) {
+    var y = calTy(T);
+    h += '<line x1="' + (T % 10 ? 482 : 475) + '" x2="491" y1="' + y + '" y2="' + y + '"/>';
+    if (T % 10 === 0) h += '<text x="469" y="' + (y + 5) + '" text-anchor="end">' + T + '</text>';
+  }
+  $('.cth-ticks', s).innerHTML = h;
+}
+function calLabels(s) { $$('.cal-lbls [data-k]', s).forEach(function (t) { t.textContent = L(CAL_L[t.getAttribute('data-k')]); }); }
+function calFormula(s) {
+  var ex = CAL.mode === 'exo', dt = Math.abs(CAL_T2[CAL.mode] - 20), Q = Math.round(4200 * 0.1 * dt);
+  var w = L(T3('су', 'воды', 'water'));
+  $('.cal-q', s).innerHTML =
+    '<div class="cq-h">' + L(T3('Жылу мөлшері:', 'Количество теплоты:', 'Amount of heat:')) + '</div>' +
+    '<div class="cq-f">Q = c · m · Δt = 4200 · ' + fmtNum(0.1, 1) + ' · ' + fmtNum(dt, 1) + ' = ' + Q + ' ' + L(JU) + ' ≈ ' + fmtNum(Q / 1000, 1) + ' ' + L(UI.kJ) + '</div>' +
+    '<div class="cq-l">c(' + w + ') = 4200 ' + L(JU) + '/(' + L(KGU) + '·°C), m(' + w + ') = ' + fmtNum(0.1, 1) + ' ' + L(KGU) + '</div>' +
+    '<div class="cq-r ' + (ex ? 'exo' : 'endo') + '">' + L(ex
+      ? T3('Су жылыды → реакцияда жылу <b>бөлінді</b> → <b>экзо</b>', 'Вода нагрелась → теплота <b>выделилась</b> → <b>экзо</b>', 'The water warmed up → heat was <b>released</b> → <b>exo</b>')
+      : T3('Су суыды → реакция жылу <b>сіңірді</b> → <b>эндо</b>', 'Вода остыла → теплота <b>поглотилась</b> → <b>эндо</b>', 'The water cooled down → heat was <b>absorbed</b> → <b>endo</b>')) + '</div>';
+}
+function calRead(s) {
+  var n = s._calStep || 0, t2 = CAL_T2[CAL.mode], done = n >= 5 && s._calDone, dt = t2 - 20;
+  $('.cr-t1', s).textContent = n >= 1 ? fmtNum(20, 1) + ' °C' : '—';
+  $('.cr-t2', s).textContent = done ? fmtNum(t2, 1) + ' °C' : '—';
+  var d = $('.cr-dt', s);
+  d.textContent = done ? (dt > 0 ? '+' : '−') + fmtNum(Math.abs(dt), 1) + ' °C' : '—';
+  d.className = 'cr-dt' + (done ? (dt > 0 ? ' up' : ' down') : '');
+  calFormula(s);
+}
+function calStop(s) {
+  if (s._calRaf) { cancelAnimationFrame(s._calRaf); s._calRaf = 0; }
+  if (s._calPlay) { clearInterval(s._calPlay); s._calPlay = 0; }
+}
+function calReset(s) {
+  calStop(s);
+  var w = $('.cal2', s);
+  for (var k = 1; k <= 6; k++) w.classList.remove('cs' + k);
+  w.classList.remove('mode-exo', 'mode-endo'); w.classList.add('mode-' + CAL.mode);
+  $$('[data-calmode]', s).forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-calmode') === CAL.mode); });
+  s._calStep = 0; s._calDone = false;
+  calTherm(s, 20);
+  calRead(s);
+}
+function calRestart(s) {
+  $$('.frag', s).forEach(function (f) { f.classList.remove('on'); });
+  $$('[data-step]', s).forEach(function (b) { b.classList.remove('done'); });
+  calReset(s);
+}
+function calPlay(s) {
+  if (s._calPlay) { clearInterval(s._calPlay); s._calPlay = 0; return; }
+  var tick = function () {
+    var f = $$('.frag:not(.on)', s)[0];
+    if (!f) { clearInterval(s._calPlay); s._calPlay = 0; return; }
+    reveal(f);
+  };
+  tick();
+  s._calPlay = setInterval(tick, 2700);
+}
+FX.cal = function (f, s) {
+  var n = +f.getAttribute('data-s'), w = $('.cal2', s);
+  for (var k = 1; k <= n; k++) w.classList.add('cs' + k);
+  s._calStep = Math.max(s._calStep || 0, n);
+  var t2 = CAL_T2[CAL.mode];
+  if (n === 2) { sfx(CAL.mode === 'exo' ? 'fire' : 'ice'); calTween(s, 20 + (t2 - 20) * 0.55, 2600); }
+  if (n === 3) calTween(s, 20 + (t2 - 20) * 0.92, 2400);
+  if (n === 5) calTween(s, t2, 1500, function () {
+    s._calDone = true; calRead(s); sfx('ok');
+    burstAt($('.cth-tag', s), { kind: CAL.mode === 'exo' ? 'fire' : 'ice', n: 30, power: 6 });
+  });
+  calRead(s);
+};
+SL.calor = { reset: calReset, leave: calStop };
 
 // diagrams
 FX.diag = function (f, s) {
@@ -3098,7 +3392,9 @@ function bindEvents() {
     if ((el = t.closest('[data-resetchoose]'))) { chooseReset(el.closest('.slide')); return; }
     if ((el = t.closest('[data-toggle-hint]'))) { $('.q6-list', el.closest('.slide')).classList.toggle('hint'); sfx('pop'); return; }
     if ((el = t.closest('[data-qmode]'))) { qMode(el.closest('.slide'), el.getAttribute('data-qmode')); sfx(el.getAttribute('data-qmode') === 'exo' ? 'fire' : 'ice'); return; }
-    if ((el = t.closest('[data-cal]'))) { calRun(el.closest('.slide')); return; }
+    if ((el = t.closest('[data-calmode]'))) { CAL.mode = el.getAttribute('data-calmode'); calRestart(el.closest('.slide')); sfx(CAL.mode === 'exo' ? 'fire' : 'ice'); return; }
+    if ((el = t.closest('[data-calplay]'))) { calPlay(el.closest('.slide')); return; }
+    if ((el = t.closest('[data-calreset]'))) { calRestart(el.closest('.slide')); sfx('pop'); return; }
     if ((el = t.closest('[data-pre]'))) {
       var v = el.getAttribute('data-pre').split(','); $('#sEr').value = v[0]; $('#sEp').value = v[1]; bldUpdate(); sfx('pop'); return;
     }
@@ -3179,6 +3475,9 @@ function init() {
   LANG_HOOKS.push(function () { $$('.ediag').forEach(diagText); bldUpdate(); if (slides[S.i].getAttribute('data-id') === 'calor') {} });
   subifyAll();
   tmInit(); scInit(); gameInit(); gameBind(); qzInit(); asInit();
+  var cs = calSlide(); calTicks(cs); calLabels(cs); calReset(cs);
+  LANG_HOOKS.push(function () { var c = calSlide(); calLabels(c); calTherm(c, c._calT); calRead(c); dotsTitles(); });
+  buildDots();
   bldUpdate();
   bindEvents();
   applyLang();

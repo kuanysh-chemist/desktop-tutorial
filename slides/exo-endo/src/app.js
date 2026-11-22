@@ -403,6 +403,7 @@ function later(s, fn, ms) { var id = setTimeout(fn, ms); (s._timers = s._timers 
 function go(n, first) {
   n = clamp(n, 0, N - 1);
   var nw = slides[n], old = slides[S.i];
+  if (old && old !== nw) { var oid = old.getAttribute('data-id'); if (SL[oid] && SL[oid].leave) SL[oid].leave(old); }
   slides.forEach(function (s, k) { s.classList.toggle('before', k < n); if (k !== n) s.classList.remove('active'); });
   (nw._timers || []).forEach(clearTimeout); nw._timers = [];
   $$('.frag', nw).forEach(function (f) { f.classList.remove('on'); });
@@ -453,7 +454,7 @@ function updateStepBtns(s) {
 
 /* ================= chrome: bar, notes, menu ================= */
 function updateChrome() {
-  $('.prog-fill').style.width = ((S.i + 1) / N * 100) + '%';
+  $$('.dn').forEach(function (b, k) { b.classList.toggle('cur', k === S.i); b.classList.toggle('done', k < S.i); });
   $('.c-cur').textContent = S.i + 1;
   $('.c-all').textContent = N;
   $('#bPrev').disabled = S.i === 0;
@@ -487,6 +488,28 @@ function buildMenu() {
       '<span class="mst">' + ROMAN[st] + ' · ' + STAGE_MIN[st] + ' ' + (S.lang === 'en' ? 'min' : 'мин') + (opt ? ' · ⭐ ' + L(UI.optional) : '') + '</span></span>';
     b.addEventListener('click', function () { closeAll(); go(k); });
     g.appendChild(b);
+  });
+}
+function buildDots() {
+  var box = $('.dots-nav'), prevSt = 0;
+  box.innerHTML = '';
+  slides.forEach(function (s, k) {
+    var b = document.createElement('button');
+    b.className = 'dn'; b.innerHTML = '<i></i>';
+    var st = +s.getAttribute('data-stage');
+    if (k && st !== prevSt) b.classList.add('sep');
+    prevSt = st;
+    if ((($('.notes', s) || {}).textContent || '').indexOf('⭐') >= 0) b.classList.add('opt');
+    b.addEventListener('click', function () { go(k); });
+    box.appendChild(b);
+  });
+  dotsTitles();
+}
+function dotsTitles() {
+  $$('.dn').forEach(function (b, k) {
+    var opt = b.classList.contains('opt') ? ' (⭐ ' + L(UI.optional) + ')' : '';
+    var t = (k + 1) + '. ' + slideTitle(slides[k]) + opt;
+    b.title = t; b.setAttribute('aria-label', t);
   });
 }
 function openPanel(id) {
@@ -703,22 +726,115 @@ FX.teqHl = function (f, s) {
 };
 SL.thermoeq = { reset: function (s) { $('.teq', s).classList.remove('hl-st', 'hl-q', 'hl-std'); } };
 
-// calorimeter
-SL.calor = {
-  reset: function (s) { $('.cal-stage', s).classList.remove('run'); $('.cal-t', s).textContent = fmtNum(20, 1); if (s._calRaf) cancelAnimationFrame(s._calRaf); }
+// calorimeter (v2): steps 1–6, exo / endo modes
+var CAL = { mode: 'exo' };
+var CAL_T2 = { exo: 31.5, endo: 12 };
+var CAL_L = {
+  stir: T3('Араластырғыш', 'Мешалка', 'Stirrer'),
+  lid: T3('Қақпақ', 'Крышка', 'Lid'),
+  gap: T3('Ауа қабаты', 'Воздушная прослойка', 'Air gap'),
+  gapS: T3('жылуды өткізбейді', 'не пропускает тепло', 'keeps the heat in'),
+  outer: T3('Сыртқы ыдыс', 'Внешний сосуд', 'Outer vessel'),
+  water: T3('Су', 'Вода', 'Water'),
+  therm: T3('Термометр', 'Термометр', 'Thermometer'),
+  inner: T3('Ішкі ыдыс', 'Внутренний сосуд', 'Inner vessel'),
+  ch: T3('Реакциялық ыдыс', 'Реакционный сосуд', 'Reaction vessel'),
+  chS: T3('реакция осында жүреді', 'здесь идёт реакция', 'the reaction happens here'),
+  sup: T3('Тығын тіреуіш', 'Пробковая подставка', 'Cork support')
 };
-function calRun(s) {
-  var st = $('.cal-stage', s), out = $('.cal-t', s);
-  st.classList.remove('run'); void st.offsetWidth; st.classList.add('run');
-  sfx('reveal');
-  var t0 = performance.now(), dur = 4200;
+var JU = T3('Дж', 'Дж', 'J'), KGU = T3('кг', 'кг', 'kg');
+function calSlide() { return $('[data-id="calor"]'); }
+function calTy(T) { return 166 - T * 3; }
+function calTherm(s, T) {
+  s._calT = T;
+  var y = calTy(T), liq = $('.cth-liq', s);
+  liq.setAttribute('y', y); liq.setAttribute('height', 458 - y);
+  $('.cth-tag', s).setAttribute('transform', 'translate(0 ' + (y - 106) + ')');
+  $('.cth-val', s).textContent = fmtNum(T, 1) + ' °C';
+}
+function calTween(s, to, dur, cb) {
+  if (s._calRaf) cancelAnimationFrame(s._calRaf);
+  var from = s._calT, t0 = performance.now();
   function step(t) {
-    var k = clamp((t - t0) / dur, 0, 1), e = 1 - Math.pow(1 - k, 2);
-    out.textContent = fmtNum(20 + 11.5 * e, 1);
-    if (k < 1) s._calRaf = requestAnimationFrame(step); else sfx('ok');
+    var k = clamp((t - t0) / dur, 0, 1), e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+    calTherm(s, from + (to - from) * e);
+    if (k < 1) s._calRaf = requestAnimationFrame(step); else { s._calRaf = 0; if (cb) cb(); }
   }
   s._calRaf = requestAnimationFrame(step);
 }
+function calTicks(s) {
+  var h = '';
+  for (var T = 0; T <= 40; T += 5) {
+    var y = calTy(T);
+    h += '<line x1="' + (T % 10 ? 482 : 475) + '" x2="491" y1="' + y + '" y2="' + y + '"/>';
+    if (T % 10 === 0) h += '<text x="469" y="' + (y + 5) + '" text-anchor="end">' + T + '</text>';
+  }
+  $('.cth-ticks', s).innerHTML = h;
+}
+function calLabels(s) { $$('.cal-lbls [data-k]', s).forEach(function (t) { t.textContent = L(CAL_L[t.getAttribute('data-k')]); }); }
+function calFormula(s) {
+  var ex = CAL.mode === 'exo', dt = Math.abs(CAL_T2[CAL.mode] - 20), Q = Math.round(4200 * 0.1 * dt);
+  var w = L(T3('су', 'воды', 'water'));
+  $('.cal-q', s).innerHTML =
+    '<div class="cq-h">' + L(T3('Жылу мөлшері:', 'Количество теплоты:', 'Amount of heat:')) + '</div>' +
+    '<div class="cq-f">Q = c · m · Δt = 4200 · ' + fmtNum(0.1, 1) + ' · ' + fmtNum(dt, 1) + ' = ' + Q + ' ' + L(JU) + ' ≈ ' + fmtNum(Q / 1000, 1) + ' ' + L(UI.kJ) + '</div>' +
+    '<div class="cq-l">c(' + w + ') = 4200 ' + L(JU) + '/(' + L(KGU) + '·°C), m(' + w + ') = ' + fmtNum(0.1, 1) + ' ' + L(KGU) + '</div>' +
+    '<div class="cq-r ' + (ex ? 'exo' : 'endo') + '">' + L(ex
+      ? T3('Су жылыды → реакцияда жылу <b>бөлінді</b> → <b>экзо</b>', 'Вода нагрелась → теплота <b>выделилась</b> → <b>экзо</b>', 'The water warmed up → heat was <b>released</b> → <b>exo</b>')
+      : T3('Су суыды → реакция жылу <b>сіңірді</b> → <b>эндо</b>', 'Вода остыла → теплота <b>поглотилась</b> → <b>эндо</b>', 'The water cooled down → heat was <b>absorbed</b> → <b>endo</b>')) + '</div>';
+}
+function calRead(s) {
+  var n = s._calStep || 0, t2 = CAL_T2[CAL.mode], done = n >= 5 && s._calDone, dt = t2 - 20;
+  $('.cr-t1', s).textContent = n >= 1 ? fmtNum(20, 1) + ' °C' : '—';
+  $('.cr-t2', s).textContent = done ? fmtNum(t2, 1) + ' °C' : '—';
+  var d = $('.cr-dt', s);
+  d.textContent = done ? (dt > 0 ? '+' : '−') + fmtNum(Math.abs(dt), 1) + ' °C' : '—';
+  d.className = 'cr-dt' + (done ? (dt > 0 ? ' up' : ' down') : '');
+  calFormula(s);
+}
+function calStop(s) {
+  if (s._calRaf) { cancelAnimationFrame(s._calRaf); s._calRaf = 0; }
+  if (s._calPlay) { clearInterval(s._calPlay); s._calPlay = 0; }
+}
+function calReset(s) {
+  calStop(s);
+  var w = $('.cal2', s);
+  for (var k = 1; k <= 6; k++) w.classList.remove('cs' + k);
+  w.classList.remove('mode-exo', 'mode-endo'); w.classList.add('mode-' + CAL.mode);
+  $$('[data-calmode]', s).forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-calmode') === CAL.mode); });
+  s._calStep = 0; s._calDone = false;
+  calTherm(s, 20);
+  calRead(s);
+}
+function calRestart(s) {
+  $$('.frag', s).forEach(function (f) { f.classList.remove('on'); });
+  $$('[data-step]', s).forEach(function (b) { b.classList.remove('done'); });
+  calReset(s);
+}
+function calPlay(s) {
+  if (s._calPlay) { clearInterval(s._calPlay); s._calPlay = 0; return; }
+  var tick = function () {
+    var f = $$('.frag:not(.on)', s)[0];
+    if (!f) { clearInterval(s._calPlay); s._calPlay = 0; return; }
+    reveal(f);
+  };
+  tick();
+  s._calPlay = setInterval(tick, 2700);
+}
+FX.cal = function (f, s) {
+  var n = +f.getAttribute('data-s'), w = $('.cal2', s);
+  for (var k = 1; k <= n; k++) w.classList.add('cs' + k);
+  s._calStep = Math.max(s._calStep || 0, n);
+  var t2 = CAL_T2[CAL.mode];
+  if (n === 2) { sfx(CAL.mode === 'exo' ? 'fire' : 'ice'); calTween(s, 20 + (t2 - 20) * 0.55, 2600); }
+  if (n === 3) calTween(s, 20 + (t2 - 20) * 0.92, 2400);
+  if (n === 5) calTween(s, t2, 1500, function () {
+    s._calDone = true; calRead(s); sfx('ok');
+    burstAt($('.cth-tag', s), { kind: CAL.mode === 'exo' ? 'fire' : 'ice', n: 30, power: 6 });
+  });
+  calRead(s);
+};
+SL.calor = { reset: calReset, leave: calStop };
 
 // diagrams
 FX.diag = function (f, s) {
@@ -1059,7 +1175,9 @@ function bindEvents() {
     if ((el = t.closest('[data-resetchoose]'))) { chooseReset(el.closest('.slide')); return; }
     if ((el = t.closest('[data-toggle-hint]'))) { $('.q6-list', el.closest('.slide')).classList.toggle('hint'); sfx('pop'); return; }
     if ((el = t.closest('[data-qmode]'))) { qMode(el.closest('.slide'), el.getAttribute('data-qmode')); sfx(el.getAttribute('data-qmode') === 'exo' ? 'fire' : 'ice'); return; }
-    if ((el = t.closest('[data-cal]'))) { calRun(el.closest('.slide')); return; }
+    if ((el = t.closest('[data-calmode]'))) { CAL.mode = el.getAttribute('data-calmode'); calRestart(el.closest('.slide')); sfx(CAL.mode === 'exo' ? 'fire' : 'ice'); return; }
+    if ((el = t.closest('[data-calplay]'))) { calPlay(el.closest('.slide')); return; }
+    if ((el = t.closest('[data-calreset]'))) { calRestart(el.closest('.slide')); sfx('pop'); return; }
     if ((el = t.closest('[data-pre]'))) {
       var v = el.getAttribute('data-pre').split(','); $('#sEr').value = v[0]; $('#sEp').value = v[1]; bldUpdate(); sfx('pop'); return;
     }
@@ -1140,6 +1258,9 @@ function init() {
   LANG_HOOKS.push(function () { $$('.ediag').forEach(diagText); bldUpdate(); if (slides[S.i].getAttribute('data-id') === 'calor') {} });
   subifyAll();
   tmInit(); scInit(); gameInit(); gameBind(); qzInit(); asInit();
+  var cs = calSlide(); calTicks(cs); calLabels(cs); calReset(cs);
+  LANG_HOOKS.push(function () { var c = calSlide(); calLabels(c); calTherm(c, c._calT); calRead(c); dotsTitles(); });
+  buildDots();
   bldUpdate();
   bindEvents();
   applyLang();
