@@ -1,0 +1,926 @@
+<!--
+  Тіл макростары (build.py өңдейді):
+    [[қаз|рус|eng]]  -> <span data-l="..">  (жол ішіндегі мәтін)
+    {{қаз|рус|eng}}  -> <div data-l="..">   (блок)
+    %kJ% %mol% %g%   -> бірліктер үш тілде
+  .f класы бар элементтерде формула сандары автоматты түрде төменгі индекске айналады.
+-->
+
+<!-- ===================== 1. ТИТУЛ ===================== -->
+<section class="slide s-title" data-id="title" data-stage="1" data-amb="fireice" data-t="Тақырып|Тема урока|Title">
+  <div class="title-grid">
+    <div class="hero a a-left" style="--d:.15">
+      <div class="hero-glow exo"></div>
+      <svg class="flame-big" viewBox="0 0 200 280" aria-hidden="true">
+        <path class="fl fl-a" fill="url(#gFlameOuter)" d="M100 272C42 272 18 228 26 184C32 150 58 132 62 96C80 116 86 136 84 156C104 130 108 84 96 14C148 54 186 118 178 186C172 236 146 272 100 272Z"/>
+        <path class="fl fl-b" fill="url(#gFlameMid)" d="M100 270C62 270 48 240 54 210C60 186 78 176 82 150C94 166 98 180 96 196C112 178 116 150 108 108C140 140 160 180 152 220C146 252 128 270 100 270Z"/>
+        <path class="fl fl-c" fill="#fff4c2" d="M100 268C78 268 70 250 74 232C78 216 90 206 94 190C104 206 110 218 108 232C116 226 120 214 118 200C132 218 134 240 126 254C120 264 110 268 100 268Z"/>
+      </svg>
+      <div class="hero-tag exo">[[ЭКЗО|ЭКЗО|EXO]] <span class="f">+Q</span></div>
+    </div>
+
+    <div class="title-center">
+      <div class="kicker a" style="--d:.05"><span class="kdot"></span>[[Химия · 8 сынып|Химия · 8 класс|Chemistry · Grade 8]]</div>
+      <h1 class="a a-zoom" style="--d:.3">
+        <span class="grad-exo">[[Экзотермиялық|Экзотермические|Exothermic]]</span>
+        <span class="t-and">[[және|и|and]]</span>
+        <span class="grad-endo">[[эндотермиялық|эндотермические|endothermic]]</span>
+        <span class="t-rest">[[реакциялар|реакции|reactions]]</span>
+      </h1>
+      <p class="subtitle a" style="--d:.7">[[Химиялық реакциялардың жылу эффектісі|Тепловой эффект химических реакций|The heat effect of chemical reactions]]</p>
+      <div class="title-chips a" style="--d:1">
+        <span class="chip exo">🔥 [[жылу бөлінеді|теплота выделяется|heat is released]]</span>
+        <span class="chip endo">❄️ [[жылу сіңіріледі|теплота поглощается|heat is absorbed]]</span>
+      </div>
+    </div>
+
+    <div class="hero a a-right" style="--d:.15">
+      <div class="hero-glow endo"></div>
+      <svg class="snow-big" viewBox="-110 -110 220 220" aria-hidden="true"><use href="#symSnow" x="-110" y="-110" width="220" height="220"/></svg>
+      <div class="hero-tag endo">[[ЭНДО|ЭНДО|ENDO]] <span class="f">−Q</span></div>
+    </div>
+  </div>
+  <div class="start-hint a" style="--d:1.5">[[Бастау үшін ▶ батырмасын басыңыз|Нажмите ▶, чтобы начать|Press ▶ to begin]]</div>
+  <aside class="notes">{{<p>Сәлемдесу, оң көңіл-күй орнату. Тақырыпты жариялау.</p><p>Сұрақ: <b>«От пен мұздың химияға қандай қатысы бар? Тақырыпты болжаңдар.»</b></p>|<p>Приветствие, положительный настрой. Объявить тему.</p><p>Вопрос: <b>«Как огонь и лёд связаны с химией? Предположите тему урока.»</b></p>|<p>Greet the class, set a positive mood, announce the topic.</p><p>Ask: <b>“What do fire and ice have to do with chemistry? Guess today's topic.”</b></p>}}</aside>
+</section>
+
+<!-- ===================== 2. МАҚСАТТАР ===================== -->
+<section class="slide" data-id="goals" data-stage="1" data-t="Сабақ мақсаттары|Цели урока|Lesson goals">
+  <header class="sh a"><h2><span class="h-ico">🎯</span>[[Бүгінгі сабақта|Сегодня на уроке|Today's lesson]]</h2></header>
+  <div class="body goals-layout">
+    <div class="goals">
+      <div class="goal a" style="--d:.15"><span class="gi g1">⚖️</span><p>[[Экзотермиялық және эндотермиялық реакцияларды <b>ажыратамыз</b>|<b>Различаем</b> экзотермические и эндотермические реакции|We <b>tell apart</b> exothermic and endothermic reactions]]</p></div>
+      <div class="goal a" style="--d:.3"><span class="gi g2">🌡️</span><p>[[Энергия <b>бөліне ме</b>, әлде <b>сіңіріле ме</b> — анықтаймыз|Определяем, <b>выделяется</b> или <b>поглощается</b> энергия|We find out whether energy is <b>released</b> or <b>absorbed</b>]]</p></div>
+      <div class="goal a" style="--d:.45"><span class="gi g3">📈</span><p>[[Энергетикалық <b>диаграммаларды</b> талдаймыз|Анализируем энергетические <b>диаграммы</b>|We analyse energy <b>diagrams</b>]]</p></div>
+      <div class="goal a" style="--d:.6"><span class="gi g4">🧮</span><p>[[Бөлінген немесе сіңірілген <b>жылу мөлшерін</b> есептейміз|Рассчитываем <b>количество теплоты</b>, выделившейся или поглощённой|We calculate the <b>amount of heat</b> released or absorbed]]</p></div>
+    </div>
+    <div class="card terms a a-right" style="--d:.5">
+      <h3>[[Тірек ұғымдар|Ключевые понятия|Key terms]]</h3>
+      <ul class="term-list">
+        <li class="a" style="--d:.8"><span class="tdot q"></span>[[Жылу эффектісі|Тепловой эффект|Heat effect]]</li>
+        <li class="a" style="--d:.95"><span class="tdot exo"></span>[[Экзотермиялық реакция|Экзотермическая реакция|Exothermic reaction]]</li>
+        <li class="a" style="--d:1.1"><span class="tdot endo"></span>[[Эндотермиялық реакция|Эндотермическая реакция|Endothermic reaction]]</li>
+        <li class="a" style="--d:1.25"><span class="tdot eq"></span>[[Термохимиялық теңдеу|Термохимическое уравнение|Thermochemical equation]]</li>
+      </ul>
+      <div class="terms-foot">📖 [[Оқулық, §22|Учебник, §22|Textbook, §22]]</div>
+    </div>
+  </div>
+  <aside class="notes">{{<p>Мақсаттарды оқушылармен бірге оқу. Тірек ұғымдарды дәптерге жазғызу.</p>|<p>Прочитать цели вместе с учащимися. Ключевые понятия записать в тетрадь.</p>|<p>Read the goals with the class. Students copy the key terms into their notebooks.</p>}}</aside>
+</section>
+
+<!-- ===================== 3. ЕСКЕ ТҮСІРЕЙІК ===================== -->
+<section class="slide" data-id="recall" data-stage="2" data-t="Еске түсірейік|Вспомним|Let's recall">
+  <header class="sh a"><h2><span class="h-ico">💭</span>[[Еске түсірейік|Вспомним|Let's recall]]</h2><p class="lead">[[Картаны басыңыз — жауабы ашылады|Нажмите на карточку — откроется ответ|Tap a card to see the answer]]</p></header>
+  <div class="body recall-grid">
+    <div class="flip frag keep a" style="--d:.1"><div class="flip-in">
+      <div class="face front"><span class="num">1</span><p>[[Химиялық реакция кезінде не болады?|Что происходит при химической реакции?|What happens during a chemical reaction?]]</p></div>
+      <div class="face back"><span class="num">1</span><p>[[Жаңа заттар түзіледі: ескі байланыстар үзіліп, жаңа байланыстар пайда болады.|Образуются новые вещества: старые связи рвутся, возникают новые.|New substances form: old bonds break and new bonds form.]]</p></div>
+    </div></div>
+    <div class="flip frag keep a" style="--d:.2"><div class="flip-in">
+      <div class="face front"><span class="num">2</span><p>[[Заттар неден тұрады?|Из чего состоят вещества?|What are substances made of?]]</p></div>
+      <div class="face back"><span class="num">2</span><p>[[Атомдардан, молекулалардан, иондардан.|Из атомов, молекул, ионов.|Atoms, molecules and ions.]]</p></div>
+    </div></div>
+    <div class="flip frag keep a" style="--d:.3"><div class="flip-in">
+      <div class="face front"><span class="num">3</span><p>[[Энергия дегеніміз не?|Что такое энергия?|What is energy?]]</p></div>
+      <div class="face back"><span class="num">3</span><p>[[Жұмыс атқару қабілеті. Түрлері: жылу, жарық, электр, химиялық энергия…|Способность совершать работу. Виды: тепловая, световая, электрическая, химическая…|The ability to do work. Forms: heat, light, electrical, chemical energy…]]</p></div>
+    </div></div>
+    <div class="flip frag keep a" style="--d:.4"><div class="flip-in">
+      <div class="face front"><span class="num">4</span><p>[[Химиялық реакция кезінде температура өзгере ме?|Может ли химическая реакция сопровождаться изменением температуры?|Can a chemical reaction change the temperature?]]</p></div>
+      <div class="face back"><span class="num">4</span><p>[[Иә! Бір реакцияларда температура көтеріледі, ал басқаларында төмендейді.|Да! В одних реакциях температура повышается, в других — понижается.|Yes! Some reactions get hot, others get cold.]]</p></div>
+    </div></div>
+    <div class="flip frag keep a" style="--d:.5"><div class="flip-in">
+      <div class="face front"><span class="num">5</span><p>[[Энергия бөлінуінің қандай мысалдарын білесің?|Какие примеры выделения энергии вы знаете?|Which examples of energy release do you know?]]</p></div>
+      <div class="face back"><span class="num">5</span><p>[[Отынның, газдың, шырақтың, сіріңкенің жануы; ағзадағы тағамның тотығуы.|Горение топлива, газа, свечи, спички; окисление пищи в организме.|Burning fuel, gas, a candle or a match; food oxidation in our body.]]</p></div>
+    </div></div>
+  </div>
+  <aside class="notes">{{<p><b>Ауызша сұрау.</b> Әр сұрақты оқып, оқушыларды тыңдап, содан кейін картаны аударыңыз (→ немесе картаны басу).</p><p>4-сұрақта «тамақ қыздырғыш», «жанып тұрған от» сияқты мысал сұраңыз.</p>|<p><b>Устный опрос.</b> Прочитайте вопрос, выслушайте ответы, затем переверните карточку (→ или нажатием).</p><p>На вопрос 4 попросите примеры: костёр, грелка.</p>|<p><b>Oral quiz.</b> Read each question, listen to answers, then flip the card (→ or tap).</p><p>For question 4 ask for examples: a campfire, a hand warmer.</p>}}</aside>
+</section>
+
+<!-- ===================== 4. ҚАРА ЖӘШІК №1 ===================== -->
+<section class="slide" data-id="bb1" data-stage="3" data-t="«Қара жәшік» №1|«Чёрный ящик» № 1|“Black box” No. 1">
+  <header class="sh a"><h2><span class="h-ico">⬛</span>[[«Қара жәшік» №1|«Чёрный ящик» № 1|“Black box” No. 1]]</h2><p class="lead">[[Ішін көрмейміз — тек температураны бақылаймыз|Внутрь заглянуть нельзя — наблюдаем только за температурой|We can't look inside — we only watch the temperature]]</p></header>
+  <div class="body bb-layout">
+    <div class="bb-stage a" style="--d:.15">
+      <div class="bb-flow bbox" data-type="exo">
+        <div class="bb-io bb-in">
+          <svg viewBox="0 0 160 120" class="mols"><g class="m1"><circle cx="46" cy="44" r="20" fill="#7dd3fc"/><circle cx="74" cy="44" r="14" fill="#e2e8f0"/></g><g class="m2"><circle cx="98" cy="80" r="20" fill="#f9a8d4"/><circle cx="126" cy="70" r="13" fill="#fde68a"/></g></svg>
+          <span>[[Бастапқы заттар|Исходные вещества|Reactants]]</span>
+        </div>
+        <div class="bb-arrow"><i></i><i></i><i></i></div>
+        <div class="bb-boxwrap">
+          <svg class="bb-svg" viewBox="0 0 380 370" aria-hidden="true">
+            <ellipse class="bb-halo" cx="185" cy="336" rx="175" ry="28"/>
+            <g class="bb-inside"><g class="bbi"><use href="#symFlame" x="92" y="128" width="116" height="170"/></g></g>
+            <g class="bb-waves"><path d="M120 40q12-14 0-28t0-28"/><path d="M185 34q12-14 0-28t0-28"/><path d="M250 40q12-14 0-28t0-28"/></g>
+            <polygon class="bb-right" points="262,122 332,62 332,272 262,332"/>
+            <polygon class="bb-front" points="40,122 262,122 262,332 40,332"/>
+            <g class="bb-lid"><polygon class="bb-top" points="40,122 110,62 332,62 262,122"/></g>
+            <polyline class="bb-edge" points="40,332 40,122 110,62 332,62 332,272 262,332 40,332"/>
+            <text class="bb-q" x="151" y="268" text-anchor="middle">?</text>
+          </svg>
+        </div>
+        <div class="bb-arrow"><i></i><i></i><i></i></div>
+        <div class="bb-io bb-out">
+          <div class="bb-unknown">?</div>
+          <svg viewBox="0 0 160 120" class="mols prod"><g class="m3"><circle cx="50" cy="60" r="20" fill="#86efac"/><circle cx="78" cy="48" r="14" fill="#7dd3fc"/><circle cx="78" cy="74" r="14" fill="#f9a8d4"/></g><g class="m4"><circle cx="120" cy="60" r="16" fill="#fde68a"/></g></svg>
+          <span>[[Реакция өнімдері|Продукты реакции|Products]]</span>
+        </div>
+        <div class="thermo bb-th" data-min="0" data-max="70" data-t0="20" data-t1="58"></div>
+      </div>
+      <div class="bb-ctl">
+        <button class="btn exo" data-reveal="#bb1-obs">▶ [[Реакцияны бастау|Запустить реакцию|Start the reaction]]</button>
+        <button class="btn ghost" data-reveal="#bb1-concl">🔓 [[Жәшікті ашу|Открыть ящик|Open the box]]</button>
+      </div>
+      <div class="obs frag exo" id="bb1-obs" data-fx="bbStart">👀 [[Бақылау: температура <b>көтерілді</b>!|Наблюдение: температура <b>повысилась</b>!|Observation: the temperature <b>went up</b>!]] <span class="f">20 °C → 58 °C</span></div>
+      <div class="concl frag exo" id="bb1-concl" data-fx="bbOpen">
+        <b>[[Қорытынды|Вывод|Conclusion]]:</b> [[ішінде <b class="t-exo">экзотермиялық</b> реакция жүреді — энергия <b>бөлінеді</b>.|внутри протекает <b class="t-exo">экзотермическая</b> реакция — энергия <b>выделяется</b>.|an <b class="t-exo">exothermic</b> reaction takes place inside — energy is <b>released</b>.]]
+        <div class="concl-ex">[[Мысалы|Например|For example]]: <span class="f">CH4 + 2O2 → CO2 + 2H2O + Q</span></div>
+      </div>
+    </div>
+    <div class="bb-side">
+      <div class="qlist card a a-right" style="--d:.35">
+        <h3>[[Сұрақтар|Вопросы|Questions]] <span class="hint-pts" data-open-scores>🏆 [[дәлелді болжам — 1 ұпай|обоснованная гипотеза — 1 балл|a reasoned guess = 1 point]]</span></h3>
+        <div class="qa" data-toggle><div class="q"><b>1</b>[[Жәшіктің ішінде не болды?|Что произошло внутри ящика?|What happened inside the box?]]</div><div class="ans">[[Химиялық реакция жүрді — жаңа заттар түзілді.|Прошла химическая реакция — образовались новые вещества.|A chemical reaction took place — new substances formed.]]</div></div>
+        <div class="qa" data-toggle><div class="q"><b>2</b>[[Энергия бөлінді ме, әлде сіңірілді ме?|Выделилась или поглотилась энергия?|Was energy released or absorbed?]]</div><div class="ans">[[Энергия <b>бөлінді</b> — жылу сыртқа шықты.|Энергия <b>выделилась</b> — теплота вышла наружу.|Energy was <b>released</b> — heat came out.]]</div></div>
+        <div class="qa" data-toggle><div class="q"><b>3</b>[[Бұл реакция қай түрге жатады?|К какому типу относится реакция?|What type of reaction is it?]]</div><div class="ans">[[<b class="t-exo">Экзотермиялық</b> реакция.|<b class="t-exo">Экзотермическая</b> реакция.|An <b class="t-exo">exothermic</b> reaction.]]</div></div>
+        <div class="qa" data-toggle><div class="q"><b>4</b>[[Қоршаған ортаның температурасы қалай өзгереді?|Как изменится температура окружающей среды?|How does the temperature of the surroundings change?]]</div><div class="ans">[[Температура <b>көтеріледі</b>.|Температура <b>повышается</b>.|It <b>rises</b>.]]</div></div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">{{<p><b>«Қара жәшік» әдісі.</b> «Реакцияны бастау» → термометр көтеріледі. Сұрақ: «Жәшіктің ішінде не болып жатыр? Энергия қайда кетті?»</p><p>Топтар болжам айтады — әр дәлелді болжамға 1 ұпай (🏆 батырмасы). Содан кейін «Жәшікті ашу».</p>|<p><b>Метод «Чёрный ящик».</b> «Запустить реакцию» → термометр растёт. Вопрос: «Что происходит внутри ящика? Куда направляется энергия?»</p><p>Группы выдвигают гипотезы — за каждую обоснованную 1 балл (кнопка 🏆). Затем «Открыть ящик».</p>|<p><b>“Black box” method.</b> “Start the reaction” → the thermometer rises. Ask: “What is happening inside? Where does the energy go?”</p><p>Teams make hypotheses — 1 point for each reasoned one (🏆 button). Then “Open the box”.</p>}}</aside>
+</section>
+
+<!-- ===================== 5. ҚАРА ЖӘШІК №2 ===================== -->
+<section class="slide" data-id="bb2" data-stage="3" data-t="«Қара жәшік» №2|«Чёрный ящик» № 2|“Black box” No. 2">
+  <header class="sh a"><h2><span class="h-ico">⬛</span>[[«Қара жәшік» №2|«Чёрный ящик» № 2|“Black box” No. 2]]</h2><p class="lead">[[Бұл жолы не болады екен?|А что произойдёт теперь?|What will happen this time?]]</p></header>
+  <div class="body bb-layout">
+    <div class="bb-stage a" style="--d:.15">
+      <div class="bb-flow bbox" data-type="endo">
+        <div class="bb-io bb-in">
+          <svg viewBox="0 0 160 120" class="mols"><g class="m1"><circle cx="46" cy="44" r="20" fill="#c4b5fd"/><circle cx="74" cy="44" r="14" fill="#e2e8f0"/></g><g class="m2"><circle cx="98" cy="80" r="20" fill="#fdba74"/><circle cx="126" cy="70" r="13" fill="#a5f3fc"/></g></svg>
+          <span>[[Бастапқы заттар|Исходные вещества|Reactants]]</span>
+        </div>
+        <div class="bb-arrow"><i></i><i></i><i></i></div>
+        <div class="bb-boxwrap">
+          <svg class="bb-svg" viewBox="0 0 380 370" aria-hidden="true">
+            <ellipse class="bb-halo" cx="185" cy="336" rx="175" ry="28"/>
+            <g class="bb-inside"><g class="bbi"><use href="#symSnow" x="76" y="150" width="150" height="150"/></g></g>
+            <g class="bb-frost">
+              <use href="#symSnow" x="20" y="20" width="40" height="40"/><use href="#symSnow" x="300" y="12" width="32" height="32"/>
+              <use href="#symSnow" x="330" y="150" width="36" height="36"/><use href="#symSnow" x="6" y="250" width="34" height="34"/><use href="#symSnow" x="170" y="6" width="28" height="28"/>
+            </g>
+            <polygon class="bb-right" points="262,122 332,62 332,272 262,332"/>
+            <polygon class="bb-front" points="40,122 262,122 262,332 40,332"/>
+            <g class="bb-lid"><polygon class="bb-top" points="40,122 110,62 332,62 262,122"/></g>
+            <polyline class="bb-ice" points="40,332 40,122 110,62 332,62 332,272 262,332 40,332"/>
+            <text class="bb-q" x="151" y="268" text-anchor="middle">?</text>
+          </svg>
+        </div>
+        <div class="bb-arrow"><i></i><i></i><i></i></div>
+        <div class="bb-io bb-out">
+          <div class="bb-unknown">?</div>
+          <svg viewBox="0 0 160 120" class="mols prod"><g class="m3"><circle cx="50" cy="60" r="20" fill="#a5f3fc"/><circle cx="78" cy="48" r="14" fill="#c4b5fd"/><circle cx="78" cy="74" r="14" fill="#fdba74"/></g><g class="m4"><circle cx="120" cy="60" r="16" fill="#e2e8f0"/></g></svg>
+          <span>[[Реакция өнімдері|Продукты реакции|Products]]</span>
+        </div>
+        <div class="thermo bb-th" data-min="0" data-max="70" data-t0="20" data-t1="6"></div>
+      </div>
+      <div class="bb-ctl">
+        <button class="btn endo" data-reveal="#bb2-obs">▶ [[Реакцияны бастау|Запустить реакцию|Start the reaction]]</button>
+        <button class="btn ghost" data-reveal="#bb2-concl">🔓 [[Жәшікті ашу|Открыть ящик|Open the box]]</button>
+      </div>
+      <div class="obs frag endo" id="bb2-obs" data-fx="bbStart">👀 [[Бақылау: температура <b>төмендеді</b>!|Наблюдение: температура <b>понизилась</b>!|Observation: the temperature <b>went down</b>!]] <span class="f">20 °C → 6 °C</span></div>
+      <div class="concl frag endo" id="bb2-concl" data-fx="bbOpen">
+        <b>[[Қорытынды|Вывод|Conclusion]]:</b> [[ішінде <b class="t-endo">эндотермиялық</b> реакция жүреді — энергия қоршаған ортадан <b>сіңіріледі</b>.|внутри протекает <b class="t-endo">эндотермическая</b> реакция — энергия <b>поглощается</b> из окружающей среды.|an <b class="t-endo">endothermic</b> reaction takes place inside — energy is <b>absorbed</b> from the surroundings.]]
+        <div class="concl-ex">[[Мысалы: ас содасы + лимон қышқылы — қоспа суып кетеді|Например: пищевая сода + лимонная кислота — смесь охлаждается|For example: baking soda + citric acid — the mixture gets cold]]</div>
+      </div>
+    </div>
+    <div class="bb-side">
+      <div class="qlist card a a-right" style="--d:.35">
+        <h3>[[Сұрақтар|Вопросы|Questions]] <span class="hint-pts" data-open-scores>🏆 [[дәлелді болжам — 1 ұпай|обоснованная гипотеза — 1 балл|a reasoned guess = 1 point]]</span></h3>
+        <div class="qa" data-toggle><div class="q"><b>1</b>[[Температура қалай өзгерді?|Какое изменение температуры наблюдается?|How did the temperature change?]]</div><div class="ans">[[Температура <b>төмендеді</b> — айнала суыды.|Температура <b>понизилась</b> — вокруг стало холоднее.|It <b>dropped</b> — the surroundings got colder.]]</div></div>
+        <div class="qa" data-toggle><div class="q"><b>2</b>[[Жүйе энергияны қайдан алады?|Откуда система получает энергию?|Where does the system get its energy from?]]</div><div class="ans">[[<b>Қоршаған ортадан</b> — жылуды сырттан сіңіреді.|<b>Из окружающей среды</b> — поглощает теплоту извне.|<b>From the surroundings</b> — it takes heat in from outside.]]</div></div>
+        <div class="qa" data-toggle><div class="q"><b>3</b>[[Бұл реакция қай түрге жатады?|К какому типу относится реакция?|What type of reaction is it?]]</div><div class="ans">[[<b class="t-endo">Эндотермиялық</b> реакция.|<b class="t-endo">Эндотермическая</b> реакция.|An <b class="t-endo">endothermic</b> reaction.]]</div></div>
+        <div class="qa" data-toggle><div class="q"><b>4</b>[[Бұл құбылысты қалай түсіндіруге болады?|Как можно объяснить наблюдаемое явление?|How can we explain what we saw?]]</div><div class="ans">[[Реакция жүру үшін айналадан жылу алады, сондықтан қоршаған орта суиды.|Реакция забирает теплоту у окружающей среды, поэтому вокруг становится холоднее.|The reaction takes heat from its surroundings, so they cool down.]]</div></div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">{{<p>Бірінші жәшікпен салыстыру: «Неге бұл жолы температура төмендеді?»</p><p>Негізгі ой: энергия жоғалмайды — реакция оны қоршаған ортадан <b>алады</b>.</p>|<p>Сравнить с первым ящиком: «Почему теперь температура понизилась?»</p><p>Ключевая мысль: энергия не исчезает — реакция <b>забирает</b> её у окружающей среды.</p>|<p>Compare with box 1: “Why did the temperature drop this time?”</p><p>Key idea: energy does not vanish — the reaction <b>takes</b> it from the surroundings.</p>}}</aside>
+</section>
+
+<!-- ===================== 6. ҚАРА ЖӘШІКТІ АШ ===================== -->
+<section class="slide" data-id="openbox" data-stage="3" data-t="Қара жәшікті аш!|Раскрой чёрный ящик!|Open the black box!">
+  <header class="sh a"><h2><span class="h-ico">🔍</span>[[Қара жәшікті аш!|Раскрой чёрный ящик!|Open the black box!]]</h2><p class="lead">[[Бақылау бойынша реакция түрін таңда|По наблюдению выбери тип реакции|Choose the reaction type from the observation]]</p></header>
+  <div class="body">
+    <div class="otable a" style="--d:.15">
+      <div class="orow ohead"><div>[[Бақылау|Наблюдение|Observation]]</div><div>[[Реакция түрі|Тип реакции|Reaction type]]</div><div>[[Энергетикалық процесс|Энергетический процесс|Energy process]]</div></div>
+      <div class="orow choose" data-answer="exo">
+        <div class="o-obs"><span class="o-ic">🔥</span>[[Ағаш жанғанда жылу бөлінеді|При горении древесины выделяется тепло|Burning wood gives off heat]]</div>
+        <div class="o-pick"><button class="pick exo" data-pick="exo">[[Экзо|Экзо|Exo]]</button><button class="pick endo" data-pick="endo">[[Эндо|Эндо|Endo]]</button></div>
+        <div class="o-res"><span class="t-exo">⬆ [[Жылу бөлінеді|Теплота выделяется|Heat is released]]</span></div>
+      </div>
+      <div class="orow choose" data-answer="endo">
+        <div class="o-obs"><span class="o-ic">🧪</span>[[<span class="f">CaCO3</span> айырылуы үшін қыздыру қажет|При разложении <span class="f">CaCO3</span> требуется нагревание|Decomposing <span class="f">CaCO3</span> needs heating]]</div>
+        <div class="o-pick"><button class="pick exo" data-pick="exo">[[Экзо|Экзо|Exo]]</button><button class="pick endo" data-pick="endo">[[Эндо|Эндо|Endo]]</button></div>
+        <div class="o-res"><span class="t-endo">⬇ [[Жылу сіңіріледі|Теплота поглощается|Heat is absorbed]]</span></div>
+      </div>
+      <div class="orow choose" data-answer="exo">
+        <div class="o-obs"><span class="o-ic">🔥</span>[[Табиғи газ жанғанда жылу бөлінеді|При горении природного газа выделяется тепло|Burning natural gas gives off heat]]</div>
+        <div class="o-pick"><button class="pick exo" data-pick="exo">[[Экзо|Экзо|Exo]]</button><button class="pick endo" data-pick="endo">[[Эндо|Эндо|Endo]]</button></div>
+        <div class="o-res"><span class="t-exo">⬆ [[Жылу бөлінеді|Теплота выделяется|Heat is released]]</span></div>
+      </div>
+      <div class="orow choose" data-answer="endo">
+        <div class="o-obs"><span class="o-ic">🌿</span>[[Фотосинтез кезінде жарық энергиясы сіңіріледі|При фотосинтезе поглощается световая энергия|Photosynthesis absorbs light energy]]</div>
+        <div class="o-pick"><button class="pick exo" data-pick="exo">[[Экзо|Экзо|Exo]]</button><button class="pick endo" data-pick="endo">[[Эндо|Эндо|Endo]]</button></div>
+        <div class="o-res"><span class="t-endo">⬇ [[Жарық энергиясы сіңіріледі|Поглощается энергия света|Light energy is absorbed]]</span></div>
+      </div>
+    </div>
+    <div class="row-btns a" style="--d:.5">
+      <button class="btn ghost sm" data-showall>👁 [[Барлық жауапты көрсету|Показать все ответы|Show all answers]]</button>
+      <button class="btn ghost sm" data-resetchoose>↺ [[Қайта бастау|Сначала|Start over]]</button>
+    </div>
+  </div>
+  <aside class="notes">{{<p>Оқушылар кезекпен шығып, батырманы басады. Дұрыс жауап: экзо; эндо; экзо; эндо.</p>|<p>Учащиеся по очереди выходят и нажимают кнопку. Ответы: экзо; эндо; экзо; эндо.</p>|<p>Students come up in turn and tap a button. Answers: exo; endo; exo; endo.</p>}}</aside>
+</section>
+
+<!-- ===================== 7. ЭНЕРГИЯ ҚАЙДАН? ===================== -->
+<section class="slide" data-id="bonds" data-stage="4" data-t="Энергия қайдан шығады?|Откуда берётся энергия?|Where does the energy come from?">
+  <header class="sh a"><h2><span class="h-ico">⚡</span>[[Энергия қайдан шығады?|Откуда берётся энергия?|Where does the energy come from?]]</h2><p class="lead">[[Әр заттың белгілі бір энергия қоры бар. Барлық химиялық реакциялар энергияны бөлу немесе сіңіру арқылы жүреді.|Каждое вещество обладает запасом энергии. Все химические реакции идут с выделением или поглощением энергии.|Every substance stores energy. Every chemical reaction either releases or absorbs energy.]]</p></header>
+  <div class="body bonds-layout">
+    <div class="bond-stage card a" style="--d:.2">
+      <div class="bond-legend"><span>[[Бастапқы заттар|Исходные вещества|Reactants]]</span><span class="bl-ar">⟶</span><span>[[Реакция өнімдері|Продукты реакции|Products]]</span></div>
+      <svg class="bond-svg" viewBox="0 0 700 400" aria-hidden="true">
+        <text class="bs-eq" x="350" y="40" text-anchor="middle">H₂ + Cl₂ → 2HCl</text>
+        <g class="bs-ein">
+          <path d="M20 205h60" marker-end="url(#mEndo)"/><path d="M330 205h-60" marker-end="url(#mEndo)"/>
+          <path d="M175 382v-40" marker-end="url(#mEndo)"/>
+          <text x="175" y="246" text-anchor="middle" class="bs-lbl endo">+E</text>
+        </g>
+        <g class="bs-burst"><circle cx="535" cy="205" r="150" fill="url(#gFlameOuter)" filter="url(#fSoft)" opacity=".55"/></g>
+        <line class="bond b-hh" x1="130" y1="110" x2="186" y2="110"/>
+        <line class="bond b-clcl" x1="122" y1="290" x2="200" y2="290"/>
+        <line class="bond b-hcl1" x1="480" y1="140" x2="550" y2="140"/>
+        <line class="bond b-hcl2" x1="480" y1="280" x2="550" y2="280"/>
+        <g class="atom" style="--x0:130px;--y0:110px;--x1:90px;--y1:80px;--x2:480px;--y2:140px"><circle r="26" fill="url(#gH)"/><text y="9" text-anchor="middle" class="al dark">H</text></g>
+        <g class="atom" style="--x0:186px;--y0:110px;--x1:262px;--y1:136px;--x2:480px;--y2:280px"><circle r="26" fill="url(#gH)"/><text y="9" text-anchor="middle" class="al dark">H</text></g>
+        <g class="atom" style="--x0:122px;--y0:290px;--x1:84px;--y1:322px;--x2:550px;--y2:140px"><circle r="36" fill="url(#gCl)"/><text y="10" text-anchor="middle" class="al">Cl</text></g>
+        <g class="atom" style="--x0:200px;--y0:290px;--x1:272px;--y1:286px;--x2:550px;--y2:280px"><circle r="36" fill="url(#gCl)"/><text y="10" text-anchor="middle" class="al">Cl</text></g>
+      </svg>
+      <div class="bond-btns">
+        <button class="btn endo sm" data-reveal="#bd-1">① [[Байланыстар үзіледі|Связи рвутся|Bonds break]]</button>
+        <button class="btn exo sm" data-reveal="#bd-2">② [[Жаңа байланыстар түзіледі|Образуются новые связи|New bonds form]]</button>
+      </div>
+    </div>
+    <div class="bond-info">
+      <div class="ebar in frag" id="bd-1" data-fx="bond1">
+        <div class="eb-top"><span>①&nbsp;[[Байланыстар <b>үзіледі</b> → энергия <b>сіңіріледі</b>|Связи <b>рвутся</b> → энергия <b>поглощается</b>|Bonds <b>break</b> → energy is <b>absorbed</b>]]</span><b class="f">≈ <span data-count="679">679</span> %kJ%</b></div>
+        <div class="track"><div class="fill" style="--w:.787"></div></div>
+      </div>
+      <div class="ebar out frag" id="bd-2" data-fx="bond2">
+        <div class="eb-top"><span>②&nbsp;[[Жаңа байланыстар <b>түзіледі</b> → энергия <b>бөлінеді</b>|Новые связи <b>образуются</b> → энергия <b>выделяется</b>|New bonds <b>form</b> → energy is <b>released</b>]]</span><b class="f">≈ <span data-count="863">863</span> %kJ%</b></div>
+        <div class="track"><div class="fill" style="--w:1"></div></div>
+      </div>
+      <div class="eres frag" id="bd-3">
+        <div class="f big">863 − 679 ≈ <b class="t-exo" data-count="184">184</b> %kJ%</div>
+        <p>[[Бөлінген энергия көп → жылу <b>бөлінеді</b> → <b class="t-exo">экзотермиялық</b> реакция.<br>Керісінше болса — <b class="t-endo">эндотермиялық</b>.|Выделилось больше, чем поглотилось → теплота <b>выделяется</b> → реакция <b class="t-exo">экзотермическая</b>.<br>Если наоборот — <b class="t-endo">эндотермическая</b>.|More energy is released than absorbed → heat is <b>given out</b> → <b class="t-exo">exothermic</b> reaction.<br>The other way round → <b class="t-endo">endothermic</b>.]]</p>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">{{<p>⭐ <b>Қосымша слайд</b> — уақыт болса. Байланысты үзуге энергия <b>жұмсалады</b>, жаңа байланыс түзілгенде энергия <b>бөлінеді</b>. Айырмасы — жылу эффектісі (оқулықтағы H₂ + Cl₂ теңдеуіндегі 184 кДж).</p>|<p>⭐ <b>Дополнительный слайд</b> — если есть время. На разрыв связей энергия <b>затрачивается</b>, при образовании связей — <b>выделяется</b>. Разность — тепловой эффект (184 кДж в уравнении H₂ + Cl₂ из учебника).</p>|<p>⭐ <b>Optional slide</b> — if time allows. Breaking bonds <b>takes</b> energy, forming bonds <b>releases</b> it. The difference is the heat effect (184 kJ in the textbook's H₂ + Cl₂ equation).</p>}}</aside>
+</section>
+
+<!-- ===================== 8. ЕКІ ТҮР ===================== -->
+<section class="slide" data-id="types" data-stage="4" data-t="Реакциялардың екі түрі|Два типа реакций|Two types of reactions">
+  <header class="sh a"><h2><span class="h-ico">🔥❄️</span>[[Реакциялардың екі түрі|Два типа реакций|Two types of reactions]]</h2><p class="lead">[[Химиялық реакция кезінде жылудың бөлінуіне немесе сіңірілуіне байланысты|По тому, выделяется или поглощается теплота при реакции|Depending on whether heat is released or absorbed]]</p></header>
+  <div class="body types-layout">
+    <div class="tcard exo a a-left" style="--d:.15">
+      <div class="tc-head"><h3>[[Экзотермиялық реакция|Экзотермическая реакция|Exothermic reaction]]</h3><span class="etym">[[грек. <i>экзо</i> — «сыртқа»|греч. <i>экзо</i> — «наружу»|Greek <i>exo</i> — “outside”]]</span></div>
+      <div class="tc-body">
+        <svg class="tube-svg out" viewBox="0 0 300 330" aria-hidden="true">
+          <g class="t-arrows">
+            <g transform="translate(150 236) rotate(180)"><g class="ar"><path d="M44 0h50" marker-end="url(#mExo)"/></g></g>
+            <g transform="translate(150 236) rotate(150)"><g class="ar d1"><path d="M44 0h50" marker-end="url(#mExo)"/></g></g>
+            <g transform="translate(150 236) rotate(120)"><g class="ar d2"><path d="M44 0h50" marker-end="url(#mExo)"/></g></g>
+            <g transform="translate(150 236) rotate(90)"><g class="ar"><path d="M44 0h50" marker-end="url(#mExo)"/></g></g>
+            <g transform="translate(150 236) rotate(60)"><g class="ar d1"><path d="M44 0h50" marker-end="url(#mExo)"/></g></g>
+            <g transform="translate(150 236) rotate(30)"><g class="ar d2"><path d="M44 0h50" marker-end="url(#mExo)"/></g></g>
+            <g transform="translate(150 236) rotate(0)"><g class="ar"><path d="M44 0h50" marker-end="url(#mExo)"/></g></g>
+            <g transform="translate(150 190) rotate(180)"><g class="ar d2"><path d="M40 0h50" marker-end="url(#mExo)"/></g></g>
+            <g transform="translate(150 190) rotate(0)"><g class="ar d1"><path d="M40 0h50" marker-end="url(#mExo)"/></g></g>
+          </g>
+          <path class="tube-liq exo" d="M124 140V236a26 26 0 0 0 52 0V140z"/>
+          <g class="bubbles"><circle cx="140" cy="220" r="5"/><circle cx="158" cy="200" r="4"/><circle cx="148" cy="236" r="3.5"/><circle cx="162" cy="226" r="5"/></g>
+          <path class="tube-glass" d="M120 20V236a30 30 0 0 0 60 0V20"/>
+          <path class="tube-rim" d="M112 20h76"/>
+        </svg>
+        <ul class="signs">
+          <li>🌡️ [[Қоршаған ортаның температурасы <b>көтеріледі</b>|Температура окружающей среды <b>повышается</b>|The surroundings get <b>hotter</b>]]</li>
+          <li>⚡ [[Энергия <b>бөлінеді</b>|Энергия <b>выделяется</b>|Energy is <b>released</b>]]</li>
+          <li class="f sgn"><span class="pill-q exo">+Q</span> <span class="pill-q exo">ΔH &lt; 0</span></li>
+        </ul>
+      </div>
+      <p class="tc-def">[[Жылу <b>бөле</b> жүретін реакция|Реакция, протекающая с <b>выделением</b> теплоты|A reaction that <b>gives out</b> heat]]</p>
+    </div>
+
+    <div class="tcard endo frag" id="types-endo">
+      <div class="tc-head"><h3>[[Эндотермиялық реакция|Эндотермическая реакция|Endothermic reaction]]</h3><span class="etym">[[грек. <i>эндо</i> — «ішке»|греч. <i>эндо</i> — «внутрь»|Greek <i>endo</i> — “inside”]]</span></div>
+      <div class="tc-body">
+        <svg class="tube-svg in" viewBox="0 0 300 330" aria-hidden="true">
+          <g class="t-arrows">
+            <g transform="translate(150 236) rotate(180)"><g class="ar"><path d="M100 0H50" marker-end="url(#mEndo)"/></g></g>
+            <g transform="translate(150 236) rotate(150)"><g class="ar d1"><path d="M100 0H50" marker-end="url(#mEndo)"/></g></g>
+            <g transform="translate(150 236) rotate(120)"><g class="ar d2"><path d="M100 0H50" marker-end="url(#mEndo)"/></g></g>
+            <g transform="translate(150 236) rotate(90)"><g class="ar"><path d="M100 0H50" marker-end="url(#mEndo)"/></g></g>
+            <g transform="translate(150 236) rotate(60)"><g class="ar d1"><path d="M100 0H50" marker-end="url(#mEndo)"/></g></g>
+            <g transform="translate(150 236) rotate(30)"><g class="ar d2"><path d="M100 0H50" marker-end="url(#mEndo)"/></g></g>
+            <g transform="translate(150 236) rotate(0)"><g class="ar"><path d="M100 0H50" marker-end="url(#mEndo)"/></g></g>
+            <g transform="translate(150 190) rotate(180)"><g class="ar d2"><path d="M96 0H46" marker-end="url(#mEndo)"/></g></g>
+            <g transform="translate(150 190) rotate(0)"><g class="ar d1"><path d="M96 0H46" marker-end="url(#mEndo)"/></g></g>
+          </g>
+          <path class="tube-liq endo" d="M124 140V236a26 26 0 0 0 52 0V140z"/>
+          <g class="flakes"><g><use href="#symSnow" x="132" y="170" width="20" height="20"/></g><g><use href="#symSnow" x="150" y="206" width="16" height="16"/></g><g><use href="#symSnow" x="134" y="232" width="14" height="14"/></g></g>
+          <path class="tube-glass" d="M120 20V236a30 30 0 0 0 60 0V20"/>
+          <path class="tube-rim" d="M112 20h76"/>
+        </svg>
+        <ul class="signs">
+          <li>🌡️ [[Температура <b>төмендеуі мүмкін</b>|Температура может <b>понижаться</b>|The temperature may <b>drop</b>]]</li>
+          <li>⚡ [[Энергия <b>сіңіріледі</b>|Энергия <b>поглощается</b>|Energy is <b>absorbed</b>]]</li>
+          <li class="f sgn"><span class="pill-q endo">−Q</span> <span class="pill-q endo">ΔH &gt; 0</span></li>
+        </ul>
+      </div>
+      <p class="tc-def">[[Жылу <b>сіңіре</b> жүретін реакция|Реакция, протекающая с <b>поглощением</b> теплоты|A reaction that <b>takes in</b> heat]]</p>
+    </div>
+  </div>
+  <aside class="notes">{{<p>Анықтамаларды дәптерге жазғызу. Грек сөздерін еске сақтау тәсілі: <b>экзо = exit (шығу)</b>, <b>эндо = enter (кіру)</b>.</p><p>Сурет — оқулықтағы 40-сурет: жебелер жылудың бағытын көрсетеді.</p>|<p>Записать определения в тетрадь. Подсказка для запоминания: <b>экзо = exit (выход)</b>, <b>эндо = enter (вход)</b>.</p><p>Рисунок — рис. 40 учебника: стрелки показывают направление теплоты.</p>|<p>Students copy the definitions. Memory trick: <b>exo = exit</b>, <b>endo = enter</b>.</p><p>The picture is textbook Fig. 40: arrows show which way heat flows.</p>}}</aside>
+</section>
+
+<!-- ===================== 9. ЭКЗО МЫСАЛДАР ===================== -->
+<section class="slide" data-id="exoex" data-stage="4" data-t="Экзотермиялық реакциялар: мысалдар|Экзотермические реакции: примеры|Exothermic reactions: examples">
+  <header class="sh a"><h2><span class="h-ico">🔥</span>[[Экзотермиялық реакциялар: мысалдар|Экзотермические реакции: примеры|Exothermic reactions: examples]]</h2></header>
+  <div class="body ex-grid">
+    <div class="excard exo a" style="--d:.1">
+      <svg class="mini" viewBox="0 0 200 160" aria-hidden="true">
+        <ellipse cx="100" cy="142" rx="74" ry="12" class="glow-o"/>
+        <g class="flick"><use href="#symFlame" x="52" y="34" width="44" height="78"/></g>
+        <g class="flick d1"><use href="#symFlame" x="84" y="10" width="54" height="100"/></g>
+        <g class="flick d2"><use href="#symFlame" x="124" y="40" width="40" height="70"/></g>
+        <path d="M36 134L58 104L96 98L122 108L152 100L170 128L142 142L68 144Z" fill="#23262e" stroke="#3a3f4b" stroke-width="2"/>
+        <path d="M66 130L84 117L102 125L126 115L146 124" class="ember" fill="none" stroke-width="3.5"/>
+      </svg>
+      <div class="ex-txt"><h4>[[Көміртектің (көмірдің) жануы|Горение углерода (угля)|Burning carbon (coal)]]</h4><div class="f eq">C + O2 → CO2 + <b class="t-exo">Q</b></div></div>
+    </div>
+    <div class="excard exo a" style="--d:.25">
+      <svg class="mini" viewBox="0 0 200 160" aria-hidden="true">
+        <ellipse cx="100" cy="150" rx="60" ry="8" class="glow-b"/>
+        <g class="flick"><use href="#symFlameBlue" x="70" y="18" width="60" height="90"/></g>
+        <rect x="58" y="104" width="84" height="12" rx="6" fill="#9aa3b5"/><rect x="88" y="116" width="24" height="26" fill="#7a8396"/><rect x="62" y="140" width="76" height="12" rx="4" fill="#5b6478"/>
+        <text x="150" y="40" class="mini-lbl">CH₄</text>
+      </svg>
+      <div class="ex-txt"><h4>[[Метанның (табиғи газдың) жануы|Горение метана (природного газа)|Burning methane (natural gas)]]</h4><div class="f eq">CH4 + 2O2 → CO2 + 2H2O + <b class="t-exo">Q</b></div></div>
+    </div>
+    <div class="excard exo a" style="--d:.4">
+      <svg class="mini" viewBox="0 0 200 160" aria-hidden="true">
+        <g class="heatw"><path d="M80 44q8-10 0-20t0-20"/><path d="M104 40q8-10 0-20t0-20"/><path d="M128 44q8-10 0-20t0-20"/></g>
+        <path d="M62 60h76v8l-4 2v64a12 12 0 0 1-12 12H78a12 12 0 0 1-12-12V70l-4-2z" class="beaker"/>
+        <path d="M68 96h64v38a10 10 0 0 1-10 10H78a10 10 0 0 1-10-10z" class="liq-warm"/>
+        <rect x="150" y="40" width="10" height="90" rx="5" class="th-glass-mini"/><rect x="152.5" y="80" width="5" height="50" rx="2.5" class="th-rise"/><circle cx="155" cy="134" r="9" fill="#ef4444"/>
+        <circle cx="100" cy="74" r="5" class="drop"/>
+      </svg>
+      <div class="ex-txt"><h4>[[Бейтараптану реакциясы|Реакция нейтрализации|Neutralisation]]</h4><div class="f eq">HCl + NaOH → NaCl + H2O + <b class="t-exo">Q</b></div></div>
+    </div>
+    <div class="excard exo a" style="--d:.55">
+      <svg class="mini" viewBox="0 0 200 160" aria-hidden="true">
+        <g class="pop"><circle cx="100" cy="128" r="30" fill="url(#gFlameOuter)" filter="url(#fSoft)"/><path d="M100 98l6 18 18-6-12 14 14 10-18 0 2 18-10-14-10 14 2-18-18 0 14-10-12-14 18 6z" fill="#ffd23f"/></g>
+        <path class="tube-glass sm" d="M84 10V104a16 16 0 0 0 32 0V10" transform="rotate(180 100 70)"/>
+        <text x="148" y="40" class="mini-lbl">H₂</text>
+        <text x="30" y="150" class="mini-lbl pop-t">💥</text>
+      </svg>
+      <div class="ex-txt"><h4>[[Сутектің жануы (39-сурет)|Горение водорода (рис. 39)|Burning hydrogen (Fig. 39)]]</h4><div class="f eq">2H2 + O2 → 2H2O + <b class="t-exo">Q</b></div></div>
+    </div>
+    <p class="ex-note a" style="--d:.8">💡 [[Экзотермиялық реакция кезінде зат бөлшектері үлкен жылдамдықпен қозғалады — олардың кинетикалық энергиясы жоғары болады.|При экзотермической реакции частицы движутся с большой скоростью — их кинетическая энергия высока.|In an exothermic reaction particles move very fast — their kinetic energy is high.]]</p>
+  </div>
+  <aside class="notes">{{<p>Теңдеулерді дәптерге жазғызу. Әр мысалды күнделікті өмірмен байланыстыру: көмір пеші, газ плитасы, сутек — болашақ таза отын.</p>|<p>Записать уравнения в тетрадь. Связать с жизнью: угольная печь, газовая плита, водород — топливо будущего.</p>|<p>Students copy the equations. Link to daily life: a coal stove, a gas cooker, hydrogen as a clean fuel.</p>}}</aside>
+</section>
+
+<!-- ===================== 10. ЭНДО МЫСАЛДАР ===================== -->
+<section class="slide" data-id="endoex" data-stage="4" data-t="Эндотермиялық реакциялар: мысалдар|Эндотермические реакции: примеры|Endothermic reactions: examples">
+  <header class="sh a"><h2><span class="h-ico">❄️</span>[[Эндотермиялық реакциялар: мысалдар|Эндотермические реакции: примеры|Endothermic reactions: examples]]</h2></header>
+  <div class="body ex-grid">
+    <div class="excard endo a" style="--d:.1">
+      <svg class="mini" viewBox="0 0 200 160" aria-hidden="true">
+        <g class="co2"><text x="128" y="40" class="mini-lbl">CO₂</text><circle cx="112" cy="34" r="4"/><circle cx="120" cy="20" r="3"/></g>
+        <g transform="rotate(-28 100 80)"><path class="tube-glass sm" d="M84 10V96a16 16 0 0 0 32 0V10"/><path d="M87 78h26v18a13 13 0 0 1-26 0z" fill="#f4f4f5"/></g>
+        <g class="flick"><use href="#symFlame" x="104" y="104" width="30" height="42"/></g>
+        <use href="#symBurner" x="80" y="120" width="80" height="40"/>
+      </svg>
+      <div class="ex-txt"><h4>[[Кальций карбонатының айырылуы|Разложение карбоната кальция|Decomposition of calcium carbonate]]</h4><div class="f eq">CaCO3 → CaO + CO2 − <b class="t-endo">Q</b></div></div>
+    </div>
+    <div class="excard endo a" style="--d:.25">
+      <svg class="mini" viewBox="0 0 200 160" aria-hidden="true">
+        <g transform="rotate(-20 100 80)"><path class="cuoh" d="M87 60h26v36a13 13 0 0 1-26 0z"/><path class="tube-glass sm" d="M84 10V96a16 16 0 0 0 32 0V10"/></g>
+        <g class="flick"><use href="#symFlame" x="108" y="106" width="28" height="40"/></g>
+        <use href="#symBurner" x="82" y="122" width="76" height="38"/>
+        <text x="16" y="40" class="mini-lbl cu1">🔵→⚫</text>
+      </svg>
+      <div class="ex-txt"><h4>[[Мыс(II) гидроксидінің айырылуы|Разложение гидроксида меди(II)|Decomposition of copper(II) hydroxide]]</h4><div class="f eq">Cu(OH)2 → CuO + H2O − <b class="t-endo">Q</b></div></div>
+    </div>
+    <div class="excard endo a" style="--d:.4">
+      <svg class="mini" viewBox="0 0 200 160" aria-hidden="true">
+        <g class="sun"><circle cx="40" cy="36" r="20" fill="url(#gSun)"/><g class="rays" stroke="#fbbf24" stroke-width="4" stroke-linecap="round"><path d="M40 6v-4M40 70v-4M10 36H6M74 36h-4M19 15l-3-3M64 60l-3-3M19 57l-3 3M64 12l-3 3"/></g></g>
+        <path class="light" d="M58 50l40 30" stroke="#fde047" stroke-width="3" stroke-dasharray="6 6"/>
+        <path d="M100 140C60 120 70 70 150 52C160 110 140 140 100 140Z" fill="url(#gLeaf)"/><path d="M104 136C116 110 130 86 148 56" stroke="#14532d" stroke-width="3" fill="none"/>
+        <text x="20" y="130" class="mini-lbl sm">CO₂ + H₂O</text><text x="150" y="150" class="mini-lbl sm">O₂ ↑</text>
+      </svg>
+      <div class="ex-txt"><h4>[[Фотосинтез (жарық энергиясы сіңіріледі)|Фотосинтез (поглощается энергия света)|Photosynthesis (light energy is absorbed)]]</h4><div class="f eq sm">6CO2 + 6H2O → C6H12O6 + 6O2</div></div>
+    </div>
+    <div class="excard endo a" style="--d:.55">
+      <svg class="mini" viewBox="0 0 200 160" aria-hidden="true">
+        <rect x="70" y="6" width="22" height="34" rx="3" fill="#38bdf8"/><rect x="92" y="6" width="22" height="34" rx="3" fill="#e2e8f0"/><text x="81" y="30" text-anchor="middle" class="mini-lbl sm dark">−</text><text x="103" y="30" text-anchor="middle" class="mini-lbl sm dark">+</text>
+        <path d="M81 40V70M103 40v10h34v20" stroke="#64748b" stroke-width="3" fill="none"/>
+        <path d="M50 80h110v50a12 12 0 0 1-12 12H62a12 12 0 0 1-12-12z" class="beaker"/>
+        <path d="M54 96h102v34a9 9 0 0 1-9 9H63a9 9 0 0 1-9-9z" fill="url(#gWater)"/>
+        <rect x="78" y="70" width="6" height="58" fill="#334155"/><rect x="134" y="70" width="6" height="58" fill="#334155"/>
+        <g class="bub"><circle cx="81" cy="120" r="3"/><circle cx="76" cy="108" r="2.5"/><circle cx="86" cy="100" r="3"/><circle cx="137" cy="116" r="2.5"/></g>
+      </svg>
+      <div class="ex-txt"><h4>[[Судың айырылуы — электролиз (39-сурет)|Разложение воды — электролиз (рис. 39)|Splitting water — electrolysis (Fig. 39)]]</h4><div class="f eq">2H2O → 2H2 + O2 − <b class="t-endo">Q</b></div></div>
+    </div>
+    <p class="ex-note a" style="--d:.8">💡 [[Эндотермиялық реакция жүруі үшін энергия үнемі берілуі керек: <b>қыздыру</b>, <b>жарық</b> немесе <b>электр тогы</b>.|Для эндотермической реакции энергию нужно подводить постоянно: <b>нагревание</b>, <b>свет</b> или <b>электрический ток</b>.|An endothermic reaction needs a steady energy supply: <b>heating</b>, <b>light</b> or <b>electric current</b>.]]</p>
+  </div>
+  <aside class="notes">{{<p>Назар аударыңыз: сутектің жануы (экзо) мен судың айырылуы (эндо) — бір реакцияның екі бағыты. Біреуінде қанша жылу бөлінсе, екіншісінде сонша сіңіріледі.</p><p>Cu(OH)₂ қыздырғанда көк тұнба қара CuO-ға айналады.</p>|<p>Обратите внимание: горение водорода (экзо) и разложение воды (эндо) — одна реакция в двух направлениях. Сколько теплоты выделяется в одной, столько поглощается в другой.</p><p>При нагревании голубой Cu(OH)₂ превращается в чёрный CuO.</p>|<p>Note: burning hydrogen (exo) and splitting water (endo) are the same reaction in opposite directions. The heat released in one equals the heat absorbed in the other.</p><p>On heating, blue Cu(OH)₂ turns into black CuO.</p>}}</aside>
+</section>
+
+<!-- ===================== 11. ЖЫЛУ ЭФФЕКТІСІ Q / ΔH ===================== -->
+<section class="slide" data-id="qdh" data-stage="4" data-t="Жылу эффектісі: Q және ΔH|Тепловой эффект: Q и ΔH|Heat effect: Q and ΔH">
+  <header class="sh a"><h2><span class="h-ico">♨️</span>[[Реакцияның жылу эффектісі|Тепловой эффект реакции|The heat effect of a reaction]]</h2></header>
+  <div class="body qdh-layout">
+    <div class="qdh-left">
+      <div class="card defcard a" style="--d:.1">
+        <p>[[Химиялық реакция кезінде бөлінетін немесе сіңірілетін жылу мөлшері — реакцияның <b>жылу эффектісі</b>.|Количество теплоты, которое выделяется или поглощается при химической реакции, — <b>тепловой эффект</b> реакции.|The amount of heat released or absorbed in a chemical reaction is its <b>heat effect</b>.]]</p>
+        <div class="chips"><span class="chip">[[Белгісі|Обозначение|Symbol]]: <b class="f">Q</b></span><span class="chip">[[Бірлігі|Единицы|Units]]: <b>[[Дж, кДж|Дж, кДж|J, kJ]]</b></span></div>
+      </div>
+      <div class="card lawcard a" style="--d:.3">
+        <h4>⚖️ [[Энергияның сақталу заңы|Закон сохранения энергии|Conservation of energy]]</h4>
+        <p>[[Жүйе қанша энергия бөлсе, қоршаған орта сонша энергия алады. Жүйе қанша сіңірсе, қоршаған орта сонша жоғалтады.|Сколько энергии выделила система, столько получила окружающая среда. Сколько система поглотила, столько среда потеряла.|Whatever energy the system gives out, the surroundings gain. Whatever it takes in, the surroundings lose.]]</p>
+      </div>
+      <div class="card signcard a" style="--d:.5">
+        <div class="sg-row"><span class="sg-l exo">🔥 [[Экзо|Экзо|Exo]]</span><span class="f pill-q exo">+Q</span><span class="f pill-q exo">ΔH &lt; 0</span></div>
+        <div class="sg-row"><span class="sg-l endo">❄️ [[Эндо|Эндо|Endo]]</span><span class="f pill-q endo">−Q</span><span class="f pill-q endo">ΔH &gt; 0</span></div>
+        <div class="sg-formula f">ΔH = −Q</div>
+        <p class="sg-exp">[[<b>Q</b> — қоршаған орта алған жылу, <b>ΔH</b> — жүйенің өз энергиясының өзгерісі. Сондықтан таңбалары қарама-қарсы.|<b>Q</b> — теплота, полученная средой, <b>ΔH</b> — изменение энергии самой системы. Поэтому знаки противоположны.|<b>Q</b> is the heat the surroundings receive, <b>ΔH</b> is the change in the system's own energy — so the signs are opposite.]]</p>
+      </div>
+    </div>
+    <div class="qviz card m-exo a a-right" style="--d:.2">
+      <div class="qv-toggle">
+        <button class="seg exo on" data-qmode="exo">🔥 [[Экзо|Экзо|Exo]]</button>
+        <button class="seg endo" data-qmode="endo">❄️ [[Эндо|Эндо|Endo]]</button>
+      </div>
+      <div class="qv-main">
+        <div class="qv-bar sys"><div class="qv-val f"><span class="v-exo">ΔH &lt; 0</span><span class="v-endo">ΔH &gt; 0</span></div><div class="qv-track"><div class="qv-fill"></div></div><div class="qv-lbl">[[Жүйенің энергиясы|Энергия системы|System energy]]</div></div>
+        <div class="qv-center">
+          <div class="qv-env">[[Қоршаған орта|Окружающая среда|Surroundings]]</div>
+          <svg class="qv-svg" viewBox="0 0 360 360" aria-hidden="true">
+            <circle cx="180" cy="190" r="150" class="qv-ring"/>
+            <g class="qv-out">
+              <g transform="translate(180 200) rotate(-90)"><g class="ar"><path d="M70 0h60" marker-end="url(#mExo)"/></g></g>
+              <g transform="translate(180 200) rotate(-30)"><g class="ar d1"><path d="M70 0h60" marker-end="url(#mExo)"/></g></g>
+              <g transform="translate(180 200) rotate(30)"><g class="ar d2"><path d="M70 0h60" marker-end="url(#mExo)"/></g></g>
+              <g transform="translate(180 200) rotate(150)"><g class="ar d1"><path d="M70 0h60" marker-end="url(#mExo)"/></g></g>
+              <g transform="translate(180 200) rotate(210)"><g class="ar d2"><path d="M70 0h60" marker-end="url(#mExo)"/></g></g>
+            </g>
+            <g class="qv-in">
+              <g transform="translate(180 200) rotate(-90)"><g class="ar"><path d="M140 0H80" marker-end="url(#mEndo)"/></g></g>
+              <g transform="translate(180 200) rotate(-30)"><g class="ar d1"><path d="M140 0H80" marker-end="url(#mEndo)"/></g></g>
+              <g transform="translate(180 200) rotate(30)"><g class="ar d2"><path d="M140 0H80" marker-end="url(#mEndo)"/></g></g>
+              <g transform="translate(180 200) rotate(150)"><g class="ar d1"><path d="M140 0H80" marker-end="url(#mEndo)"/></g></g>
+              <g transform="translate(180 200) rotate(210)"><g class="ar d2"><path d="M140 0H80" marker-end="url(#mEndo)"/></g></g>
+            </g>
+            <path class="flask" d="M160 128v40l-36 64a14 14 0 0 0 12 21h88a14 14 0 0 0 12-21l-36-64v-40"/>
+            <path class="flask-liq" d="M138 214l-12 22a8 8 0 0 0 7 12h94a8 8 0 0 0 7-12l-12-22z"/>
+            <path class="flask-rim" d="M152 128h56"/>
+          </svg>
+          <div class="qv-sys">[[ЖҮЙЕ (әрекеттесетін заттар)|СИСТЕМА (реагирующие вещества)|SYSTEM (reacting substances)]]</div>
+        </div>
+        <div class="qv-bar env"><div class="qv-val f"><span class="v-exo">+Q</span><span class="v-endo">−Q</span></div><div class="qv-track"><div class="qv-fill"></div></div><div class="qv-lbl">[[Ортаның энергиясы|Энергия среды|Surroundings' energy]]</div></div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">{{<p>⚠️ ҚМЖ-да ΔH, оқулықта Q қолданылады — екеуін байланыстырыңыз: <b>ΔH = −Q</b>. Экзо: теңдеуде «+Q», ΔH теріс. Эндо: «−Q», ΔH оң.</p><p>Оң жақтағы «Экзо/Эндо» батырмасын басып, энергияның жүйеден ортаға (немесе керісінше) өтуін көрсетіңіз.</p>|<p>⚠️ В КСП используется ΔH, в учебнике — Q. Свяжите их: <b>ΔH = −Q</b>. Экзо: в уравнении «+Q», ΔH отрицательный. Эндо: «−Q», ΔH положительный.</p><p>Переключайте «Экзо/Эндо» справа, чтобы показать переход энергии из системы в среду и обратно.</p>|<p>⚠️ The lesson plan uses ΔH, the textbook uses Q. Link them: <b>ΔH = −Q</b>. Exo: “+Q” in the equation, ΔH negative. Endo: “−Q”, ΔH positive.</p><p>Use the Exo/Endo switch on the right to show energy moving between system and surroundings.</p>}}</aside>
+</section>
+
+<!-- ===================== 12. ТЕРМОХИМИЯЛЫҚ ТЕҢДЕУ ===================== -->
+<section class="slide" data-id="thermoeq" data-stage="4" data-t="Термохимиялық теңдеу|Термохимическое уравнение|Thermochemical equation">
+  <header class="sh a"><h2><span class="h-ico">📝</span>[[Термохимиялық теңдеу|Термохимическое уравнение|Thermochemical equation]]</h2><p class="lead">[[Жылу эффектісі көрсетілген химиялық реакция теңдеуі — <b>термохимиялық теңдеу</b>.|Уравнение химической реакции, в котором указан тепловой эффект, — <b>термохимическое уравнение</b>.|A chemical equation that shows the heat effect is a <b>thermochemical equation</b>.]]</p></header>
+  <div class="body teq-layout">
+    <div class="teq-row a" style="--d:.15"><span class="teq-l">[[Химиялық теңдеу|Химическое уравнение|Chemical equation]]</span><span class="f teq-e plain">H2 + Cl2 → 2HCl</span></div>
+    <div class="teq-row main a" style="--d:.35"><span class="teq-l">[[Термохимиялық теңдеу|Термохимическое уравнение|Thermochemical equation]]</span>
+      <span class="f teq-e teq">H2<span class="p-st">([[г|г|g]])</span> + Cl2<span class="p-st">([[г|г|g]])</span> → 2HCl<span class="p-st">([[г|г|g]])</span> <span class="p-q exo">+ 184 %kJ%</span></span>
+    </div>
+    <div class="callouts">
+      <div class="callout c-st frag" data-fx="teqHl" data-hl="st"><b>①</b> [[Заттардың <b>агрегаттық күйі</b>|<b>Агрегатное состояние</b> веществ|The <b>physical state</b> of each substance]]<small>[[(г) — газ, (с) — сұйық, (қ) — қатты|(г) — газ, (ж) — жидкость, (т) — твёрдое|(g) — gas, (l) — liquid, (s) — solid]]</small></div>
+      <div class="callout c-q frag" data-fx="teqHl" data-hl="q"><b>②</b> [[<b>Жылу эффектісі</b>: «+» — бөлінеді, «−» — сіңіріледі|<b>Тепловой эффект</b>: «+» — выделяется, «−» — поглощается|The <b>heat effect</b>: “+” released, “−” absorbed]]<small>[[мәні 1 реакция үшін, кДж|значение на уравнение реакции, кДж|value per equation as written, kJ]]</small></div>
+      <div class="callout c-std frag" data-fx="teqHl" data-hl="std"><b>③</b> [[<b>Стандартты жағдай</b>|<b>Стандартные условия</b>|<b>Standard conditions</b>]]<small class="f">T = 298 K (25 °C), p = 101,3 [[кПа|кПа|kPa]]</small></div>
+    </div>
+    <div class="teq-row second frag" data-fx="teqHl" data-hl="none"><span class="teq-l">[[Эндотермиялық мысал|Эндотермический пример|Endothermic example]]</span><span class="f teq-e">N2([[г|г|g]]) + O2([[г|г|g]]) → 2NO([[г|г|g]]) <span class="p-q endo">− 180 %kJ%</span></span></div>
+  </div>
+  <aside class="notes">{{<p>§22-дегі 5-сұрақ: «Химиялық теңдеудің термохимиялық теңдеуден айырмашылығы неде?» — агрегаттық күй мен жылу эффектісі көрсетіледі.</p><p>Оқулықта жылу эффектісін теңдеудің екінші жағына көшіру де көрсетілген: H₂ + Cl₂ − 184 кДж = 2HCl.</p>|<p>Вопрос 5 из §22: «Чем химическое уравнение отличается от термохимического?» — указаны агрегатные состояния и тепловой эффект.</p><p>В учебнике показан и перенос теплового эффекта в другую часть: H₂ + Cl₂ − 184 кДж = 2HCl.</p>|<p>Textbook §22, question 5: “How does a chemical equation differ from a thermochemical one?” — states and the heat effect are shown.</p><p>The textbook also shows moving the heat term across: H₂ + Cl₂ − 184 kJ = 2HCl.</p>}}</aside>
+</section>
+
+<!-- ===================== 13. КАЛОРИМЕТР ===================== -->
+<section class="slide" data-id="calor" data-stage="4" data-t="Калориметр|Калориметр|Calorimeter">
+  <header class="sh a"><h2><span class="h-ico">🧪</span>[[Жылу эффектісін қалай өлшейді?|Как измеряют тепловой эффект?|How is the heat effect measured?]]</h2><p class="lead">[[<b>Калориметр</b> — реакцияның жылу эффектісін өлшейтін құрал (41-сурет).|<b>Калориметр</b> — прибор для измерения теплового эффекта реакции (рис. 41).|A <b>calorimeter</b> measures the heat effect of a reaction (Fig. 41).]]</p></header>
+  <div class="body cal-layout">
+    <div class="cal-stage card a" style="--d:.15">
+      <svg class="cal-svg" viewBox="0 0 420 420" aria-hidden="true">
+        <path d="M70 120h280v240a30 30 0 0 1-30 30H100a30 30 0 0 1-30-30z" fill="url(#gMetal)"/>
+        <path d="M96 150h228v196a20 20 0 0 1-20 20H116a20 20 0 0 1-20-20z" class="cal-inner"/>
+        <path d="M100 196h220v150a16 16 0 0 1-16 16H116a16 16 0 0 1-16-16z" fill="url(#gWater)"/>
+        <g class="cal-bub"><circle cx="190" cy="320" r="5"/><circle cx="210" cy="300" r="4"/><circle cx="200" cy="340" r="3.5"/><circle cx="290" cy="330" r="4"/></g>
+        <rect x="60" y="104" width="300" height="22" rx="10" fill="#1d4ed8"/><rect x="112" y="96" width="70" height="12" rx="5" fill="#2563eb"/>
+        <rect x="96" y="150" width="228" height="6" fill="#000" opacity=".15"/>
+        <g class="cal-stir"><rect x="246" y="40" width="7" height="250" rx="3" fill="#94a3b8"/><rect x="226" y="282" width="48" height="7" rx="3" fill="#94a3b8"/><rect x="238" y="30" width="24" height="14" rx="4" fill="#ef4444"/></g>
+        <g class="cal-th"><rect x="150" y="24" width="18" height="290" rx="9" class="th-glass-mini"/><rect class="cal-th-liq" x="155" y="200" width="8" height="114" rx="4"/><circle cx="159" cy="318" r="13" fill="#ef4444"/></g>
+      </svg>
+      <div class="cal-read"><span class="f"><b class="cal-t">20,0</b> °C</span><button class="btn sm" data-cal>▶ [[Өлшеу|Измерить|Measure]]</button></div>
+    </div>
+    <div class="cal-right">
+      <div class="card a a-right" style="--d:.3">
+        <h4>[[Жылу эффектісінің шамасы тәуелді:|Величина теплового эффекта зависит от:|The size of the heat effect depends on:]]</h4>
+        <ul class="factors">
+          <li class="a" style="--d:.5"><span class="fi">🧬</span>[[бастапқы заттар мен реакция өнімдерінің <b>табиғатына</b>|<b>природы</b> исходных веществ и продуктов реакции|the <b>nature</b> of the reactants and products]]</li>
+          <li class="a" style="--d:.65"><span class="fi">🌡️</span>[[<b>температураға</b>|<b>температуры</b>|the <b>temperature</b>]]</li>
+          <li class="a" style="--d:.8"><span class="fi">🧊</span>[[реагенттер мен өнімдердің <b>агрегаттық күйлеріне</b>|<b>агрегатных состояний</b> реагентов и продуктов|the <b>physical states</b> of reactants and products]]</li>
+        </ul>
+      </div>
+      <div class="card tipcard a a-right" style="--d:.9">💡 [[Калориметр ішіндегі судың температурасы қаншаға өзгерсе, реакцияда соншалықты көп жылу бөлінді (немесе сіңірілді).|Чем сильнее меняется температура воды в калориметре, тем больше теплоты выделилось (или поглотилось).|The more the water temperature in the calorimeter changes, the more heat was released (or absorbed).]]</div>
+    </div>
+  </div>
+  <aside class="notes">{{<p>⭐ <b>Қосымша слайд.</b> «Өлшеу» батырмасы: араластырғыш қозғалады, су жылиды. Калориметрдің қос қабырғасы жылуды сыртқа шығармайды.</p>|<p>⭐ <b>Дополнительный слайд.</b> Кнопка «Измерить»: мешалка движется, вода нагревается. Двойные стенки калориметра не выпускают теплоту наружу.</p>|<p>⭐ <b>Optional slide.</b> “Measure”: the stirrer moves and the water warms up. The double wall keeps heat from escaping.</p>}}</aside>
+</section>
+
+<!-- ===================== 14. СЕН БІЛЕСІҢ БЕ? ===================== -->
+<section class="slide" data-id="calories" data-stage="4" data-t="Сен білесің бе?|А знаете ли вы?|Did you know?">
+  <header class="sh a"><h2><span class="h-ico">🤔</span>[[Сен білесің бе?|А знаете ли вы?|Did you know?]]</h2><p class="lead">[[Тағам ағзада баяу тотығады — бұл да <b class="t-exo">экзотермиялық</b> процесс! Тағамның энергиясын <b>калориямен</b> өлшейді.|Пища в организме медленно окисляется — это тоже <b class="t-exo">экзотермический</b> процесс! Энергию пищи измеряют в <b>калориях</b>.|Food slowly oxidises in our body — that's an <b class="t-exo">exothermic</b> process too! Food energy is measured in <b>calories</b>.]]</p></header>
+  <div class="body cal2-layout">
+    <div class="conv a a-zoom" style="--d:.2"><span class="f">1 [[кал|кал|cal]] = 4,1868 [[Дж|Дж|J]]</span><span class="sep">·</span><span class="f">1 [[ккал|ккал|kcal]] = 4,1868 %kJ%</span></div>
+    <div class="foods">
+      <div class="food flip frag keep a" style="--d:.3"><div class="flip-in"><div class="face front"><span class="fe">🍎</span><b>[[Алма|Яблоко|Apple]]</b><span class="kc">52 [[ккал|ккал|kcal]]</span></div><div class="face back"><span class="fe">🍎</span><b class="kj f">≈ <span data-count="218">218</span> %kJ%</b><small>52 × 4,1868</small></div></div></div>
+      <div class="food flip frag keep a" style="--d:.4"><div class="flip-in"><div class="face front"><span class="fe">🍌</span><b>[[Банан|Банан|Banana]]</b><span class="kc">89 [[ккал|ккал|kcal]]</span></div><div class="face back"><span class="fe">🍌</span><b class="kj f">≈ <span data-count="373">373</span> %kJ%</b><small>89 × 4,1868</small></div></div></div>
+      <div class="food flip frag keep a" style="--d:.5"><div class="flip-in"><div class="face front"><span class="fe">🥫</span><b>[[Консерві (оқулықтан)|Консервы (из учебника)|Tinned food (textbook)]]</b><span class="kc">320 [[ккал|ккал|kcal]]</span></div><div class="face back"><span class="fe">🥫</span><b class="kj f">≈ <span data-count="1340">1340</span> %kJ%</b><small>320 × 4,1868</small></div></div></div>
+      <div class="food flip frag keep a" style="--d:.6"><div class="flip-in"><div class="face front"><span class="fe">🍫</span><b>[[Шоколад|Шоколад|Chocolate]]</b><span class="kc">545 [[ккал|ккал|kcal]]</span></div><div class="face back"><span class="fe">🍫</span><b class="kj f">≈ <span data-count="2282">2282</span> %kJ%</b><small>545 × 4,1868</small></div></div></div>
+    </div>
+    <p class="foods-cap a" style="--d:.8">[[100 г өнімдегі энергия (шамамен). Картаны басып, кДж-ге айналдыр!|Энергия в 100 г продукта (примерно). Нажми на карточку — переведи в кДж!|Energy in 100 g (approx.). Tap a card to convert to kJ!]]</p>
+    <div class="body-fact a" style="--d:1">❤️ [[Бұл энергия қозғалуға, жұмыс істеуге және дене температурасын <b>36,6 °C</b> деңгейінде ұстауға жұмсалады.|Эта энергия идёт на движение, работу и поддержание температуры тела <b>36,6 °C</b>.|This energy powers movement, work and keeps our body at <b>36.6 °C</b>.]]</div>
+  </div>
+  <aside class="notes">{{<p>⭐ <b>Қосымша слайд</b> (оқулықтағы «Сен білесің бе?»). Ескерту: оқулықта «1 ккал = 4,1868 Дж» деп қате басылған — дұрысы <b>1 кал = 4,1868 Дж</b>, <b>1 ккал = 4,1868 кДж</b>.</p>|<p>⭐ <b>Дополнительный слайд</b> (рубрика учебника). Внимание: в учебнике опечатка «1 ккал = 4,1868 Дж» — верно <b>1 кал = 4,1868 Дж</b>, <b>1 ккал = 4,1868 кДж</b>.</p>|<p>⭐ <b>Optional slide</b> (textbook “Did you know?”). Note: the textbook misprints “1 kcal = 4.1868 J” — correct is <b>1 cal = 4.1868 J</b>, <b>1 kcal = 4.1868 kJ</b>.</p>}}</aside>
+</section>
+
+<!-- ===================== 15. ДИАГРАММА 1 (ЭКЗО) ===================== -->
+<section class="slide" data-id="diag1" data-stage="5" data-t="1-график: экзо|График 1: экзо|Graph 1: exo">
+  <header class="sh a"><h2><span class="h-ico">📈</span>[[Энергетикалық диаграмма: 1-график|Энергетическая диаграмма: график 1|Energy diagram: graph 1]]</h2><p class="lead">[[Тік ось — <b>энергия</b>, көлденең ось — <b>реакция барысы</b>|Вертикальная ось — <b>энергия</b>, горизонтальная — <b>ход реакции</b>|Vertical axis — <b>energy</b>, horizontal axis — <b>reaction progress</b>]]</p></header>
+  <div class="body diag-layout">
+    <div class="diag-box card a" style="--d:.1"><svg class="ediag" data-er="520" data-ep="200" data-ea="170" viewBox="0 0 900 560"></svg>
+      <div class="diag-btns">
+        <button class="btn ghost sm" data-reveal="#d1-lv">① [[Деңгейлер|Уровни|Levels]]</button>
+        <button class="btn ghost sm" data-reveal="#d1-ea">② <span class="f">Eₐ</span></button>
+        <button class="btn exo sm" data-reveal="#d1-dh">③ <span class="f">ΔH</span></button>
+      </div>
+    </div>
+    <div class="diag-side">
+      <div class="qlist card a a-right" style="--d:.3">
+        <div class="qa" data-toggle><div class="q"><b>1</b>[[Реагенттер қандай энергия деңгейінде?|На каком уровне энергии находятся реагенты?|What energy level are the reactants at?]]</div><div class="ans">[[<b>Жоғары</b> деңгейде.|На <b>высоком</b> уровне.|A <b>high</b> level.]]</div></div>
+        <div class="qa" data-toggle><div class="q"><b>2</b>[[Өнімдер қандай деңгейде?|На каком уровне находятся продукты?|And the products?]]</div><div class="ans">[[<b>Төмен</b> деңгейде.|На <b>низком</b> уровне.|A <b>low</b> level.]]</div></div>
+        <div class="qa" data-toggle><div class="q"><b>3</b>[[Жүйенің энергиясы қалай өзгереді?|Как изменяется энергия системы?|How does the system's energy change?]]</div><div class="ans">[[<b>Азаяды</b> — артық энергия бөлінеді.|<b>Уменьшается</b> — избыток энергии выделяется.|It <b>decreases</b> — the extra energy is released.]]</div></div>
+        <div class="qa" data-toggle><div class="q"><b>4</b>[[Бұл қай реакция түрі?|Какой тип реакции представлен?|What type of reaction is this?]]</div><div class="ans">[[<b class="t-exo">Экзотермиялық</b>.|<b class="t-exo">Экзотермическая</b>.|<b class="t-exo">Exothermic</b>.]]</div></div>
+      </div>
+      <span class="frag" id="d1-lv" data-fx="diag" data-show="levels"></span>
+      <span class="frag" id="d1-ea" data-fx="diag" data-show="ea"></span>
+      <span class="frag" id="d1-dh" data-fx="diag" data-show="dh"></span>
+      <div class="concl frag exo" id="d1-c"><b>[[Қорытынды|Вывод|Conclusion]]:</b> [[өнімдердің энергиясы реагенттердікінен <b>төмен</b>. Энергия <b>бөлінеді</b>, <span class="f">ΔH &lt; 0</span> → <b class="t-exo">экзотермиялық</b> реакция.|энергия продуктов <b>ниже</b> энергии реагентов. Энергия <b>выделяется</b>, <span class="f">ΔH &lt; 0</span> → <b class="t-exo">экзотермическая</b> реакция.|products are <b>lower</b> in energy than reactants. Energy is <b>released</b>, <span class="f">ΔH &lt; 0</span> → <b class="t-exo">exothermic</b>.]]</div>
+    </div>
+  </div>
+  <aside class="notes">{{<p>Осьтерді түсіндіру. → басқан сайын: деңгейлер → Eₐ → ΔH → қорытынды.</p><p>⚠️ Әдістемелік ұсыныс: <b>қисықтың шыңы</b> — активтелген күйдің энергиясы (Eₐ). <b>Өнімдер мен реагенттер энергиясының айырмасы</b> — жылу эффектісі ΔH. Оларды шатастырмау!</p>|<p>Объяснить оси. По → : уровни → Eₐ → ΔH → вывод.</p><p>⚠️ Методическая рекомендация: <b>вершина кривой</b> — энергия активированного состояния (Eₐ), <b>разность энергий продуктов и реагентов</b> — тепловой эффект ΔH. Не путать!</p>|<p>Explain the axes. Each → shows: levels → Eₐ → ΔH → conclusion.</p><p>⚠️ Method tip: the <b>peak</b> is the activated state (Eₐ); the <b>difference between products and reactants</b> is the heat effect ΔH. Don't mix them up!</p>}}</aside>
+</section>
+
+<!-- ===================== 16. ДИАГРАММА 2 (ЭНДО) ===================== -->
+<section class="slide" data-id="diag2" data-stage="5" data-t="2-график: эндо|График 2: эндо|Graph 2: endo">
+  <header class="sh a"><h2><span class="h-ico">📈</span>[[Энергетикалық диаграмма: 2-график|Энергетическая диаграмма: график 2|Energy diagram: graph 2]]</h2><p class="lead">[[Енді өнімдер қай жерде орналасқанына қара!|Посмотри, где теперь находятся продукты!|Look where the products are now!]]</p></header>
+  <div class="body diag-layout">
+    <div class="diag-box card a" style="--d:.1"><svg class="ediag" data-er="200" data-ep="480" data-ea="190" viewBox="0 0 900 560"></svg>
+      <div class="diag-btns">
+        <button class="btn ghost sm" data-reveal="#d2-lv">① [[Деңгейлер|Уровни|Levels]]</button>
+        <button class="btn ghost sm" data-reveal="#d2-ea">② <span class="f">Eₐ</span></button>
+        <button class="btn endo sm" data-reveal="#d2-dh">③ <span class="f">ΔH</span></button>
+      </div>
+    </div>
+    <div class="diag-side">
+      <div class="qlist card a a-right" style="--d:.3">
+        <div class="qa" data-toggle><div class="q"><b>1</b>[[Реагенттер мен өнімдердің деңгейлері қалай орналасқан?|Как соотносятся уровни энергии реагентов и продуктов?|How do the reactant and product levels compare?]]</div><div class="ans">[[Өнімдердің деңгейі <b>жоғары</b>.|Уровень продуктов <b>выше</b>.|The products are <b>higher</b>.]]</div></div>
+        <div class="qa" data-toggle><div class="q"><b>2</b>[[Энергия бөліне ме, сіңіріле ме?|Поглощается или выделяется энергия?|Is energy absorbed or released?]]</div><div class="ans">[[Энергия <b>сіңіріледі</b>.|Энергия <b>поглощается</b>.|Energy is <b>absorbed</b>.]]</div></div>
+        <div class="qa" data-toggle><div class="q"><b>3</b>[[ΔH қандай таңбалы?|Какой знак имеет ΔH?|What is the sign of ΔH?]]</div><div class="ans">[[<span class="f">ΔH &gt; 0</span> — оң.|<span class="f">ΔH &gt; 0</span> — положительный.|<span class="f">ΔH &gt; 0</span> — positive.]]</div></div>
+        <div class="qa" data-toggle><div class="q"><b>4</b>[[Бұл қай реакция түрі?|Какой тип реакции изображён?|What type of reaction is this?]]</div><div class="ans">[[<b class="t-endo">Эндотермиялық</b>.|<b class="t-endo">Эндотермическая</b>.|<b class="t-endo">Endothermic</b>.]]</div></div>
+      </div>
+      <span class="frag" id="d2-lv" data-fx="diag" data-show="levels"></span>
+      <span class="frag" id="d2-ea" data-fx="diag" data-show="ea"></span>
+      <span class="frag" id="d2-dh" data-fx="diag" data-show="dh"></span>
+      <div class="concl frag endo" id="d2-c"><b>[[Қорытынды|Вывод|Conclusion]]:</b> [[өнімдердің энергиясы реагенттердікінен <b>жоғары</b>. Энергия <b>сіңіріледі</b>, <span class="f">ΔH &gt; 0</span> → <b class="t-endo">эндотермиялық</b> реакция.|энергия продуктов <b>выше</b> энергии реагентов. Энергия <b>поглощается</b>, <span class="f">ΔH &gt; 0</span> → <b class="t-endo">эндотермическая</b> реакция.|products are <b>higher</b> in energy than reactants. Energy is <b>absorbed</b>, <span class="f">ΔH &gt; 0</span> → <b class="t-endo">endothermic</b>.]]</div>
+    </div>
+  </div>
+  <aside class="notes">{{<p>Оқушылар өздері талдайды: бастапқы және соңғы деңгейді салыстырады, қорытынды жасайды. Дескрипторлар: энергия деңгейлерін дұрыс анықтайды; реакция түрін белгілейді; энергия өзгерісін түсіндіреді.</p>|<p>Учащиеся анализируют сами: сравнивают начальный и конечный уровни, делают вывод. Дескрипторы: правильно определяют уровни энергии; устанавливают тип реакции; объясняют изменение энергии.</p>|<p>Students analyse on their own: compare start and end levels, conclude. Descriptors: identify energy levels; name the reaction type; explain the energy change.</p>}}</aside>
+</section>
+
+<!-- ===================== 17. ГРАФИКТЕРДІ САЛЫСТЫР ===================== -->
+<section class="slide" data-id="compare" data-stage="5" data-t="Графиктерді салыстыр|Сравни графики|Compare the graphs">
+  <header class="sh a"><h2><span class="h-ico">🆚</span>[[Графиктерді салыстыр|Сравни графики|Compare the graphs]]</h2></header>
+  <div class="body cmp-layout">
+    <div class="ctable a" style="--d:.15">
+      <div class="crow chead"><div>[[Көрсеткіш|Показатель|Feature]]</div><div><svg class="ediag thumb" data-er="520" data-ep="200" data-ea="170" data-thumb="1" viewBox="0 0 900 560"></svg>[[1-график|График 1|Graph 1]]</div><div><svg class="ediag thumb" data-er="200" data-ep="480" data-ea="190" data-thumb="1" viewBox="0 0 900 560"></svg>[[2-график|График 2|Graph 2]]</div></div>
+      <div class="crow"><div>[[Өнімдердің энергиясы|Энергия продуктов|Energy of products]]</div><div>⬇ [[Төмен|Ниже|Lower]]</div><div>⬆ [[Жоғары|Выше|Higher]]</div></div>
+      <div class="crow"><div>[[Энергияның өзгерісі|Изменение энергии|Energy change]]</div><div>[[Азаяды|Уменьшается|Decreases]]</div><div>[[Артады|Увеличивается|Increases]]</div></div>
+      <div class="crow"><div>[[Жылу эффектісі|Тепловой эффект|Heat effect]]</div><div class="f">[[Теріс|Отрицательный|Negative]] (ΔH &lt; 0)</div><div class="f">[[Оң|Положительный|Positive]] (ΔH &gt; 0)</div></div>
+      <div class="crow ctype"><div>[[Реакция түрі|Тип реакции|Reaction type]]</div>
+        <div class="cq" data-toggle><span class="cq-q">?</span><b class="cq-a t-exo">🔥 [[Экзотермиялық|Экзотермическая|Exothermic]]</b></div>
+        <div class="cq" data-toggle><span class="cq-q">?</span><b class="cq-a t-endo">❄️ [[Эндотермиялық|Эндотермическая|Endothermic]]</b></div>
+      </div>
+    </div>
+    <div class="remember a a-right" style="--d:.45">
+      <h4>📌 [[Есте сақта!|Запомни!|Remember!]]</h4>
+      <p>[[Қисықтың <b>шыңы</b> — активтелген күй, <span class="f">Eₐ</span> — активтену энергиясы.|<b>Вершина</b> кривой — активированное состояние, <span class="f">Eₐ</span> — энергия активации.|The <b>peak</b> is the activated state; <span class="f">Eₐ</span> is the activation energy.]]</p>
+      <div class="f rem-formula">ΔH = E<sub>[[өнім.|прод.|prod.]]</sub> − E<sub>[[реаг.|реаг.|react.]]</sub></div>
+      <p class="warn">⚠️ [[<span class="f">Eₐ</span> мен <span class="f">ΔH</span>-ты шатастырма!|Не путай <span class="f">Eₐ</span> и <span class="f">ΔH</span>!|Don't mix up <span class="f">Eₐ</span> and <span class="f">ΔH</span>!]]</p>
+    </div>
+  </div>
+  <aside class="notes">{{<p>«Реакция түрі» жолындағы «?» белгісін басып, жауабын ашыңыз: 1-график — экзо, 2-график — эндо.</p>|<p>Нажмите «?» в строке «Тип реакции», чтобы открыть ответ: график 1 — экзо, график 2 — эндо.</p>|<p>Tap “?” in the “Reaction type” row to reveal: graph 1 — exo, graph 2 — endo.</p>}}</aside>
+</section>
+
+<!-- ===================== 18. ӨЗІҢ ҚҰРАСТЫР ===================== -->
+<section class="slide" data-id="builder" data-stage="5" data-t="Диаграмманы өзің құрастыр|Построй диаграмму сам|Build the diagram yourself">
+  <header class="sh a"><h2><span class="h-ico">🎛️</span>[[Диаграмманы өзің құрастыр|Построй диаграмму сам|Build the diagram yourself]]</h2><p class="lead">[[Сырғытпаларды жылжыт — <span class="f">ΔH</span> мен реакция түрі өзі өзгереді|Двигай ползунки — <span class="f">ΔH</span> и тип реакции меняются сами|Move the sliders — <span class="f">ΔH</span> and the type update live]]</p></header>
+  <div class="body bld-layout">
+    <div class="card bld-diag a" style="--d:.1"><svg class="ediag live" id="bldDiag" data-er="500" data-ep="320" data-ea="150" viewBox="0 0 900 560"></svg></div>
+    <div class="bld-ctl a a-right" style="--d:.3">
+      <label class="sl"><span>[[Реагенттер энергиясы|Энергия реагентов|Reactant energy]] <b class="f"><output id="oEr">500</output> %kJ%</b></span><input type="range" id="sEr" min="100" max="700" step="10" value="500"></label>
+      <label class="sl"><span>[[Өнімдер энергиясы|Энергия продуктов|Product energy]] <b class="f"><output id="oEp">320</output> %kJ%</b></span><input type="range" id="sEp" min="100" max="700" step="10" value="320"></label>
+      <div class="bld-res">
+        <div class="f bld-dh">ΔH = <span id="bDhCalc">320 − 500</span> = <b id="bDh">−180</b> %kJ%</div>
+        <div class="bld-type" id="bType"></div>
+      </div>
+      <div class="bld-pre">
+        <button class="btn ghost sm" data-pre="500,320">[[C тапсырмасы:|Задание C:|Task C:]] 500 → 320</button>
+        <button class="btn ghost sm" data-pre="200,520">❄️ [[Эндо мысалы|Пример эндо|Endo example]]</button>
+        <button class="btn ghost sm" data-pre="620,180">🔥 [[Экзо мысалы|Пример экзо|Exo example]]</button>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">{{<p>Оқушыны тақтаға шақырып, сырғытпамен «экзо» және «эндо» жағдайын құрастыруды сұраңыз. «C тапсырмасы» батырмасы — деңгейлік С тапсырмасының жауабы: ΔH = −180 кДж.</p>|<p>Пригласите ученика к доске: пусть ползунками построит «экзо» и «эндо». Кнопка «Задание C» — ответ к заданию уровня C: ΔH = −180 кДж.</p>|<p>Invite a student to build an exo and an endo case with the sliders. “Task C” shows the level C answer: ΔH = −180 kJ.</p>}}</aside>
+</section>
+
+<!-- ===================== 19. ЕСЕПТЕР A ===================== -->
+<section class="slide" data-id="probA" data-stage="6" data-t="Есептер: A деңгейі|Задачи: уровень A|Problems: level A">
+  <header class="sh a"><h2><span class="h-ico lvl-ico a-lvl">A</span>[[Есептер · базалық деңгей|Задачи · базовый уровень|Problems · basic level]]</h2><p class="lead f">Q = q · n &nbsp;<small>[[q — 1 мольге келетін жылу, n — зат мөлшері|q — теплота на 1 моль, n — количество вещества|q — heat per 1 mol, n — amount of substance]]</small></p></header>
+  <div class="body probs two">
+    <div class="prob card lvl-a a" style="--d:.15" data-steps>
+      <div class="prob-h"><span class="pn">1</span><span class="ptag exo">🔥 [[экзо|экзо|exo]]</span></div>
+      <p class="prob-q">[[1 моль көміртек жанғанда <b>394 кДж</b> жылу бөлінеді. <b>3 моль</b> көміртек жанғанда қанша жылу бөлінеді?|При сгорании 1 моль углерода выделяется <b>394 кДж</b> теплоты. Сколько теплоты выделится при сгорании <b>3 моль</b> углерода?|Burning 1 mol of carbon releases <b>394 kJ</b> of heat. How much heat is released when <b>3 mol</b> burn?]]</p>
+      <div class="tokens frag" data-fx="tokens"><span class="tok exo">394</span><span class="tok exo">394</span><span class="tok exo">394</span></div>
+      <div class="step frag f">Q = 394 · 3 = <b data-count="1182">1182</b> %kJ%</div>
+      <div class="answer frag">✅ [[Жауабы|Ответ|Answer]]: <b class="f">1182 %kJ%</b></div>
+      <button class="btn sm step-btn" data-step>[[Шешімі|Решение|Solution]] ▸</button>
+    </div>
+    <div class="prob card lvl-a a" style="--d:.3" data-steps>
+      <div class="prob-h"><span class="pn">2</span><span class="ptag endo">❄️ [[эндо|эндо|endo]]</span></div>
+      <p class="prob-q">[[1 моль кальций карбонаты айырылғанда <b>178 кДж</b> энергия сіңіріледі. <b>2 моль</b> <span class="f">CaCO3</span> айыруға қанша энергия қажет?|При разложении 1 моль карбоната кальция поглощается <b>178 кДж</b> энергии. Сколько энергии потребуется для разложения <b>2 моль</b> <span class="f">CaCO3</span>?|Decomposing 1 mol of calcium carbonate absorbs <b>178 kJ</b>. How much energy is needed for <b>2 mol</b> of <span class="f">CaCO3</span>?]]</p>
+      <div class="tokens frag" data-fx="tokens"><span class="tok endo">178</span><span class="tok endo">178</span></div>
+      <div class="step frag f">Q = 178 · 2 = <b data-count="356">356</b> %kJ%</div>
+      <div class="answer frag">✅ [[Жауабы|Ответ|Answer]]: <b class="f">356 %kJ%</b></div>
+      <button class="btn sm step-btn" data-step>[[Шешімі|Решение|Solution]] ▸</button>
+    </div>
+  </div>
+  <aside class="notes">{{<p><b>Бекіту.</b> Есептерді жеке немесе жұппен шығарады, сосын өзара тексереді. Тапсырмалар деңгейлерге бөлінген: A — базалық, B — орта, C — жоғары.</p><p>Жауаптар: 1) 1182 кДж; 2) 356 кДж.</p>|<p><b>Закрепление.</b> Решают индивидуально или в парах, затем взаимопроверка. Уровни: A — базовый, B — средний, C — повышенный.</p><p>Ответы: 1) 1182 кДж; 2) 356 кДж.</p>|<p><b>Practice.</b> Solve individually or in pairs, then peer-check. Levels: A basic, B intermediate, C advanced.</p><p>Answers: 1) 1182 kJ; 2) 356 kJ.</p>}}</aside>
+</section>
+
+<!-- ===================== 20. ЕСЕПТЕР B ===================== -->
+<section class="slide" data-id="probB" data-stage="6" data-t="Есептер: B деңгейі|Задачи: уровень B|Problems: level B">
+  <header class="sh a"><h2><span class="h-ico lvl-ico b-lvl">B</span>[[Есептер · орта деңгей|Задачи · средний уровень|Problems · intermediate level]]</h2></header>
+  <div class="body probs two">
+    <div class="prob card lvl-b a" style="--d:.15" data-steps>
+      <div class="prob-h"><span class="pn">3</span><span class="ptag exo">🔥 [[экзо|экзо|exo]]</span></div>
+      <p class="prob-q">[[<b>2 моль</b> метан жанғанда <b>1780 кДж</b> жылу бөлінеді. <b>5 моль</b> метан жанғанда қанша жылу бөлінеді?|При сгорании <b>2 моль</b> метана выделяется <b>1780 кДж</b> теплоты. Сколько теплоты выделится при сгорании <b>5 моль</b> метана?|Burning <b>2 mol</b> of methane releases <b>1780 kJ</b>. How much heat do <b>5 mol</b> release?]]</p>
+      <div class="step frag"><span class="sn">1</span>[[1 мольге:|На 1 моль:|Per 1 mol:]] <span class="f">1780 : 2 = <b data-count="890">890</b> %kJ%</span></div>
+      <div class="step frag"><span class="sn">2</span>[[5 мольге:|На 5 моль:|For 5 mol:]] <span class="f">890 · 5 = <b data-count="4450">4450</b> %kJ%</span></div>
+      <div class="answer frag">✅ [[Жауабы|Ответ|Answer]]: <b class="f">4450 %kJ%</b></div>
+      <button class="btn sm step-btn" data-step>[[Шешімі|Решение|Solution]] ▸</button>
+    </div>
+    <div class="prob card lvl-b a" style="--d:.3" data-steps>
+      <div class="prob-h"><span class="pn">4</span><span class="ptag endo">❄️ [[эндо|эндо|endo]]</span></div>
+      <p class="prob-q">[[Реакция кезінде <b>540 кДж</b> энергия сіңірілді. 1 моль затқа <b>90 кДж</b> қажет болса, реакцияға түскен зат мөлшерін анықта.|При проведении реакции поглощено <b>540 кДж</b> энергии. Если на 1 моль вещества требуется <b>90 кДж</b>, определите количество вещества, вступившего в реакцию.|A reaction absorbed <b>540 kJ</b>. If 1 mol of substance needs <b>90 kJ</b>, find the amount of substance that reacted.]]</p>
+      <div class="step frag f"><span class="sn">1</span>n = Q : q</div>
+      <div class="step frag f"><span class="sn">2</span>n = 540 : 90 = <b data-count="6">6</b> %mol%</div>
+      <div class="answer frag">✅ [[Жауабы|Ответ|Answer]]: <b class="f">6 %mol%</b></div>
+      <button class="btn sm step-btn" data-step>[[Шешімі|Решение|Solution]] ▸</button>
+    </div>
+  </div>
+  <aside class="notes">{{<p>Жауаптар: 3) 4450 кДж; 4) 6 моль. 4-есепте формуланы кері қолданамыз: n = Q : q.</p>|<p>Ответы: 3) 4450 кДж; 4) 6 моль. В задаче 4 формула используется «наоборот»: n = Q : q.</p>|<p>Answers: 3) 4450 kJ; 4) 6 mol. Problem 4 uses the formula backwards: n = Q : q.</p>}}</aside>
+</section>
+
+<!-- ===================== 21. ЕСЕП C ===================== -->
+<section class="slide" data-id="probC" data-stage="6" data-t="Есеп: C деңгейі|Задача: уровень C|Problem: level C">
+  <header class="sh a"><h2><span class="h-ico lvl-ico c-lvl">C</span>[[Есеп · жоғары деңгей|Задача · повышенный уровень|Problem · advanced level]]</h2></header>
+  <div class="body probc">
+    <div class="prob card lvl-c wide a" style="--d:.1">
+      <div class="prob-h"><span class="pn">5</span></div>
+      <p class="prob-q big">[[<b>4 моль</b> зат жанғанда <b>2400 кДж</b> жылу бөлінді.|При сгорании <b>4 моль</b> вещества выделилось <b>2400 кДж</b> теплоты.|Burning <b>4 mol</b> of a substance released <b>2400 kJ</b> of heat.]]</p>
+    </div>
+    <div class="subq-grid">
+      <div class="subq card a" style="--d:.25" data-steps><div class="sq-h"><b>[[а)|а)|a)]]</b> [[1 моль зат жанғанда қанша жылу бөлінеді?|Сколько теплоты выделяется при сгорании 1 моль вещества?|How much heat does 1 mol release?]]</div><div class="sq-a frag f">2400 : 4 = <b data-count="600">600</b> %kJ%</div><button class="btn sm step-btn" data-step>▸</button></div>
+      <div class="subq card a" style="--d:.35" data-steps><div class="sq-h"><b>[[ә)|б)|b)]]</b> [[7 моль зат жанғанда қанша жылу бөлінеді?|Сколько теплоты выделится при сгорании 7 моль вещества?|How much heat do 7 mol release?]]</div><div class="sq-a frag f">600 · 7 = <b data-count="4200">4200</b> %kJ%</div><button class="btn sm step-btn" data-step>▸</button></div>
+      <div class="subq card a" style="--d:.45" data-steps><div class="sq-h"><b>[[б)|в)|c)]]</b> [[Реакция қай түрге жатады?|К какому типу относится реакция?|What type of reaction is it?]]</div><div class="sq-a frag"><b class="t-exo">🔥 [[Экзотермиялық|Экзотермическая|Exothermic]]</b> <small>[[(жылу бөлінді)|(теплота выделилась)|(heat was released)]]</small></div><button class="btn sm step-btn" data-step>▸</button></div>
+      <div class="subq card a" style="--d:.55" data-steps><div class="sq-h"><b>[[в)|г)|d)]]</b> [[ΔH қандай таңбалы?|Какой знак имеет ΔH?|What is the sign of ΔH?]]</div><div class="sq-a frag f"><b class="t-exo">ΔH &lt; 0</b></div><button class="btn sm step-btn" data-step>▸</button></div>
+    </div>
+  </div>
+  <aside class="notes">{{<p>Жауаптар: 600 кДж; 4200 кДж; экзотермиялық; ΔH &lt; 0. Тапсырманы жоғары деңгейдегі оқушыларға беріңіз.</p>|<p>Ответы: 600 кДж; 4200 кДж; экзотермическая; ΔH &lt; 0. Давать сильным учащимся.</p>|<p>Answers: 600 kJ; 4200 kJ; exothermic; ΔH &lt; 0. For stronger students.</p>}}</aside>
+</section>
+
+<!-- ===================== 22. §23 СУТЕК ===================== -->
+<section class="slide" data-id="hydrogen" data-stage="6" data-t="§23: термохимиялық теңдеу құрастыру|§23: составление термохимического уравнения|§23: writing a thermochemical equation">
+  <header class="sh a"><h2><span class="h-ico">💧</span>[[Термохимиялық теңдеу құрастыр|Составь термохимическое уравнение|Write the thermochemical equation]]</h2><p class="lead">📖 [[Оқулық, §23|Учебник, §23|Textbook, §23]]</p></header>
+  <div class="body h2-layout" data-steps>
+    <div class="prob card a" style="--d:.1"><p class="prob-q big">[[<b>2 г</b> сутек жанғанда <b>286 кДж</b> жылу бөлінеді. Реакцияның термохимиялық теңдеуін құрастыр.|При сгорании <b>2 г</b> водорода выделяется <b>286 кДж</b> теплоты. Составьте термохимическое уравнение реакции.|Burning <b>2 g</b> of hydrogen releases <b>286 kJ</b>. Write the thermochemical equation of the reaction.]]</p></div>
+    <div class="h2-steps">
+      <div class="hstep frag"><span class="sn">1</span><span>[[Реакция теңдеуі|Уравнение реакции|Reaction equation]]:</span> <b class="f">2H2 + O2 → 2H2O</b></div>
+      <div class="hstep frag"><span class="sn">2</span><span>[[Теңдеу бойынша сутектің массасы|Масса водорода по уравнению|Mass of hydrogen in the equation]]:</span> <span class="f">M(H2) = 2 %g%/%mol%; &nbsp;m(H2) = 2 %mol% · 2 %g%/%mol% = <b>4 %g%</b></span></div>
+      <div class="hstep frag prop-step"><span class="sn">3</span>
+        <div class="prop f"><div>2 %g% H2 — 286 %kJ%</div><div>4 %g% H2 — <b class="t-exo">x</b> %kJ%</div></div>
+        <div class="f prop-x">x = 286 · 4 : 2 = <b class="t-exo" data-count="572">572</b> %kJ%</div>
+      </div>
+      <div class="hstep answer frag"><span class="sn">✓</span><b class="f big-eq">2H2 + O2 → 2H2O + <span class="t-exo">572 %kJ%</span></b></div>
+    </div>
+    <button class="btn sm step-btn h2-btn" data-step>[[Келесі қадам|Следующий шаг|Next step]] ▸</button>
+  </div>
+  <aside class="notes">{{<p>⭐ <b>Қосымша есеп</b> (оқулық, §23). Негізгі ой: термохимиялық теңдеудегі жылу эффектісі теңдеудегі моль санына (2 моль H₂ = 4 г) сәйкес келуі керек.</p>|<p>⭐ <b>Дополнительная задача</b> (учебник, §23). Главное: тепловой эффект в уравнении соответствует числу моль в уравнении (2 моль H₂ = 4 г).</p>|<p>⭐ <b>Extra problem</b> (textbook §23). Key idea: the heat term must match the moles in the equation (2 mol H₂ = 4 g).</p>}}</aside>
+</section>
+
+<!-- ===================== 23. ДЕҢГЕЙЛІК ТАПСЫРМАЛАР ===================== -->
+<section class="slide" data-id="diff" data-stage="6" data-t="Деңгейлік тапсырмалар|Дифференцированные задания|Tasks by level">
+  <header class="sh a"><h2><span class="h-ico">🪜</span>[[Деңгейлік тапсырмалар|Дифференцированные задания|Tasks by level]]</h2></header>
+  <div class="body diff-grid">
+    <div class="dcol card lvl-a a" style="--d:.1">
+      <div class="dc-h"><span class="lvl-ico a-lvl">A</span>[[Базалық|Базовый|Basic]]</div>
+      <p>[[Реакция түрін анықта:|Определите тип реакции:|Name the reaction type:]]</p>
+      <div class="ditem" data-toggle><span>[[көмірдің жануы|горение угля|burning coal]]</span><b class="dbadge t-exo">🔥 [[экзо|экзо|exo]]</b></div>
+      <div class="ditem" data-toggle><span><span class="f">CaCO3</span> [[айырылуы|разложение|decomposition]]</span><b class="dbadge t-endo">❄️ [[эндо|эндо|endo]]</b></div>
+      <div class="ditem" data-toggle><span>[[фотосинтез|фотосинтез|photosynthesis]]</span><b class="dbadge t-endo">❄️ [[эндо|эндо|endo]]</b></div>
+      <div class="ditem" data-toggle><span>[[сутектің жануы|горение водорода|burning hydrogen]]</span><b class="dbadge t-exo">🔥 [[экзо|экзо|exo]]</b></div>
+      <div class="desc">✓ [[Реакция түрін дұрыс анықтайды.|Правильно определяет тип реакции.|Correctly identifies the reaction type.]]</div>
+    </div>
+    <div class="dcol card lvl-b a" style="--d:.25" data-steps>
+      <div class="dc-h"><span class="lvl-ico b-lvl">B</span>[[Орта|Средний|Intermediate]]</div>
+      <p>[[Неліктен отын жанғанда температура көтеріледі, ал кейбір эндотермиялық процестерге қыздыру қажет? Түсіндір.|Объясните, почему при горении топлива температура повышается, а при некоторых эндотермических процессах требуется нагревание.|Explain why burning fuel raises the temperature, while some endothermic processes need heating.]]</p>
+      <div class="dans frag">[[🔥 Отын жанғанда энергия жылу түрінде қоршаған ортаға <b>бөлінеді</b> — температура көтеріледі.<br>❄️ Эндотермиялық реакция энергияны сырттан <b>сіңіреді</b>, сондықтан оған энергияны қыздыру арқылы үнемі беріп отыру керек.|🔥 При горении энергия <b>выделяется</b> в окружающую среду в виде теплоты — температура растёт.<br>❄️ Эндотермическая реакция <b>поглощает</b> энергию извне, поэтому её нужно постоянно подводить нагреванием.|🔥 Burning <b>releases</b> energy as heat into the surroundings, so the temperature rises.<br>❄️ An endothermic reaction <b>absorbs</b> energy from outside, so it must be supplied continuously by heating.]]</div>
+      <button class="btn sm step-btn" data-step>[[Жауабы|Ответ|Answer]] ▸</button>
+      <div class="desc">✓ [[Энергияның берілу бағытын түсіндіреді.|Объясняет направление передачи энергии.|Explains the direction of energy transfer.]]</div>
+    </div>
+    <div class="dcol card lvl-c a" style="--d:.4" data-steps>
+      <div class="dc-h"><span class="lvl-ico c-lvl">C</span>[[Жоғары|Высокий|Advanced]]</div>
+      <p>[[Реагенттердің энергиясы <b>500 кДж</b>, өнімдердің энергиясы <b>320 кДж</b>. Энергияның өзгерісін және реакция түрін анықта.|Энергия реагентов <b>500 кДж</b>, энергия продуктов <b>320 кДж</b>. Определите изменение энергии и тип реакции.|Reactants have <b>500 kJ</b>, products <b>320 kJ</b>. Find the energy change and the reaction type.]]</p>
+      <div class="dans frag"><div class="f">ΔH = 320 − 500 = <b class="t-exo">−180 %kJ%</b></div><div><span class="f">ΔH &lt; 0</span> → <b class="t-exo">[[экзотермиялық|экзотермическая|exothermic]]</b></div></div>
+      <button class="btn sm step-btn" data-step>[[Жауабы|Ответ|Answer]] ▸</button>
+      <div class="desc">✓ [[ΔH есептейді және қорытынды жасайды.|Рассчитывает ΔH и делает вывод.|Calculates ΔH and draws a conclusion.]]</div>
+    </div>
+  </div>
+  <aside class="notes">{{<p>Әр оқушы өз деңгейін таңдайды. A бағанындағы реакцияны басқанда жауап шығады. С тапсырмасын 18-слайдтағы интерактив диаграммамен тексеруге болады.</p>|<p>Каждый выбирает свой уровень. В столбце A нажатие на реакцию показывает ответ. Задание C можно проверить на интерактивной диаграмме (слайд 18).</p>|<p>Each student picks a level. In column A, tap a reaction to show the answer. Task C can be checked on the interactive diagram (slide 18).</p>}}</aside>
+</section>
+
+<!-- ===================== 24. ОЙЫН ===================== -->
+<section class="slide" data-id="game" data-stage="6" data-t="Ойын: экзо ма, эндо ма?|Игра: экзо или эндо?|Game: exo or endo?">
+  <header class="sh a"><h2><span class="h-ico">🎮</span>[[Ойын: экзо ма, эндо ма?|Игра: экзо или эндо?|Game: exo or endo?]]</h2><p class="lead">[[Карточканы тиісті себетке сүйреп апар немесе алдымен карточканы, сосын себетті бас.|Перетащи карточку в нужную корзину — или нажми на карточку, затем на корзину.|Drag a card into the right basket — or tap the card, then the basket.]]</p></header>
+  <div class="body game-layout noswipe">
+    <div class="basket exo a a-left" data-basket="exo" style="--d:.15">
+      <div class="bk-head"><svg viewBox="0 0 200 280" class="bk-ico"><g class="flick"><use href="#symFlame" width="200" height="280"/></g></svg><div><b>[[ЭКЗО|ЭКЗО|EXO]]</b><small>[[жылу бөлінеді|теплота выделяется|heat released]]</small></div><span class="bk-n">0</span></div>
+      <div class="bk-items"></div>
+    </div>
+    <div class="deck a" style="--d:.3"></div>
+    <div class="basket endo a a-right" data-basket="endo" style="--d:.15">
+      <div class="bk-head"><svg viewBox="-110 -110 220 220" class="bk-ico"><g class="spin-slow"><use href="#symSnow" x="-110" y="-110" width="220" height="220"/></g></svg><div><b>[[ЭНДО|ЭНДО|ENDO]]</b><small>[[жылу сіңіріледі|теплота поглощается|heat absorbed]]</small></div><span class="bk-n">0</span></div>
+      <div class="bk-items"></div>
+    </div>
+    <div class="game-win"><div class="gw-card"><div class="gw-emoji">🏆</div><b class="gw-title"></b><button class="btn" data-game-reset>↺ <span data-ui="playAgain"></span></button></div></div>
+  </div>
+  <div class="game-foot"><button class="btn ghost sm" data-game-reset>↺ <span data-ui="restart"></span></button><span class="game-stat"></span></div>
+  <aside class="notes">{{<p>Топтар кезекпен ойнайды — дұрыс жауапқа 🏆 ұпай беруге болады. Интерактивті тақтада саусақпен сүйреуге болады.</p>|<p>Группы играют по очереди — за верные ответы можно начислять баллы 🏆. На интерактивной доске карточки перетаскиваются пальцем.</p>|<p>Teams take turns — award 🏆 points for correct answers. Cards can be dragged with a finger on an interactive board.</p>}}</aside>
+</section>
+
+<!-- ===================== 25. §22 6-СҰРАҚ ===================== -->
+<section class="slide" data-id="q6" data-stage="6" data-t="Оқулық: §22, 6-сұрақ|Учебник: §22, вопрос 6|Textbook: §22, question 6">
+  <header class="sh a"><h2><span class="h-ico">📖</span>[[Оқулық: §22, 6-сұрақ|Учебник: §22, вопрос 6|Textbook: §22, question 6]]</h2><p class="lead">[[Термохимиялық теңдеулерден экзотермиялық және эндотермиялық реакцияларды тап:|Найдите среди термохимических уравнений экзотермические и эндотермические реакции:|Find the exothermic and endothermic reactions:]]</p></header>
+  <div class="body q6-list">
+    <div class="q6row choose a" style="--d:.1" data-answer="exo"><span class="q6l">[[а)|а)|a)]]</span><span class="f q6e">4NH3 + 3O2 → 2N2 + 6H2O + 153,2 %kJ%</span><div class="o-pick"><button class="pick exo" data-pick="exo">🔥 [[Экзо|Экзо|Exo]]</button><button class="pick endo" data-pick="endo">❄️ [[Эндо|Эндо|Endo]]</button></div></div>
+    <div class="q6row choose a" style="--d:.2" data-answer="exo"><span class="q6l">[[ә)|б)|b)]]</span><span class="f q6e">C + O2 → CO2 + 402 %kJ%</span><div class="o-pick"><button class="pick exo" data-pick="exo">🔥 [[Экзо|Экзо|Exo]]</button><button class="pick endo" data-pick="endo">❄️ [[Эндо|Эндо|Endo]]</button></div></div>
+    <div class="q6row choose a" style="--d:.3" data-answer="exo"><span class="q6l">[[б)|в)|c)]]</span><span class="f q6e">CH4 + 2O2 → CO2 + 2H2O + 890 %kJ%</span><div class="o-pick"><button class="pick exo" data-pick="exo">🔥 [[Экзо|Экзо|Exo]]</button><button class="pick endo" data-pick="endo">❄️ [[Эндо|Эндо|Endo]]</button></div></div>
+    <div class="q6row choose a" style="--d:.4" data-answer="endo"><span class="q6l">[[в)|г)|d)]]</span><span class="f q6e">2HgO → 2Hg + O2 − 176,4 %kJ%</span><div class="o-pick"><button class="pick exo" data-pick="exo">🔥 [[Экзо|Экзо|Exo]]</button><button class="pick endo" data-pick="endo">❄️ [[Эндо|Эндо|Endo]]</button></div></div>
+    <div class="row-btns a" style="--d:.6">
+      <button class="btn ghost sm" data-toggle-hint>💡 [[Кеңес|Подсказка|Hint]]</button>
+      <button class="btn ghost sm" data-showall>👁 [[Барлық жауапты көрсету|Показать все ответы|Show all answers]]</button>
+      <button class="btn ghost sm" data-resetchoose>↺ [[Қайта бастау|Сначала|Start over]]</button>
+      <span class="q6hint">[[Теңдеудегі таңбаға қара: «+ Q» — жылу <b>бөлінеді</b>, «− Q» — жылу <b>сіңіріледі</b>.|Смотри на знак: «+ Q» — теплота <b>выделяется</b>, «− Q» — <b>поглощается</b>.|Look at the sign: “+ Q” — heat <b>released</b>, “− Q” — heat <b>absorbed</b>.]]</span>
+    </div>
+  </div>
+  <aside class="notes">{{<p>⭐ <b>Қосымша.</b> Жауаптар: а, ә, б — экзо; в — эндо. Ескерту: оқулықтағы аммиак теңдеуіндегі 153,2 кДж қате басылған болуы мүмкін (≈ 1530 кДж), бірақ реакция түріне әсер етпейді.</p>|<p>⭐ <b>Дополнительно.</b> Ответы: а, б, в — экзо; г — эндо. В учебнике в уравнении аммиака, вероятно, опечатка (153,2 вместо ≈ 1530 кДж) — на тип реакции это не влияет.</p>|<p>⭐ <b>Optional.</b> Answers: a, b, c — exo; d — endo. The textbook's ammonia value (153.2 kJ) is probably a misprint (≈ 1530 kJ) — it doesn't change the type.</p>}}</aside>
+</section>
+
+<!-- ===================== 26. ҚОРЫТЫНДЫ ===================== -->
+<section class="slide" data-id="summary" data-stage="7" data-t="Қорытындылайық|Подведём итоги|Let's sum up">
+  <header class="sh a"><h2><span class="h-ico">🧩</span>[[Қорытындылайық|Подведём итоги|Let's sum up]]</h2><p class="lead">[[«Қара жәшікке» оралайық: әр жағдайда энергияға не болды?|Вернёмся к «чёрному ящику»: что происходит с энергией в каждом случае?|Back to the black box: what happened to the energy in each case?]]</p></header>
+  <div class="body sum-layout">
+    <div class="sum-boxes">
+      <div class="sbox exo frag" data-fx="sumbox"><svg viewBox="0 0 200 280" class="sb-ico"><g class="flick"><use href="#symFlame" width="200" height="280"/></g></svg><div><b>[[№1: температура ↑|№ 1: температура ↑|No. 1: temperature ↑]]</b><p>[[Энергия <b>бөлінді</b> → экзо|Энергия <b>выделилась</b> → экзо|Energy <b>released</b> → exo]]</p></div></div>
+      <div class="sbox endo frag" data-fx="sumbox"><svg viewBox="-110 -110 220 220" class="sb-ico"><g class="spin-slow"><use href="#symSnow" x="-110" y="-110" width="220" height="220"/></g></svg><div><b>[[№2: температура ↓|№ 2: температура ↓|No. 2: temperature ↓]]</b><p>[[Энергия <b>сіңірілді</b> → эндо|Энергия <b>поглотилась</b> → эндо|Energy <b>absorbed</b> → endo]]</p></div></div>
+    </div>
+    <div class="stable">
+      <div class="srow shead"><div></div><div class="t-exo">🔥 [[Экзотермиялық|Экзотермическая|Exothermic]]</div><div class="t-endo">❄️ [[Эндотермиялық|Эндотермическая|Endothermic]]</div></div>
+      <div class="srow frag"><div>[[Энергия|Энергия|Energy]]</div><div>[[бөлінеді|выделяется|released]]</div><div>[[сіңіріледі|поглощается|absorbed]]</div></div>
+      <div class="srow frag"><div>[[Температура|Температура|Temperature]]</div><div>⬆ [[көтеріледі|повышается|rises]]</div><div>⬇ [[төмендейді|понижается|falls]]</div></div>
+      <div class="srow frag f"><div>[[Теңдеуде|В уравнении|In the equation]]</div><div>+Q</div><div>−Q</div></div>
+      <div class="srow frag f"><div>ΔH</div><div>ΔH &lt; 0</div><div>ΔH &gt; 0</div></div>
+      <div class="srow frag"><div>[[Диаграммада|На диаграмме|On the diagram]]</div><div>[[өнімдер <b>төмен</b>|продукты <b>ниже</b>|products <b>lower</b>]]</div><div>[[өнімдер <b>жоғары</b>|продукты <b>выше</b>|products <b>higher</b>]]</div></div>
+      <div class="srow frag"><div>[[Мысалдар|Примеры|Examples]]</div><div>[[жану, бейтараптану|горение, нейтрализация|combustion, neutralisation]]</div><div>[[айырылу, фотосинтез|разложение, фотосинтез|decomposition, photosynthesis]]</div></div>
+    </div>
+  </div>
+  <aside class="notes">{{<p><b>Қорытындылау.</b> «Қара жәшік» сұрағына оралу: оқушылар әр жағдайда энергияға не болғанын өздері түсіндіреді. Кестені → арқылы жол-жолымен ашыңыз.</p>|<p><b>Подведение итогов.</b> Вернуться к вопросу «чёрного ящика»: учащиеся сами объясняют, что происходит с энергией. Таблицу открывайте построчно (→).</p>|<p><b>Summary.</b> Return to the black box question: students explain what happened to the energy. Reveal the table row by row (→).</p>}}</aside>
+</section>
+
+<!-- ===================== 27. ТЕСТ ===================== -->
+<section class="slide" data-id="quiz" data-stage="7" data-t="Жылдам тест|Быстрый тест|Quick quiz">
+  <header class="sh a"><h2><span class="h-ico">⚡</span>[[Жылдам тест|Быстрый тест|Quick quiz]]</h2></header>
+  <div class="body quiz-wrap a" style="--d:.15">
+    <div class="qz-dots"></div>
+    <div class="qz-card card">
+      <div class="qz-num"></div>
+      <div class="qz-q"></div>
+      <div class="qz-opts"></div>
+      <div class="qz-foot"><button class="btn qz-next"></button></div>
+    </div>
+    <div class="qz-result card"><div class="qz-stars"></div><div class="qz-score"></div><div class="qz-msg"></div><button class="btn" data-quiz-reset>↺ <span data-ui="restart"></span></button></div>
+  </div>
+  <aside class="notes">{{<p>Сынып бірге жауап береді (қол көтеру арқылы) немесе топтар кезекпен. Жауаптар: 1 — жылу бөлінеді; 2 — эндо; 3 — CaCO₃; 4 — экзо; 5 — 788 кДж.</p>|<p>Класс отвечает вместе (поднятием руки) или группы по очереди. Ответы: 1 — выделяется; 2 — эндо; 3 — CaCO₃; 4 — экзо; 5 — 788 кДж.</p>|<p>The class answers together (show of hands) or teams take turns. Answers: 1 released; 2 endo; 3 CaCO₃; 4 exo; 5 788 kJ.</p>}}</aside>
+</section>
+
+<!-- ===================== 28. РЕФЛЕКСИЯ ===================== -->
+<section class="slide" data-id="reflect" data-stage="8" data-t="Рефлексия|Рефлексия|Reflection">
+  <header class="sh a"><h2><span class="h-ico">🪞</span>[[Рефлексия|Рефлексия|Reflection]]</h2><p class="lead">[[Сөйлемді аяқта:|Закончи предложение:|Finish the sentence:]]</p></header>
+  <div class="body sticky-row">
+    <div class="sticky s1 a a-pop" style="--d:.2"><span class="pin"></span><span class="st-e">💡</span><p>[[Бүгін мен білдім…|Сегодня я узнал(а)…|Today I learned…]]</p></div>
+    <div class="sticky s2 a a-pop" style="--d:.45"><span class="pin"></span><span class="st-e">🤔</span><p>[[Маған қиын болды…|Мне было трудно…|I found it hard…]]</p></div>
+    <div class="sticky s3 a a-pop" style="--d:.7"><span class="pin"></span><span class="st-e">💪</span><p>[[Енді мен істей аламын…|Теперь я могу…|Now I can…]]</p></div>
+  </div>
+  <aside class="notes">{{<p>Оқушылар жауаптарын стикерге жазып, тақтаға жапсырады (өзін-өзі бағалау).</p>|<p>Учащиеся пишут ответы на стикерах и приклеивают на доску (самооценивание).</p>|<p>Students write on sticky notes and put them on the board (self-assessment).</p>}}</aside>
+</section>
+
+<!-- ===================== 29. ӨЗІҢДІ БАҒАЛА ===================== -->
+<section class="slide" data-id="assess" data-stage="8" data-t="Өзіңді бағала|Оцени себя|Assess yourself">
+  <header class="sh a"><h2><span class="h-ico">✅</span>[[Өзіңді бағала|Оцени себя|Assess yourself]]</h2><p class="lead">[[Шеңберлерді басып, ұпайыңды белгіле|Нажимай на кружки и отмечай свои баллы|Tap the circles to mark your points]]</p></header>
+  <div class="body as-layout">
+    <div class="as-table a" style="--d:.15">
+      <div class="as-row as-head"><div>[[Критерий|Критерий|Criterion]]</div><div>[[Дескриптор|Дескриптор|Descriptor]]</div><div>[[Ұпай|Балл|Points]]</div></div>
+      <div class="as-row" data-max="2"><div>[[Реакция түрлерін ажыратады|Различает типы реакций|Tells reaction types apart]]</div><div>[[Экзо- және эндотермиялық реакцияларды анықтайды|Определяет экзотермические и эндотермические реакции|Identifies exo- and endothermic reactions]]</div><div class="dots"></div></div>
+      <div class="as-row" data-max="2"><div>[[«Қара жәшік» әдісін қолданады|Применяет метод «Чёрный ящик»|Uses the “black box” method]]</div><div>[[Температура өзгерісі бойынша қорытынды жасайды|Делает вывод по наблюдаемым изменениям температуры|Draws conclusions from temperature changes]]</div><div class="dots"></div></div>
+      <div class="as-row" data-max="2"><div>[[Графиктерді талдайды|Анализирует графики|Analyses graphs]]</div><div>[[Реагенттер мен өнімдердің энергия деңгейін анықтайды|Определяет уровни энергии реагентов и продуктов|Finds the energy levels of reactants and products]]</div><div class="dots"></div></div>
+      <div class="as-row" data-max="3"><div>[[Есеп шығарады|Решает задачи|Solves problems]]</div><div>[[Формулаларды дұрыс қолданып, есептейді|Правильно использует формулы и выполняет расчёты|Uses formulas correctly and calculates]]</div><div class="dots"></div></div>
+      <div class="as-row" data-max="1"><div>[[Қорытынды жасайды|Формулирует вывод|Draws a conclusion]]</div><div>[[Энергияның өзгерісін түсіндіреді|Объясняет изменение энергии|Explains the energy change]]</div><div class="dots"></div></div>
+    </div>
+    <div class="as-total card a a-right" style="--d:.4">
+      <svg viewBox="0 0 200 200" class="gauge"><circle cx="100" cy="100" r="80" class="g-bg"/><circle cx="100" cy="100" r="80" class="g-fg"/></svg>
+      <div class="as-num"><b>0</b><span>/ 10</span></div>
+      <div class="as-msg"></div>
+      <button class="btn ghost sm" data-as-reset>↺ <span data-ui="reset"></span></button>
+    </div>
+  </div>
+  <aside class="notes">{{<p>Бағалау критерийлері (барлығы 10 ұпай). Бір оқушыны шақырып, өзін бағалауын көрсетуге болады немесе критерийлерді жай таныстыру.</p>|<p>Критерии оценивания (итого 10 баллов). Можно пригласить ученика показать самооценку или просто познакомить с критериями.</p>|<p>Assessment criteria (10 points total). Invite a student to self-assess, or simply present the criteria.</p>}}</aside>
+</section>
+
+<!-- ===================== 30. ҮЙ ТАПСЫРМАСЫ ===================== -->
+<section class="slide" data-id="homework" data-stage="9" data-t="Үй тапсырмасы|Домашнее задание|Homework">
+  <header class="sh a"><h2><span class="h-ico">🏠</span>[[Үй тапсырмасы|Домашнее задание|Homework]]</h2></header>
+  <div class="body hw-layout">
+    <div class="notebook a a-zoom" style="--d:.15">
+      <div class="nb-rings"><i></i><i></i><i></i><i></i><i></i></div>
+      <ol class="hw-list">
+        <li class="a" style="--d:.4"><span class="hw-i">📖</span><div>[[Анықтамаларды жатта: <b>экзотермиялық</b> және <b>эндотермиялық</b> реакциялар, <b>жылу эффектісі</b>, <b>термохимиялық теңдеу</b>.|Выучить определения: <b>экзотермическая</b> и <b>эндотермическая</b> реакции, <b>тепловой эффект</b>, <b>термохимическое уравнение</b>.|Learn the definitions: <b>exothermic</b> and <b>endothermic</b> reactions, <b>heat effect</b>, <b>thermochemical equation</b>.]]</div></li>
+        <li class="a" style="--d:.6"><span class="hw-i">✍️</span><div>[[Экзотермиялық және эндотермиялық процестерге <b>екі-екіден мысал</b> құрастыр.|Составить <b>по два примера</b> экзотермических и эндотермических процессов.|Write <b>two examples each</b> of exothermic and endothermic processes.]]</div></li>
+        <li class="a" style="--d:.8"><span class="hw-i">📚</span><div>[[Оқулық: <b>§22</b>, 80–83 беттер.|Учебник: <b>§22</b>, с. 80–83.|Textbook: <b>§22</b>, pp. 80–83.]]</div></li>
+      </ol>
+    </div>
+  </div>
+  <aside class="notes">{{<p>Үй тапсырмасын түсіндіру, сұрақтарға жауап беру.</p>|<p>Объяснить домашнее задание, ответить на вопросы.</p>|<p>Explain the homework and answer questions.</p>}}</aside>
+</section>
+
+<!-- ===================== 31. РАХМЕТ ===================== -->
+<section class="slide s-title s-thanks" data-id="thanks" data-stage="9" data-amb="fireice" data-t="Рахмет!|Спасибо!|Thank you!">
+  <div class="thanks-wrap">
+    <div class="th-icons a a-zoom" style="--d:.1">
+      <svg viewBox="0 0 200 280" class="th-fl"><g class="flick"><use href="#symFlame" width="200" height="280"/></g></svg>
+      <svg viewBox="-110 -110 220 220" class="th-sn"><g class="spin-slow"><use href="#symSnow" x="-110" y="-110" width="220" height="220"/></g></svg>
+    </div>
+    <h1 class="a a-zoom" style="--d:.3"><span class="grad-mix">[[Сабаққа рахмет!|Спасибо за урок!|Thank you for the lesson!]]</span></h1>
+    <blockquote class="a" style="--d:.7">«[[Энергия ешқашан жоғалмайды және жоқтан пайда болмайды — ол тек бір түрден екінші түрге айналады.|Энергия никогда не исчезает и не возникает из ничего — она лишь переходит из одной формы в другую.|Energy is never lost and never comes from nothing — it only changes from one form into another.]]»<cite>📖 [[Оқулық, §22|Учебник, §22|Textbook, §22]]</cite></blockquote>
+  </div>
+  <aside class="notes">{{<p>Сабақты қорытып, оқушыларға алғыс айту. 🏆 ұпай тақтасын ашып, жеңімпаз топты марапаттау.</p>|<p>Завершить урок, поблагодарить учащихся. Открыть 🏆 таблицу баллов и наградить группу-победителя.</p>|<p>Wrap up and thank the class. Open the 🏆 scoreboard and congratulate the winning team.</p>}}</aside>
+</section>

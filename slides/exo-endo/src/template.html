@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="kk" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Экзо- және эндотермиялық реакциялар · 8 сынып</title>
+<meta name="description" content="Интерактивті слайд-сабақ: экзотермиялық және эндотермиялық реакциялар, химиялық реакциялардың жылу эффектісі (8 сынып, химия). Қазақ, орыс, ағылшын тілдерінде.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%23ff7a2f' d='M32 60C18 60 10 50 12 38c1-8 8-12 9-21 5 5 6 10 5 15 5-6 6-16 3-28 13 10 22 25 20 41-1 10-8 15-17 15z'/%3E%3C/svg%3E">
+<style>
+/*__CSS__*/
+</style>
+</head>
+<body>
+<div class="bg-layer" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="grid-bg"></div></div>
+<canvas id="bgCanvas" aria-hidden="true"></canvas>
+
+<main id="viewport">
+  <div id="stage">
+    <svg class="svg-defs" width="0" height="0" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="gFlameOuter" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ffd23f"/><stop offset=".45" stop-color="#ff7a1f"/><stop offset="1" stop-color="#ff2e3a"/></linearGradient>
+        <linearGradient id="gFlameMid" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff1a8"/><stop offset=".6" stop-color="#ffb12e"/><stop offset="1" stop-color="#ff6a1f"/></linearGradient>
+        <linearGradient id="gFlameBlueO" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#7cc8ff"/><stop offset=".6" stop-color="#2f7bff"/><stop offset="1" stop-color="#5b3cff" stop-opacity=".8"/></linearGradient>
+        <linearGradient id="gFlameBlueI" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#9fdcff"/></linearGradient>
+        <radialGradient id="gH" cx=".35" cy=".35" r=".75"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#aab6cc"/></radialGradient>
+        <radialGradient id="gCl" cx=".35" cy=".35" r=".75"><stop offset="0" stop-color="#c8ffb8"/><stop offset="1" stop-color="#2a9a46"/></radialGradient>
+        <radialGradient id="gO" cx=".35" cy=".35" r=".75"><stop offset="0" stop-color="#ffb3b3"/><stop offset="1" stop-color="#d42a2a"/></radialGradient>
+        <radialGradient id="gC" cx=".35" cy=".35" r=".75"><stop offset="0" stop-color="#8b93a5"/><stop offset="1" stop-color="#262b36"/></radialGradient>
+        <linearGradient id="gBoxFront" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a3046"/><stop offset="1" stop-color="#06080e"/></linearGradient>
+        <linearGradient id="gBoxTop" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a5478"/><stop offset="1" stop-color="#1c2236"/></linearGradient>
+        <linearGradient id="gBoxSide" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#171c2d"/><stop offset="1" stop-color="#04060b"/></linearGradient>
+        <linearGradient id="gQ" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffb02e"/><stop offset="1" stop-color="#37c2ff"/></linearGradient>
+        <linearGradient id="gLeaf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9df5b8"/><stop offset="1" stop-color="#15803d"/></linearGradient>
+        <radialGradient id="gSun" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff9c4"/><stop offset=".6" stop-color="#fbbf24"/><stop offset="1" stop-color="#f97316"/></radialGradient>
+        <linearGradient id="gGlass" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffffff" stop-opacity=".38"/><stop offset=".5" stop-color="#ffffff" stop-opacity=".07"/><stop offset="1" stop-color="#ffffff" stop-opacity=".26"/></linearGradient>
+        <linearGradient id="gCurveExo" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffc03a"/><stop offset="1" stop-color="#ff3d3d"/></linearGradient>
+        <linearGradient id="gCurveEndo" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8fe6ff"/><stop offset="1" stop-color="#3b6cff"/></linearGradient>
+        <linearGradient id="gMetal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8b94a6"/><stop offset=".3" stop-color="#f1f4f9"/><stop offset=".65" stop-color="#b9c1cf"/><stop offset="1" stop-color="#6f788a"/></linearGradient>
+        <linearGradient id="gWater" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7dd3fc" stop-opacity=".85"/><stop offset="1" stop-color="#1d6fd8" stop-opacity=".9"/></linearGradient>
+        <filter id="fGlow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="fSoft" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="14"/></filter>
+        <marker id="mInk" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="mk-ink"/></marker>
+        <marker id="mExo" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#ff6a2b"/></marker>
+        <marker id="mEndo" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2fb4ff"/></marker>
+        <marker id="mViolet" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#a78bfa"/></marker>
+        <symbol id="symFlame" viewBox="0 0 200 280">
+          <path fill="url(#gFlameOuter)" d="M100 272C42 272 18 228 26 184C32 150 58 132 62 96C80 116 86 136 84 156C104 130 108 84 96 14C148 54 186 118 178 186C172 236 146 272 100 272Z"/>
+          <path fill="url(#gFlameMid)" d="M100 270C62 270 48 240 54 210C60 186 78 176 82 150C94 166 98 180 96 196C112 178 116 150 108 108C140 140 160 180 152 220C146 252 128 270 100 270Z"/>
+          <path fill="#fff4c2" d="M100 268C78 268 70 250 74 232C78 216 90 206 94 190C104 206 110 218 108 232C116 226 120 214 118 200C132 218 134 240 126 254C120 264 110 268 100 268Z"/>
+        </symbol>
+        <symbol id="symFlameBlue" viewBox="0 0 200 280">
+          <path fill="url(#gFlameBlueO)" d="M100 272C50 272 34 236 42 200C50 166 78 150 84 110C96 130 100 146 98 166C114 140 116 100 106 40C150 80 176 132 168 192C162 240 140 272 100 272Z"/>
+          <path fill="url(#gFlameBlueI)" d="M100 268C76 268 68 248 72 228C76 210 90 200 94 182C104 198 110 212 108 228C118 218 122 204 120 190C134 210 136 236 128 252C122 262 112 268 100 268Z"/>
+        </symbol>
+        <g id="snowArm"><path d="M0 0V-90M0 -32L-20 -52M0 -32L20 -52M0 -58L-15 -73M0 -58L15 -73"/><circle cy="-96" r="7" class="snow-tip"/></g>
+        <symbol id="symSnow" viewBox="-110 -110 220 220">
+          <g class="snow-g" fill="none" stroke-width="9" stroke-linecap="round">
+            <use href="#snowArm"/><use href="#snowArm" transform="rotate(60)"/><use href="#snowArm" transform="rotate(120)"/>
+            <use href="#snowArm" transform="rotate(180)"/><use href="#snowArm" transform="rotate(240)"/><use href="#snowArm" transform="rotate(300)"/>
+          </g>
+          <polygon class="snow-core" points="0,-16 14,-8 14,8 0,16 -14,8 -14,-8"/>
+        </symbol>
+        <symbol id="symBurner" viewBox="0 0 120 90">
+          <path d="M30 88h60l-8-26H38z" fill="#5b6478"/><rect x="50" y="34" width="20" height="30" rx="3" fill="#8b94a6"/><rect x="46" y="30" width="28" height="7" rx="3" fill="#a9b1c2"/>
+        </symbol>
+      </defs>
+    </svg>
+<!--__SLIDES__-->
+    <div id="fxLayer"></div>
+  </div>
+</main>
+
+<canvas id="fxCanvas" aria-hidden="true"></canvas>
+
+<!-- ======= Bottom control bar ======= -->
+<nav id="bar" aria-label="controls">
+  <div class="bar-l">
+    <div class="langs" role="group" aria-label="Language">
+      <button data-lang="kk">ҚАЗ</button><button data-lang="ru">РУС</button><button data-lang="en">ENG</button>
+    </div>
+    <button class="ib" id="bTheme" data-tip="theme"><svg viewBox="0 0 24 24" class="i-moon"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg viewBox="0 0 24 24" class="i-sun"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1.5 12h3M19.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg></button>
+    <button class="ib" id="bSound" data-tip="sound"><svg viewBox="0 0 24 24" class="i-son"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg><svg viewBox="0 0 24 24" class="i-soff"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="m22 9-6 6M16 9l6 6"/></svg></button>
+    <button class="ib ib-wide" id="bTimer" data-tip="timer"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg><span class="bt-time"></span></button>
+    <button class="ib ib-wide" id="bScores" data-tip="scores"><svg viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M17 5h3v2a4 4 0 0 1-4 4M7 5H4v2a4 4 0 0 0 4 4"/></svg><span class="mini-scores"></span></button>
+    <button class="ib" id="bNotes" data-tip="notes"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h6"/></svg></button>
+    <button class="ib" id="bMenu" data-tip="menu"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></button>
+    <button class="ib" id="bFull" data-tip="full"><svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></button>
+  </div>
+  <div class="bar-c"><div class="prog"><div class="prog-fill"></div></div></div>
+  <div class="bar-r">
+    <span class="count"><b class="c-cur">1</b> / <span class="c-all">1</span></span>
+    <button class="nb" id="bPrev" data-tip="prev"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button>
+    <button class="nb nb-next" id="bNext" data-tip="next"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></button>
+  </div>
+</nav>
+<div id="tip" role="tooltip"></div>
+
+<!-- ======= Teacher notes ======= -->
+<section id="notesPanel" class="sheet" hidden>
+  <div class="sheet-h"><span class="np-stage"></span><span class="np-num"></span><button class="x" data-close="notesPanel" aria-label="close">×</button></div>
+  <div class="np-body"></div>
+</section>
+
+<!-- ======= Timer ======= -->
+<section id="timerPanel" class="panel" hidden>
+  <div class="panel-h" data-drag><span class="ph-t">⏱ <span data-ui="timer"></span></span><button class="x" data-close="timerPanel" aria-label="close">×</button></div>
+  <div class="tm-body">
+    <svg class="tm-ring" viewBox="0 0 120 120"><circle class="tm-bg" cx="60" cy="60" r="52"/><circle class="tm-fg" cx="60" cy="60" r="52"/></svg>
+    <div class="tm-time">05:00</div>
+    <div class="tm-msg" data-ui="timeUp"></div>
+  </div>
+  <div class="tm-ctl">
+    <button class="tb" data-tm="minus">−1</button>
+    <button class="tb tb-main" data-tm="toggle"><svg viewBox="0 0 24 24" class="i-play"><path d="M7 4.5v15l13-7.5z"/></svg><svg viewBox="0 0 24 24" class="i-pause"><path d="M7 4h4v16H7zM14 4h4v16h-4z"/></svg></button>
+    <button class="tb" data-tm="plus">+1</button>
+    <button class="tb" data-tm="reset">↺</button>
+  </div>
+  <div class="tm-presets"></div>
+</section>
+
+<!-- ======= Scoreboard ======= -->
+<section id="scoresModal" class="modal" hidden>
+  <div class="modal-card sc-card">
+    <div class="modal-h"><h3>🏆 <span data-ui="scores"></span></h3><button class="x" data-close="scoresModal" aria-label="close">×</button></div>
+    <div class="teams"></div>
+    <div class="modal-f">
+      <button class="pill-btn" data-sc="add">＋ <span data-ui="addTeam"></span></button>
+      <button class="pill-btn" data-sc="remove">－ <span data-ui="removeTeam"></span></button>
+      <button class="pill-btn warn" data-sc="reset">↺ <span data-ui="reset"></span></button>
+    </div>
+  </div>
+</section>
+
+<!-- ======= Overview ======= -->
+<section id="menuModal" class="modal" hidden>
+  <div class="modal-card menu-card">
+    <div class="modal-h"><h3>▦ <span data-ui="menu"></span></h3><button class="x" data-close="menuModal" aria-label="close">×</button></div>
+    <div class="menu-grid"></div>
+    <div class="keys" data-ui-html="keys"></div>
+  </div>
+</section>
+
+<script>
+/*__JS__*/
+</script>
+</body>
+</html>
