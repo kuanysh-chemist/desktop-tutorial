@@ -884,7 +884,7 @@ body.menu #menuShade{opacity:1;pointer-events:auto}
 #s-conc2 .rt{position:absolute;left:880px;top:140px;width:944px}
 #s-conc2 .eqh{display:flex;align-items:center;gap:26px;justify-content:space-between}
 #s-conc2 .eqh .eqline{font-size:50px}
-#s-conc2 canvas#cChart,#s-conc2 canvas#cRate{margin-top:10px;border-radius:26px;box-shadow:var(--shadow)}
+#s-conc2 canvas#cRate{margin-top:14px;border-radius:26px;box-shadow:var(--shadow)}
 #s-conc2 .btns{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:20px}
 #s-conc2 .btns .btn{font-size:24px;padding:14px 8px}
 #s-conc2 .stat{margin-top:18px;display:flex;align-items:center;gap:20px;padding:18px 26px;border-radius:28px;background:#fff;box-shadow:var(--shadow);min-height:110px;font-size:28px;line-height:1.3;font-weight:800;color:var(--ink)}
@@ -903,7 +903,7 @@ body.menu #menuShade{opacity:1;pointer-events:auto}
 <div class="bigcnt rv" id="cCnt" style="--d:.8s;left:78px;top:826px"></div>
 <div class="rt">
   <div class="eqh rv r" style="--d:.5s"><div class="eqline"><span class="f">2NH<sub>3</sub> <svg class="ar" viewBox="0 0 64 30"><path class="fw" d="M5 10h53M47 2l11 8"/><path class="bk" d="M59 21H6M17 29L6 21"/></svg> N<sub>2</sub> + 3H<sub>2</sub> − Q</span></div></div>
-  <canvas id="cChart" class="rv r" style="--d:.6s"></canvas><canvas id="cRate" class="rv r" style="--d:.7s;margin-top:12px"></canvas>
+  <canvas id="cRate" class="rv r" style="--d:.6s"></canvas>
   <div class="btns rv" style="--d:.9s">
     <button class="btn" id="cA1" style="--c:#0BB5A8">+ NH₃ қос</button>
     <button class="btn" id="cR1" style="--c:#7B4DFF">− NH₃ ал</button>
@@ -914,65 +914,76 @@ body.menu #menuShade{opacity:1;pointer-events:auto}
 </div>
 </section>
 
-<!-- ===== 17. КОНЦЕНТРАЦИЯ: СҰРАҚТАР + ӘТКЕНШЕК ===== -->
-<section class="slide a-blue" id="s-conc3" data-title="Концентрация: сұрақтар" data-sec="4 · Ле-Шателье принципі және факторлар">
+<!-- ===== 17. КОНЦЕНТРАЦИЯ: СҰРАҚТАР + ТАРАЗЫ ===== -->
+<section class="slide a-blue" id="s-conc3" data-title="Концентрация: таразы" data-sec="4 · Ле-Шателье принципі және факторлар">
 <style>
 #s-conc3 canvas#qSim{position:absolute;left:60px;top:132px}
-#s-conc3 .rt{position:absolute;left:880px;top:132px;width:944px;display:flex;flex-direction:column;gap:14px}
+#s-conc3 .rt{position:absolute;left:880px;top:130px;width:944px;display:flex;flex-direction:column;gap:12px}
 #s-conc3 .qh{display:flex;gap:12px;align-items:center}
-#s-conc3 .qh>span{width:50px;height:50px;border-radius:50%;background:#fff;border:4px solid var(--line);color:var(--ink3);display:grid;place-items:center;font-size:26px;font-weight:900;transition:.3s}
+#s-conc3 .qh>span{width:48px;height:48px;border-radius:50%;background:#fff;border:4px solid var(--line);color:var(--ink3);display:grid;place-items:center;font-size:25px;font-weight:900;transition:.3s}
 #s-conc3 .qh>span.on{background:var(--blue);border-color:var(--blue);color:#fff;transform:scale(1.12)}
 #s-conc3 .qh>span.ok{background:var(--green);border-color:var(--green);color:#fff}
 #s-conc3 .qh .eqline{margin-left:auto;font-size:44px;font-weight:900;color:var(--ink);white-space:nowrap}
-#s-conc3 .qc{padding:18px 30px}
-#s-conc3 .qc p{font-size:33px;line-height:1.32;font-weight:800;color:var(--ink)}
+#s-conc3 .qc{padding:14px 28px}
+#s-conc3 .qc p{font-size:30px;line-height:1.3;font-weight:800;color:var(--ink)}
 #s-conc3 .qc p b{color:var(--blue)}
 #s-conc3 .ans{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-#s-conc3 .ans .btn{font-size:34px;padding:16px 10px}
+#s-conc3 .ans .btn{font-size:30px;padding:12px 10px}
 #s-conc3 .ans .btn.bad{animation:shake .5s}
 @keyframes shake{0%,100%{transform:none}20%{transform:translateX(-14px)}40%{transform:translateX(14px)}60%{transform:translateX(-9px)}80%{transform:translateX(9px)}}
-#s-conc3 .ss{padding:8px 22px 16px;position:relative}
-#s-conc3 .ss svg{display:block;width:900px;height:390px;overflow:visible}
-#s-conc3 .ss .cap{display:flex;align-items:center;gap:16px;min-height:72px;font-size:26px;line-height:1.3;font-weight:800;color:var(--ink);border-top:3px dashed var(--line);padding-top:10px}
-#s-conc3 .ss .cap .em{flex:none;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--ink3);color:#fff;font-size:30px;font-weight:900;transition:background .3s}
-#s-conc3 .ss .cap.ok .em{background:var(--green)} #s-conc3 .ss .cap.no .em{background:var(--red)}
-#s-conc3 .ss .cap .tx{flex:1}
-#s-conc3 .ss .cap .btn{flex:none;font-size:24px;padding:12px 20px}
+#s-conc3 .ss{padding:6px 22px 12px;position:relative}
+#s-conc3 .ss svg{display:block;width:900px;height:396px;overflow:visible}
 #s-conc3 .ss .lbl{font-size:22px;font-weight:900}
-#s-conc3 .ss .blk{font-size:28px;font-weight:900;fill:#fff}
-#s-conc3 .ss .bl text{font-size:15px;font-weight:900;fill:#fff}
+#s-conc3 .ctl{position:relative;height:60px}
+#s-conc3 .ctl .grp{position:absolute;top:2px;transform:translateX(-50%);display:flex;align-items:center;gap:6px}
+#s-conc3 .ctl .pm{width:48px;height:48px;border-radius:15px;background:var(--c);color:#fff;font-size:34px;font-weight:900;line-height:1;display:grid;place-items:center;box-shadow:0 5px 0 color-mix(in srgb,var(--c) 68%,#000);transition:transform .12s,box-shadow .12s,opacity .2s;cursor:pointer}
+#s-conc3 .ctl .pm:hover{transform:translateY(-2px)}
+#s-conc3 .ctl .pm:active{transform:translateY(3px);box-shadow:0 2px 0 color-mix(in srgb,var(--c) 68%,#000)}
+#s-conc3 .ctl .pm.hint{animation:pmHint 1s ease-in-out infinite}
+@keyframes pmHint{0%,100%{box-shadow:0 5px 0 color-mix(in srgb,var(--c) 68%,#000),0 0 0 0 rgba(255,196,0,0)}50%{box-shadow:0 5px 0 color-mix(in srgb,var(--c) 68%,#000),0 0 0 12px rgba(255,196,0,.6)}}
+#s-conc3 .ctl .pm.no{animation:shake .4s}
+#s-conc3 .ctl .nm{min-width:56px;text-align:center;font-size:28px;font-weight:900;color:var(--c)}
+#s-conc3 .ctl .rs{position:absolute;top:4px;transform:translateX(-50%);width:44px;height:44px;border-radius:50%;background:#fff;border:3px solid var(--line);color:var(--ink2);font-size:24px;font-weight:900;display:grid;place-items:center;cursor:pointer}
+#s-conc3 .cap{display:flex;align-items:center;gap:16px;min-height:70px;font-size:25px;line-height:1.28;font-weight:800;color:var(--ink);border-top:3px dashed var(--line);padding-top:10px}
+#s-conc3 .cap .em{flex:none;width:50px;height:50px;border-radius:50%;display:grid;place-items:center;background:var(--ink3);color:#fff;font-size:28px;font-weight:900;transition:background .3s}
+#s-conc3 .cap.ok .em{background:var(--green)} #s-conc3 .cap.no .em{background:var(--red)} #s-conc3 .cap.fw .em{background:var(--blue)} #s-conc3 .cap.bk .em{background:var(--red)}
+#s-conc3 .cap .tx{flex:1}
+#s-conc3 .cap .btn{flex:none;font-size:23px;padding:12px 18px}
 </style>
 <div class="top">
   <div class="chip rv pop"><b>1</b>Концентрацияның әсері</div>
-  <h1 class="t1 rv" style="--d:.15s">Тепе-теңдік қай жаққа <em>ығысады?</em></h1>
+  <h1 class="t1 rv" style="--d:.15s">Тепе-теңдік — <em>таразы</em> сияқты</h1>
 </div>
 <canvas id="qSim" class="rv z" style="--d:.35s"></canvas>
-<div class="bigcnt rv" id="qCnt" style="--d:.8s;left:66px;top:936px"></div>
+<div class="bigcnt rv" id="qCnt" style="--d:.8s;left:66px;top:858px"></div>
 <div class="rt">
-  <div class="qh rv r" style="--d:.4s"><span id="qb1" class="on">1</span><span id="qb2">2</span><div class="eqline"><span class="f">2NO + O<sub>2</sub> <svg class="ar" viewBox="0 0 64 30"><path class="fw" d="M5 10h53M47 2l11 8"/><path class="bk" d="M59 21H6M17 29L6 21"/></svg> 2NO<sub>2</sub></span></div></div>
+  <div class="qh rv r" style="--d:.4s"><span id="qb1" class="on">1</span><span id="qb2">2</span><span id="qb3">3</span><div class="eqline"><span class="f">2NO + O<sub>2</sub> <svg class="ar" viewBox="0 0 64 30"><path class="fw" d="M5 10h53M47 2l11 8"/><path class="bk" d="M59 21H6M17 29L6 21"/></svg> 2NO<sub>2</sub></span></div></div>
   <div class="card qc rv r" style="--d:.5s"><p id="qTxt"></p></div>
-  <div class="ans rv r" style="--d:.65s"><button class="btn" id="aL" style="--c:#F43F5E"><span class="f"><svg class="ar" viewBox="0 0 64 28"><path class="bk" d="M59 14H7M19 4L7 14l12 10"/></svg></span>&nbsp;Солға</button><button class="btn" id="aR" style="--c:#2F6BFF">Оңға&nbsp;<span class="f"><svg class="ar" viewBox="0 0 64 28"><path class="fw" d="M5 14h52M45 4l12 10-12 10"/></svg></span></button></div>
-  <div class="card ss rv r" style="--d:.8s">
-    <svg viewBox="0 0 900 390">
+  <div class="ans rv r" style="--d:.6s"><button class="btn" id="aL" style="--c:#F43F5E"><span class="f"><svg class="ar" viewBox="0 0 64 28"><path class="bk" d="M59 14H7M19 4L7 14l12 10"/></svg></span>&nbsp;Солға</button><button class="btn" id="aR" style="--c:#2F6BFF">Оңға&nbsp;<span class="f"><svg class="ar" viewBox="0 0 64 28"><path class="fw" d="M5 14h52M45 4l12 10-12 10"/></svg></span></button></div>
+  <div class="card ss rv r" style="--d:.75s">
+    <svg viewBox="0 0 900 396" id="ssSvg">
       <defs>
         <linearGradient id="ssF" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9B7BFF"/><stop offset="1" stop-color="#6A3FF0"/></linearGradient>
-        <linearGradient id="ssBm" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8B5CF6"/><stop offset=".5" stop-color="#4A5887"/><stop offset="1" stop-color="#E0A21B"/></linearGradient>
-        <linearGradient id="ssBL" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8B5CF6"/><stop offset="1" stop-color="#F43F5E"/></linearGradient>
-        <linearGradient id="ssBR" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F2B23A"/><stop offset="1" stop-color="#D98E0B"/></linearGradient>
-        <radialGradient id="ssHl" cx=".35" cy=".3" r=".7"><stop offset="0" stop-color="#fff" stop-opacity=".75"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/></radialGradient>
+        <linearGradient id="ssBm" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8B5CF6"/><stop offset=".33" stop-color="#F43F5E"/><stop offset=".5" stop-color="#4A5887"/><stop offset="1" stop-color="#E0A21B"/></linearGradient>
+        <radialGradient id="ssHl" cx=".35" cy=".3" r=".7"><stop offset="0" stop-color="#fff" stop-opacity=".8"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/></radialGradient>
       </defs>
-      <rect x="20" y="352" width="860" height="10" rx="5" fill="#DCE5FB"/>
-      <text class="lbl" x="150" y="386" text-anchor="middle" fill="#8B5CF6">реагенттер</text>
-      <text class="lbl" x="750" y="386" text-anchor="middle" fill="#D98E0B">өнім</text>
-      <path d="M450 232 L392 352 H508 Z" fill="url(#ssF)"/>
-      <g id="ssBeam"><rect x="110" y="224" width="680" height="20" rx="10" fill="url(#ssBm)"/><rect x="118" y="228" width="664" height="5" rx="2.5" fill="#fff" opacity=".35"/></g>
-      <circle cx="450" cy="234" r="13" fill="#fff" stroke="#6A3FF0" stroke-width="6"/>
-      <g id="ssL"><rect x="-108" y="-52" width="216" height="46" rx="14" fill="url(#ssBL)"/><text class="blk" x="0" y="-19" text-anchor="middle">2NO + O₂</text><path d="M-128 -128 L-114 -6 Q-112 2 -102 2 H102 Q112 2 114 -6 L128 -128" fill="rgba(255,255,255,.35)" stroke="#9AB0E8" stroke-width="6" stroke-linejoin="round"/></g>
-      <g id="ssR"><rect x="-108" y="-52" width="216" height="46" rx="14" fill="url(#ssBR)"/><text class="blk" x="0" y="-19" text-anchor="middle">2NO₂</text><path d="M-128 -128 L-114 -6 Q-112 2 -102 2 H102 Q112 2 114 -6 L128 -128" fill="rgba(255,255,255,.35)" stroke="#9AB0E8" stroke-width="6" stroke-linejoin="round"/></g>
+      <rect x="20" y="378" width="860" height="10" rx="5" fill="#DCE5FB"/>
+      <text class="lbl" x="230" y="366" text-anchor="middle" fill="#8B5CF6">реагенттер</text>
+      <text class="lbl" x="700" y="366" text-anchor="middle" fill="#D98E0B">өнім</text>
+      <path d="M450 260 L394 378 H506 Z" fill="url(#ssF)"/>
+      <g id="ssBeam"><rect x="28" y="252" width="844" height="20" rx="10" fill="url(#ssBm)"/><rect x="36" y="256" width="828" height="5" rx="2.5" fill="#fff" opacity=".35"/></g>
+      <circle cx="450" cy="262" r="13" fill="#fff" stroke="#6A3FF0" stroke-width="6"/>
+      <g id="ssBk"></g>
       <g id="ssBalls"></g>
-      <g id="ssArr" opacity="0"><rect x="320" y="20" width="260" height="58" rx="29" fill="#2F6BFF"/><text x="450" y="59" text-anchor="middle" font-size="30" font-weight="900" fill="#fff">→ оңға</text></g>
+      <g id="ssArr"><rect x="310" y="12" width="280" height="56" rx="28" fill="#12B76A"/><text x="450" y="50" text-anchor="middle" font-size="29" font-weight="900" fill="#fff">тепе-теңдік</text></g>
     </svg>
-    <div class="cap" id="qCap"><span class="em">?</span><span class="tx" id="qCapT">Жауапты таңда — сосын әткеншек көрсетеді!</span><button class="btn" id="qNext" style="--c:#12B76A;display:none">Келесі сұрақ →</button></div>
+    <div class="ctl">
+      <div class="grp" style="left:142px;--c:#8B5CF6"><button class="pm" data-k="NO" data-d="-1">−</button><span class="nm">NO</span><button class="pm" data-k="NO" data-d="1">+</button></div>
+      <div class="grp" style="left:314px;--c:#F43F5E"><button class="pm" data-k="O2" data-d="-1">−</button><span class="nm">O₂</span><button class="pm" data-k="O2" data-d="1">+</button></div>
+      <button class="rs" id="ssReset" style="left:472px" title="Бастапқы күй">↻</button>
+      <div class="grp" style="left:772px;--c:#E0A21B"><button class="pm" data-k="NO2" data-d="-1">−</button><span class="nm">NO₂</span><button class="pm" data-k="NO2" data-d="1">+</button></div>
+    </div>
+    <div class="cap" id="qCap"><span class="em">⇌</span><span class="tx" id="qCapT"></span><button class="btn" id="qNext" style="--c:#12B76A;display:none">Келесі сұрақ →</button></div>
   </div>
 </div>
 </section>
@@ -1014,7 +1025,6 @@ body.menu #menuShade{opacity:1;pointer-events:auto}
   </div>
   <div class="card vol rv r" style="--d:.55s"><div class="eqm"><div class="grp" id="gL"><span class="f">N₂ + 3H₂</span><span class="br"><i style="width:320px"></i><span>1 + 3 = 4 көлем</span></span></div><span style="margin-top:2px"><span class="f"><svg class="ar" viewBox="0 0 64 30"><path class="fw" d="M5 10h53M47 2l11 8"/><path class="bk" d="M59 21H6M17 29L6 21"/></svg></span></span><div class="grp" id="gR"><span class="f">2NH₃</span><span class="br"><i style="width:140px"></i><span>2 көлем</span></span></div></div></div>
   <canvas id="pChart" class="ch rv r" style="--d:.65s"></canvas>
-  <canvas id="pRate" class="ch rv r" style="--d:.7s"></canvas>
   <div class="card ctl rv" style="--d:.85s"><b class="k-violet">Қысым</b><input type="range" id="pSl" min="100" max="220" value="100"><button class="btn" id="pUp" style="--c:#7B4DFF">▲ Арттыр</button><button class="btn" id="pDn" style="--c:#FF6A2B">▼ Кеміт</button></div>
   <div class="card st2 rv" style="--d:.95s" id="pSt"><span class="dirb">⇌</span><span id="pTx">«Арттыр» түймесін бас: поршень газды қысады, жүйе молекула санын азайтуға тырысады.</span></div>
 </div>
@@ -1091,7 +1101,6 @@ body.menu #menuShade{opacity:1;pointer-events:auto}
   </div>
   <div class="card qb rv r" style="--d:.55s"><div class="eqline"><span class="f">N<sub>2</sub> + 3H<sub>2</sub> <svg class="ar" viewBox="0 0 64 30"><path class="fw" d="M5 10h53M47 2l11 8"/><path class="bk" d="M59 21H6M17 29L6 21"/></svg> 2NH<sub>3</sub> + Q</span></div><div class="pl"><span style="--c:#2F6BFF">→ тура: жылу бөлінеді (+Q)</span><span style="--c:#F43F5E">← кері: жылу сіңіріледі (−Q)</span></div></div>
   <canvas id="hChart" class="ch rv r" style="--d:.65s"></canvas>
-  <canvas id="hRate" class="ch rv r" style="--d:.7s"></canvas>
   <div class="card ctl rv" style="--d:.85s"><b style="color:#22A6F2">Суыту</b><input type="range" id="tSl" min="-100" max="100" value="0"><b style="color:var(--orange)">Қыздыру</b></div>
   <div class="card st2 rv" style="--d:.95s" id="hSt"><span class="dirb">⇌</span><span id="hTx">Жүгірткіні қозғалт. Жылу (Q) да зат сияқты: қыздырсақ — жылуды «қосамыз».</span></div>
 </div>
@@ -1123,7 +1132,6 @@ body.menu #menuShade{opacity:1;pointer-events:auto}
   </div>
   <div class="card qb rv r" style="--d:.55s"><div class="eqline"><span class="f">N<sub>2</sub> + O<sub>2</sub> <svg class="ar" viewBox="0 0 64 30"><path class="fw" d="M5 10h53M47 2l11 8"/><path class="bk" d="M59 21H6M17 29L6 21"/></svg> 2NO − Q</span></div><div class="pl"><span style="--c:#2F6BFF">→ тура: жылу сіңіріледі (−Q)</span><span style="--c:#F43F5E">← кері: жылу бөлінеді (+Q)</span></div></div>
   <canvas id="hChart" class="ch rv r" style="--d:.65s"></canvas>
-  <canvas id="hRate" class="ch rv r" style="--d:.7s"></canvas>
   <div class="card ctl rv" style="--d:.85s"><b style="color:#22A6F2">Суыту</b><input type="range" id="tSl" min="-100" max="100" value="0"><b style="color:var(--orange)">Қыздыру</b><button class="btn" id="tBolt" style="--c:#E39A00"><svg width="20" height="26" viewBox="0 0 22 28" style="margin-right:4px"><path d="M13 0L2 16h7l-3 12 14-18h-8z" fill="#fff"/></svg>Найзағай</button></div>
   <div class="card st2 rv" style="--d:.95s" id="hSt"><span class="dirb">⇌</span><span id="hTx">Найзағай ауаны өте қатты қыздырады: N₂ мен O₂ әрекеттесіп, NO түзіледі. Батырманы бас!</span></div>
 </div>
@@ -1168,15 +1176,19 @@ body.menu #menuShade{opacity:1;pointer-events:auto}
 <!-- ===== 23. ЛЕ-ШАТЕЛЬЕ ПРИНЦИПІ ===== -->
 <section class="slide a-gold" id="s-lc" data-steps="1" data-title="Ле-Шателье принципі" data-sec="4 · Ле-Шателье принципі және факторлар">
 <style>
-#s-lc .qt{position:absolute;left:96px;top:150px;width:900px;padding:20px 44px 30px;background:linear-gradient(135deg,#fff,#FFF6D8);border:5px solid #fff;overflow:visible}
-#s-lc .qt::before{content:"«";position:absolute;left:30px;top:-6px;font-size:150px;font-weight:900;color:#F5B000;line-height:1}
-#s-lc .qt p{font-size:41px;line-height:1.38;font-weight:800;color:var(--ink);font-style:italic;margin-top:54px}
+#s-lc .qt{position:absolute;left:96px;top:150px;width:620px;height:480px;padding:28px 34px;background:linear-gradient(135deg,#fff,#FFF6D8);border:5px solid #fff;display:flex;flex-direction:column;justify-content:center}
+#s-lc .qt p{font-size:32px;line-height:1.4;font-weight:800;color:var(--ink);font-style:italic}
 #s-lc .qt em{font-style:normal;background:linear-gradient(transparent 58%,#FFD2DA 58%);padding:0 4px;border-radius:4px}
 #s-lc .qt em.g{background:linear-gradient(transparent 58%,#BEF0D3 58%)}
-#s-lc .who{margin-top:20px;display:flex;align-items:center;gap:16px;font-size:26px;font-weight:800;color:var(--ink2);font-style:normal}
+#s-lc .who{margin-top:20px;display:flex;align-items:center;gap:14px;font-size:22px;font-weight:800;color:var(--ink2);font-style:normal}
 #s-lc .who i{display:grid;place-items:center;width:58px;height:58px;border-radius:50%;background:#E39A00;color:#fff;font-style:normal;font-weight:900;font-size:26px}
-#s-lc .sp{position:absolute;left:1030px;top:150px;width:800px;height:480px;background:rgba(255,255,255,.7);border-radius:40px;box-shadow:var(--shadow);border:3px solid #fff}
-#s-lc .sp svg{position:absolute;left:0;top:0;width:800px;height:480px}
+#s-lc .sp,#s-lc .sw{position:absolute;top:150px;height:480px;background:rgba(255,255,255,.78);border-radius:40px;box-shadow:var(--shadow);border:3px solid #fff;overflow:hidden}
+#s-lc .sp{left:740px;width:530px}
+#s-lc .sw{left:1290px;width:534px}
+#s-lc .sp h4,#s-lc .sw h4{position:absolute;left:0;right:0;top:16px;text-align:center;font-size:27px;font-weight:900;color:var(--ink2)}
+#s-lc .sp svg{position:absolute;left:5px;top:96px;width:520px;height:312px}
+#s-lc .sw svg{position:absolute;left:12px;top:60px;width:510px;height:315px}
+#s-lc .sw p{position:absolute;left:18px;right:18px;top:384px;text-align:center;font-size:24px;line-height:1.3;font-weight:800;color:var(--ink);transition:color .3s}
 #s-lc .tri{position:absolute;left:96px;right:96px;top:668px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
 #s-lc .pr{padding:20px 26px;border-top:8px solid var(--c)}
 #s-lc .pr .a{display:flex;align-items:center;gap:14px;font-size:30px;font-weight:900;color:var(--c)}
@@ -1193,7 +1205,8 @@ body.menu #menuShade{opacity:1;pointer-events:auto}
 </div>
 <div class="card qt rv l" style="--d:.35s"><p>Егер химиялық тепе-теңдік күйінде тұрған жүйеге <em>сыртқы әсер</em> етсе, онда тепе-теңдік реакция бағытына (тікелей немесе кері) ауысады, бұл сыртқы әсерді <em class="g">әлсіретеді</em>.</p>
   <div class="who"><i>L</i><span>Анри Луи Ле Шателье, француз химигі · 1884 ж.</span></div></div>
-<div class="sp rv r" style="--d:.5s"><svg id="spSvg" viewBox="0 0 800 480"></svg></div>
+<div class="sp rv r" style="--d:.5s"><h4>Серіппе</h4><svg id="spSvg" viewBox="0 0 800 480"></svg></div>
+<div class="sw rv r" style="--d:.65s"><h4>Таразы (әткеншек)</h4><svg id="lsSvg" viewBox="0 0 534 330"></svg><p id="lsCap">Тепе-теңдік: таразы тең</p></div>
 <div class="tri">
   <div class="card pr st" data-st="1" style="--c:#2F6BFF"><div class="a"><i>Концентрация ↑</i></div><div class="mid"><svg viewBox="0 0 44 50"><path d="M22 4v34M10 28l12 14 12-14" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="r">Жүйе қосылған затты <b>жұмсайды</b></div></div>
   <div class="card pr st" data-st="1" style="--c:#7B4DFF"><div class="a"><i>Қысым ↑</i></div><div class="mid"><svg viewBox="0 0 44 50"><path d="M22 4v34M10 28l12 14 12-14" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="r"><b>Молекула саны</b> азаяды, қысым төмендейді</div></div>
@@ -1280,8 +1293,7 @@ body.menu #menuShade{opacity:1;pointer-events:auto}
   <div class="gl rv" style="--d:.55s"><button class="btn" id="lN" style="--c:#2F6BFF">+ N₂ қос</button><button class="btn" id="lH" style="--c:#FF5C93">+ H₂ қос</button><button class="btn" id="lA" style="--c:#0BB5A8">− NH₃ ал</button><button class="btn" id="lC" style="--c:#E39A00">Катализатор: ӨШІРУЛІ</button></div>
   <div class="card cp rv" style="--d:.65s"><b class="k-violet">Қысым</b><input type="range" id="lP" min="100" max="220" value="100"><b style="color:var(--orange)">Темп.</b><input type="range" id="lT" min="-100" max="100" value="0"><button class="btn ghost" id="lR" style="--c:#4A5887">↻ Басынан</button></div>
   <canvas id="lChart" class="ch rv r" style="--d:.75s"></canvas>
-  <canvas id="lRate" class="ch rv r" style="--d:.8s"></canvas>
-  <div class="card st2 rv" style="--d:.9s" id="lSt"><span class="dirb">⇌</span><span id="lTx">Түймелер мен жүгірткілерді қолдан. Нәтижені колбадан, сандардан және графиктерден бақыла.</span></div>
+  <div class="card st2 rv" style="--d:.9s" id="lSt"><span class="dirb">⇌</span><span id="lTx">Түймелер мен жүгірткілерді қолдан. Нәтижені колбадан, сандардан және графиктен бақыла.</span></div>
 </div>
 <div class="win" id="lWin">Жарайсың! Шығым 60%-дан асты<small>Қысымды арттырып, температураны төмендету — аммиак шығымын арттырады</small></div>
 </section>
@@ -1764,6 +1776,14 @@ class Chart {
       g.fillStyle = '#fff'; g.beginPath(); g.arc(lx, ly, 10, 0, 7); g.fill(); g.fillStyle = s.color; g.beginPath(); g.arc(lx, ly, 6.5, 0, 7); g.fill();
     }
     g.restore();
+    // сызық соңындағы атаулар
+    if (this.o.endLabels) {
+      const fs = this.o.endFont || 26;
+      const ends = this.o.series.map(s => { const d = this.data[s.k]; if (d.length < 2) return null; const L = d[d.length - 1]; return { s, x: X(L[0]), y: Y(L[1]) }; }).filter(Boolean).sort((a, b) => a.y - b.y);
+      for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < fs + 8) ends[i].y = ends[i - 1].y + fs + 8;
+      const over = ends.length ? Math.max(0, ends[ends.length - 1].y - (p.t + H - 4)) : 0; ends.forEach(e => e.y -= over);
+      ends.forEach(e => { const lab = e.s.label || e.s.k, tw = chemWidth(g, lab, fs); const x = Math.min(e.x + 16, w - tw - 14); g.save(); g.shadowColor = 'rgba(20,33,77,.15)'; g.shadowBlur = 8; rr(g, x - 8, e.y - fs * .62, tw + 16, fs * 1.24, fs * .62); g.fillStyle = '#fff'; g.fill(); g.restore(); chemFill(g, lab, x, e.y + fs * .36, fs, e.s.color); });
+    }
   }
 }
 
@@ -3051,23 +3071,23 @@ Deck.slide('s-conc1', ctx => {
 // ============ 16. Колбадағы концентрация тәжірибесі ============
 Deck.slide('s-conc2', ctx => {
   const sim = new Sim(ctx, ctx.q('#cSim'), { W: 760, H: 700, by: 650, bh: 520, sp: { NH3: 1, N2: 1, H2: 1 }, L: [['NH3', 2]], R: [['N2', 1], ['H2', 3]], n0: { NH3: 24, N2: 8, H2: 24 }, exo: -1, kf: 1.5, noise: .5, ms: 1 });
-  const ch = new DualChart(ctx, ctx.q('#cChart'), ctx.q('#cRate'), 944, 250, 262, [{ k: 'NH3', color: '#0BB5A8', label: 'NH3' }, { k: 'N2', color: '#2F6BFF', label: 'N2' }, { k: 'H2', color: '#FF5C93', label: 'H2' }], { ymax0: 40, rmax: 3 });
+  const ch = new Chart(ctx, ctx.q('#cRate'), 944, 524, { series: [{ k: 'f', color: '#2F6BFF', label: 'υ тура' }, { k: 'b', color: '#F43F5E', label: 'υ кері', dash: [16, 11] }], window: 24, ymax0: 3, ylabel: 'Реакция жылдамдығы (υ)', xlabel: 'Уақыт', legend: true, endLabels: true, endFont: 24, pad: { l: 74, r: 30, t: 54, b: 54 } });
   const cnt = mkCounters(ctx.q('#cCnt'), [{ k: 'NH3', label: 'NH3', color: '#0BB5A8' }, { k: 'N2', label: 'N2', color: '#2F6BFF' }, { k: 'H2', label: 'H2', color: '#FF5C93' }]);
   let acc = 0, T = 0; const stat = ctx.q('#cStat'), txt = ctx.q('#cTxt');
   let pending = null, since = 0;
   const say = (cls, t) => { stat.className = 'stat ' + cls; txt.innerHTML = t; };
   function act(label, f, color) { f(); ch.mark(label, color); pending = { label }; since = 0; Snd.click(); }
-  ctx.on(ctx.q('#cA1'), 'click', () => act('+ NH₃', () => sim.add('NH3', 14), '#0BB5A8'));
-  ctx.on(ctx.q('#cR1'), 'click', () => act('− NH₃', () => sim.remove('NH3', 10), '#7B4DFF'));
-  ctx.on(ctx.q('#cA2'), 'click', () => act('+ N₂', () => sim.add('N2', 6), '#2F6BFF'));
-  ctx.on(ctx.q('#cA3'), 'click', () => act('+ H₂', () => sim.add('H2', 14), '#FF5C93'));
+  ctx.on(ctx.q('#cA1'), 'click', () => act('C(NH₃) ↑', () => sim.add('NH3', 14), '#0BB5A8'));
+  ctx.on(ctx.q('#cR1'), 'click', () => act('C(NH₃) ↓', () => sim.remove('NH3', 10), '#7B4DFF'));
+  ctx.on(ctx.q('#cA2'), 'click', () => act('C(N₂) ↑', () => sim.add('N2', 6), '#2F6BFF'));
+  ctx.on(ctx.q('#cA3'), 'click', () => act('C(H₂) ↑', () => sim.add('H2', 14), '#FF5C93'));
   ctx.raf(dt => {
     T += dt; sim.update(dt); sim.draw(); acc += dt;
-    if (acc > .1) { acc = 0; ch.push(T, sim); cnt.set({ NH3: sim.cnt('NH3'), N2: sim.cnt('N2'), H2: sim.cnt('H2') }); }
+    if (acc > .1) { acc = 0; ch.push(T, { f: sim.rf, b: sim.rrv }); cnt.set({ NH3: sim.cnt('NH3'), N2: sim.cnt('N2'), H2: sim.cnt('H2') }); }
     ch.draw(dt);
     if (pending) {
       since += dt;
-      if (since > .7 && since < 7) {
+      if (since > .2 && since < 7) {
         if (sim.shift > .12) say('fw', '<b>υ тура &gt; υ кері</b> → тепе-теңдік <b>оңға (→)</b>: NH₃ жұмсалып, N₂ мен H₂ көбейеді');
         else if (sim.shift < -.12) say('bk', '<b>υ кері &gt; υ тура</b> → тепе-теңдік <b>солға (←)</b>: N₂ мен H₂ қосылып, NH₃ түзіледі');
       }
@@ -3078,82 +3098,134 @@ Deck.slide('s-conc2', ctx => {
 
 // ============ 17. Концентрация: сұрақтар ============
 Deck.slide('s-conc3', ctx => {
-  const sim = new Sim(ctx, ctx.q('#qSim'), { W: 760, H: 790, by: 770, bh: 730, sp: { NO: 1, O2: 1, NO2: 1 }, L: [['NO', 2], ['O2', 1]], R: [['NO2', 2]], n0: { NO: 18, O2: 11, NO2: 12 }, exo: 1, kf: .55, noise: .45 });
+  const N0 = { NO: 8, O2: 6, NO2: 8 };
+  const sim = new Sim(ctx, ctx.q('#qSim'), { W: 760, H: 700, by: 680, bh: 640, sp: { NO: 1, O2: 1, NO2: 1 }, L: [['NO', 2], ['O2', 1]], R: [['NO2', 2]], n0: N0, exo: 1, kf: .6, noise: .2, ms: 1.3 });
   const cnt = mkCounters(ctx.q('#qCnt'), [{ k: 'NO', label: 'NO', color: '#8B5CF6' }, { k: 'O2', label: 'O2', color: '#F43F5E' }, { k: 'NO2', label: 'NO2', color: '#E0A21B' }]);
-  const Q = [
-    { t: 'Азот (II) оксидінің <b>NO</b> концентрациясын <b>арттырсақ</b>, тепе-теңдік қай жаққа ығысады?', ans: 'R', add: 'NO', src: 'L', dst: 'R', why: '<b>NO көбейді</b> → сол жақ ауырлады → жүйе NO-ны жұмсап, <b>NO₂ түзеді</b> → тепе-теңдік <b class="k-blue">оңға (→)</b>.' },
-    { t: 'Азот (IV) оксидінің <b>NO₂</b> концентрациясын <b>арттырсақ</b>, тепе-теңдік қай жаққа ығысады?', ans: 'L', add: 'NO2', src: 'R', dst: 'L', why: '<b>NO₂ көбейді</b> → оң жақ ауырлады → жүйе NO₂-ні ыдыратып, <b>NO мен O₂ түзеді</b> → тепе-теңдік <b class="k-red">солға (←)</b>.' }
-  ];
-  const txt = ctx.q('#qTxt'), cap = ctx.q('#qCap'), capT = ctx.q('#qCapT'), nx = ctx.q('#qNext'), aL = ctx.q('#aL'), aR = ctx.q('#aR');
-  const beam = ctx.q('#ssBeam'), gB = { L: ctx.q('#ssL'), R: ctx.q('#ssR') }, ballsG = ctx.q('#ssBalls'), arr = ctx.q('#ssArr'), arrR = arr.querySelector('rect'), arrT = arr.querySelector('text');
-  const NS = 'http://www.w3.org/2000/svg', PX = 450, PY = 234, ARM = 318, MAXT = 12, G = 11;
-  const COL = { NO: [139, 92, 246], NO2: [224, 162, 27] }, LBL = { NO: 'NO', NO2: 'NO₂' };
   const K = sim.K();
-  let qi = 0, locked = false, snap = null, snapC = null, tt = 0, time = 0, th = 0, thv = 0, balls = [], moved = 0, lastFly = 0, active = false, arrA = 0, arrTgt = 0, settled = 0, done = false;
-  const say = (cls, icon, t) => { cap.className = 'cap ' + cls; cap.querySelector('.em').textContent = icon; capT.innerHTML = t; };
-  const hub = side => { const a = th * Math.PI / 180, sg = side === 'L' ? -1 : 1; return [PX + sg * ARM * Math.cos(a), PY + sg * ARM * Math.sin(a) - 12]; };
-  const slotXY = i => [-88 + (i % 5) * 44, -74 - Math.floor(i / 5) * 42];
-  const freeSlot = side => { const used = balls.filter(b => (b.st === 'fly' ? b.dst : b.side) === side).map(b => b.st === 'fly' ? b.dslot : b.slot); let i = 0; while (used.includes(i)) i++; return i; };
-  const pos = (side, slot) => { const [hx, hy] = hub(side), [sx, sy] = slotXY(slot); return [hx + sx, hy + sy]; };
-  const rgb = (c1, c2, e) => `rgb(${c1.map((v, i) => Math.round(v + (c2[i] - v) * e)).join(',')})`;
-  function mkBall(kind, side, delay) {
-    const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'bl');
-    g.innerHTML = `<circle r="20" stroke="#fff" stroke-width="3"/><circle r="20" fill="url(#ssHl)"/><text y="5" text-anchor="middle">${LBL[kind]}</text>`;
-    ballsG.appendChild(g);
-    const b = { g, c: g.querySelector('circle'), t: g.querySelector('text'), kind, side, slot: freeSlot(side), st: 'drop', k: -delay };
-    b.c.setAttribute('fill', rgb(COL[kind], COL[kind], 0)); g.style.opacity = 0; balls.push(b); return b;
+  const Q = [
+    { t: '<b>NO</b> концентрациясын <b>арттырсақ</b>, тепе-теңдік қай жаққа ығысады?', ans: 'R', k: 'NO', d: 1 },
+    { t: '<b>NO₂</b> концентрациясын <b>арттырсақ</b>, тепе-теңдік қай жаққа ығысады?', ans: 'L', k: 'NO2', d: 1 },
+    { t: '<b>O₂</b> концентрациясын <b>азайтсақ</b>, тепе-теңдік қай жаққа ығысады?', ans: 'L', k: 'O2', d: -1 }
+  ];
+  const MSG = {
+    'NO+': 'NO көбейді → сол жақ ауырлады → жүйе NO-ны жұмсап, NO₂ түзеді → <b class="k-blue">оңға (→)</b>',
+    'NO-': 'NO азайды → сол жақ жеңілдеді → NO₂ ыдырап, NO түзіледі → <b class="k-red">солға (←)</b>',
+    'O2+': 'O₂ көбейді → сол жақ ауырлады → жүйе O₂-ні жұмсайды → <b class="k-blue">оңға (→)</b>',
+    'O2-': 'O₂ азайды → сол жақ жеңілдеді → NO₂ ыдырап, O₂ түзіледі → <b class="k-red">солға (←)</b>',
+    'NO2+': 'NO₂ көбейді → оң жақ ауырлады → NO₂ ыдырап, NO мен O₂ түзіледі → <b class="k-red">солға (←)</b>',
+    'NO2-': 'NO₂ азайды → оң жақ жеңілдеді → жүйе NO₂ түзеді → <b class="k-blue">оңға (→)</b>'
+  };
+  const CAP = { NO: 20, O2: 16, NO2: 22 }, STEP = 3;
+  const COL = { NO: '#8B5CF6', O2: '#F43F5E', NO2: '#E0A21B' }, RGB = { NO: [139, 92, 246], O2: [244, 63, 94], NO2: [224, 162, 27] }, LBL = { NO: 'NO', O2: 'O₂', NO2: 'NO₂' };
+  const BK = { NO: { off: -330, w: 176, per: 6 }, O2: { off: -158, w: 150, per: 5 }, NO2: { off: 300, w: 230, per: 8 } };
+  const NS = 'http://www.w3.org/2000/svg', PX = 450, PY = 262, MAXT = 11, G = 16;
+  const txt = ctx.q('#qTxt'), cap = ctx.q('#qCap'), capT = ctx.q('#qCapT'), nx = ctx.q('#qNext'), aL = ctx.q('#aL'), aR = ctx.q('#aR');
+  const beam = ctx.q('#ssBeam'), bkG = ctx.q('#ssBk'), ballsG = ctx.q('#ssBalls'), arr = ctx.q('#ssArr'), arrR = arr.querySelector('rect'), arrT = arr.querySelector('text');
+  const pms = ctx.qa('.pm');
+  // себеттер
+  bkG.innerHTML = '';
+  for (const k in BK) {
+    const b = BK[k], w = b.w, g = document.createElementNS(NS, 'g');
+    g.innerHTML = `<path d="M${-w / 2} -150 L${-w / 2 + 12} -6 Q${-w / 2 + 14} 2 ${-w / 2 + 24} 2 H${w / 2 - 24} Q${w / 2 - 14} 2 ${w / 2 - 12} -6 L${w / 2} -150" fill="rgba(255,255,255,.55)" stroke="#9AB0E8" stroke-width="5" stroke-linejoin="round"/><rect x="${-w / 2 + 12}" y="-38" width="${w - 24}" height="32" rx="12" fill="${COL[k]}"/><text y="-14" text-anchor="middle" font-size="22" font-weight="900" fill="#fff"></text>`;
+    bkG.appendChild(g); b.g = g; b.t = g.querySelector('text');
   }
-  function clearBalls() { balls.forEach(b => b.g.remove()); balls = []; moved = 0; }
+  let th = 0, thv = 0, time = 0, tt = 0, SEQ = 0, balls = [], qi = 0, waitAct = null, act = null, settled = 0, snapC = null, lastCnt = {};
+  const hub = k => { const a = th * Math.PI / 180, o = BK[k].off; return [PX + o * Math.cos(a), PY + o * Math.sin(a) - 10]; };
+  const slotXY = (k, i) => { const b = BK[k], c = i % b.per, r = Math.floor(i / b.per); return [-(b.per - 1) * 13.5 + c * 27, -52 - r * 25]; };
+  const rgb = (a, b, e) => `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * e)).join(',')})`;
+  function mkBall(kind, b, x, y, st) {
+    const g = document.createElementNS(NS, 'g');
+    g.innerHTML = `<circle r="12.5" stroke="#fff" stroke-width="2.5" fill="${COL[kind]}"/><circle r="12.5" fill="url(#ssHl)"/>`;
+    ballsG.appendChild(g);
+    const o = { g, c: g.firstChild, kind, to: kind, b, seq: ++SEQ, st, x, y, t: 0, sc: 1 }; balls.push(o); return o;
+  }
+  const list = k => balls.filter(o => o.b === k && !o.gone && !o.merge).sort((a, b) => a.seq - b.seq);
+  const top = (k, n) => list(k).sort((a, b) => (a.st === 'sit' ? 0 : 1) - (b.st === 'sit' ? 0 : 1) || b.seq - a.seq).slice(0, n);
+  function initBalls() {
+    balls.forEach(o => o.g.remove()); balls = [];
+    for (const k in N0) for (let i = 0; i < N0[k]; i++) { const [hx, hy] = hub(k), [sx, sy] = slotXY(k, i); mkBall(k, k, hx + sx, hy + sy, 'sit'); }
+  }
+  // реакция оқиғалары → шарлар ұшады
+  sim.onEvent = d => {
+    if (d > 0) { // 2NO + O2 -> 2NO2
+      const no = top('NO', 2), o2 = top('O2', 1)[0];
+      no.forEach(o => { o.st = 'fly'; o.t = 0; o.sx = o.x; o.sy = o.y; o.to = 'NO2'; o.from = o.kind; o.b = 'NO2'; o.seq = ++SEQ; });
+      if (o2 && no[0]) { o2.merge = true; o2.st = 'merge'; o2.t = 0; o2.sx = o2.x; o2.sy = o2.y; o2.partner = no[0]; }
+    } else { // 2NO2 -> 2NO + O2
+      const n2 = top('NO2', 2);
+      n2.forEach(o => { o.st = 'fly'; o.t = 0; o.sx = o.x; o.sy = o.y; o.to = 'NO'; o.from = o.kind; o.b = 'NO'; o.seq = ++SEQ; });
+      if (n2[0]) { const o = mkBall('O2', 'O2', n2[0].x, n2[0].y, 'fly'); o.sx = o.x; o.sy = o.y; o.from = 'O2'; o.to = 'O2'; o.sc = 0; o.grow = true; }
+    }
+  };
+  const say = (cls, icon, t) => { cap.className = 'cap ' + cls; cap.querySelector('.em').textContent = icon; capT.innerHTML = t; };
   function load() {
-    txt.innerHTML = Q[qi].t; locked = false; active = false; done = false; nx.style.display = 'none'; snap = null; snapC = null; cnt.delta(null); clearBalls(); arrTgt = 0;
-    say('', '?', 'Жауапты таңда — сосын әткеншек көрсетеді!');
-    ctx.q('#qb1').className = qi === 0 ? 'on' : 'ok'; ctx.q('#qb2').className = qi === 1 ? 'on' : ''; aL.disabled = aR.disabled = false;
+    txt.innerHTML = Q[qi].t; waitAct = null; nx.style.display = 'none'; aL.disabled = aR.disabled = false;
+    ['qb1', 'qb2', 'qb3'].forEach((id, i) => ctx.q('#' + id).className = i < qi ? 'ok' : i === qi ? 'on' : '');
+    pms.forEach(b => b.classList.remove('hint'));
+    say('', '?', 'Алдымен болжа: <b>солға</b> ма, <b>оңға</b> ма? Таразыдағы − / + батырмаларымен өзің де тексере аласың.');
   }
   function pick(side, btn) {
-    if (locked) return;
     const q = Q[qi];
-    if (side !== q.ans) { btn.classList.remove('bad'); void btn.offsetWidth; btn.classList.add('bad'); Snd.bad(); say('no', '✗', 'Қайта ойлан: жүйе <b>қосылған затты жұмсауға</b> тырысады. Қай жақ ауырлайды?'); return; }
-    locked = true; aL.disabled = aR.disabled = true; Snd.good();
-    const r = btn.getBoundingClientRect(); Fx.confetti(r.left + r.width / 2, r.top, 50);
-    say('ok', '✓', 'Дұрыс! Қарап тұр: ' + LBL[q.add] + ' қосамыз…');
-    for (let i = 0; i < 6; i++) mkBall(q.add, q.src, .25 + i * .09);
-    ctx.after(1050, () => { sim.add(q.add, 12); Snd.pop(); snap = {}; sim.keys.forEach(k => snap[k] = sim.n(k)); snapC = {}; sim.keys.forEach(k => snapC[k] = sim.cnt(k)); active = true; settled = 0; say('ok', '✓', q.why); });
+    if (side !== q.ans) { btn.classList.remove('bad'); void btn.offsetWidth; btn.classList.add('bad'); Snd.bad(); say('no', '✗', 'Қайта ойлан: жүйе әсерді <b>әлсіретуге</b> тырысады. Таразының қай жағы ауырлайды немесе жеңілдейді?'); return; }
+    Snd.good(); aL.disabled = aR.disabled = true; const r = btn.getBoundingClientRect(); Fx.confetti(r.left + r.width / 2, r.top, 50);
+    waitAct = q.k + (q.d > 0 ? '+' : '-');
+    const pb = pms.find(b => b.dataset.k === q.k && +b.dataset.d === q.d); pb.classList.add('hint');
+    say('ok', '✓', `Дұрыс! Енді таразыда <b>${LBL[q.k]}</b> «${q.d > 0 ? '+' : '−'}» батырмасын басып тексер.`);
   }
+  function press(btn) {
+    const k = btn.dataset.k, d = +btn.dataset.d, now = Math.round(sim.cnt(k));
+    let ok = false;
+    if (d > 0) { if (now + STEP <= CAP[k]) { sim.add(k, STEP); ok = true; } }
+    else ok = sim.remove(k, STEP) > 0;
+    if (!ok) { btn.classList.remove('no'); void btn.offsetWidth; btn.classList.add('no'); Snd.bad(); return; }
+    Snd.click(); const key = k + (d > 0 ? '+' : '-');
+    act = key; settled = 0; snapC = {}; sim.keys.forEach(kk => snapC[kk] = Math.round(sim.cnt(kk)));
+    say(MSG[key].includes('оңға') ? 'fw' : 'bk', MSG[key].includes('оңға') ? '→' : '←', MSG[key]);
+    if (waitAct === key) { pms.forEach(b => b.classList.remove('hint')); waitAct = 'done:' + key; }
+  }
+  pms.forEach(b => ctx.on(b, 'click', () => press(b)));
   ctx.on(aL, 'click', () => pick('L', aL)); ctx.on(aR, 'click', () => pick('R', aR));
-  ctx.on(nx, 'click', () => { Snd.click(); if (qi < 1) { qi = 1; load(); } else Deck.next(); });
-  load();
+  ctx.on(nx, 'click', () => { Snd.click(); if (qi < Q.length - 1) { qi++; load(); } else Deck.next(); });
+  ctx.on(ctx.q('#ssReset'), 'click', () => { sim.reset(); initBalls(); act = null; snapC = null; cnt.delta(null); Snd.click(); say('', '⇌', 'Бастапқы күй: таразы тең — тепе-теңдік.'); });
+  initBalls(); load();
   ctx.raf(dt => {
-    sim.update(dt); sim.draw(); tt += dt; time += dt;
-    // әткеншек бұрышы: Q < K → сол жақ ауыр (сол жақ төмен), Q > K → оң жақ ауыр
+    sim.update(dt); sim.draw(); time += dt; tt += dt;
     const lq = Math.log(Math.max(sim.Q(), 1e-9) / K);
-    const tgt = clamp(G * lq, -MAXT, MAXT) + (Math.abs(lq) < .04 ? .5 * Math.sin(time * 1.6) : 0);
+    const tgt = clamp(G * lq, -MAXT, MAXT) + (Math.abs(lq) < .04 ? .45 * Math.sin(time * 1.6) : 0);
     thv += ((tgt - th) * 38 - thv * 7.5) * dt; th += thv * dt;
     beam.setAttribute('transform', `rotate(${th.toFixed(2)} ${PX} ${PY})`);
-    ['L', 'R'].forEach(sd => { const [x, y] = hub(sd); gB[sd].setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)})`); });
-    // бағыт көрсеткіші
-    arrTgt = active && Math.abs(lq) > .06 ? 1 : 0;
-    if (arrTgt) { const fw = lq < 0; arrR.setAttribute('fill', fw ? '#2F6BFF' : '#F43F5E'); arrT.textContent = fw ? 'оңға ығысу →' : '← солға ығысу'; }
-    else if (active) { arrR.setAttribute('fill', '#12B76A'); arrT.textContent = 'тепе-теңдік!'; }
-    arrA += ((active ? 1 : 0) - arrA) * Math.min(1, dt * 6); arr.setAttribute('opacity', arrA.toFixed(2));
-    // шарлар
-    if (active && snap) {
-      const q = Q[qi], formed = q.add === 'NO' ? sim.n('NO2') - snap.NO2 : sim.n('NO') - snap.NO;
-      const want = clamp(Math.round(formed / 2), 0, 6);
-      if (moved < want && time - lastFly > .32) {
-        const cand = balls.filter(b => b.st === 'sit' && b.side === q.src && b.kind === q.add).sort((a, b) => b.slot - a.slot)[0];
-        if (cand) { cand.st = 'fly'; cand.k = 0; cand.dst = q.dst; cand.dslot = freeSlot(q.dst); cand.to = q.add === 'NO' ? 'NO2' : 'NO'; moved++; lastFly = time; Snd.pop(); }
-      }
-      if (Math.abs(lq) < .06 && !balls.some(b => b.st === 'fly')) settled += dt; else settled = 0;
-      if (settled > 1.2 && !done) { done = true; nx.textContent = qi < 1 ? 'Келесі сұрақ →' : 'Қысымның әсері →'; nx.style.display = ''; say('ok', '✓', 'Әткеншек қайта <b>теңесті</b> — жаңа тепе-теңдік! ' + (q.add === 'NO' ? 'NO₂ көбейді.' : 'NO мен O₂ көбейді.')); }
+    for (const k in BK) { const [x, y] = hub(k); BK[k].g.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)})`); const n = Math.round(sim.cnt(k)); if (lastCnt[k] !== n) { BK[k].t.textContent = LBL[k] + ' · ' + n; lastCnt[k] = n; } }
+    // көрсеткіш
+    if (Math.abs(lq) > .06) { const fw = lq < 0; arrR.setAttribute('fill', fw ? '#2F6BFF' : '#F43F5E'); arrT.textContent = fw ? 'оңға ығысу →' : '← солға ығысу'; }
+    else { arrR.setAttribute('fill', '#12B76A'); arrT.textContent = 'тепе-теңдік'; }
+    // сандарды колбамен сәйкестендіру
+    for (const k in BK) {
+      const want = Math.max(0, Math.round(sim.cnt(k))), L = list(k);
+      if (L.length < want) { const [hx, hy] = hub(k), [sx, sy] = slotXY(k, L.length); const o = mkBall(k, k, hx + sx, hy + sy - 260, 'drop'); o.sy = o.y; }
+      else if (L.length > want) { const o = top(k, 1)[0]; if (o) { o.gone = true; o.st = 'out'; o.t = 0; o.sx = o.x; o.sy = o.y; } }
     }
-    balls.forEach(b => {
-      let x, y;
-      if (b.st === 'drop') { b.k += dt; const e = clamp(b.k / .55, 0, 1); const [px, py] = pos(b.side, b.slot); const bn = e < 1 ? 1 - Math.pow(1 - e, 2) : 1; x = px; y = py - 300 * (1 - bn) + (e === 1 ? 0 : 0); b.g.style.opacity = b.k > 0 ? 1 : 0; if (e >= 1) { b.st = 'sit'; } }
-      else if (b.st === 'sit') { [x, y] = pos(b.side, b.slot); }
-      else { b.k += dt / .9; const e = clamp(b.k, 0, 1), es = e * e * (3 - 2 * e); const [x0, y0] = pos(b.side, b.slot), [x1, y1] = pos(b.dst, b.dslot); x = x0 + (x1 - x0) * es; y = y0 + (y1 - y0) * es - 110 * Math.sin(Math.PI * es); b.c.setAttribute('fill', rgb(COL[b.kind], COL[b.to], es)); if (es > .5) b.t.textContent = LBL[b.to]; if (e >= 1) { b.st = 'sit'; b.side = b.dst; b.slot = b.dslot; b.kind = b.to; } }
-      b.g.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)})`);
-    });
-    if (tt > .12) { tt = 0; const o = {}; sim.keys.forEach(k => o[k] = sim.cnt(k)); cnt.set(o); if (snapC) { const d = {}; sim.keys.forEach(k => d[k] = o[k] - snapC[k]); cnt.delta(d); } }
+    for (const k in BK) list(k).forEach((o, i) => o.slot = i);
+    let flying = 0;
+    for (let i = balls.length - 1; i >= 0; i--) {
+      const o = balls[i]; let x = o.x, y = o.y;
+      const T = () => { const [hx, hy] = hub(o.b), [sx, sy] = slotXY(o.b, o.slot || 0); return [hx + sx, hy + sy]; };
+      if (o.st === 'sit') { const [X, Y] = T(); x += (X - x) * Math.min(1, dt * 16); y += (Y - y) * Math.min(1, dt * 16); }
+      else if (o.st === 'drop') { o.t += dt; const e = Math.min(1, o.t / .5), [X, Y] = T(); x = X; y = o.sy + (Y - o.sy) * e * e; if (e >= 1) o.st = 'sit'; flying++; }
+      else if (o.st === 'fly') { o.t += dt / .8; const e = Math.min(1, o.t), es = e * e * (3 - 2 * e), [X, Y] = T(); x = o.sx + (X - o.sx) * es; y = o.sy + (Y - o.sy) * es - 120 * Math.sin(Math.PI * es); o.c.setAttribute('fill', rgb(RGB[o.from], RGB[o.to], es)); if (o.grow) o.sc = Math.min(1, es * 1.6); if (e >= 1) { o.st = 'sit'; o.kind = o.to; o.sc = 1; } flying++; }
+      else if (o.st === 'merge') { o.t += dt / .8; const e = Math.min(1, o.t), es = e * e * (3 - 2 * e), p = o.partner; x = o.sx + (p.x - o.sx) * es; y = o.sy + (p.y - o.sy) * es - 60 * Math.sin(Math.PI * es); o.sc = 1 - Math.max(0, (es - .7) / .3); if (e >= 1) { o.g.remove(); balls.splice(i, 1); continue; } flying++; }
+      else if (o.st === 'out') { o.t += dt / .55; x = o.sx; y = o.sy - 90 * o.t; o.sc = 1 - o.t; if (o.t >= 1) { o.g.remove(); balls.splice(i, 1); continue; } }
+      o.x = x; o.y = y; o.g.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${Math.max(0, o.sc).toFixed(2)})`);
+    }
+    // теңесу
+    if (act) {
+      if (Math.abs(lq) < .06 && !flying) settled += dt; else settled = 0;
+      if (settled > .8) {
+        act = null; Snd.pop();
+        say('ok', '✓', 'Таразы қайта <b>теңесті</b> — жаңа тепе-теңдік орнады! Жүйе әсерді әлсіретті.');
+        if (waitAct && waitAct.startsWith('done:')) { waitAct = null; nx.textContent = qi < Q.length - 1 ? 'Келесі сұрақ →' : 'Қысымның әсері →'; nx.style.display = ''; ctx.q('#qb' + (qi + 1)).className = 'ok'; }
+      }
+    }
+    if (tt > .12) { tt = 0; const o = {}; sim.keys.forEach(k => o[k] = sim.cnt(k)); cnt.set(o); if (snapC) { const dd = {}; sim.keys.forEach(k => dd[k] = o[k] - snapC[k]); cnt.delta(dd); } }
   });
 });
 
@@ -3161,7 +3233,8 @@ Deck.slide('s-conc3', ctx => {
 Deck.slide('s-press1', ctx => {
   const sim = new Sim(ctx, ctx.q('#pSim'), { W: 760, H: 800, bx: 50, bw: 660, by: 790, bh: 560, vmin: .42, vmax: 1.2, piston: true, sp: { N2: 1, H2: 1, NH3: 1 }, L: [['N2', 1], ['H2', 3]], R: [['NH3', 2]], n0: { N2: 10, H2: 30, NH3: 12 }, exo: 1, kf: 1.5, noise: .45, ms: 1 });
   sim.V = 1; sim.Vt = 1;
-  const ch = new DualChart(ctx, ctx.q('#pChart'), ctx.q('#pRate'), 984, 206, 220, [{ k: 'NH3', color: '#0BB5A8', label: 'NH3' }, { k: 'N2', color: '#2F6BFF', label: 'N2' }, { k: 'H2', color: '#FF5C93', label: 'H2' }], { ymax0: 40, rmax: 4 });
+  const ch = new Chart(ctx, ctx.q('#pChart'), 984, 424, Object.assign({ series: [{ k: 'NH3', color: '#0BB5A8', label: 'NH3' }, { k: 'N2', color: '#2F6BFF', label: 'N2' }, { k: 'H2', color: '#FF5C93', label: 'H2' }] }, { window: 24, ymax0: 40, ylabel: 'Концентрация', xlabel: 'Уақыт', legend: true, endLabels: true, pad: { l: 74, r: 30, t: 52, b: 54 } }));
+  const conc = () => { const o = {}; sim.keys.forEach(k => o[k] = sim.c(k)); return o; };
   const cnt = mkCounters(ctx.q('#pCnt'), [{ k: 'N2', label: 'N2', color: '#2F6BFF' }, { k: 'H2', label: 'H2', color: '#FF5C93' }, { k: 'NH3', label: 'NH3', color: '#0BB5A8' }, { k: 'S', label: 'барлығы', color: '#7B4DFF' }]);
   const sl = ctx.q('#pSl'), st = ctx.q('#pSt'), tx = ctx.q('#pTx'), gL = ctx.q('#gL'), gR = ctx.q('#gR');
   let T = 0, acc = 0, pend = false, since = 0, lastP = 100;
@@ -3174,10 +3247,10 @@ Deck.slide('s-press1', ctx => {
   ctx.on(ctx.q('#pDn'), 'click', () => { setP(+sl.value - 40, true); Snd.click(); });
   ctx.raf(dt => {
     T += dt; sim.update(dt); sim.draw(); acc += dt;
-    if (acc > .1) { acc = 0; ch.push(T, sim); const a = sim.cnt('N2'), b = sim.cnt('H2'), c = sim.cnt('NH3'); cnt.set({ N2: a, H2: b, NH3: c, S: Math.round(a) + Math.round(b) + Math.round(c) }); }
+    if (acc > .1) { acc = 0; ch.push(T, conc()); const a = sim.cnt('N2'), b = sim.cnt('H2'), c = sim.cnt('NH3'); cnt.set({ N2: a, H2: b, NH3: c, S: Math.round(a) + Math.round(b) + Math.round(c) }); }
     ch.draw(dt);
     const sh = sim.shift; gR.style.transform = `scale(${1 + clamp(sh, 0, 1) * .12})`; gL.style.transform = `scale(${1 + clamp(-sh, 0, 1) * .12})`;
-    if (pend) { since += dt; if (since > .9 && since < 8) { if (sim.shift > .1) say('fw', '→', '<b>υ тура &gt; υ кері</b> → тепе-теңдік <b>оңға</b>: молекула саны азаяды (4 → 2), NH₃ көбейеді'); else if (sim.shift < -.1) say('bk', '←', '<b>υ кері &gt; υ тура</b> → тепе-теңдік <b>солға</b>: молекула саны көбейеді (2 → 4), NH₃ азаяды'); } if (since > 8) { pend = false; say('', '⇌', 'Жылдамдықтар қайта теңесті — жаңа тепе-теңдік. Қысымды тағы өзгертіп көр!'); } }
+    if (pend) { since += dt; if (since > .2 && since < 8) { if (sim.shift > .1) say('fw', '→', '<b>υ тура &gt; υ кері</b> → тепе-теңдік <b>оңға</b>: молекула саны азаяды (4 → 2), NH₃ көбейеді'); else if (sim.shift < -.1) say('bk', '←', '<b>υ кері &gt; υ тура</b> → тепе-теңдік <b>солға</b>: молекула саны көбейеді (2 → 4), NH₃ азаяды'); } if (since > 8) { pend = false; say('', '⇌', 'Жылдамдықтар қайта теңесті — жаңа тепе-теңдік. Қысымды тағы өзгертіп көр!'); } }
   });
 });
 
@@ -3224,7 +3297,8 @@ Deck.slide('s-press2', ctx => {
 // ============ 20–21. Температура зертханасы (ортақ) ============
 function heatLab(ctx, cfg) {
   const sim = new Sim(ctx, ctx.q('#hSim'), Object.assign({ W: 760, H: 790, bx: 50, bw: 660, by: 700, bh: 620, kf: 1.5, noise: .45, heater: true, beta: 2 }, cfg.sim));
-  const ch = new DualChart(ctx, ctx.q('#hChart'), ctx.q('#hRate'), 984, cfg.chartH || 206, cfg.rateH || 220, cfg.series, { ymax0: 40, rmax: 4 });
+  const ch = new Chart(ctx, ctx.q('#hChart'), 984, cfg.chartH || 450, Object.assign({ series: cfg.series }, { window: 24, ymax0: 40, ylabel: 'Концентрация', xlabel: 'Уақыт', legend: true, endLabels: true, pad: { l: 74, r: 30, t: 52, b: 54 } }));
+  const conc = () => { const o = {}; sim.keys.forEach(k => o[k] = sim.c(k)); return o; };
   const cnt = mkCounters(ctx.q('#hCnt'), cfg.series.slice().sort((x, y) => cfg.order.indexOf(x.k) - cfg.order.indexOf(y.k)));
   const sl = ctx.q('#tSl'), st = ctx.q('#hSt'), tx = ctx.q('#hTx'), tb = ctx.q('#hTb'), tv = ctx.q('#hTv'), tm = ctx.q('#hTm');
   let T = 0, acc = 0, pend = false, since = 0, bolt = 0, boltT = 0, boltX = 0, lastV = 0;
@@ -3241,21 +3315,21 @@ function heatLab(ctx, cfg) {
     T += dt; sim.update(dt); sim.draw(); acc += dt;
     if (boltT > 0) { boltT -= dt; if (boltT <= 0) setT(0, true); }
     if (bolt > 0) { bolt = Math.max(0, bolt - dt * 1.3); const g = sim.g; g.save(); g.globalAlpha = bolt; g.fillStyle = 'rgba(255,250,200,.55)'; g.fillRect(sim.o.bx, sim.boxTop(), sim.o.bw, sim.o.by - sim.boxTop()); g.strokeStyle = '#fff'; g.lineWidth = 10; g.shadowColor = '#FFD84A'; g.shadowBlur = 30; g.lineJoin = 'round'; g.beginPath(); let x = boltX, y = sim.boxTop(); g.moveTo(x, y); while (y < sim.o.by - 20) { y += rnd(50, 80); x += rnd(-55, 55); g.lineTo(x, y); } g.stroke(); g.restore(); }
-    if (acc > .1) { acc = 0; ch.push(T, sim); const o = {}; sim.keys.forEach(k => o[k] = sim.cnt(k)); cnt.set(o); }
+    if (acc > .1) { acc = 0; ch.push(T, conc()); const o = {}; sim.keys.forEach(k => o[k] = sim.cnt(k)); cnt.set(o); }
     ch.draw(dt);
-    if (pend) { since += dt; if (since > .9 && since < 9) { if (sim.shift > .1) say('fw', '→', cfg.fw); else if (sim.shift < -.1) say('bk', '←', cfg.bk); } if (since > 9) { pend = false; say('', '⇌', 'Жылдамдықтар қайта теңесті — жаңа тепе-теңдік. Температураны тағы өзгертіп көр!'); } }
+    if (pend) { since += dt; if (since > .2 && since < 9) { if (sim.shift > .1) say('fw', '→', cfg.fw); else if (sim.shift < -.1) say('bk', '←', cfg.bk); } if (since > 9) { pend = false; say('', '⇌', 'Жылдамдықтар қайта теңесті — жаңа тепе-теңдік. Температураны тағы өзгертіп көр!'); } }
   });
   return { sim, ch };
 }
 Deck.slide('s-temp1', ctx => heatLab(ctx, {
   sim: { sp: { N2: 1, H2: 1, NH3: 1 }, L: [['N2', 1], ['H2', 3]], R: [['NH3', 2]], n0: { N2: 10, H2: 30, NH3: 12 }, exo: 1 },
-  series: [{ k: 'NH3', color: '#0BB5A8', label: 'NH3' }, { k: 'N2', color: '#2F6BFF', label: 'N2' }, { k: 'H2', color: '#FF5C93', label: 'H2' }], order: ['N2', 'H2', 'NH3'],
+  series: [{ k: 'NH3', color: '#0BB5A8', label: 'NH3' }, { k: 'N2', color: '#2F6BFF', label: 'N2' }, { k: 'H2', color: '#FF5C93', label: 'H2' }], order: ['N2', 'H2', 'NH3'], chartH: 452,
   fw: '<b>υ тура &gt; υ кері</b> → <b>оңға</b>: суытқанда <b>экзотермиялық (+Q)</b> бағыт басым, NH₃ көбейеді',
   bk: '<b>υ кері &gt; υ тура</b> → <b>солға</b>: қыздырғанда <b>эндотермиялық (−Q)</b> бағыт басым, NH₃ ыдырайды'
 }));
 Deck.slide('s-temp2', ctx => heatLab(ctx, {
   sim: { sp: { N2: 1, O2: 1, NO: 1 }, L: [['N2', 1], ['O2', 1]], R: [['NO', 2]], n0: { N2: 16, O2: 16, NO: 8 }, exo: -1 },
-  series: [{ k: 'NO', color: '#8B5CF6', label: 'NO' }, { k: 'N2', color: '#2F6BFF', label: 'N2' }, { k: 'O2', color: '#F43F5E', label: 'O2' }], order: ['N2', 'O2', 'NO'],
+  series: [{ k: 'NO', color: '#8B5CF6', label: 'NO' }, { k: 'N2', color: '#2F6BFF', label: 'N2' }, { k: 'O2', color: '#F43F5E', label: 'O2' }], order: ['N2', 'O2', 'NO'], chartH: 432,
   fw: '<b>υ тура &gt; υ кері</b> → <b>оңға</b>: қыздырғанда <b>эндотермиялық (−Q)</b> бағыт басым, NO көбейеді',
   bk: '<b>υ кері &gt; υ тура</b> → <b>солға</b>: суытқанда <b>экзотермиялық (+Q)</b> бағыт басым, NO азаяды'
 }));
@@ -3300,7 +3374,7 @@ Deck.slide('s-lc', ctx => {
   const spring = svgEl('path', { fill: 'none', stroke: '#E39A00', 'stroke-width': 9, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, svg);
   const plate = svgEl('g', {}, svg); svgEl('rect', { x: -24, y: -110, width: 48, height: 220, rx: 14, fill: '#7B4DFF' }, plate); svgEl('rect', { x: -14, y: -96, width: 10, height: 190, rx: 5, fill: '#fff', opacity: .35 }, plate);
   const push = svgEl('g', { opacity: 0 }, svg); svgEl('path', { d: 'M0 0H-110M-70 -34L-110 0l40 34', stroke: '#F43F5E', 'stroke-width': 16, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, push);
-  const tp = svgEl('text', { x: -60, y: -52, 'text-anchor': 'middle', 'font-size': 30, 'font-weight': 900, fill: '#F43F5E' }, push); tp.textContent = 'сыртқы әсер';
+  const tp = svgEl('text', { x: -42, y: -56, 'text-anchor': 'middle', 'font-size': 30, 'font-weight': 900, fill: '#F43F5E' }, push); tp.textContent = 'сыртқы әсер';
   const back = svgEl('g', { opacity: 0 }, svg); svgEl('path', { d: 'M0 0H110M70 -34L110 0l-40 34', stroke: '#12B76A', 'stroke-width': 16, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, back);
   const tb = svgEl('text', { x: -10, y: -40, 'text-anchor': 'middle', 'font-size': 30, 'font-weight': 900, fill: '#12B76A' }, back); tb.textContent = 'жүйенің жауабы';
   function render(c, a, b) {
@@ -3322,12 +3396,71 @@ Deck.slide('s-lc', ctx => {
     render(c, u < 3.2 ? 1 : 0, b);
     if (u > 1.8 && u < 1.85) Snd.merge();
   });
+  // ---- Таразы (әткеншек): сыртқы әсер → жүйенің жауабы → жаңа тепе-теңдік ----
+  const ls = ctx.q('#lsSvg'), lsCap = ctx.q('#lsCap'); ls.innerHTML = '';
+  const LD = svgEl('defs', {}, ls);
+  LD.innerHTML = '<linearGradient id="lsF" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFC53D"/><stop offset="1" stop-color="#E39A00"/></linearGradient><linearGradient id="lsBm" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2F6BFF"/><stop offset=".5" stop-color="#4A5887"/><stop offset="1" stop-color="#0BB5A8"/></linearGradient><radialGradient id="lsHl" cx=".35" cy=".3" r=".7"><stop offset="0" stop-color="#fff" stop-opacity=".8"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/></radialGradient>';
+  const LPX = 267, LPY = 228, LARM = 150, LCOL = { L: [47, 107, 255], R: [11, 181, 168] };
+  svgEl('rect', { x: 30, y: 318, width: 474, height: 9, rx: 4.5, fill: '#E6EBF8' }, ls);
+  svgEl('path', { d: `M${LPX} ${LPY} L${LPX - 46} 318 H${LPX + 46} Z`, fill: 'url(#lsF)' }, ls);
+  const lBeam = svgEl('g', {}, ls); svgEl('rect', { x: LPX - 220, y: LPY - 9, width: 440, height: 18, rx: 9, fill: 'url(#lsBm)' }, lBeam);
+  svgEl('circle', { cx: LPX, cy: LPY, r: 11, fill: '#fff', stroke: '#E39A00', 'stroke-width': 5 }, ls);
+  const lBk = {};
+  [['L', 'реагент', '#2F6BFF'], ['R', 'өнім', '#0BB5A8']].forEach(([k, t, c]) => {
+    const g = svgEl('g', {}, ls); g.innerHTML = `<path d="M-72 -122 L-62 -6 Q-60 2 -50 2 H50 Q60 2 62 -6 L72 -122" fill="rgba(255,255,255,.6)" stroke="#B8C6EE" stroke-width="5" stroke-linejoin="round"/><rect x="-58" y="-36" width="116" height="30" rx="11" fill="${c}"/><text y="-14" text-anchor="middle" font-size="19" font-weight="900" fill="#fff">${t}</text>`; lBk[k] = g;
+  });
+  const lBalls = svgEl('g', {}, ls);
+  const lPill = svgEl('g', {}, ls), lPR = svgEl('rect', { x: LPX - 150, y: 6, width: 300, height: 46, rx: 23, fill: '#12B76A' }, lPill), lPT = svgEl('text', { x: LPX, y: 37, 'text-anchor': 'middle', 'font-size': 23, 'font-weight': 900, fill: '#fff' }, lPill);
+  let lth = 0, lthv = 0, lb = [], lPhase = -1;
+  const lHub = k => { const a = lth * Math.PI / 180, s = k === 'L' ? -1 : 1; return [LPX + s * LARM * Math.cos(a), LPY + s * LARM * Math.sin(a) - 9]; };
+  const lSlot = i => [-44 + (i % 4) * 29, -50 - Math.floor(i / 4) * 27];
+  const lMk = (side, extra) => { const g = svgEl('g', {}, lBalls); const c = svgEl('circle', { r: 13, fill: `rgb(${LCOL[side].join(',')})`, stroke: extra ? '#F43F5E' : '#fff', 'stroke-width': extra ? 4 : 2.5 }, g); svgEl('circle', { r: 13, fill: 'url(#lsHl)' }, g); const o = { g, c, side, to: side, extra, st: 'sit', t: 0, a: 1, x: 0, y: 0 }; lb.push(o); return o; };
+  const lInit = () => { lb.forEach(o => o.g.remove()); lb = []; for (let i = 0; i < 4; i++) { lMk('L'); lMk('R'); } };
+  const lSay = (fill, t, cap, col) => { lPR.setAttribute('fill', fill); lPT.textContent = t; lsCap.innerHTML = cap; lsCap.style.color = col || ''; };
+  lInit();
+  ctx.raf((dt, t) => {
+    const u = t % 10, ph = u < 1.6 ? 0 : u < 2.6 ? 1 : u < 5.6 ? 2 : u < 8.6 ? 3 : 4;
+    if (ph !== lPhase) {
+      lPhase = ph;
+      if (ph === 0) { lInit(); lSay('#12B76A', 'тепе-теңдік', 'Тепе-теңдік: таразы <b>тең</b>'); }
+      if (ph === 1) { for (let i = 0; i < 4; i++) { const o = lMk('L', true); o.st = 'drop'; o.t = -i * .12; } lSay('#F43F5E', 'сыртқы әсер', '<b>Сыртқы әсер:</b> реагент қосылды, сол жақ ауырлады', '#E11D48'); }
+      if (ph === 2) { lSay('#2F6BFF', 'жүйенің жауабы →', '<b>Жүйенің жауабы:</b> реагент өнімге айналады — <b>оңға (→)</b>', '#1D4ED8'); const mv = lb.filter(o => o.side === 'L').slice(-2); mv.forEach((o, i) => { o.st = 'wait'; o.t = -i * 1.1 - .3; }); }
+      if (ph === 3) lSay('#12B76A', 'жаңа тепе-теңдік', '<b>Жаңа тепе-теңдік:</b> әсер әлсіреді, таразы қайта тең', '#0E9F5A');
+      if (ph === 4) { lb.forEach(o => { if (o.extra || o.moved) o.st = 'fade'; }); }
+    }
+    // салмақ айырмасы → бұрыш
+    let dL = 0, dR = 0;
+    lb.forEach(o => {
+      if (o.st === 'drop') { const e = clamp(o.t / .45, 0, 1); if (o.side === 'L') dL += e * e; else dR += e * e; }
+      else if (o.st === 'fly') { const e = clamp(o.t, 0, 1); dL += 1 - e; dR += e; }
+      else if (o.st === 'fade') { if (o.side === 'L') dL += o.a; else dR += o.a; }
+      else { if (o.side === 'L') dL++; else dR++; }
+    });
+    const tg = clamp(-(dL - dR) * 2.6, -12, 12);
+    lthv += ((tg - lth) * 34 - lthv * 7) * dt; lth += lthv * dt;
+    lBeam.setAttribute('transform', `rotate(${lth.toFixed(2)} ${LPX} ${LPY})`);
+    ['L', 'R'].forEach(k => { const [x, y] = lHub(k); lBk[k].setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)})`); });
+    const idx = { L: 0, R: 0 };
+    lb.forEach(o => { o.slot = idx[o.side === 'L' && o.st === 'fly' ? 'R' : o.side]++; });
+    for (let i = lb.length - 1; i >= 0; i--) {
+      const o = lb[i];
+      const tgt = side => { const [hx, hy] = lHub(side), [sx, sy] = lSlot(o.slot); return [hx + sx, hy + sy]; };
+      let x, y;
+      if (o.st === 'drop') { o.t += dt; const e = clamp(o.t / .45, 0, 1), [X, Y] = tgt(o.side); x = X; y = Y - 200 * (1 - e * e); o.a = o.t < 0 ? 0 : 1; if (e >= 1) o.st = 'sit'; }
+      else if (o.st === 'wait') { o.t += dt; [x, y] = tgt(o.side); if (o.t >= 0) { o.st = 'fly'; o.t = 0; o.sx = x; o.sy = y; } }
+      else if (o.st === 'fly') { o.t += dt / .9; const e = clamp(o.t, 0, 1), es = e * e * (3 - 2 * e), [X, Y] = tgt('R'); x = o.sx + (X - o.sx) * es; y = o.sy + (Y - o.sy) * es - 90 * Math.sin(Math.PI * es); o.c.setAttribute('fill', `rgb(${LCOL.L.map((v, j) => Math.round(v + (LCOL.R[j] - v) * es)).join(',')})`); if (e >= 1) { o.st = 'sit'; o.side = 'R'; o.moved = true; o.c.setAttribute('stroke', '#fff'); o.c.setAttribute('stroke-width', 2.5); } }
+      else if (o.st === 'fade') { o.a = Math.max(0, o.a - dt * 1.6); [x, y] = tgt(o.side); y -= (1 - o.a) * 30; if (o.a <= 0) { o.g.remove(); lb.splice(i, 1); continue; } }
+      else { const [X, Y] = tgt(o.side); x = o.x ? o.x + (X - o.x) * Math.min(1, dt * 14) : X; y = o.y ? o.y + (Y - o.y) * Math.min(1, dt * 14) : Y; }
+      o.x = x; o.y = y; o.g.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)})`); o.g.setAttribute('opacity', o.a);
+    }
+  });
 });
 
 // ============ 25. Виртуалды зертхана ============
 Deck.slide('s-lab', ctx => {
   const sim = new Sim(ctx, ctx.q('#lSim'), { W: 760, H: 800, bx: 50, bw: 660, by: 720, bh: 540, vmin: .42, vmax: 1.2, piston: true, heater: true, sp: { N2: 1, H2: 1, NH3: 1 }, L: [['N2', 1], ['H2', 3]], R: [['NH3', 2]], n0: { N2: 10, H2: 30, NH3: 12 }, exo: 1, kf: 1.5, noise: .45, beta: 1.8, catBed: true });
-  const ch = new DualChart(ctx, ctx.q('#lChart'), ctx.q('#lRate'), 984, 196, 210, [{ k: 'NH3', color: '#0BB5A8', label: 'NH3' }, { k: 'N2', color: '#2F6BFF', label: 'N2' }, { k: 'H2', color: '#FF5C93', label: 'H2' }], { ymax0: 40, rmax: 4, window: 26 });
+  const ch = new Chart(ctx, ctx.q('#lChart'), 984, 418, Object.assign({ series: [{ k: 'NH3', color: '#0BB5A8', label: 'NH3' }, { k: 'N2', color: '#2F6BFF', label: 'N2' }, { k: 'H2', color: '#FF5C93', label: 'H2' }] }, { window: 24, ymax0: 40, ylabel: 'Концентрация', xlabel: 'Уақыт', legend: true, endLabels: true, pad: { l: 74, r: 30, t: 52, b: 54 } }));
+  const conc = () => { const o = {}; sim.keys.forEach(k => o[k] = sim.c(k)); return o; };
   const cnt = mkCounters(ctx.q('#lCnt'), [{ k: 'N2', label: 'N2', color: '#2F6BFF' }, { k: 'H2', label: 'H2', color: '#FF5C93' }, { k: 'NH3', label: 'NH3', color: '#0BB5A8' }]);
   const lp = ctx.q('#lP'), lt = ctx.q('#lT'), bar = ctx.q('#lBar'), pc = ctx.q('#lPc'), st = ctx.q('#lSt'), tx = ctx.q('#lTx'), win = ctx.q('#lWin'), bc = ctx.q('#lC');
   let T = 0, acc = 0, pend = false, since = 0, cat = false, won = false, lastP = 100, lastT = 0;
@@ -3345,11 +3478,11 @@ Deck.slide('s-lab', ctx => {
   ctx.on(bc, 'click', () => { cat = !cat; sim.setCat(cat ? 4.5 : 1); bc.textContent = 'Катализатор: ' + (cat ? 'ҚОСУЛЫ' : 'ӨШІРУЛІ'); ch.mark('кат.', '#E39A00'); pend = false; say('', '⇌', cat ? 'Катализатор <b>екі</b> жылдамдықты да бірдей арттырады — тепе-теңдік <b>ығыспайды</b>, тек тезірек орнайды.' : 'Катализатор өшірілді: жылдамдықтар азайды, бірақ шығым өзгермейді.'); Snd.click(); });
   ctx.raf(dt => {
     T += dt; sim.update(dt); sim.draw(); acc += dt;
-    if (acc > .1) { acc = 0; ch.push(T, sim); const o = {}; sim.keys.forEach(k => o[k] = sim.cnt(k)); cnt.set(o);
+    if (acc > .1) { acc = 0; ch.push(T, conc()); const o = {}; sim.keys.forEach(k => o[k] = sim.cnt(k)); cnt.set(o);
       const a = sim.n('N2'), b = sim.n('NH3'), y = b / (2 * a + b) * 100; bar.style.width = clamp(y, 0, 100) + '%'; pc.textContent = Math.round(y) + '%';
       if (y > 60 && !won) { won = true; win.classList.add('show'); Snd.good(); Fx.confetti(innerWidth / 2, innerHeight * .4, 120); setTimeout(() => win.classList.remove('show'), 4200); } }
     ch.draw(dt);
-    if (pend) { since += dt; if (since > .9 && since < 9) { if (sim.shift > .1) say('fw', '→', '<b>υ тура &gt; υ кері</b> → тепе-теңдік <b>оңға</b>: NH₃ көбейеді, шығым артады'); else if (sim.shift < -.1) say('bk', '←', '<b>υ кері &gt; υ тура</b> → тепе-теңдік <b>солға</b>: NH₃ азаяды, шығым кемиді'); } if (since > 9) { pend = false; say('', '⇌', 'υ тура = υ кері — жаңа тепе-теңдік орнады. Келесі әсерді таңда!'); } }
+    if (pend) { since += dt; if (since > .2 && since < 9) { if (sim.shift > .1) say('fw', '→', '<b>υ тура &gt; υ кері</b> → тепе-теңдік <b>оңға</b>: NH₃ көбейеді, шығым артады'); else if (sim.shift < -.1) say('bk', '←', '<b>υ кері &gt; υ тура</b> → тепе-теңдік <b>солға</b>: NH₃ азаяды, шығым кемиді'); } if (since > 9) { pend = false; say('', '⇌', 'υ тура = υ кері — жаңа тепе-теңдік орнады. Келесі әсерді таңда!'); } }
   });
 });
 
