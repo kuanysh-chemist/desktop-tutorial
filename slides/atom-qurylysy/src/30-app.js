@@ -77,14 +77,38 @@ $$('[data-setlang]').forEach(b => b.addEventListener('click', () => setLang(b.da
 const btnSound = $('#btnSound');
 const syncSound = () => btnSound.classList.toggle('is-off', sfx.muted);
 btnSound.addEventListener('click', () => { sfx.toggle(); syncSound(); });
-function toggleFull() {
-  try {
-    const d = document;
-    if (!d.fullscreenElement) { const p = d.documentElement.requestFullscreen && d.documentElement.requestFullscreen(); if (p && p.catch) p.catch(() => {}); }
-    else if (d.exitFullscreen) { const p = d.exitFullscreen(); if (p && p.catch) p.catch(() => {}); }
-  } catch (e) { /* fullscreen not allowed here */ }
+let toastT = 0;
+function showToast(html, ms = 6000) {
+  const t = $('#toast'); t.innerHTML = html; t.hidden = false;
+  t.style.animation = 'none'; void t.offsetWidth; t.style.animation = '';
+  clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, ms);
 }
+const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement || null;
+function fsFail() {
+  showToast(tr(['Бұл терезе толық экранға рұқсат бермеді. Пернетақтадағы <kbd>F11</kbd> пернесін басыңыз (Mac-та: <kbd>Ctrl</kbd> + <kbd>Cmd</kbd> + <kbd>F</kbd>).',
+    'Это окно не разрешает полноэкранный режим. Нажмите <kbd>F11</kbd> (на Mac: <kbd>Ctrl</kbd> + <kbd>Cmd</kbd> + <kbd>F</kbd>).',
+    'This window does not allow full screen. Press <kbd>F11</kbd> (on a Mac: <kbd>Ctrl</kbd> + <kbd>Cmd</kbd> + <kbd>F</kbd>).']));
+}
+function toggleFull() {
+  const d = document, el = d.documentElement;
+  sfx.click();
+  try {
+    if (!fsEl()) {
+      const req = el.requestFullscreen || el.webkitRequestFullscreen;
+      if (!req || (d.fullscreenEnabled === false && !d.webkitFullscreenEnabled)) { fsFail(); return; }
+      const p = req.call(el, { navigationUI: 'hide' });
+      if (p && p.catch) p.catch(fsFail);
+    } else {
+      const ex = d.exitFullscreen || d.webkitExitFullscreen;
+      const p = ex && ex.call(d); if (p && p.catch) p.catch(() => {});
+    }
+  } catch (e) { fsFail(); }
+}
+const syncFull = () => { document.documentElement.classList.toggle('is-full', !!fsEl()); if (fsEl()) $('#toast').hidden = true; };
+document.addEventListener('fullscreenchange', syncFull);
+document.addEventListener('webkitfullscreenchange', syncFull);
 $('#btnFull').addEventListener('click', toggleFull);
+$('#titleFull').addEventListener('click', toggleFull);
 $('#brandBadge').addEventListener('click', (e) => { e.preventDefault(); go(0); });
 const ov = $('#overview');
 function buildOverview() {

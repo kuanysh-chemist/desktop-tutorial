@@ -96,6 +96,22 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
 .icon-btn:hover{transform:translate(-1px,-1px) rotate(-6deg)}
 .icon-btn:active{transform:translate(.15rem,.15rem);box-shadow:0 0 0 var(--ink)}
 .icon-btn svg{width:1.45rem;height:1.45rem;fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.full-btn{position:relative;display:inline-flex;align-items:center;gap:.5rem;height:3rem;padding:0 1.15rem 0 .9rem;border-radius:99rem;background:var(--brand);color:#fff;border:var(--line) solid var(--ink);box-shadow:var(--shadow-sm);font:800 1.02rem/1 var(--font-body);cursor:pointer;white-space:nowrap;transition:transform .2s var(--spring),box-shadow .15s}
+.full-btn:hover{transform:translate(-.1rem,-.1rem) scale(1.04);box-shadow:.3rem .3rem 0 var(--ink)}
+.full-btn:active{transform:translate(.15rem,.15rem);box-shadow:0 0 0 var(--ink)}
+.full-btn svg{width:1.45rem;height:1.45rem;flex:none;fill:none;stroke:#fff;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.full-btn::after{content:"";position:absolute;inset:-.25rem;border-radius:inherit;border:.2rem solid var(--brand);opacity:0;animation:fbPulse 1.8s ease-out 1.5s 3;pointer-events:none}
+@keyframes fbPulse{0%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(1.35)}}
+.full-btn .ex-ico,.full-btn .fb-ex{display:none}
+:root.is-full .full-btn{background:var(--ink)}
+:root.is-full .full-btn .en-ico,:root.is-full .full-btn .fb-en{display:none}
+:root.is-full .full-btn .ex-ico{display:block}
+:root.is-full .full-btn .fb-ex{display:inline}
+:root.is-full #titleFull{display:none}
+.title-actions{display:flex;align-items:center;gap:1.3rem;flex-wrap:wrap}
+.toast{position:absolute;z-index:90;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 6.2rem);transform:translateX(-50%);width:max-content;max-width:min(44rem,calc(100% - 32px));padding:.9rem 1.2rem;border-radius:1rem;background:var(--ink);color:#fff;font:700 1.15rem/1.45 var(--font-body);box-shadow:.3rem .3rem 0 var(--brand);animation:toastIn .45s var(--spring)}
+.toast kbd{color:var(--ink)}
+@keyframes toastIn{from{opacity:0;transform:translate(-50%,1.2rem) scale(.95)}}
 .icon-btn .off-ico{display:none}
 .icon-btn.is-off .on-ico{display:none}.icon-btn.is-off .off-ico{display:block}
 
@@ -758,7 +774,9 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
   .slide>*:not(.s-head){flex:0 0 auto;min-height:auto}
   .pt-wrap{overflow-x:auto;overflow-y:visible}
   .ptable{flex:none;min-height:0;grid-template-rows:repeat(7,2.6rem) .5rem repeat(2,2.6rem)}
-  #btnFull{display:none}
+  .full-btn{width:2.3rem;height:2.3rem;padding:0;justify-content:center;box-shadow:.15rem .15rem 0 var(--ink)}
+  .full-btn .fb-lbl{display:none!important}
+  .full-btn svg{width:1.15rem;height:1.15rem}
   .slide{overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:5.2rem max(16px,env(safe-area-inset-right,0px)) 6.2rem max(16px,env(safe-area-inset-left,0px));gap:1.1rem}
   .s-title{font-size:2.1rem}
   .mega{font-size:3.3rem}.mega-2{font-size:2.3rem}
@@ -800,6 +818,9 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
   .mat{grid-template-columns:repeat(3,1fr)}
   .tlight{width:7rem;justify-self:center}
   .step-hint .txt{display:none}
+}
+@media (max-width:560px){
+  #btnFull,#titleFull{display:none}
 }
 @media (max-width:370px){
   .brand{font-size:.68rem}

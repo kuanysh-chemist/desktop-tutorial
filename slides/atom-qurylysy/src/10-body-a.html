@@ -30,8 +30,11 @@
       <svg class="on-ico" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19.2 5.8a9 9 0 0 1 0 12.4"/></svg>
       <svg class="off-ico" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M17 9l5 6M22 9l-5 6"/></svg>
     </button>
-    <button class="icon-btn" id="btnFull" type="button" data-i-title="Толық экран|Полный экран|Full screen">
-      <svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+    <button class="full-btn" id="btnFull" type="button" data-i-title="Толық экран (F)|Полный экран (F)|Full screen (F)">
+      <svg class="en-ico" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+      <svg class="ex-ico" viewBox="0 0 24 24"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>
+      <span class="fb-lbl fb-en" data-i="Толық экран|Во весь экран|Full screen"></span>
+      <span class="fb-lbl fb-ex" data-i="Кішірейту|Свернуть|Exit full screen"></span>
     </button>
     <button class="icon-btn" id="btnMenu" type="button" data-i-title="Барлық слайдтар|Все слайды|All slides">
       <svg viewBox="0 0 24 24"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg>
@@ -66,7 +69,10 @@
         </svg>
         <span>kuanysh<b>.chemist</b></span>
       </div>
-      <div class="start-hint ani a-fade" style="--d:2000" data-i="Бастау үшін &lt;kbd&gt;→&lt;/kbd&gt; басыңыз|Нажмите &lt;kbd&gt;→&lt;/kbd&gt;, чтобы начать|Press &lt;kbd&gt;→&lt;/kbd&gt; to start"></div>
+      <div class="title-actions ani a-rise" style="--d:1900">
+        <button class="btn" type="button" id="titleFull"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span data-i="Толық экранға шығу|Во весь экран|Go full screen"></span></button>
+        <div class="start-hint" data-i="Бастау үшін &lt;kbd&gt;→&lt;/kbd&gt; басыңыз|Нажмите &lt;kbd&gt;→&lt;/kbd&gt;, чтобы начать|Press &lt;kbd&gt;→&lt;/kbd&gt; to start"></div>
+      </div>
     </div>
     <div class="title-art ani a-zoom" style="--d:250">
       <canvas id="cvTitle" aria-label="Animated atom"></canvas>
