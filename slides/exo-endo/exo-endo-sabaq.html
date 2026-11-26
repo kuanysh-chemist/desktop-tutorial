@@ -1088,6 +1088,31 @@ html[data-theme="light"] .dn.done i{background:rgba(114,71,245,.55)}
 .factors-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 24px;border-radius:20px;background:var(--card);border:1px solid var(--glass-border);font-size:22px}
 .factors-row .chip{font-size:21px;font-weight:600}
 
+/* =========================================================
+   Work-form badges · graph analysis (pair work)
+   ========================================================= */
+.work-badge{display:inline-flex;align-items:center;gap:8px;font-size:20px;font-weight:850;letter-spacing:.02em;line-height:1.2;padding:7px 16px;border-radius:999px;border:2px solid;white-space:nowrap;margin-left:4px;flex-shrink:0}
+.work-badge.group{color:#ffc531;border-color:rgba(255,197,49,.65);background:rgba(255,197,49,.12)}
+.work-badge.pair{color:#2dd4bf;border-color:rgba(45,212,191,.65);background:rgba(45,212,191,.12)}
+.work-badge.solo{color:#c4b0ff;border-color:rgba(179,146,255,.65);background:rgba(179,146,255,.14)}
+html[data-theme="light"] .work-badge.group{color:#a16207}
+html[data-theme="light"] .work-badge.pair{color:#0f766e}
+html[data-theme="light"] .work-badge.solo{color:#6d28d9}
+.slide.shown .work-badge{animation:popIn .6s .7s both}
+.pair-layout{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr auto;gap:16px 26px}
+.pg{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 22px;min-height:0}
+.pg-h{font-size:26px;font-weight:900;align-self:flex-start}
+.pg .ediag{flex:1;min-height:0;max-height:400px;width:100%}
+.pq{font:800 22px var(--font);padding:10px 24px;border-radius:14px;border:2px dashed var(--line);background:var(--card-2);color:var(--ink);cursor:pointer;min-width:360px;transition:border-color .3s,transform .15s}
+.pq:hover{transform:translateY(-2px);border-color:var(--accent)}
+.pq-q{color:var(--accent)}
+.pq-a{display:none}
+.pg.open .pq-a{display:inline;animation:popIn .5s both}
+.pg.open .pq-q{display:none}
+.pg.open .pq{border-style:solid}
+.pq-list{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.pq-list > span{font-size:20px;font-weight:650;padding:9px 16px;border-radius:999px;background:var(--card);border:1px solid var(--glass-border)}
+
 </style>
 </head>
 <body>
@@ -1391,7 +1416,7 @@ html[data-theme="light"] .dn.done i{background:rgba(114,71,245,.55)}
 
 <!-- ===================== 7. ЭНЕРГИЯ ҚАЙДАН? ===================== -->
 <section class="slide" data-id="bonds" data-stage="4" data-t="Энергия қайдан шығады?|Откуда берётся энергия?|Where does the energy come from?">
-  <header class="sh a"><h2><span class="h-ico">⚡</span><span data-l="kk">Энергия қайдан шығады?</span><span data-l="ru">Откуда берётся энергия?</span><span data-l="en">Where does the energy come from?</span></h2><p class="lead"><span data-l="kk">Әр заттың белгілі бір энергия қоры бар. Барлық химиялық реакциялар энергияны бөлу немесе сіңіру арқылы жүреді.</span><span data-l="ru">Каждое вещество обладает запасом энергии. Все химические реакции идут с выделением или поглощением энергии.</span><span data-l="en">Every substance stores energy. Every chemical reaction either releases or absorbs energy.</span></p></header>
+  <header class="sh a"><h2><span class="h-ico">⚡</span><span data-l="kk">Энергия қайдан шығады?</span><span data-l="ru">Откуда берётся энергия?</span><span data-l="en">Where does the energy come from?</span><span class="work-badge group">👥 <span data-l="kk">Топтық жұмыс</span><span data-l="ru">Групповая работа</span><span data-l="en">Group work</span></span></h2><p class="lead"><span data-l="kk">Әр заттың белгілі бір энергия қоры бар. Барлық химиялық реакциялар энергияны бөлу немесе сіңіру арқылы жүреді.</span><span data-l="ru">Каждое вещество обладает запасом энергии. Все химические реакции идут с выделением или поглощением энергии.</span><span data-l="en">Every substance stores energy. Every chemical reaction either releases or absorbs energy.</span></p></header>
   <div class="body bonds-layout">
     <div class="bond-stage card a" style="--d:.2">
       <div class="bond-legend"><span><span data-l="kk">Бастапқы заттар</span><span data-l="ru">Исходные вещества</span><span data-l="en">Reactants</span></span><span class="bl-ar">⟶</span><span><span data-l="kk">Реакция өнімдері</span><span data-l="ru">Продукты реакции</span><span data-l="en">Products</span></span></div>
@@ -1432,7 +1457,7 @@ html[data-theme="light"] .dn.done i{background:rgba(114,71,245,.55)}
       </div>
     </div>
   </div>
-  <aside class="notes"><div data-l="kk"><p>⭐ <b>Қосымша слайд</b> — уақыт болса. Байланысты үзуге энергия <b>жұмсалады</b>, жаңа байланыс түзілгенде энергия <b>бөлінеді</b>. Айырмасы — жылу эффектісі (оқулықтағы H₂ + Cl₂ теңдеуіндегі 184 кДж).</p></div><div data-l="ru"><p>⭐ <b>Дополнительный слайд</b> — если есть время. На разрыв связей энергия <b>затрачивается</b>, при образовании связей — <b>выделяется</b>. Разность — тепловой эффект (184 кДж в уравнении H₂ + Cl₂ из учебника).</p></div><div data-l="en"><p>⭐ <b>Optional slide</b> — if time allows. Breaking bonds <b>takes</b> energy, forming bonds <b>releases</b> it. The difference is the heat effect (184 kJ in the textbook's H₂ + Cl₂ equation).</p></div></aside>
+  <aside class="notes"><div data-l="kk"><p><b>Топтық жұмыс.</b> Топтар анимацияны бақылап, энергияның қайдан шығатынын талқылайды. Байланысты үзуге энергия <b>жұмсалады</b>, жаңа байланыс түзілгенде энергия <b>бөлінеді</b>. Айырмасы — жылу эффектісі (оқулықтағы H₂ + Cl₂ теңдеуіндегі 184 кДж).</p></div><div data-l="ru"><p><b>Групповая работа.</b> Группы наблюдают анимацию и обсуждают, откуда берётся энергия. На разрыв связей энергия <b>затрачивается</b>, при образовании связей — <b>выделяется</b>. Разность — тепловой эффект (184 кДж в уравнении H₂ + Cl₂ из учебника).</p></div><div data-l="en"><p><b>Group work.</b> Teams watch the animation and discuss where the energy comes from. Breaking bonds <b>takes</b> energy, forming bonds <b>releases</b> it. The difference is the heat effect (184 kJ in the textbook's H₂ + Cl₂ equation).</p></div></aside>
 </section>
 
 <!-- ===================== 8. ЕКІ ТҮР ===================== -->
@@ -1788,7 +1813,31 @@ html[data-theme="light"] .dn.done i{background:rgba(114,71,245,.55)}
   <aside class="notes"><div data-l="kk"><p>⭐ <b>Қосымша слайд</b> (оқулықтағы «Сен білесің бе?»). Ескерту: оқулықта «1 ккал = 4,1868 Дж» деп қате басылған — дұрысы <b>1 кал = 4,1868 Дж</b>, <b>1 ккал = 4,1868 кДж</b>.</p></div><div data-l="ru"><p>⭐ <b>Дополнительный слайд</b> (рубрика учебника). Внимание: в учебнике опечатка «1 ккал = 4,1868 Дж» — верно <b>1 кал = 4,1868 Дж</b>, <b>1 ккал = 4,1868 кДж</b>.</p></div><div data-l="en"><p>⭐ <b>Optional slide</b> (textbook “Did you know?”). Note: the textbook misprints “1 kcal = 4.1868 J” — correct is <b>1 cal = 4.1868 J</b>, <b>1 kcal = 4.1868 kJ</b>.</p></div></aside>
 </section>
 
-<!-- ===================== 15. ДИАГРАММА 1 (ЭКЗО) ===================== -->
+<!-- ===================== 15. ГРАФИК БОЙЫНША ТАЛДАУ (ЖҰПТЫҚ ЖҰМЫС) ===================== -->
+<section class="slide" data-id="pairs" data-stage="5" data-t="График бойынша талдау|Анализ по графику|Graph analysis">
+  <header class="sh a"><h2><span class="h-ico">📊</span><span data-l="kk">График бойынша талдау</span><span data-l="ru">Анализ по графику</span><span data-l="en">Graph analysis</span><span class="work-badge pair">👫 <span data-l="kk">Жұптық жұмыс</span><span data-l="ru">Парная работа</span><span data-l="en">Pair work</span></span></h2><p class="lead"><span data-l="kk">Жұбыңмен екі графикті салыстыр және реакция түрін анықта.</span><span data-l="ru">Сравните в паре два графика и определите тип реакции.</span><span data-l="en">Compare the two graphs with your partner and name the reaction type.</span></p></header>
+  <div class="body pair-layout">
+    <div class="pg card a a-left" style="--d:.15">
+      <div class="pg-h"><span data-l="kk">1-график</span><span data-l="ru">График 1</span><span data-l="en">Graph 1</span></div>
+      <svg class="ediag" data-er="520" data-ep="200" data-ea="170" viewBox="0 0 900 560"></svg>
+      <button class="pq" data-pairrev><span class="pq-q">? <span data-l="kk">Реакция түрі</span><span data-l="ru">Тип реакции</span><span data-l="en">Reaction type</span></span><b class="pq-a t-exo">🔥 <span data-l="kk">Экзотермиялық</span><span data-l="ru">Экзотермическая</span><span data-l="en">Exothermic</span> <span class="f">· ΔH &lt; 0</span></b></button>
+    </div>
+    <div class="pg card a a-right" style="--d:.3">
+      <div class="pg-h"><span data-l="kk">2-график</span><span data-l="ru">График 2</span><span data-l="en">Graph 2</span></div>
+      <svg class="ediag" data-er="200" data-ep="480" data-ea="190" viewBox="0 0 900 560"></svg>
+      <button class="pq" data-pairrev><span class="pq-q">? <span data-l="kk">Реакция түрі</span><span data-l="ru">Тип реакции</span><span data-l="en">Reaction type</span></span><b class="pq-a t-endo">❄️ <span data-l="kk">Эндотермиялық</span><span data-l="ru">Эндотермическая</span><span data-l="en">Endothermic</span> <span class="f">· ΔH &gt; 0</span></b></button>
+    </div>
+    <div class="pq-list a" style="--d:.5">
+      <span>① <span data-l="kk">Реагенттер мен өнімдердің энергия деңгейін салыстыр</span><span data-l="ru">Сравни уровни энергии реагентов и продуктов</span><span data-l="en">Compare the energy of reactants and products</span></span>
+      <span>② <span data-l="kk">Энергия бөліне ме, сіңіріле ме?</span><span data-l="ru">Энергия выделяется или поглощается?</span><span data-l="en">Is energy released or absorbed?</span></span>
+      <span>③ <span data-l="kk">ΔH таңбасы қандай?</span><span data-l="ru">Какой знак у ΔH?</span><span data-l="en">What is the sign of ΔH?</span></span>
+      <span>④ <span data-l="kk">Реакция түрі қандай?</span><span data-l="ru">Какой тип реакции?</span><span data-l="en">What type of reaction is it?</span></span>
+    </div>
+  </div>
+  <aside class="notes"><div data-l="kk"><p><b>Жұптық жұмыс</b> (графиктік талдау). Жұптар екі графикті салыстырады: реагенттер мен өнімдердің энергия деңгейі, энергия бөліне ме әлде сіңіріле ме, ΔH таңбасы, реакция түрі.</p><p>Жұптар жауап бергеннен кейін «? Реакция түрі» батырмасын басып тексеріңіз. Келесі слайдтарда әр график қадамдап талданады.</p></div><div data-l="ru"><p><b>Парная работа</b> (графический анализ). Пары сравнивают два графика: уровни энергии реагентов и продуктов, выделяется или поглощается энергия, знак ΔH, тип реакции.</p><p>После ответов пар нажмите «? Тип реакции» для проверки. На следующих слайдах каждый график разбирается по шагам.</p></div><div data-l="en"><p><b>Pair work</b> (graph analysis). Pairs compare the two graphs: energy of reactants and products, energy released or absorbed, the sign of ΔH, the reaction type.</p><p>After the pairs answer, tap “? Reaction type” to check. The next slides go through each graph step by step.</p></div></aside>
+</section>
+
+<!-- ===================== 16. ДИАГРАММА 1 (ЭКЗО) ===================== -->
 <section class="slide" data-id="diag1" data-stage="5" data-t="1-график: экзо|График 1: экзо|Graph 1: exo">
   <header class="sh a"><h2><span class="h-ico">📈</span><span data-l="kk">Энергетикалық диаграмма: 1-график</span><span data-l="ru">Энергетическая диаграмма: график 1</span><span data-l="en">Energy diagram: graph 1</span></h2><p class="lead"><span data-l="kk">Тік ось — <b>энергия</b>, көлденең ось — <b>реакция барысы</b></span><span data-l="ru">Вертикальная ось — <b>энергия</b>, горизонтальная — <b>ход реакции</b></span><span data-l="en">Vertical axis — <b>energy</b>, horizontal axis — <b>reaction progress</b></span></p></header>
   <div class="body diag-layout">
@@ -1890,7 +1939,7 @@ html[data-theme="light"] .dn.done i{background:rgba(114,71,245,.55)}
 
 <!-- ===================== 19. ЕСЕПТЕР A ===================== -->
 <section class="slide" data-id="probA" data-stage="6" data-t="Есептер: A деңгейі|Задачи: уровень A|Problems: level A">
-  <header class="sh a"><h2><span class="h-ico lvl-ico a-lvl">A</span><span data-l="kk">Есептер · базалық деңгей</span><span data-l="ru">Задачи · базовый уровень</span><span data-l="en">Problems · basic level</span></h2><p class="lead f">Q = q · n &nbsp;<small><span data-l="kk">q — 1 мольге келетін жылу, n — зат мөлшері</span><span data-l="ru">q — теплота на 1 моль, n — количество вещества</span><span data-l="en">q — heat per 1 mol, n — amount of substance</span></small></p></header>
+  <header class="sh a"><h2><span class="h-ico lvl-ico a-lvl">A</span><span data-l="kk">Есептер · базалық деңгей</span><span data-l="ru">Задачи · базовый уровень</span><span data-l="en">Problems · basic level</span><span class="work-badge solo">👤 <span data-l="kk">Жеке жұмыс</span><span data-l="ru">Индивидуальная работа</span><span data-l="en">Individual work</span></span></h2><p class="lead f">Q = q · n &nbsp;<small><span data-l="kk">q — 1 мольге келетін жылу, n — зат мөлшері</span><span data-l="ru">q — теплота на 1 моль, n — количество вещества</span><span data-l="en">q — heat per 1 mol, n — amount of substance</span></small></p></header>
   <div class="body probs two">
     <div class="prob card lvl-a a" style="--d:.15" data-steps>
       <div class="prob-h"><span class="pn">1</span><span class="ptag exo">🔥 <span data-l="kk">экзо</span><span data-l="ru">экзо</span><span data-l="en">exo</span></span></div>
@@ -1914,7 +1963,7 @@ html[data-theme="light"] .dn.done i{background:rgba(114,71,245,.55)}
 
 <!-- ===================== 20. ЕСЕПТЕР B ===================== -->
 <section class="slide" data-id="probB" data-stage="6" data-t="Есептер: B деңгейі|Задачи: уровень B|Problems: level B">
-  <header class="sh a"><h2><span class="h-ico lvl-ico b-lvl">B</span><span data-l="kk">Есептер · орта деңгей</span><span data-l="ru">Задачи · средний уровень</span><span data-l="en">Problems · intermediate level</span></h2></header>
+  <header class="sh a"><h2><span class="h-ico lvl-ico b-lvl">B</span><span data-l="kk">Есептер · орта деңгей</span><span data-l="ru">Задачи · средний уровень</span><span data-l="en">Problems · intermediate level</span><span class="work-badge solo">👤 <span data-l="kk">Жеке жұмыс</span><span data-l="ru">Индивидуальная работа</span><span data-l="en">Individual work</span></span></h2></header>
   <div class="body probs two">
     <div class="prob card lvl-b a" style="--d:.15" data-steps>
       <div class="prob-h"><span class="pn">3</span><span class="ptag exo">🔥 <span data-l="kk">экзо</span><span data-l="ru">экзо</span><span data-l="en">exo</span></span></div>
@@ -1938,7 +1987,7 @@ html[data-theme="light"] .dn.done i{background:rgba(114,71,245,.55)}
 
 <!-- ===================== 21. ЕСЕП C ===================== -->
 <section class="slide" data-id="probC" data-stage="6" data-t="Есеп: C деңгейі|Задача: уровень C|Problem: level C">
-  <header class="sh a"><h2><span class="h-ico lvl-ico c-lvl">C</span><span data-l="kk">Есеп · жоғары деңгей</span><span data-l="ru">Задача · повышенный уровень</span><span data-l="en">Problem · advanced level</span></h2></header>
+  <header class="sh a"><h2><span class="h-ico lvl-ico c-lvl">C</span><span data-l="kk">Есеп · жоғары деңгей</span><span data-l="ru">Задача · повышенный уровень</span><span data-l="en">Problem · advanced level</span><span class="work-badge solo">👤 <span data-l="kk">Жеке жұмыс</span><span data-l="ru">Индивидуальная работа</span><span data-l="en">Individual work</span></span></h2></header>
   <div class="body probc">
     <div class="prob card lvl-c wide a" style="--d:.1">
       <div class="prob-h"><span class="pn">5</span></div>
@@ -1956,7 +2005,7 @@ html[data-theme="light"] .dn.done i{background:rgba(114,71,245,.55)}
 
 <!-- ===================== 22. §23 СУТЕК ===================== -->
 <section class="slide" data-id="hydrogen" data-stage="6" data-t="§23: термохимиялық теңдеу құрастыру|§23: составление термохимического уравнения|§23: writing a thermochemical equation">
-  <header class="sh a"><h2><span class="h-ico">💧</span><span data-l="kk">Термохимиялық теңдеу құрастыр</span><span data-l="ru">Составь термохимическое уравнение</span><span data-l="en">Write the thermochemical equation</span></h2><p class="lead">📖 <span data-l="kk">Оқулық, §23</span><span data-l="ru">Учебник, §23</span><span data-l="en">Textbook, §23</span></p></header>
+  <header class="sh a"><h2><span class="h-ico">💧</span><span data-l="kk">Термохимиялық теңдеу құрастыр</span><span data-l="ru">Составь термохимическое уравнение</span><span data-l="en">Write the thermochemical equation</span><span class="work-badge solo">👤 <span data-l="kk">Жеке жұмыс</span><span data-l="ru">Индивидуальная работа</span><span data-l="en">Individual work</span></span></h2><p class="lead">📖 <span data-l="kk">Оқулық, §23</span><span data-l="ru">Учебник, §23</span><span data-l="en">Textbook, §23</span></p></header>
   <div class="body h2-layout" data-steps>
     <div class="prob card a" style="--d:.1"><p class="prob-q big"><span data-l="kk"><b>2 г</b> сутек жанғанда <b>286 кДж</b> жылу бөлінеді. Реакцияның термохимиялық теңдеуін құрастыр.</span><span data-l="ru">При сгорании <b>2 г</b> водорода выделяется <b>286 кДж</b> теплоты. Составьте термохимическое уравнение реакции.</span><span data-l="en">Burning <b>2 g</b> of hydrogen releases <b>286 kJ</b>. Write the thermochemical equation of the reaction.</span></p></div>
     <div class="h2-steps">
@@ -1975,7 +2024,7 @@ html[data-theme="light"] .dn.done i{background:rgba(114,71,245,.55)}
 
 <!-- ===================== 23. ДЕҢГЕЙЛІК ТАПСЫРМАЛАР ===================== -->
 <section class="slide" data-id="diff" data-stage="6" data-t="Деңгейлік тапсырмалар|Дифференцированные задания|Tasks by level">
-  <header class="sh a"><h2><span class="h-ico">🪜</span><span data-l="kk">Деңгейлік тапсырмалар</span><span data-l="ru">Дифференцированные задания</span><span data-l="en">Tasks by level</span></h2></header>
+  <header class="sh a"><h2><span class="h-ico">🪜</span><span data-l="kk">Деңгейлік тапсырмалар</span><span data-l="ru">Дифференцированные задания</span><span data-l="en">Tasks by level</span><span class="work-badge solo">👤 <span data-l="kk">Жеке жұмыс</span><span data-l="ru">Индивидуальная работа</span><span data-l="en">Individual work</span></span></h2></header>
   <div class="body diff-grid">
     <div class="dcol card lvl-a a" style="--d:.1">
       <div class="dc-h"><span class="lvl-ico a-lvl">A</span><span data-l="kk">Базалық</span><span data-l="ru">Базовый</span><span data-l="en">Basic</span></div>
@@ -2001,7 +2050,7 @@ html[data-theme="light"] .dn.done i{background:rgba(114,71,245,.55)}
       <div class="desc">✓ <span data-l="kk">ΔH есептейді және қорытынды жасайды.</span><span data-l="ru">Рассчитывает ΔH и делает вывод.</span><span data-l="en">Calculates ΔH and draws a conclusion.</span></div>
     </div>
   </div>
-  <aside class="notes"><div data-l="kk"><p>Әр оқушы өз деңгейін таңдайды. A бағанындағы реакцияны басқанда жауап шығады. С тапсырмасын 18-слайдтағы интерактив диаграммамен тексеруге болады.</p></div><div data-l="ru"><p>Каждый выбирает свой уровень. В столбце A нажатие на реакцию показывает ответ. Задание C можно проверить на интерактивной диаграмме (слайд 18).</p></div><div data-l="en"><p>Each student picks a level. In column A, tap a reaction to show the answer. Task C can be checked on the interactive diagram (slide 18).</p></div></aside>
+  <aside class="notes"><div data-l="kk"><p>Әр оқушы өз деңгейін таңдайды. A бағанындағы реакцияны басқанда жауап шығады. С тапсырмасын 19-слайдтағы интерактив диаграммамен тексеруге болады.</p></div><div data-l="ru"><p>Каждый выбирает свой уровень. В столбце A нажатие на реакцию показывает ответ. Задание C можно проверить на интерактивной диаграмме (слайд 19).</p></div><div data-l="en"><p>Each student picks a level. In column A, tap a reaction to show the answer. Task C can be checked on the interactive diagram (slide 19).</p></div></aside>
 </section>
 
 <!-- ===================== 24. ОЙЫН ===================== -->
@@ -2095,11 +2144,11 @@ html[data-theme="light"] .dn.done i{background:rgba(114,71,245,.55)}
   <div class="body as-layout">
     <div class="as-table a" style="--d:.15">
       <div class="as-row as-head"><div><span data-l="kk">Критерий</span><span data-l="ru">Критерий</span><span data-l="en">Criterion</span></div><div><span data-l="kk">Дескриптор</span><span data-l="ru">Дескриптор</span><span data-l="en">Descriptor</span></div><div><span data-l="kk">Ұпай</span><span data-l="ru">Балл</span><span data-l="en">Points</span></div></div>
-      <div class="as-row" data-max="2"><div><span data-l="kk">Реакция түрлерін ажыратады</span><span data-l="ru">Различает типы реакций</span><span data-l="en">Tells reaction types apart</span></div><div><span data-l="kk">Экзо- және эндотермиялық реакцияларды анықтайды</span><span data-l="ru">Определяет экзотермические и эндотермические реакции</span><span data-l="en">Identifies exo- and endothermic reactions</span></div><div class="dots"></div></div>
-      <div class="as-row" data-max="2"><div><span data-l="kk">«Қара жәшік» әдісін қолданады</span><span data-l="ru">Применяет метод «Чёрный ящик»</span><span data-l="en">Uses the “black box” method</span></div><div><span data-l="kk">Температура өзгерісі бойынша қорытынды жасайды</span><span data-l="ru">Делает вывод по наблюдаемым изменениям температуры</span><span data-l="en">Draws conclusions from temperature changes</span></div><div class="dots"></div></div>
-      <div class="as-row" data-max="2"><div><span data-l="kk">Графиктерді талдайды</span><span data-l="ru">Анализирует графики</span><span data-l="en">Analyses graphs</span></div><div><span data-l="kk">Реагенттер мен өнімдердің энергия деңгейін анықтайды</span><span data-l="ru">Определяет уровни энергии реагентов и продуктов</span><span data-l="en">Finds the energy levels of reactants and products</span></div><div class="dots"></div></div>
-      <div class="as-row" data-max="3"><div><span data-l="kk">Есеп шығарады</span><span data-l="ru">Решает задачи</span><span data-l="en">Solves problems</span></div><div><span data-l="kk">Формулаларды дұрыс қолданып, есептейді</span><span data-l="ru">Правильно использует формулы и выполняет расчёты</span><span data-l="en">Uses formulas correctly and calculates</span></div><div class="dots"></div></div>
-      <div class="as-row" data-max="1"><div><span data-l="kk">Қорытынды жасайды</span><span data-l="ru">Формулирует вывод</span><span data-l="en">Draws a conclusion</span></div><div><span data-l="kk">Энергияның өзгерісін түсіндіреді</span><span data-l="ru">Объясняет изменение энергии</span><span data-l="en">Explains the energy change</span></div><div class="dots"></div></div>
+      <div class="as-row" data-max="2"><div><span data-l="kk">Реакция түрлерін ажыратамын</span><span data-l="ru">Различаю типы реакций</span><span data-l="en">I tell reaction types apart</span></div><div><span data-l="kk">Экзо- және эндотермиялық реакцияларды анықтайды</span><span data-l="ru">Определяет экзотермические и эндотермические реакции</span><span data-l="en">Identifies exo- and endothermic reactions</span></div><div class="dots"></div></div>
+      <div class="as-row" data-max="2"><div><span data-l="kk">«Қара жәшік» әдісін қолданамын</span><span data-l="ru">Применяю метод «Чёрный ящик»</span><span data-l="en">I use the “black box” method</span></div><div><span data-l="kk">Температура өзгерісі бойынша қорытынды жасайды</span><span data-l="ru">Делает вывод по наблюдаемым изменениям температуры</span><span data-l="en">Draws conclusions from temperature changes</span></div><div class="dots"></div></div>
+      <div class="as-row" data-max="2"><div><span data-l="kk">Графиктерді талдаймын</span><span data-l="ru">Анализирую графики</span><span data-l="en">I analyse graphs</span></div><div><span data-l="kk">Реагенттер мен өнімдердің энергия деңгейін анықтайды</span><span data-l="ru">Определяет уровни энергии реагентов и продуктов</span><span data-l="en">Finds the energy levels of reactants and products</span></div><div class="dots"></div></div>
+      <div class="as-row" data-max="3"><div><span data-l="kk">Есеп шығарамын</span><span data-l="ru">Решаю задачи</span><span data-l="en">I solve problems</span></div><div><span data-l="kk">Формулаларды дұрыс қолданып, есептейді</span><span data-l="ru">Правильно использует формулы и выполняет расчёты</span><span data-l="en">Uses formulas correctly and calculates</span></div><div class="dots"></div></div>
+      <div class="as-row" data-max="1"><div><span data-l="kk">Қорытынды жасаймын</span><span data-l="ru">Формулирую вывод</span><span data-l="en">I draw a conclusion</span></div><div><span data-l="kk">Энергияның өзгерісін түсіндіреді</span><span data-l="ru">Объясняет изменение энергии</span><span data-l="en">Explains the energy change</span></div><div class="dots"></div></div>
     </div>
     <div class="as-total card a a-right" style="--d:.4">
       <svg viewBox="0 0 200 200" class="gauge"><circle cx="100" cy="100" r="80" class="g-bg"/><circle cx="100" cy="100" r="80" class="g-fg"/></svg>
@@ -2134,7 +2183,7 @@ html[data-theme="light"] .dn.done i{background:rgba(114,71,245,.55)}
       <svg viewBox="0 0 200 280" class="th-fl"><g class="flick"><use href="#symFlame" width="200" height="280"/></g></svg>
       <svg viewBox="-110 -110 220 220" class="th-sn"><g class="spin-slow"><use href="#symSnow" x="-110" y="-110" width="220" height="220"/></g></svg>
     </div>
-    <h1 class="a a-zoom" style="--d:.3"><span class="grad-mix"><span data-l="kk">Сабаққа рахмет!</span><span data-l="ru">Спасибо за урок!</span><span data-l="en">Thank you for the lesson!</span></span></h1>
+    <h1 class="a a-zoom" style="--d:.3"><span class="grad-mix"><span data-l="kk">Назарларыңызға рахмет!</span><span data-l="ru">Спасибо за внимание!</span><span data-l="en">Thank you for your attention!</span></span></h1>
     <blockquote class="a" style="--d:.7">«<span data-l="kk">Энергия ешқашан жоғалмайды және жоқтан пайда болмайды — ол тек бір түрден екінші түрге айналады.</span><span data-l="ru">Энергия никогда не исчезает и не возникает из ничего — она лишь переходит из одной формы в другую.</span><span data-l="en">Energy is never lost and never comes from nothing — it only changes from one form into another.</span>»<cite>📖 <span data-l="kk">Оқулық, §22</span><span data-l="ru">Учебник, §22</span><span data-l="en">Textbook, §22</span></cite></blockquote>
   </div>
   <aside class="notes"><div data-l="kk"><p>Сабақты қорытып, оқушыларға алғыс айту. 🏆 ұпай тақтасын ашып, жеңімпаз топты марапаттау.</p></div><div data-l="ru"><p>Завершить урок, поблагодарить учащихся. Открыть 🏆 таблицу баллов и наградить группу-победителя.</p></div><div data-l="en"><p>Wrap up and thank the class. Open the 🏆 scoreboard and congratulate the winning team.</p></div></aside>
@@ -3058,6 +3107,16 @@ FX.diag = function (f, s) {
   var svg = $('.ediag', s); svg.classList.add('show-' + f.getAttribute('data-show'));
   if (f.getAttribute('data-show') === 'dh') { var a = svg.querySelector('.dh-ar'); burstAt(a, { kind: svg._type === 'exo' ? 'fire' : 'ice', n: 30, power: 6 }); }
 };
+SL.pairs = {
+  reset: function (s) {
+    $$('.pg', s).forEach(function (c) { c.classList.remove('open'); });
+    $$('.ediag', s).forEach(function (svg) { svg.classList.remove('show-levels', 'show-ea', 'show-dh', 'drawn'); });
+  },
+  enter: function (s) {
+    $$('.ediag', s).forEach(function (svg) { diagDraw(svg); });
+    later(s, function () { $$('.ediag', s).forEach(function (svg) { svg.classList.add('show-levels'); }); }, 2300);
+  }
+};
 SL.diag1 = SL.diag2 = {
   reset: function (s) { $('.ediag', s).classList.remove('show-levels', 'show-ea', 'show-dh', 'drawn'); },
   enter: function (s) { diagDraw($('.ediag', s)); }
@@ -3387,6 +3446,12 @@ function bindEvents() {
       if (f) reveal(f); return;
     }
     if ((el = t.closest('[data-open-scores]'))) { openPanel('scoresModal'); return; }
+    if ((el = t.closest('[data-pairrev]'))) {
+      var pc = el.closest('.pg'), on = !pc.classList.contains('open'), dg = $('.ediag', pc);
+      pc.classList.toggle('open', on); dg.classList.toggle('show-dh', on);
+      if (on) { sfx('ok'); burstAt(el, { kind: dg._type === 'exo' ? 'fire' : 'ice', n: 30, power: 7 }); } else sfx('pop');
+      return;
+    }
     if ((el = t.closest('[data-pick]'))) { choosePick(el); return; }
     if ((el = t.closest('[data-showall]'))) { chooseShowAll(el.closest('.slide')); return; }
     if ((el = t.closest('[data-resetchoose]'))) { chooseReset(el.closest('.slide')); return; }

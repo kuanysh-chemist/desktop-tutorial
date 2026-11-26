@@ -841,6 +841,16 @@ FX.diag = function (f, s) {
   var svg = $('.ediag', s); svg.classList.add('show-' + f.getAttribute('data-show'));
   if (f.getAttribute('data-show') === 'dh') { var a = svg.querySelector('.dh-ar'); burstAt(a, { kind: svg._type === 'exo' ? 'fire' : 'ice', n: 30, power: 6 }); }
 };
+SL.pairs = {
+  reset: function (s) {
+    $$('.pg', s).forEach(function (c) { c.classList.remove('open'); });
+    $$('.ediag', s).forEach(function (svg) { svg.classList.remove('show-levels', 'show-ea', 'show-dh', 'drawn'); });
+  },
+  enter: function (s) {
+    $$('.ediag', s).forEach(function (svg) { diagDraw(svg); });
+    later(s, function () { $$('.ediag', s).forEach(function (svg) { svg.classList.add('show-levels'); }); }, 2300);
+  }
+};
 SL.diag1 = SL.diag2 = {
   reset: function (s) { $('.ediag', s).classList.remove('show-levels', 'show-ea', 'show-dh', 'drawn'); },
   enter: function (s) { diagDraw($('.ediag', s)); }
@@ -1170,6 +1180,12 @@ function bindEvents() {
       if (f) reveal(f); return;
     }
     if ((el = t.closest('[data-open-scores]'))) { openPanel('scoresModal'); return; }
+    if ((el = t.closest('[data-pairrev]'))) {
+      var pc = el.closest('.pg'), on = !pc.classList.contains('open'), dg = $('.ediag', pc);
+      pc.classList.toggle('open', on); dg.classList.toggle('show-dh', on);
+      if (on) { sfx('ok'); burstAt(el, { kind: dg._type === 'exo' ? 'fire' : 'ice', n: 30, power: 7 }); } else sfx('pop');
+      return;
+    }
     if ((el = t.closest('[data-pick]'))) { choosePick(el); return; }
     if ((el = t.closest('[data-showall]'))) { chooseShowAll(el.closest('.slide')); return; }
     if ((el = t.closest('[data-resetchoose]'))) { chooseReset(el.closest('.slide')); return; }

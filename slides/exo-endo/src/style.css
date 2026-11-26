@@ -1078,3 +1078,28 @@ html[data-theme="light"] .dn.done i{background:rgba(114,71,245,.55)}
 .cal-btns .step-btn{align-self:auto;margin-top:0}
 .factors-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 24px;border-radius:20px;background:var(--card);border:1px solid var(--glass-border);font-size:22px}
 .factors-row .chip{font-size:21px;font-weight:600}
+
+/* =========================================================
+   Work-form badges · graph analysis (pair work)
+   ========================================================= */
+.work-badge{display:inline-flex;align-items:center;gap:8px;font-size:20px;font-weight:850;letter-spacing:.02em;line-height:1.2;padding:7px 16px;border-radius:999px;border:2px solid;white-space:nowrap;margin-left:4px;flex-shrink:0}
+.work-badge.group{color:#ffc531;border-color:rgba(255,197,49,.65);background:rgba(255,197,49,.12)}
+.work-badge.pair{color:#2dd4bf;border-color:rgba(45,212,191,.65);background:rgba(45,212,191,.12)}
+.work-badge.solo{color:#c4b0ff;border-color:rgba(179,146,255,.65);background:rgba(179,146,255,.14)}
+html[data-theme="light"] .work-badge.group{color:#a16207}
+html[data-theme="light"] .work-badge.pair{color:#0f766e}
+html[data-theme="light"] .work-badge.solo{color:#6d28d9}
+.slide.shown .work-badge{animation:popIn .6s .7s both}
+.pair-layout{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr auto;gap:16px 26px}
+.pg{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 22px;min-height:0}
+.pg-h{font-size:26px;font-weight:900;align-self:flex-start}
+.pg .ediag{flex:1;min-height:0;max-height:400px;width:100%}
+.pq{font:800 22px var(--font);padding:10px 24px;border-radius:14px;border:2px dashed var(--line);background:var(--card-2);color:var(--ink);cursor:pointer;min-width:360px;transition:border-color .3s,transform .15s}
+.pq:hover{transform:translateY(-2px);border-color:var(--accent)}
+.pq-q{color:var(--accent)}
+.pq-a{display:none}
+.pg.open .pq-a{display:inline;animation:popIn .5s both}
+.pg.open .pq-q{display:none}
+.pg.open .pq{border-style:solid}
+.pq-list{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.pq-list > span{font-size:20px;font-weight:650;padding:9px 16px;border-radius:999px;background:var(--card);border:1px solid var(--glass-border)}
