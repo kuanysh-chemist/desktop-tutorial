@@ -1121,6 +1121,39 @@ html[data-theme="light"] .work-badge.solo{color:#6d28d9}
 .panel{top:calc(16px + env(safe-area-inset-top,0px));right:calc(16px + env(safe-area-inset-right,0px))}
 .pill-btn.armed{color:#fff;background:var(--bad);border-color:var(--bad)}
 
+/* =========================================================
+   2. FORMING TEAMS (black-box lottery)
+   ========================================================= */
+.tm-layout{display:grid;grid-template-columns:330px 1fr 330px;gap:22px}
+.tm-basket{cursor:default}
+.tm-basket .bk-n{display:flex;align-items:baseline;gap:2px}
+.tm-of{font-size:20px;color:var(--muted);font-weight:800}
+.tm-list{display:flex;flex-direction:column;gap:10px;flex:1;min-height:0}
+.tm-mem{font-size:22px;font-weight:800;padding:10px 16px;border-radius:14px;line-height:1.2;animation:popIn .45s both}
+.tm-basket.exo .tm-mem{background:linear-gradient(135deg,rgba(255,180,58,.3),rgba(255,64,64,.2));border:1px solid rgba(255,125,51,.55)}
+.tm-basket.endo .tm-mem{background:linear-gradient(135deg,rgba(143,230,255,.3),rgba(59,108,255,.2));border:1px solid rgba(60,196,255,.55)}
+.tm-center{display:flex;flex-direction:column;align-items:center;gap:12px;min-width:0}
+.tm-orbit{position:relative;flex:1;width:100%;min-height:0}
+.tm-box{position:absolute;left:50%;top:50%;width:250px;height:244px;margin:-122px 0 0 -125px;z-index:6;pointer-events:none}
+.tm-box svg{width:100%;height:100%;overflow:visible}
+.tm-halo{fill:#a98bff;opacity:.4;filter:url(#fSoft);transition:opacity .5s}
+.tm-box.mixing svg{animation:shake .38s ease-in-out infinite}
+.tm-box.mixing .tm-halo{opacity:.95;animation:tmGlow .7s ease-in-out infinite alternate}
+.tm-box.done .tm-halo{fill:url(#gQ);opacity:.75}
+@keyframes tmGlow{from{fill:#ff6a1f}to{fill:#2fb4ff}}
+.tm-chip{position:absolute;left:0;top:0;font-size:20px;font-weight:800;padding:9px 18px;border-radius:999px;background:var(--card-solid);color:var(--ink);border:2px solid rgba(169,139,255,.6);box-shadow:0 8px 20px rgba(0,0,0,.25);white-space:nowrap;will-change:transform,opacity}
+html[data-theme="dark"] .tm-chip{background:linear-gradient(160deg,#27315f,#1a2142)}
+.tg-ctl{display:flex;gap:12px;flex-shrink:0;flex-wrap:wrap;justify-content:center}
+.tm-center.started .tm-go-btn{opacity:.35;pointer-events:none}
+.tg-msg{position:absolute;left:0;right:0;bottom:4px;z-index:9;font-size:24px;font-weight:850;text-align:center;opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s}
+.tm-center.done .tg-msg{opacity:1;transform:none}
+.tm-fly{position:absolute;left:0;top:0;z-index:60;font-size:22px;font-weight:850;padding:10px 20px;border-radius:999px;color:#fff;white-space:nowrap;pointer-events:none}
+.tm-fly.exo{background:linear-gradient(135deg,#ffb43a,#ff4040);box-shadow:0 0 28px rgba(255,90,40,.85)}
+.tm-fly.endo{background:linear-gradient(135deg,#7fd8ff,#3b6cff);box-shadow:0 0 28px rgba(60,160,255,.85)}
+.tmem{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;font-size:13px;font-weight:700;color:var(--muted)}
+.tmem:empty{display:none}
+.tmem span{padding:2px 8px;border-radius:8px;background:var(--card);border:1px solid var(--line)}
+
 </style>
 </head>
 <body>
@@ -1224,7 +1257,54 @@ html[data-theme="light"] .work-badge.solo{color:#6d28d9}
   <aside class="notes"><div data-l="kk"><p>Сәлемдесу, оң көңіл-күй орнату. Тақырыпты жариялау.</p><p>Сұрақ: <b>«От пен мұздың химияға қандай қатысы бар? Тақырыпты болжаңдар.»</b></p></div><div data-l="ru"><p>Приветствие, положительный настрой. Объявить тему.</p><p>Вопрос: <b>«Как огонь и лёд связаны с химией? Предположите тему урока.»</b></p></div><div data-l="en"><p>Greet the class, set a positive mood, announce the topic.</p><p>Ask: <b>“What do fire and ice have to do with chemistry? Guess today's topic.”</b></p></div></aside>
 </section>
 
-<!-- ===================== 2. МАҚСАТТАР ===================== -->
+<!-- ===================== 2. ТОПҚА БӨЛІНЕЙІК ===================== -->
+<section class="slide" data-id="teams" data-stage="1" data-t="Топқа бөлінейік|Делимся на группы|Forming teams">
+  <header class="sh a"><h2><span class="h-ico">🎲</span><span data-l="kk">Топқа бөлінейік!</span><span data-l="ru">Делимся на группы!</span><span data-l="en">Let's form teams!</span></h2><p class="lead"><span data-l="kk">«Қара жәшік» кім <b class="t-exo">ЭКЗО</b>, кім <b class="t-endo">ЭНДО</b> тобында болатынын шешеді!</span><span data-l="ru">«Чёрный ящик» решит, кто попадёт в группу <b class="t-exo">ЭКЗО</b>, а кто — в <b class="t-endo">ЭНДО</b>!</span><span data-l="en">The “black box” decides who joins team <b class="t-exo">EXO</b> and who joins team <b class="t-endo">ENDO</b>!</span></p></header>
+  <div class="body tm-layout">
+    <div class="basket exo tm-basket a a-left" data-side="exo" style="--d:.25">
+      <div class="bk-head"><svg viewBox="0 0 200 280" class="bk-ico"><g class="flick"><use href="#symFlame" width="200" height="280"/></g></svg><div><b><span data-l="kk">ЭКЗО</span><span data-l="ru">ЭКЗО</span><span data-l="en">EXO</span></b><small><span data-l="kk">1-топ</span><span data-l="ru">Группа 1</span><span data-l="en">Team 1</span></small></div><span class="bk-n"><span class="tm-n">0</span><small class="tm-of"></small></span></div>
+      <div class="tm-list"></div>
+    </div>
+    <div class="tm-center a a-zoom" style="--d:.1">
+      <div class="tm-orbit">
+        <div class="tm-box">
+          <svg viewBox="0 0 380 370" aria-hidden="true">
+            <ellipse class="tm-halo" cx="185" cy="336" rx="175" ry="30"/>
+            <polygon class="bb-right" points="262,122 332,62 332,272 262,332"/>
+            <polygon class="bb-front" points="40,122 262,122 262,332 40,332"/>
+            <polygon class="bb-top" points="40,122 110,62 332,62 262,122"/>
+            <text class="bb-q" x="151" y="268" text-anchor="middle">?</text>
+          </svg>
+        </div>
+        <div class="tg-msg">✨ <span data-l="kk">Топтар дайын! Олар 🏆 ұпай тақтасына жазылды.</span><span data-l="ru">Группы готовы! Они уже в таблице баллов 🏆.</span><span data-l="en">Teams are ready! They are on the 🏆 scoreboard.</span></div>
+      </div>
+      <div class="tg-ctl">
+        <button class="btn tm-go-btn" data-reveal="#tm-go">▶ <span data-l="kk">Топқа бөлу</span><span data-l="ru">Разделить на группы</span><span data-l="en">Split into teams</span></button>
+        <button class="btn ghost" data-teams="again">🔀 <span data-l="kk">Қайта бөлу</span><span data-l="ru">Перемешать заново</span><span data-l="en">Shuffle again</span></button>
+      </div>
+      <span class="frag" id="tm-go" data-fx="teamSplit"></span>
+    </div>
+    <div class="basket endo tm-basket a a-right" data-side="endo" style="--d:.25">
+      <div class="bk-head"><svg viewBox="-110 -110 220 220" class="bk-ico"><g class="spin-slow"><use href="#symSnow" x="-110" y="-110" width="220" height="220"/></g></svg><div><b><span data-l="kk">ЭНДО</span><span data-l="ru">ЭНДО</span><span data-l="en">ENDO</span></b><small><span data-l="kk">2-топ</span><span data-l="ru">Группа 2</span><span data-l="en">Team 2</span></small></div><span class="bk-n"><span class="tm-n">0</span><small class="tm-of"></small></span></div>
+      <div class="tm-list"></div>
+    </div>
+    <ul class="tm-src" hidden>
+      <li>Базарбай Нұрислам</li>
+      <li>Бандура Анна</li>
+      <li>Гаргопин Юрий</li>
+      <li>Қаблан Нұрсезім</li>
+      <li>Маравина Арина</li>
+      <li>Марат Нұрасыл</li>
+      <li>Мырзайым Еркежан</li>
+      <li>Рыбалкина Вилина</li>
+      <li>Тишина Дарья</li>
+      <li>Фисунов Артем</li>
+    </ul>
+  </div>
+  <aside class="notes"><div data-l="kk"><p><b>Ұйымдастыру кезеңі: топқа бөлу.</b> «Топқа бөлу» батырмасын (немесе →) басыңыз. Аттар қара жәшікке кіреді, сосын бір-бірлеп ЭКЗО 🔥 немесе ЭНДО ❄️ тобына ұшады (кездейсоқ, 5 + 5).</p><p>Топтар 🏆 ұпай тақтасына аттарымен бірге өздігінен жазылады. Басқаша бөлу керек болса — «🔀 Қайта бөлу».</p></div><div data-l="ru"><p><b>Оргмомент: деление на группы.</b> Нажмите «Разделить на группы» (или →). Имена влетают в чёрный ящик и по одному вылетают в группу ЭКЗО 🔥 или ЭНДО ❄️ (случайно, 5 + 5).</p><p>Группы с именами сами записываются в таблицу баллов 🏆. Чтобы разделить иначе — «🔀 Перемешать заново».</p></div><div data-l="en"><p><b>Organisation: forming teams.</b> Press “Split into teams” (or →). The names fly into the black box and come out one by one into team EXO 🔥 or ENDO ❄️ (random, 5 + 5).</p><p>The teams and their members are added to the 🏆 scoreboard automatically. To split differently, press “🔀 Shuffle again”.</p></div></aside>
+</section>
+
+<!-- ===================== 3. МАҚСАТТАР ===================== -->
 <section class="slide" data-id="goals" data-stage="1" data-t="Сабақ мақсаттары|Цели урока|Lesson goals">
   <header class="sh a"><h2><span class="h-ico">🎯</span><span data-l="kk">Бүгінгі сабақта</span><span data-l="ru">Сегодня на уроке</span><span data-l="en">Today's lesson</span></h2></header>
   <div class="body goals-layout">
@@ -2058,7 +2138,7 @@ html[data-theme="light"] .work-badge.solo{color:#6d28d9}
       <div class="desc">✓ <span data-l="kk">ΔH есептейді және қорытынды жасайды.</span><span data-l="ru">Рассчитывает ΔH и делает вывод.</span><span data-l="en">Calculates ΔH and draws a conclusion.</span></div>
     </div>
   </div>
-  <aside class="notes"><div data-l="kk"><p>Әр оқушы өз деңгейін таңдайды. A бағанындағы реакцияны басқанда жауап шығады. С тапсырмасын 19-слайдтағы интерактив диаграммамен тексеруге болады.</p></div><div data-l="ru"><p>Каждый выбирает свой уровень. В столбце A нажатие на реакцию показывает ответ. Задание C можно проверить на интерактивной диаграмме (слайд 19).</p></div><div data-l="en"><p>Each student picks a level. In column A, tap a reaction to show the answer. Task C can be checked on the interactive diagram (slide 19).</p></div></aside>
+  <aside class="notes"><div data-l="kk"><p>Әр оқушы өз деңгейін таңдайды. A бағанындағы реакцияны басқанда жауап шығады. С тапсырмасын 20-слайдтағы интерактив диаграммамен тексеруге болады.</p></div><div data-l="ru"><p>Каждый выбирает свой уровень. В столбце A нажатие на реакцию показывает ответ. Задание C можно проверить на интерактивной диаграмме (слайд 20).</p></div><div data-l="en"><p>Each student picks a level. In column A, tap a reaction to show the answer. Task C can be checked on the interactive diagram (slide 20).</p></div></aside>
 </section>
 
 <!-- ===================== 24. ОЙЫН ===================== -->
@@ -2406,7 +2486,9 @@ var SFX = (function () {
     },
     ice: function () { [1568, 2093, 2637, 3136, 2637].forEach(function (f, i) { tone(f, i * 0.13, 0.55, 'sine', 0.045); }); noise(0, 1.2, 0.02, 'highpass', 5000, 8000, 0.5); },
     reveal: function () { tone(392, 0, 0.3, 'sine', 0.07, 784); tone(587, 0.1, 0.35, 'triangle', 0.05); },
-    tick: function () { tone(1250, 0, 0.03, 'square', 0.025); }
+    tick: function () { tone(1250, 0, 0.03, 'square', 0.025); },
+    flame: function () { tone(240, 0, 0.28, 'sawtooth', 0.045, 720); noise(0, 0.3, 0.05, 'bandpass', 700, 2600, 1); },
+    frost: function () { tone(1760, 0, 0.32, 'sine', 0.06); tone(2349, 0.06, 0.38, 'sine', 0.045); tone(3136, 0.12, 0.3, 'sine', 0.03); }
   };
   return {
     play: function (n) {
@@ -2909,7 +2991,8 @@ function renderTeams() {
     var el = document.createElement('div');
     el.className = 'team' + (max > 0 && t.s === max ? ' lead' : '');
     el.style.setProperty('--tc', COLORS[i % 8]);
-    el.innerHTML = '<span class="crown">👑</span><input maxlength="24" aria-label="name"><div class="sc">' + t.s + '</div><div class="tbr"><button class="minus" aria-label="-1">−</button><button class="plus">+1</button></div>';
+    el.innerHTML = '<span class="crown">👑</span><input maxlength="24" aria-label="name"><div class="tmem"></div><div class="sc">' + t.s + '</div><div class="tbr"><button class="minus" aria-label="-1">−</button><button class="plus">+1</button></div>';
+    (t.m || []).forEach(function (nm) { var sp = document.createElement('span'); sp.textContent = nm; $('.tmem', el).appendChild(sp); });
     var inp = $('input', el);
     inp.value = t.n; inp.placeholder = L(UI.team).replace('{n}', i + 1);
     inp.addEventListener('input', function () { t.n = inp.value.trim(); saveTeams(); });
@@ -2954,6 +3037,147 @@ function scInit() {
 }
 
 /* ================= slide controllers ================= */
+// forming teams: black-box lottery
+var TM2 = { names: [], chips: [], raf: 0, t0: 0, state: 'idle', result: null };
+function teamsSlide() { return $('[data-id="teams"]'); }
+function shuffled(n) {
+  var a = [];
+  for (var i = 0; i < n; i++) a.push(i);
+  for (var j = a.length - 1; j > 0; j--) { var k = (Math.random() * (j + 1)) | 0, t = a[j]; a[j] = a[k]; a[k] = t; }
+  return a;
+}
+function teamsInit() {
+  var s = teamsSlide(); if (!s) return;
+  TM2.names = $$('.tm-src li', s).map(function (li) { return li.textContent.trim(); }).filter(Boolean);
+  var orbit = $('.tm-orbit', s);
+  TM2.chips = TM2.names.map(function (n) {
+    var c = document.createElement('div'); c.className = 'tm-chip'; c.textContent = n;
+    orbit.appendChild(c); return c;
+  });
+  teamsCounts(s);
+  teamsPlace(s, 0);
+}
+function teamsPlace(s, t) {
+  var orbit = $('.tm-orbit', s), W = orbit.offsetWidth, H = orbit.offsetHeight, N = TM2.chips.length;
+  var cx = W / 2, cy = H / 2, rx = W * 0.39, ry = H * 0.4;
+  TM2.chips.forEach(function (c, i) {
+    if (!c._w) { c._w = c.offsetWidth; c._h = c.offsetHeight; }
+    var a = t * 0.32 + i * 2 * Math.PI / N, d = (Math.sin(a) + 1) / 2;
+    var x = cx + rx * Math.cos(a) - c._w / 2, y = cy + ry * Math.sin(a) - c._h / 2;
+    c.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) scale(' + (0.8 + 0.2 * d).toFixed(3) + ')';
+    c.style.opacity = (0.6 + 0.4 * d).toFixed(2);
+    c.style.zIndex = d > 0.5 ? 8 : 3;
+  });
+}
+function teamsLoop() {
+  var s = teamsSlide();
+  if (TM2.state !== 'idle' || slides[S.i] !== s) { TM2.raf = 0; return; }
+  teamsPlace(s, (performance.now() - TM2.t0) / 1000);
+  TM2.raf = requestAnimationFrame(teamsLoop);
+}
+function teamsStartOrbit() {
+  if (TM2.state !== 'idle' || TM2.raf) return;
+  TM2.t0 = performance.now() - (TM2.tLast || 0) * 1000;
+  TM2.raf = requestAnimationFrame(teamsLoop);
+}
+function teamsCounts(s) {
+  var N = TM2.names.length, half = { exo: Math.ceil(N / 2), endo: Math.floor(N / 2) };
+  $$('.tm-basket', s).forEach(function (b) {
+    $('.tm-n', b).textContent = $('.tm-list', b).children.length;
+    $('.tm-of', b).textContent = '/' + half[b.getAttribute('data-side')];
+  });
+}
+function teamsAddMember(s, k, side) {
+  var list = $('.tm-basket[data-side="' + side + '"] .tm-list', s);
+  var m = document.createElement('div'); m.className = 'tm-mem'; m.textContent = TM2.names[k];
+  list.appendChild(m);
+  teamsCounts(s);
+  return m;
+}
+function teamsReset(s, keep) {
+  if (TM2.raf) { cancelAnimationFrame(TM2.raf); TM2.raf = 0; }
+  $$('.tm-fly').forEach(function (f) { f.remove(); });
+  var c = $('.tm-center', s), box = $('.tm-box', s);
+  box.classList.remove('mixing', 'done'); c.classList.remove('started', 'done');
+  $$('.tm-list', s).forEach(function (l) { l.innerHTML = ''; });
+  TM2.chips.forEach(function (ch) {
+    if (ch.getAnimations) ch.getAnimations().forEach(function (a) { a.cancel(); });
+    ch.style.visibility = '';
+  });
+  if (keep && TM2.state === 'done' && TM2.result) {
+    TM2.names.forEach(function (n, k) { teamsAddMember(s, k, TM2.result[k]); });
+    TM2.chips.forEach(function (ch) { ch.style.visibility = 'hidden'; });
+    c.classList.add('started', 'done'); box.classList.add('done');
+    $('#tm-go', s).classList.add('on');
+  } else {
+    TM2.state = 'idle'; TM2.result = null;
+  }
+  teamsCounts(s);
+}
+function teamsSplit(s) {
+  if (TM2.state !== 'idle') return;
+  TM2.state = 'mixing';
+  if (TM2.raf) { cancelAnimationFrame(TM2.raf); TM2.raf = 0; }
+  TM2.tLast = (performance.now() - TM2.t0) / 1000;
+  var c = $('.tm-center', s), box = $('.tm-box', s), orbit = $('.tm-orbit', s), N = TM2.names.length;
+  c.classList.add('started');
+  var W = orbit.offsetWidth, H = orbit.offsetHeight;
+  // 1) every name is pulled into the box
+  TM2.chips.forEach(function (ch, i) {
+    var to = 'translate(' + (W / 2 - ch._w / 2) + 'px,' + (H / 2 - ch._h / 2) + 'px) scale(.15)';
+    ch.animate([{ transform: ch.style.transform, opacity: ch.style.opacity }, { transform: to, opacity: 0 }],
+      { duration: 620, delay: i * 85, easing: 'cubic-bezier(.55,0,.8,.2)', fill: 'forwards' });
+  });
+  sfx('whoosh');
+  later(s, function () { box.classList.add('mixing'); sfx('reveal'); }, 620 + N * 85);
+  // 2) random 5 + 5, revealed one by one in random order
+  var order = shuffled(N), assign = {}, nExo = Math.ceil(N / 2);
+  order.forEach(function (k, j) { assign[k] = j < nExo ? 'exo' : 'endo'; });
+  var t0 = 620 + N * 85 + 1300, step = 850;
+  shuffled(N).forEach(function (k, j) { later(s, function () { teamsFly(s, k, assign[k]); }, t0 + j * step); });
+  later(s, function () { teamsDone(s, assign); }, t0 + N * step + 600);
+}
+function teamsFly(s, k, side) {
+  var box = $('.tm-box', s), list = $('.tm-basket[data-side="' + side + '"] .tm-list', s), layer = $('#fxLayer');
+  var sr = stage.getBoundingClientRect(), br = box.getBoundingClientRect(), lr = list.getBoundingClientRect();
+  var sc = S.scale || 1;
+  var fx = (br.left + br.width / 2 - sr.left) / sc, fy = (br.top + br.height * 0.42 - sr.top) / sc;
+  var tx = (lr.left - sr.left) / sc + lr.width / sc / 2, ty = (lr.top - sr.top) / sc + list.children.length * 58 + 24;
+  var f = document.createElement('div'); f.className = 'tm-fly ' + side; f.textContent = (side === 'exo' ? '🔥 ' : '❄️ ') + TM2.names[k];
+  layer.appendChild(f);
+  var w = f.offsetWidth / 2, h = f.offsetHeight / 2;
+  var tr = function (x, y, z) { return 'translate(' + (x - w) + 'px,' + (y - h) + 'px) scale(' + z + ')'; };
+  var a = f.animate([
+    { transform: tr(fx, fy, 0.3), opacity: 0 },
+    { transform: tr(fx + (side === 'exo' ? -70 : 70), fy - 150, 1.3), opacity: 1, offset: 0.35 },
+    { transform: tr(tx, ty, 1), opacity: 1 }
+  ], { duration: 780, easing: 'cubic-bezier(.3,.6,.3,1)', fill: 'forwards' });
+  sfx(side === 'exo' ? 'flame' : 'frost');
+  a.onfinish = function () {
+    f.remove();
+    if (TM2.state !== 'mixing') return;
+    var m = teamsAddMember(s, k, side);
+    burstAt(m, { kind: side === 'exo' ? 'fire' : 'ice', n: 22, power: 5 });
+  };
+}
+function teamsDone(s, assign) {
+  var box = $('.tm-box', s), c = $('.tm-center', s), exo = [], endo = [];
+  TM2.names.forEach(function (n, k) { (assign[k] === 'exo' ? exo : endo).push(n); });
+  TM2.result = assign; TM2.state = 'done';
+  box.classList.remove('mixing'); box.classList.add('done'); c.classList.add('done');
+  teams = [{ n: L(T3('Экзо 🔥', 'Экзо 🔥', 'Exo 🔥')), s: 0, m: exo }, { n: L(T3('Эндо ❄️', 'Эндо ❄️', 'Endo ❄️')), s: 0, m: endo }];
+  saveTeams();
+  if (!$('#scoresModal').hidden) renderTeams();
+  sfx('win');
+  $$('.tm-basket', s).forEach(function (b) { burstAt(b, { n: 70, power: 11 }); });
+}
+FX.teamSplit = function (f, s) { teamsSplit(s); };
+SL.teams = {
+  reset: function (s) { teamsReset(s, true); },
+  enter: function () { teamsStartOrbit(); },
+  leave: function () { if (TM2.raf) { cancelAnimationFrame(TM2.raf); TM2.raf = 0; } TM2.tLast = (performance.now() - TM2.t0) / 1000; }
+};
+
 // black box
 function bbReset(s) {
   var box = $('.bbox', s), th = $('.thermo', s);
@@ -3464,6 +3688,7 @@ function bindEvents() {
       if (f) reveal(f); return;
     }
     if ((el = t.closest('[data-open-scores]'))) { openPanel('scoresModal'); return; }
+    if ((el = t.closest('[data-teams]'))) { var ts = el.closest('.slide'); teamsReset(ts, false); $('#tm-go', ts).classList.add('on'); teamsSplit(ts); return; }
     if ((el = t.closest('[data-pairrev]'))) {
       var pc = el.closest('.pg'), on = !pc.classList.contains('open'), dg = $('.ediag', pc);
       pc.classList.toggle('open', on); dg.classList.toggle('show-dh', on);
@@ -3559,6 +3784,7 @@ function init() {
   subifyAll();
   tmInit(); scInit(); gameInit(); gameBind(); qzInit(); asInit();
   var cs = calSlide(); calTicks(cs); calLabels(cs); calReset(cs);
+  teamsInit();
   LANG_HOOKS.push(function () { var c = calSlide(); calLabels(c); calTherm(c, c._calT); calRead(c); dotsTitles(); });
   buildDots();
   bldUpdate();

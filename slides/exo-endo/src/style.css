@@ -1111,3 +1111,36 @@ html[data-theme="light"] .work-badge.solo{color:#6d28d9}
 .sheet{bottom:calc(var(--bar-h) + env(safe-area-inset-bottom,0px) + 10px)}
 .panel{top:calc(16px + env(safe-area-inset-top,0px));right:calc(16px + env(safe-area-inset-right,0px))}
 .pill-btn.armed{color:#fff;background:var(--bad);border-color:var(--bad)}
+
+/* =========================================================
+   2. FORMING TEAMS (black-box lottery)
+   ========================================================= */
+.tm-layout{display:grid;grid-template-columns:330px 1fr 330px;gap:22px}
+.tm-basket{cursor:default}
+.tm-basket .bk-n{display:flex;align-items:baseline;gap:2px}
+.tm-of{font-size:20px;color:var(--muted);font-weight:800}
+.tm-list{display:flex;flex-direction:column;gap:10px;flex:1;min-height:0}
+.tm-mem{font-size:22px;font-weight:800;padding:10px 16px;border-radius:14px;line-height:1.2;animation:popIn .45s both}
+.tm-basket.exo .tm-mem{background:linear-gradient(135deg,rgba(255,180,58,.3),rgba(255,64,64,.2));border:1px solid rgba(255,125,51,.55)}
+.tm-basket.endo .tm-mem{background:linear-gradient(135deg,rgba(143,230,255,.3),rgba(59,108,255,.2));border:1px solid rgba(60,196,255,.55)}
+.tm-center{display:flex;flex-direction:column;align-items:center;gap:12px;min-width:0}
+.tm-orbit{position:relative;flex:1;width:100%;min-height:0}
+.tm-box{position:absolute;left:50%;top:50%;width:250px;height:244px;margin:-122px 0 0 -125px;z-index:6;pointer-events:none}
+.tm-box svg{width:100%;height:100%;overflow:visible}
+.tm-halo{fill:#a98bff;opacity:.4;filter:url(#fSoft);transition:opacity .5s}
+.tm-box.mixing svg{animation:shake .38s ease-in-out infinite}
+.tm-box.mixing .tm-halo{opacity:.95;animation:tmGlow .7s ease-in-out infinite alternate}
+.tm-box.done .tm-halo{fill:url(#gQ);opacity:.75}
+@keyframes tmGlow{from{fill:#ff6a1f}to{fill:#2fb4ff}}
+.tm-chip{position:absolute;left:0;top:0;font-size:20px;font-weight:800;padding:9px 18px;border-radius:999px;background:var(--card-solid);color:var(--ink);border:2px solid rgba(169,139,255,.6);box-shadow:0 8px 20px rgba(0,0,0,.25);white-space:nowrap;will-change:transform,opacity}
+html[data-theme="dark"] .tm-chip{background:linear-gradient(160deg,#27315f,#1a2142)}
+.tg-ctl{display:flex;gap:12px;flex-shrink:0;flex-wrap:wrap;justify-content:center}
+.tm-center.started .tm-go-btn{opacity:.35;pointer-events:none}
+.tg-msg{position:absolute;left:0;right:0;bottom:4px;z-index:9;font-size:24px;font-weight:850;text-align:center;opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s}
+.tm-center.done .tg-msg{opacity:1;transform:none}
+.tm-fly{position:absolute;left:0;top:0;z-index:60;font-size:22px;font-weight:850;padding:10px 20px;border-radius:999px;color:#fff;white-space:nowrap;pointer-events:none}
+.tm-fly.exo{background:linear-gradient(135deg,#ffb43a,#ff4040);box-shadow:0 0 28px rgba(255,90,40,.85)}
+.tm-fly.endo{background:linear-gradient(135deg,#7fd8ff,#3b6cff);box-shadow:0 0 28px rgba(60,160,255,.85)}
+.tmem{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;font-size:13px;font-weight:700;color:var(--muted)}
+.tmem:empty{display:none}
+.tmem span{padding:2px 8px;border-radius:8px;background:var(--card);border:1px solid var(--line)}

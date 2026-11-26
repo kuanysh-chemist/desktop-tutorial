@@ -44,7 +44,54 @@
   <aside class="notes">{{<p>Сәлемдесу, оң көңіл-күй орнату. Тақырыпты жариялау.</p><p>Сұрақ: <b>«От пен мұздың химияға қандай қатысы бар? Тақырыпты болжаңдар.»</b></p>|<p>Приветствие, положительный настрой. Объявить тему.</p><p>Вопрос: <b>«Как огонь и лёд связаны с химией? Предположите тему урока.»</b></p>|<p>Greet the class, set a positive mood, announce the topic.</p><p>Ask: <b>“What do fire and ice have to do with chemistry? Guess today's topic.”</b></p>}}</aside>
 </section>
 
-<!-- ===================== 2. МАҚСАТТАР ===================== -->
+<!-- ===================== 2. ТОПҚА БӨЛІНЕЙІК ===================== -->
+<section class="slide" data-id="teams" data-stage="1" data-t="Топқа бөлінейік|Делимся на группы|Forming teams">
+  <header class="sh a"><h2><span class="h-ico">🎲</span>[[Топқа бөлінейік!|Делимся на группы!|Let's form teams!]]</h2><p class="lead">[[«Қара жәшік» кім <b class="t-exo">ЭКЗО</b>, кім <b class="t-endo">ЭНДО</b> тобында болатынын шешеді!|«Чёрный ящик» решит, кто попадёт в группу <b class="t-exo">ЭКЗО</b>, а кто — в <b class="t-endo">ЭНДО</b>!|The “black box” decides who joins team <b class="t-exo">EXO</b> and who joins team <b class="t-endo">ENDO</b>!]]</p></header>
+  <div class="body tm-layout">
+    <div class="basket exo tm-basket a a-left" data-side="exo" style="--d:.25">
+      <div class="bk-head"><svg viewBox="0 0 200 280" class="bk-ico"><g class="flick"><use href="#symFlame" width="200" height="280"/></g></svg><div><b>[[ЭКЗО|ЭКЗО|EXO]]</b><small>[[1-топ|Группа 1|Team 1]]</small></div><span class="bk-n"><span class="tm-n">0</span><small class="tm-of"></small></span></div>
+      <div class="tm-list"></div>
+    </div>
+    <div class="tm-center a a-zoom" style="--d:.1">
+      <div class="tm-orbit">
+        <div class="tm-box">
+          <svg viewBox="0 0 380 370" aria-hidden="true">
+            <ellipse class="tm-halo" cx="185" cy="336" rx="175" ry="30"/>
+            <polygon class="bb-right" points="262,122 332,62 332,272 262,332"/>
+            <polygon class="bb-front" points="40,122 262,122 262,332 40,332"/>
+            <polygon class="bb-top" points="40,122 110,62 332,62 262,122"/>
+            <text class="bb-q" x="151" y="268" text-anchor="middle">?</text>
+          </svg>
+        </div>
+        <div class="tg-msg">✨ [[Топтар дайын! Олар 🏆 ұпай тақтасына жазылды.|Группы готовы! Они уже в таблице баллов 🏆.|Teams are ready! They are on the 🏆 scoreboard.]]</div>
+      </div>
+      <div class="tg-ctl">
+        <button class="btn tm-go-btn" data-reveal="#tm-go">▶ [[Топқа бөлу|Разделить на группы|Split into teams]]</button>
+        <button class="btn ghost" data-teams="again">🔀 [[Қайта бөлу|Перемешать заново|Shuffle again]]</button>
+      </div>
+      <span class="frag" id="tm-go" data-fx="teamSplit"></span>
+    </div>
+    <div class="basket endo tm-basket a a-right" data-side="endo" style="--d:.25">
+      <div class="bk-head"><svg viewBox="-110 -110 220 220" class="bk-ico"><g class="spin-slow"><use href="#symSnow" x="-110" y="-110" width="220" height="220"/></g></svg><div><b>[[ЭНДО|ЭНДО|ENDO]]</b><small>[[2-топ|Группа 2|Team 2]]</small></div><span class="bk-n"><span class="tm-n">0</span><small class="tm-of"></small></span></div>
+      <div class="tm-list"></div>
+    </div>
+    <ul class="tm-src" hidden>
+      <li>Базарбай Нұрислам</li>
+      <li>Бандура Анна</li>
+      <li>Гаргопин Юрий</li>
+      <li>Қаблан Нұрсезім</li>
+      <li>Маравина Арина</li>
+      <li>Марат Нұрасыл</li>
+      <li>Мырзайым Еркежан</li>
+      <li>Рыбалкина Вилина</li>
+      <li>Тишина Дарья</li>
+      <li>Фисунов Артем</li>
+    </ul>
+  </div>
+  <aside class="notes">{{<p><b>Ұйымдастыру кезеңі: топқа бөлу.</b> «Топқа бөлу» батырмасын (немесе →) басыңыз. Аттар қара жәшікке кіреді, сосын бір-бірлеп ЭКЗО 🔥 немесе ЭНДО ❄️ тобына ұшады (кездейсоқ, 5 + 5).</p><p>Топтар 🏆 ұпай тақтасына аттарымен бірге өздігінен жазылады. Басқаша бөлу керек болса — «🔀 Қайта бөлу».</p>|<p><b>Оргмомент: деление на группы.</b> Нажмите «Разделить на группы» (или →). Имена влетают в чёрный ящик и по одному вылетают в группу ЭКЗО 🔥 или ЭНДО ❄️ (случайно, 5 + 5).</p><p>Группы с именами сами записываются в таблицу баллов 🏆. Чтобы разделить иначе — «🔀 Перемешать заново».</p>|<p><b>Organisation: forming teams.</b> Press “Split into teams” (or →). The names fly into the black box and come out one by one into team EXO 🔥 or ENDO ❄️ (random, 5 + 5).</p><p>The teams and their members are added to the 🏆 scoreboard automatically. To split differently, press “🔀 Shuffle again”.</p>}}</aside>
+</section>
+
+<!-- ===================== 3. МАҚСАТТАР ===================== -->
 <section class="slide" data-id="goals" data-stage="1" data-t="Сабақ мақсаттары|Цели урока|Lesson goals">
   <header class="sh a"><h2><span class="h-ico">🎯</span>[[Бүгінгі сабақта|Сегодня на уроке|Today's lesson]]</h2></header>
   <div class="body goals-layout">
@@ -878,7 +925,7 @@
       <div class="desc">✓ [[ΔH есептейді және қорытынды жасайды.|Рассчитывает ΔH и делает вывод.|Calculates ΔH and draws a conclusion.]]</div>
     </div>
   </div>
-  <aside class="notes">{{<p>Әр оқушы өз деңгейін таңдайды. A бағанындағы реакцияны басқанда жауап шығады. С тапсырмасын 19-слайдтағы интерактив диаграммамен тексеруге болады.</p>|<p>Каждый выбирает свой уровень. В столбце A нажатие на реакцию показывает ответ. Задание C можно проверить на интерактивной диаграмме (слайд 19).</p>|<p>Each student picks a level. In column A, tap a reaction to show the answer. Task C can be checked on the interactive diagram (slide 19).</p>}}</aside>
+  <aside class="notes">{{<p>Әр оқушы өз деңгейін таңдайды. A бағанындағы реакцияны басқанда жауап шығады. С тапсырмасын 20-слайдтағы интерактив диаграммамен тексеруге болады.</p>|<p>Каждый выбирает свой уровень. В столбце A нажатие на реакцию показывает ответ. Задание C можно проверить на интерактивной диаграмме (слайд 20).</p>|<p>Each student picks a level. In column A, tap a reaction to show the answer. Task C can be checked on the interactive diagram (slide 20).</p>}}</aside>
 </section>
 
 <!-- ===================== 24. ОЙЫН ===================== -->

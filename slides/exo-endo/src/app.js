@@ -132,7 +132,9 @@ var SFX = (function () {
     },
     ice: function () { [1568, 2093, 2637, 3136, 2637].forEach(function (f, i) { tone(f, i * 0.13, 0.55, 'sine', 0.045); }); noise(0, 1.2, 0.02, 'highpass', 5000, 8000, 0.5); },
     reveal: function () { tone(392, 0, 0.3, 'sine', 0.07, 784); tone(587, 0.1, 0.35, 'triangle', 0.05); },
-    tick: function () { tone(1250, 0, 0.03, 'square', 0.025); }
+    tick: function () { tone(1250, 0, 0.03, 'square', 0.025); },
+    flame: function () { tone(240, 0, 0.28, 'sawtooth', 0.045, 720); noise(0, 0.3, 0.05, 'bandpass', 700, 2600, 1); },
+    frost: function () { tone(1760, 0, 0.32, 'sine', 0.06); tone(2349, 0.06, 0.38, 'sine', 0.045); tone(3136, 0.12, 0.3, 'sine', 0.03); }
   };
   return {
     play: function (n) {
@@ -635,7 +637,8 @@ function renderTeams() {
     var el = document.createElement('div');
     el.className = 'team' + (max > 0 && t.s === max ? ' lead' : '');
     el.style.setProperty('--tc', COLORS[i % 8]);
-    el.innerHTML = '<span class="crown">👑</span><input maxlength="24" aria-label="name"><div class="sc">' + t.s + '</div><div class="tbr"><button class="minus" aria-label="-1">−</button><button class="plus">+1</button></div>';
+    el.innerHTML = '<span class="crown">👑</span><input maxlength="24" aria-label="name"><div class="tmem"></div><div class="sc">' + t.s + '</div><div class="tbr"><button class="minus" aria-label="-1">−</button><button class="plus">+1</button></div>';
+    (t.m || []).forEach(function (nm) { var sp = document.createElement('span'); sp.textContent = nm; $('.tmem', el).appendChild(sp); });
     var inp = $('input', el);
     inp.value = t.n; inp.placeholder = L(UI.team).replace('{n}', i + 1);
     inp.addEventListener('input', function () { t.n = inp.value.trim(); saveTeams(); });
@@ -680,6 +683,147 @@ function scInit() {
 }
 
 /* ================= slide controllers ================= */
+// forming teams: black-box lottery
+var TM2 = { names: [], chips: [], raf: 0, t0: 0, state: 'idle', result: null };
+function teamsSlide() { return $('[data-id="teams"]'); }
+function shuffled(n) {
+  var a = [];
+  for (var i = 0; i < n; i++) a.push(i);
+  for (var j = a.length - 1; j > 0; j--) { var k = (Math.random() * (j + 1)) | 0, t = a[j]; a[j] = a[k]; a[k] = t; }
+  return a;
+}
+function teamsInit() {
+  var s = teamsSlide(); if (!s) return;
+  TM2.names = $$('.tm-src li', s).map(function (li) { return li.textContent.trim(); }).filter(Boolean);
+  var orbit = $('.tm-orbit', s);
+  TM2.chips = TM2.names.map(function (n) {
+    var c = document.createElement('div'); c.className = 'tm-chip'; c.textContent = n;
+    orbit.appendChild(c); return c;
+  });
+  teamsCounts(s);
+  teamsPlace(s, 0);
+}
+function teamsPlace(s, t) {
+  var orbit = $('.tm-orbit', s), W = orbit.offsetWidth, H = orbit.offsetHeight, N = TM2.chips.length;
+  var cx = W / 2, cy = H / 2, rx = W * 0.39, ry = H * 0.4;
+  TM2.chips.forEach(function (c, i) {
+    if (!c._w) { c._w = c.offsetWidth; c._h = c.offsetHeight; }
+    var a = t * 0.32 + i * 2 * Math.PI / N, d = (Math.sin(a) + 1) / 2;
+    var x = cx + rx * Math.cos(a) - c._w / 2, y = cy + ry * Math.sin(a) - c._h / 2;
+    c.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) scale(' + (0.8 + 0.2 * d).toFixed(3) + ')';
+    c.style.opacity = (0.6 + 0.4 * d).toFixed(2);
+    c.style.zIndex = d > 0.5 ? 8 : 3;
+  });
+}
+function teamsLoop() {
+  var s = teamsSlide();
+  if (TM2.state !== 'idle' || slides[S.i] !== s) { TM2.raf = 0; return; }
+  teamsPlace(s, (performance.now() - TM2.t0) / 1000);
+  TM2.raf = requestAnimationFrame(teamsLoop);
+}
+function teamsStartOrbit() {
+  if (TM2.state !== 'idle' || TM2.raf) return;
+  TM2.t0 = performance.now() - (TM2.tLast || 0) * 1000;
+  TM2.raf = requestAnimationFrame(teamsLoop);
+}
+function teamsCounts(s) {
+  var N = TM2.names.length, half = { exo: Math.ceil(N / 2), endo: Math.floor(N / 2) };
+  $$('.tm-basket', s).forEach(function (b) {
+    $('.tm-n', b).textContent = $('.tm-list', b).children.length;
+    $('.tm-of', b).textContent = '/' + half[b.getAttribute('data-side')];
+  });
+}
+function teamsAddMember(s, k, side) {
+  var list = $('.tm-basket[data-side="' + side + '"] .tm-list', s);
+  var m = document.createElement('div'); m.className = 'tm-mem'; m.textContent = TM2.names[k];
+  list.appendChild(m);
+  teamsCounts(s);
+  return m;
+}
+function teamsReset(s, keep) {
+  if (TM2.raf) { cancelAnimationFrame(TM2.raf); TM2.raf = 0; }
+  $$('.tm-fly').forEach(function (f) { f.remove(); });
+  var c = $('.tm-center', s), box = $('.tm-box', s);
+  box.classList.remove('mixing', 'done'); c.classList.remove('started', 'done');
+  $$('.tm-list', s).forEach(function (l) { l.innerHTML = ''; });
+  TM2.chips.forEach(function (ch) {
+    if (ch.getAnimations) ch.getAnimations().forEach(function (a) { a.cancel(); });
+    ch.style.visibility = '';
+  });
+  if (keep && TM2.state === 'done' && TM2.result) {
+    TM2.names.forEach(function (n, k) { teamsAddMember(s, k, TM2.result[k]); });
+    TM2.chips.forEach(function (ch) { ch.style.visibility = 'hidden'; });
+    c.classList.add('started', 'done'); box.classList.add('done');
+    $('#tm-go', s).classList.add('on');
+  } else {
+    TM2.state = 'idle'; TM2.result = null;
+  }
+  teamsCounts(s);
+}
+function teamsSplit(s) {
+  if (TM2.state !== 'idle') return;
+  TM2.state = 'mixing';
+  if (TM2.raf) { cancelAnimationFrame(TM2.raf); TM2.raf = 0; }
+  TM2.tLast = (performance.now() - TM2.t0) / 1000;
+  var c = $('.tm-center', s), box = $('.tm-box', s), orbit = $('.tm-orbit', s), N = TM2.names.length;
+  c.classList.add('started');
+  var W = orbit.offsetWidth, H = orbit.offsetHeight;
+  // 1) every name is pulled into the box
+  TM2.chips.forEach(function (ch, i) {
+    var to = 'translate(' + (W / 2 - ch._w / 2) + 'px,' + (H / 2 - ch._h / 2) + 'px) scale(.15)';
+    ch.animate([{ transform: ch.style.transform, opacity: ch.style.opacity }, { transform: to, opacity: 0 }],
+      { duration: 620, delay: i * 85, easing: 'cubic-bezier(.55,0,.8,.2)', fill: 'forwards' });
+  });
+  sfx('whoosh');
+  later(s, function () { box.classList.add('mixing'); sfx('reveal'); }, 620 + N * 85);
+  // 2) random 5 + 5, revealed one by one in random order
+  var order = shuffled(N), assign = {}, nExo = Math.ceil(N / 2);
+  order.forEach(function (k, j) { assign[k] = j < nExo ? 'exo' : 'endo'; });
+  var t0 = 620 + N * 85 + 1300, step = 850;
+  shuffled(N).forEach(function (k, j) { later(s, function () { teamsFly(s, k, assign[k]); }, t0 + j * step); });
+  later(s, function () { teamsDone(s, assign); }, t0 + N * step + 600);
+}
+function teamsFly(s, k, side) {
+  var box = $('.tm-box', s), list = $('.tm-basket[data-side="' + side + '"] .tm-list', s), layer = $('#fxLayer');
+  var sr = stage.getBoundingClientRect(), br = box.getBoundingClientRect(), lr = list.getBoundingClientRect();
+  var sc = S.scale || 1;
+  var fx = (br.left + br.width / 2 - sr.left) / sc, fy = (br.top + br.height * 0.42 - sr.top) / sc;
+  var tx = (lr.left - sr.left) / sc + lr.width / sc / 2, ty = (lr.top - sr.top) / sc + list.children.length * 58 + 24;
+  var f = document.createElement('div'); f.className = 'tm-fly ' + side; f.textContent = (side === 'exo' ? '🔥 ' : '❄️ ') + TM2.names[k];
+  layer.appendChild(f);
+  var w = f.offsetWidth / 2, h = f.offsetHeight / 2;
+  var tr = function (x, y, z) { return 'translate(' + (x - w) + 'px,' + (y - h) + 'px) scale(' + z + ')'; };
+  var a = f.animate([
+    { transform: tr(fx, fy, 0.3), opacity: 0 },
+    { transform: tr(fx + (side === 'exo' ? -70 : 70), fy - 150, 1.3), opacity: 1, offset: 0.35 },
+    { transform: tr(tx, ty, 1), opacity: 1 }
+  ], { duration: 780, easing: 'cubic-bezier(.3,.6,.3,1)', fill: 'forwards' });
+  sfx(side === 'exo' ? 'flame' : 'frost');
+  a.onfinish = function () {
+    f.remove();
+    if (TM2.state !== 'mixing') return;
+    var m = teamsAddMember(s, k, side);
+    burstAt(m, { kind: side === 'exo' ? 'fire' : 'ice', n: 22, power: 5 });
+  };
+}
+function teamsDone(s, assign) {
+  var box = $('.tm-box', s), c = $('.tm-center', s), exo = [], endo = [];
+  TM2.names.forEach(function (n, k) { (assign[k] === 'exo' ? exo : endo).push(n); });
+  TM2.result = assign; TM2.state = 'done';
+  box.classList.remove('mixing'); box.classList.add('done'); c.classList.add('done');
+  teams = [{ n: L(T3('Экзо 🔥', 'Экзо 🔥', 'Exo 🔥')), s: 0, m: exo }, { n: L(T3('Эндо ❄️', 'Эндо ❄️', 'Endo ❄️')), s: 0, m: endo }];
+  saveTeams();
+  if (!$('#scoresModal').hidden) renderTeams();
+  sfx('win');
+  $$('.tm-basket', s).forEach(function (b) { burstAt(b, { n: 70, power: 11 }); });
+}
+FX.teamSplit = function (f, s) { teamsSplit(s); };
+SL.teams = {
+  reset: function (s) { teamsReset(s, true); },
+  enter: function () { teamsStartOrbit(); },
+  leave: function () { if (TM2.raf) { cancelAnimationFrame(TM2.raf); TM2.raf = 0; } TM2.tLast = (performance.now() - TM2.t0) / 1000; }
+};
+
 // black box
 function bbReset(s) {
   var box = $('.bbox', s), th = $('.thermo', s);
@@ -1190,6 +1334,7 @@ function bindEvents() {
       if (f) reveal(f); return;
     }
     if ((el = t.closest('[data-open-scores]'))) { openPanel('scoresModal'); return; }
+    if ((el = t.closest('[data-teams]'))) { var ts = el.closest('.slide'); teamsReset(ts, false); $('#tm-go', ts).classList.add('on'); teamsSplit(ts); return; }
     if ((el = t.closest('[data-pairrev]'))) {
       var pc = el.closest('.pg'), on = !pc.classList.contains('open'), dg = $('.ediag', pc);
       pc.classList.toggle('open', on); dg.classList.toggle('show-dh', on);
@@ -1285,6 +1430,7 @@ function init() {
   subifyAll();
   tmInit(); scInit(); gameInit(); gameBind(); qzInit(); asInit();
   var cs = calSlide(); calTicks(cs); calLabels(cs); calReset(cs);
+  teamsInit();
   LANG_HOOKS.push(function () { var c = calSlide(); calLabels(c); calTherm(c, c._calT); calRead(c); dotsTitles(); });
   buildDots();
   bldUpdate();
