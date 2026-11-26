@@ -288,7 +288,7 @@ reg('title', { enter() { avTitle.set(0, 0, 0, { instant: true }); avTitle.set(6,
     c.fillStyle = 'rgba(255,122,69,.10)'; c.fillRect(bx + bw, cy - R * 0.45, R * 0.4, R * 0.9);
     c.fillStyle = '#5A607A'; c.strokeStyle = '#fff'; c.lineWidth = 2;
     c.beginPath(); if (c.roundRect) c.roundRect(bx, cy - bh / 2, bw, bh, 8); else c.rect(bx, cy - bh / 2, bw, bh); c.fill(); c.stroke();
-    c.fillStyle = '#FF7A45'; c.font = '800 ' + (fs * 1.5) + 'px Unbounded, Nunito, sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.fillStyle = '#FF7A45'; c.font = '800 ' + (fs * 1.5) + 'px Rubik, Nunito, sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle';
     c.fillText('α', bx + bw / 2, cy + 1);
     c.fillStyle = 'rgba(255,255,255,.85)'; c.font = '800 ' + fs + 'px Nunito, Segoe UI, sans-serif';
     c.textBaseline = 'alphabetic';
@@ -431,7 +431,7 @@ reg('title', { enter() { avTitle.set(0, 0, 0, { instant: true }); avTitle.set(6,
   function mRender() {
     if (free) {
       $('#mTitle').textContent = tr(['Еркін режим', 'Свободный режим', 'Free play']);
-      $('#mTarget').textContent = tr(['Кез келген атомды құрастыр. Тапсырмаларға оралу үшін «Келесі тапсырма» түймесін бас.', 'Собери любой атом. Чтобы вернуться к заданиям, нажми «Следующее задание».', 'Build any atom you like. Tap “Next mission” to return to the missions.']);
+      $('#mTarget').textContent = tr(['Кез келген атомды құрастыр!', 'Собери любой атом!', 'Build any atom you like!']);
     } else {
       const m = MISSIONS[mi];
       $('#mTitle').textContent = tr(['Тапсырма', 'Задание', 'Mission']) + ' ' + (mi + 1) + '/' + MISSIONS.length;
@@ -522,8 +522,8 @@ reg('title', { enter() { avTitle.set(0, 0, 0, { instant: true }); avTitle.set(6,
   }
   function scoreUI() { $('#trScore').textContent = score; $('#trStreak').textContent = streak; }
   const hintText = () => mode === 'el'
-    ? tr(['Кеңес: <b>p⁺ = №</b>, <b>e⁻ = p⁺</b>, <b>n⁰ = Ar − №</b>. Ar-ды бүтін санға дейін дөңгелекте!', 'Подсказка: <b>p⁺ = №</b>, <b>e⁻ = p⁺</b>, <b>n⁰ = Ar − №</b>. Не забудь округлить Ar!', 'Hint: <b>p⁺ = №</b>, <b>e⁻ = p⁺</b>, <b>n⁰ = Ar − №</b>. Round Ar to a whole number!'])
-    : tr(['Кеңес: төменгі сан — №, жоғарғы сан — массалық сан A. <b>p⁺ = e⁻ = №</b>, <b>n⁰ = A − №</b>.', 'Подсказка: нижнее число — №, верхнее — массовое число A. <b>p⁺ = e⁻ = №</b>, <b>n⁰ = A − №</b>.', 'Hint: the bottom number is №, the top one is the mass number A. <b>p⁺ = e⁻ = №</b>, <b>n⁰ = A − №</b>.']);
+    ? tr(['Кеңес: <b>p⁺ = №</b>, <b>e⁻ = p⁺</b>, <b>n⁰ = Ar − №</b> (Ar-ды дөңгелекте).', 'Подсказка: <b>p⁺ = №</b>, <b>e⁻ = p⁺</b>, <b>n⁰ = Ar − №</b> (округли Ar).', 'Hint: <b>p⁺ = №</b>, <b>e⁻ = p⁺</b>, <b>n⁰ = Ar − №</b> (round Ar).'])
+    : tr(['Кеңес: төменгі сан — №, жоғарғы — A. <b>n⁰ = A − №</b>.', 'Подсказка: нижнее число — №, верхнее — A. <b>n⁰ = A − №</b>.', 'Hint: the bottom number is №, the top is A. <b>n⁰ = A − №</b>.']);
   function solution() {
     const a = ans(), top = q.iso ? 'A' : 'Ar';
     const note = q.iso ? '' : ' <small>(Ar = ' + arShow(q.z) + ' ≈ ' + q.A + ')</small>';
@@ -544,7 +544,7 @@ reg('title', { enter() { avTitle.set(0, 0, 0, { instant: true }); avTitle.set(6,
       setFb('good', () => '<b>' + tr(['Дұрыс! Жарайсың!', 'Верно! Молодец!', 'Correct! Well done!']) + '</b> ' + record() + (streak >= 3 ? ' · ' + tr(['Қатарынан ', 'Подряд ', 'Streak: ']) + streak + '!' : ''));
     } else {
       streak = 0; sfx.error();
-      setFb('bad', () => '<b>' + tr(['Қатесі бар. Қызыл өрістерді тексер.', 'Есть ошибка. Проверь красные поля.', 'Something is off. Check the red boxes.']) + '</b><br>' + hintText());
+      setFb('bad', () => '<b>' + tr(['Қате бар — қызыл өрістерді тексер.', 'Есть ошибка — проверь красные поля.', 'Not quite. Check the red boxes.']) + '</b><br>' + hintText());
     }
     scoreUI();
   }
@@ -572,23 +572,23 @@ reg('title', { enter() { avTitle.set(0, 0, 0, { instant: true }); avTitle.set(6,
   const Q = [
     { q: ['Атомның ортасында не орналасқан?', 'Что находится в центре атома?', 'What is at the centre of an atom?'],
       o: [['Ядро', 'Ядро', 'The nucleus'], ['Электрон', 'Электрон', 'An electron'], ['Молекула', 'Молекула', 'A molecule'], ['Бос кеңістік', 'Пустота', 'Empty space']],
-      x: ['Резерфорд дәлелдегендей, атомның ортасында кішкентай әрі ауыр ядро бар.', 'Как доказал Резерфорд, в центре атома — маленькое тяжёлое ядро.', 'As Rutherford showed, a tiny heavy nucleus sits at the centre.'] },
+      x: ['Атомның ортасында — ядро.', 'В центре атома — ядро.', 'The nucleus is at the centre.'] },
     { q: ['Протонның заряды қандай?', 'Какой заряд у протона?', 'What is the charge of a proton?'],
       o: [['+1', '+1', '+1'], ['−1', '−1', '−1'], ['0', '0', '0'], ['+2', '+2', '+2']],
-      x: ['Протон — оң зарядталған бөлшек: p⁺, заряды +1.', 'Протон — положительная частица: p⁺, заряд +1.', 'A proton is positive: p⁺, charge +1.'] },
+      x: ['Протон: p⁺, заряды +1.', 'Протон: p⁺, заряд +1.', 'Proton: p⁺, charge +1.'] },
     { q: ['Қай бөлшектің заряды жоқ?', 'У какой частицы нет заряда?', 'Which particle has no charge?'],
       o: [['Нейтрон', 'Нейтрон', 'Neutron'], ['Протон', 'Протон', 'Proton'], ['Электрон', 'Электрон', 'Electron'], ['Ядро', 'Ядро', 'Nucleus']],
       x: ['Нейтрон бейтарап: n⁰, заряды 0.', 'Нейтрон нейтрален: n⁰, заряд 0.', 'The neutron is neutral: n⁰, charge 0.'] },
     { q: ['Атом ядросы неден тұрады?', 'Из чего состоит ядро атома?', 'What is the nucleus made of?'],
       o: [['Протондар мен нейтрондардан', 'Из протонов и нейтронов', 'Protons and neutrons'], ['Протондар мен электрондардан', 'Из протонов и электронов', 'Protons and electrons'], ['Тек электрондардан', 'Только из электронов', 'Only electrons'], ['Молекулалардан', 'Из молекул', 'Molecules']],
-      x: ['Ядро = протондар + нейтрондар. Электрондар ядроның айналасында.', 'Ядро = протоны + нейтроны. Электроны — вокруг ядра.', 'Nucleus = protons + neutrons. Electrons stay around it.'] },
+      x: ['Ядро = p⁺ + n⁰.', 'Ядро = p⁺ + n⁰.', 'Nucleus = p⁺ + n⁰.'] },
     { q: ['«Мейізді кекс» моделін кім ұсынды?', 'Кто предложил модель «пудинг с изюмом»?', 'Who proposed the “plum pudding” model?'],
       o: [['Дж. Томсон', 'Дж. Томсон', 'J. J. Thomson'], ['Э. Резерфорд', 'Э. Резерфорд', 'E. Rutherford'], ['Д. Менделеев', 'Д. Менделеев', 'D. Mendeleev'], ['Демокрит', 'Демокрит', 'Democritus']],
-      x: ['Томсон электронды ашып, атомды мейізді кекске ұқсатты.', 'Томсон открыл электрон и сравнил атом с кексом с изюмом.', 'Thomson discovered the electron and compared the atom to a plum pudding.'] },
-    { q: ['Резерфорд тәжірибесінде α-бөлшектердің көбі фольгадан тура өтіп кетті. Бұл нені көрсетеді?', 'В опыте Резерфорда большинство α-частиц прошли сквозь фольгу. Что это значит?', 'In Rutherford\'s experiment most α-particles went straight through the foil. What does it show?'],
+      x: ['Томсон атомды мейізді кекске ұқсатты.', 'Томсон сравнил атом с кексом с изюмом.', 'Thomson compared the atom to a plum pudding.'] },
+    { q: ['α-бөлшектердің көбі фольгадан тура өтті. Бұл нені білдіреді?', 'Большинство α-частиц прошли сквозь фольгу. Что это значит?', 'Most α-particles went straight through the foil. What does it mean?'],
       o: [['Атомның көп бөлігі бос', 'Атом в основном пустой', 'The atom is mostly empty'], ['Атом өте қатты', 'Атом очень твёрдый', 'The atom is very hard'], ['Алтын — металл', 'Золото — металл', 'Gold is a metal'], ['Электрондар ауыр', 'Электроны тяжёлые', 'Electrons are heavy']],
-      x: ['Бөлшектер еш нәрсеге соқпай өтті — демек атомда бос кеңістік көп.', 'Частицы ни во что не врезались — значит, в атоме много пустоты.', 'They hit nothing, so the atom must be mostly empty space.'] },
-    { q: ['Натрийдің реттік нөмірі 11. Натрий атомында неше электрон бар?', 'Порядковый номер натрия — 11. Сколько электронов в атоме натрия?', 'Sodium\'s atomic number is 11. How many electrons does a sodium atom have?'],
+      x: ['Соқпай өтті → атомның іші бос.', 'Ни во что не врезались → атом почти пустой.', 'They hit nothing → the atom is mostly empty.'] },
+    { q: ['Натрий: № 11. Атомында неше электрон бар?', 'Натрий: № 11. Сколько в атоме электронов?', 'Sodium: № 11. How many electrons?'],
       o: [['11', '11', '11'], ['12', '12', '12'], ['23', '23', '23'], ['22', '22', '22']],
       x: ['№ = p⁺ = e⁻ = 11.', '№ = p⁺ = e⁻ = 11.', '№ = p⁺ = e⁻ = 11.'] },
     { q: ['Алюминий: № 13, Ar = 27. Нейтрон саны қанша?', 'Алюминий: № 13, Ar = 27. Сколько нейтронов?', 'Aluminium: № 13, Ar = 27. How many neutrons?'],
@@ -609,7 +609,7 @@ reg('title', { enter() { avTitle.set(0, 0, 0, { instant: true }); avTitle.set(6,
   function start() { S.phase = 'q'; S.i = 0; S.score = 0; S.picked = []; S.perms = Q.map(() => shuffle([0, 1, 2, 3])); render(true); sfx.whoosh(); }
   function render(anim) {
     if (S.phase === 'start') {
-      box.innerHTML = '<div class="q-start">' + chars + '<h3>' + tr(['10 сұрақ — 10 ұпай!', '10 вопросов — 10 баллов!', '10 questions, 10 points!']) + '</h3><p>' + tr(['Әр сұраққа бір жауап таңда. Пернетақтадағы 1–4 сандарын да басуға болады.', 'Выбери один ответ на каждый вопрос. Можно нажимать клавиши 1–4.', 'Pick one answer for each question. You can also press keys 1–4.']) + '</p><button class="btn" type="button" id="qStart">' + tr(['Бастау', 'Начать', 'Start']) + ' →</button></div>';
+      box.innerHTML = '<div class="q-start">' + chars + '<h3>' + tr(['10 сұрақ — 10 ұпай!', '10 вопросов — 10 баллов!', '10 questions, 10 points!']) + '</h3><p>' + tr(['Бір жауапты таңда. 1–4 пернелері де жұмыс істейді.', 'Выбери один ответ. Работают и клавиши 1–4.', 'Pick one answer. Keys 1–4 work too.']) + '</p><button class="btn" type="button" id="qStart">' + tr(['Бастау', 'Начать', 'Start']) + ' →</button></div>';
       $('#qStart').addEventListener('click', start);
     } else if (S.phase === 'q') {
       const q = Q[S.i], perm = S.perms[S.i], picked = S.picked[S.i];
@@ -627,7 +627,7 @@ reg('title', { enter() { avTitle.set(0, 0, 0, { instant: true }); avTitle.set(6,
       const nb = $('#qNext'); if (nb) nb.addEventListener('click', advance);
     } else {
       const s = S.score, stars = s >= 9 ? 3 : s >= 6 ? 2 : 1;
-      const msg = s >= 9 ? ['Керемет! Сен — нағыз химиксің!', 'Великолепно! Ты настоящий химик!', 'Amazing! You are a real chemist!'] : s >= 6 ? ['Жақсы нәтиже! Аздап қайталасаң, мінсіз болады.', 'Хороший результат! Немного повтори — и будет идеально.', 'Good result! A little more practice and it will be perfect.'] : ['Тақырыпты тағы бір қарап шық — сен міндетті түрде үлгересің!', 'Повтори тему ещё раз — у тебя обязательно получится!', 'Go over the topic once more, you can definitely do it!'];
+      const msg = s >= 9 ? ['Керемет! Сен — нағыз химиксің!', 'Великолепно! Ты настоящий химик!', 'Amazing! You are a real chemist!'] : s >= 6 ? ['Жақсы! Аздап қайталасаң — мінсіз.', 'Хорошо! Чуть повтори — и будет идеально.', 'Good! A bit more practice and it\'s perfect.'] : ['Тақырыпты қайтала — сен үлгересің!', 'Повтори тему — у тебя получится!', 'Review the topic, you can do it!'];
       box.innerHTML = '<div class="q-result">' + chars + '<div class="big-score">' + s + ' / ' + Q.length + '</div><div class="big-stars">' + [0, 1, 2].map(i => starSVG(i < stars, i)).join('') + '</div><h3>' + tr(msg) + '</h3><button class="btn yellow" type="button" id="qAgain">' + tr(['Қайта бастау', 'Пройти заново', 'Try again']) + '</button></div>';
       $('#qAgain').addEventListener('click', start);
     }

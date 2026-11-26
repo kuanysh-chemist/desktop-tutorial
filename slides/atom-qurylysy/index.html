@@ -8,7 +8,7 @@
 <meta name="description" content="7-сыныпқа арналған интерактивті слайдтар: атом құрылысы, атом модельдері, изотоптар · kuanysh.chemist">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Nunito:wght@500;600;700;800;900&family=Unbounded:wght@500;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Nunito:wght@500;600;700;800;900&family=Rubik:wght@600;700;800;900&display=swap">
 <script>try{var l=localStorage.getItem('kc-atom-lang');l=l?JSON.parse(l):'kk';document.documentElement.dataset.lang=(['kk','ru','en'].indexOf(l)>-1?l:'kk');}catch(e){document.documentElement.dataset.lang='kk';}</script>
 <style>
 /* Layout: a squared school-notebook page; brand + tools float on top, nav pill bottom-right; each slide is one full screen.
@@ -42,7 +42,7 @@
   --p-block:#FFE27D;
   --d-block:#A5CFFF;
   --f-block:#A6E9C0;
-  --font-display:"Unbounded","Arial Black","Segoe UI",system-ui,sans-serif;
+  --font-display:"Rubik","Arial Black","Segoe UI",system-ui,sans-serif;
   --font-body:"Nunito","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   --font-hand:"Caveat","Comic Sans MS","Segoe Print",cursive;
   --line:.19rem;
@@ -155,7 +155,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
 .s-head{display:flex;flex-direction:column;align-items:flex-start;gap:.55rem;flex:none}
 .eyebrow{display:inline-flex;align-items:center;gap:.5rem;padding:.42rem .85rem;border-radius:99rem;background:var(--card);border:.16rem solid var(--ink);font:800 .95rem/1 var(--font-body);letter-spacing:.07em;text-transform:uppercase;color:var(--brand)}
 .eyebrow::before{content:"";width:.6rem;height:.6rem;border-radius:50%;background:var(--brand)}
-.s-title{margin:0;font:700 3rem/1.08 var(--font-display);letter-spacing:-.02em;text-wrap:balance;color:var(--ink)}
+.s-title{margin:0;font:800 3.1rem/1.08 var(--font-display);letter-spacing:-.015em;text-wrap:balance;color:var(--ink)}
 .s-title .hl{color:var(--brand)}
 .s-title::after{content:"";display:block;width:9rem;height:.75rem;margin-top:.55rem;
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 12'%3E%3Cpath d='M0 6 Q10 0 20 6 T40 6' fill='none' stroke='%236A4BFF' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E") repeat-x 0 50%/2rem .75rem}
@@ -163,7 +163,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
 @keyframes wave{to{background-position:2rem 50%}}
 .s-sub{margin:0;font-size:1.45rem;color:var(--ink-2);max-width:62rem}
 .s-body{flex:1;min-height:0;display:grid;gap:2rem}
-.lead{font-size:1.55rem;line-height:1.45;color:var(--ink-2);margin:0;max-width:44rem}
+.lead{font-size:1.8rem;line-height:1.4;color:var(--ink-2);margin:0;max-width:44rem}
 .hand{font-family:var(--font-hand);font-weight:700}
 
 /* ---------- reusable atoms ---------- */
@@ -190,8 +190,8 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
 .chr svg{width:100%;height:100%;overflow:visible}
 .chr text,.svg-txt{font-family:var(--font-display);font-weight:800}
 .fact{position:relative;padding:1.2rem 1.4rem 1.3rem;border-radius:var(--r);background:var(--electron-2);border:var(--line) dashed var(--ink)}
-.fact h4{margin:0 0 .4rem;font:700 1.1rem/1.2 var(--font-display);color:var(--ink);display:flex;gap:.5rem;align-items:center}
-.fact p{margin:0;font-size:1.3rem;line-height:1.4}
+.fact h4{margin:0 0 .4rem;font:800 1.3rem/1.2 var(--font-display);color:var(--ink);display:flex;gap:.5rem;align-items:center}
+.fact p{margin:0;font-size:1.5rem;line-height:1.38}
 
 /* character idle animations */
 .blink{transform-box:fill-box;transform-origin:center;animation:blink 4.6s infinite}
@@ -249,7 +249,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
 /* ---------- 1 · title ---------- */
 .title-grid{flex:1;min-height:0;display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:2rem}
 .title-copy{display:flex;flex-direction:column;align-items:flex-start;gap:1.3rem;min-width:0}
-.mega{margin:0;font:800 5.4rem/1 var(--font-display);letter-spacing:-.035em;color:var(--ink)}
+.mega{margin:0;font:900 5.8rem/.98 var(--font-display);letter-spacing:-.02em;color:var(--ink)}
 .mega-2{display:inline-block;margin-top:.3rem;font:800 3.6rem/1.1 var(--font-display);letter-spacing:-.02em;color:var(--ink);padding:.05em .3em .12em;background:var(--electron);border:var(--line) solid var(--ink);border-radius:1rem;box-shadow:var(--shadow);transform:rotate(-2deg)}
 .title-chips{display:flex;flex-wrap:wrap;gap:.7rem}
 .start-hint{display:inline-flex;align-items:center;gap:.7rem;font-size:1.25rem;color:var(--ink-2)}
@@ -282,7 +282,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
 .rung{width:100%;text-align:left;display:grid;grid-template-columns:auto 1fr;gap:.2rem 1rem;align-items:center;padding:.8rem 1rem;border-radius:1.1rem;border:var(--line) solid transparent;background:transparent;cursor:pointer;transition:background .35s,border-color .35s,transform .45s var(--spring),box-shadow .35s}
 .rung .num{grid-row:span 2;width:2.4rem;height:2.4rem;border-radius:50%;display:grid;place-items:center;border:var(--line) solid var(--ink);background:var(--card);font:700 1.1rem/1 var(--font-display);transition:background .3s,color .3s}
 .rung .rt{font:700 1.45rem/1.15 var(--font-display);color:var(--ink-3);transition:color .3s}
-.rung .rd{font-size:1.12rem;line-height:1.35;color:var(--ink-3);max-height:0;overflow:hidden;opacity:0;transition:max-height .5s var(--ease),opacity .4s}
+.rung .rd{font-size:1.35rem;line-height:1.35;color:var(--ink-3);max-height:0;overflow:hidden;opacity:0;transition:max-height .5s var(--ease),opacity .4s}
 .rung.on{background:var(--card);border-color:var(--ink);box-shadow:var(--shadow);transform:translateX(.6rem)}
 .rung.on .num{background:var(--brand);color:#fff}
 .rung.on .rt{color:var(--ink)}
@@ -313,18 +313,18 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
 .tl-line path{fill:none;stroke:var(--ink);stroke-width:.32rem;stroke-linecap:round}
 .tl-item{position:relative;display:grid;grid-template-rows:1fr auto 1fr;align-items:center;justify-items:center;gap:1rem;min-width:0}
 .tl-year{grid-row:2;z-index:1;padding:.55rem 1rem;border-radius:99rem;background:var(--ink);color:#fff;font:700 1.25rem/1 var(--font-display);white-space:nowrap;box-shadow:0 0 0 .4rem var(--paper)}
-.tl-card{width:100%;padding:.9rem 1rem 1rem;display:grid;grid-template-columns:auto 1fr;gap:.5rem .7rem;align-items:center;align-self:end}
+.tl-card{width:100%;padding:1rem 1.1rem 1.1rem;display:grid;grid-template-columns:auto 1fr;gap:.5rem .7rem;align-items:center;align-self:end}
 .tl-item.down .tl-card{grid-row:3;align-self:start}
 .tl-item.up .tl-card{grid-row:1}
-.tl-card .ico{width:3.2rem;height:3.2rem}
-.tl-card h3{margin:0;font:700 1.2rem/1.15 var(--font-display)}
-.tl-card p{grid-column:1 / -1;margin:0;font-size:1.1rem;line-height:1.35;color:var(--ink-2)}
+.tl-card .ico{width:3.8rem;height:3.8rem}
+.tl-card h3{margin:0;font:800 1.32rem/1.15 var(--font-display)}
+.tl-card p{grid-column:1 / -1;margin:0;font-size:1.4rem;line-height:1.35;color:var(--ink-2)}
 .tl-item.hot .tl-card{background:var(--electron-2)}
 
 /* ---------- 5 · thomson ---------- */
 .two-col{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2.6rem;align-items:center}
 .pts{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.9rem}
-.pts li{display:grid;grid-template-columns:3rem 1fr;gap:1rem;align-items:center;font-size:1.4rem;line-height:1.35}
+.pts li{display:grid;grid-template-columns:3rem 1fr;gap:1rem;align-items:center;font-size:1.65rem;line-height:1.35}
 .pts .pi{width:3rem;height:3rem;border-radius:50%;display:grid;place-items:center;border:var(--line) solid var(--ink);font:800 1.4rem/1 var(--font-display);background:var(--card)}
 .thom-stage{position:relative;justify-self:center;width:min(100%,29rem);aspect-ratio:1;display:grid;place-items:center}
 .thom-stage svg{width:100%;height:100%;overflow:visible}
@@ -357,13 +357,13 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
 .rx-res{display:grid;grid-template-columns:auto 1fr auto;gap:.3rem 1rem;align-items:center;padding:.9rem 1.1rem;border-radius:1.1rem;background:var(--card);border:var(--line) solid var(--ink);box-shadow:var(--shadow-sm)}
 .rx-res .ri{grid-row:span 2;width:3.3rem;height:3.3rem;border-radius:.9rem;border:var(--line) solid var(--ink);display:grid;place-items:center}
 .rx-res .ri svg{width:2.2rem;height:2.2rem;fill:none;stroke:var(--ink);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
-.rx-res h3{margin:0;font:700 1.2rem/1.15 var(--font-display)}
+.rx-res h3{margin:0;font:800 1.45rem/1.15 var(--font-display)}
 .rx-res .cnt{grid-row:span 2;font:800 2.1rem/1 var(--font-display);font-variant-numeric:tabular-nums;min-width:3.5rem;text-align:right}
-.rx-res p{margin:0;font-size:1.12rem;line-height:1.3;color:var(--ink-2)}
+.rx-res p{margin:0;font-size:1.3rem;line-height:1.3;color:var(--ink-2)}
 .rx-res.r1 .ri{background:var(--neutron-2)}.rx-res.r2 .ri{background:var(--electron-2)}.rx-res.r3 .ri{background:var(--proton-2)}
 .rx-res.bump{animation:bump .5s var(--spring)}
 @keyframes bump{40%{transform:scale(1.04) rotate(-.6deg)}}
-.rx-lead{font-size:1.3rem;line-height:1.4;margin:0;color:var(--ink-2)}
+.rx-lead{font-size:1.55rem;line-height:1.4;margin:0;color:var(--ink-2)}
 
 /* ---------- 7 · planetary ---------- */
 .pm-grid{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:2.2rem;align-items:center}
@@ -380,9 +380,9 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
 .tree-svg .node-txt{font-family:var(--font-display);font-weight:700}
 .tree-svg .conn{fill:none;stroke:var(--ink);stroke-width:5;stroke-linecap:round}
 .tree-notes{display:flex;flex-direction:column;gap:1rem}
-.tnote{display:grid;grid-template-columns:3.2rem 1fr;gap:1rem;align-items:center;padding:1rem 1.1rem;font-size:1.25rem;line-height:1.35}
+.tnote{display:grid;grid-template-columns:3.2rem 1fr;gap:1rem;align-items:center;padding:1rem 1.1rem;font-size:1.5rem;line-height:1.35}
 .tnote .chr{width:3.2rem;height:3.2rem}
-.formula-line{padding:1rem 1.3rem;border-radius:var(--r);background:var(--ink);color:#fff;font:700 1.35rem/1.4 var(--font-display)}
+.formula-line{padding:1rem 1.3rem;border-radius:var(--r);background:var(--ink);color:#fff;font:800 1.6rem/1.4 var(--font-display)}
 .formula-line .tp{color:#FF8C97}.formula-line .tn{color:#7DEBB3}.formula-line .te{color:var(--electron)}
 
 /* ---------- 9 · particle cards ---------- */
@@ -423,7 +423,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
 .panel.p2{background:#EEF4FF}.panel.p3{background:#E7ECFA}
 .meme-foot{flex:none;display:grid;grid-template-columns:auto 1fr;gap:1.2rem;align-items:center;padding:1rem 1.4rem}
 .meme-foot .tag{font:800 .95rem/1 var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--brand);padding:.5rem .8rem;border-radius:.6rem}
-.meme-foot p{margin:0;font-size:1.3rem;line-height:1.4}
+.meme-foot p{margin:0;font-size:1.6rem;line-height:1.4}
 .heart{transform-box:fill-box;transform-origin:center;animation:heart 2.6s ease-out infinite}
 @keyframes heart{0%{transform:translateY(0) scale(.4);opacity:0}20%{opacity:1}100%{transform:translateY(-70px) scale(1.1);opacity:0}}
 
@@ -455,8 +455,8 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
 .eq{font:800 2.4rem/1 var(--font-display);color:var(--ink-2)}
 .slide.in .plate-1 .ft,.slide.in .plate-1 .eq,.plate-2.shown .ft,.plate-2.shown .eq{animation:tileIn .7s var(--spring) both;animation-delay:calc(var(--i) * 110ms + 250ms)}
 @keyframes tileIn{0%{opacity:0;transform:translateY(-2.5rem) rotate(-15deg) scale(.6)}100%{opacity:1;transform:none}}
-.f-cap{margin:0;font-size:1.35rem;line-height:1.35;font-weight:800}
-.f-why{margin:0;display:flex;gap:.8rem;align-items:flex-start;font-size:1.2rem;line-height:1.4;color:var(--ink-2)}
+.f-cap{margin:0;font-size:1.45rem;line-height:1.35;font-weight:800}
+.f-why{margin:0;display:flex;gap:.8rem;align-items:flex-start;font-size:1.45rem;line-height:1.4;color:var(--ink-2)}
 .f-why svg{flex:none;width:2rem;height:2rem}
 .f-ex{grid-column:2;grid-row:1 / span 2;align-self:stretch;padding:1.4rem 1.5rem;display:flex;flex-direction:column;gap:.9rem;background:var(--card)}
 .f-ex h3{margin:0;font:700 1.4rem/1.2 var(--font-display);display:flex;gap:.8rem;align-items:center}
@@ -480,7 +480,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
 .csteps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.7rem}
 .cstep{display:grid;grid-template-columns:auto 1fr;gap:.1rem 1rem;align-items:center;padding:.55rem 1rem;border-radius:1rem;background:var(--card);border:var(--line) solid var(--ink);box-shadow:var(--shadow-sm)}
 .cstep .eqn{font:800 1.55rem/1.1 var(--font-display);white-space:nowrap}
-.cstep .why{grid-column:2;font-size:1.1rem;color:var(--ink-2)}
+.cstep .why{grid-column:2;font-size:1.25rem;color:var(--ink-2)}
 .cstep .badge{grid-row:span 2;width:2.8rem;height:2.8rem;border-radius:50%;border:var(--line) solid var(--ink);display:grid;place-items:center;font:800 1.2rem/1 var(--font-display)}
 .cstep.s1 .badge{background:var(--proton);color:#fff}.cstep.s2 .badge{background:var(--electron)}.cstep.s3 .badge{background:var(--neutron)}
 .c-final{padding:.7rem 1.2rem;border-radius:1rem;background:var(--ink);color:#fff;font:700 1.75rem/1 var(--font-display);text-align:center}
@@ -568,7 +568,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
 /* ---------- 16 · isotopes ---------- */
 .iso-def{flex:none;display:grid;grid-template-columns:auto 1fr;gap:1.2rem;align-items:center;padding:.8rem 1.4rem;background:#FFFDF2}
 .iso-def .big-i{font:800 2.3rem/1 var(--font-display);color:var(--brand)}
-.iso-def p{margin:0;font-size:1.35rem;line-height:1.4}
+.iso-def p{margin:0;font-size:1.65rem;line-height:1.4}
 .iso-def mark{background:linear-gradient(transparent 55%,var(--electron) 55%);color:inherit;padding:0 .1em}
 .iso-def mark.n{background:linear-gradient(transparent 55%,var(--neutron) 55%)}
 .iso-cols{flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.6rem}
@@ -583,7 +583,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
 .iso-chips .chip{font-size:1.05rem;padding:.35rem .7rem}
 .iso-chips .chip.diff{animation:glow 1.6s ease-in-out infinite;background:var(--neutron)}
 @keyframes glow{50%{box-shadow:0 0 0 .35rem rgba(61,214,140,.35)}}
-.iso-word{flex:none;text-align:center;font:700 1.75rem/1.2 var(--font-hand);color:var(--ink-2)}
+.iso-word{flex:none;text-align:center;font:700 2.1rem/1.2 var(--font-hand);color:var(--ink-2)}
 .iso-word b{color:var(--brand)}
 
 /* ---------- 17 · isotopes in life ---------- */
@@ -591,14 +591,14 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
 .use-card{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto 1fr;gap:.3rem 1rem;padding:1rem 1.2rem;min-height:0;align-content:start}
 .use-card .u-ico{grid-row:span 2;width:4.4rem;height:4.4rem;border-radius:1rem;border:var(--line) solid var(--ink);display:grid;place-items:center;background:var(--tint)}
 .use-card .u-ico svg{width:3rem;height:3rem;fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
-.use-card h3{margin:0;display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;font:700 1.3rem/1.1 var(--font-display)}
+.use-card h3{margin:0;display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;font:800 1.55rem/1.1 var(--font-display)}
 .use-card h3 .nuc{font-size:1.7rem;color:var(--brand)}
-.use-card p{margin:0;font-size:1.18rem;line-height:1.35;color:var(--ink-2)}
+.use-card p{margin:0;font-size:1.45rem;line-height:1.35;color:var(--ink-2)}
 .use-card.kz{background:#F1FBFF}
 .kz-flag{display:inline-flex;align-items:center;gap:.4rem;margin-top:.4rem;padding:.3rem .6rem;border-radius:.5rem;background:#00AFCA;color:#FFE14D;font:800 .95rem/1 var(--font-body)}
 .cl-box{grid-column:3;grid-row:1 / span 2;padding:1.2rem 1.3rem;display:flex;flex-direction:column;gap:.8rem;background:#FFFBEA;min-height:0}
-.cl-box h3{margin:0;font:700 1.45rem/1.2 var(--font-display)}
-.cl-box p{margin:0;font-size:1.18rem;line-height:1.4}
+.cl-box h3{margin:0;font:800 1.65rem/1.2 var(--font-display)}
+.cl-box p{margin:0;font-size:1.45rem;line-height:1.4}
 .cl-balls{display:flex;justify-content:center;gap:.8rem;padding:.4rem 0}
 .cl-ball{width:4.4rem;height:4.4rem;border-radius:50%;border:var(--line) solid var(--ink);display:grid;place-items:center;font:800 1.15rem/1 var(--font-display);background:#B8F06A;box-shadow:inset -.4rem -.4rem 0 rgba(0,0,0,.12),inset .3rem .3rem 0 rgba(255,255,255,.5)}
 .cl-ball.heavy{background:#6FD13F;width:4.8rem;height:4.8rem}
@@ -626,7 +626,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
 .tr-score{display:flex;gap:.8rem;flex-wrap:wrap}
 .tr-score .status{font-size:1.05rem;padding:.5rem .9rem}
 .tr-right{display:flex;flex-direction:column;gap:.8rem;min-width:0}
-.tr-q{margin:0;font:700 1.45rem/1.25 var(--font-display)}
+.tr-q{margin:0;font:800 2rem/1.2 var(--font-display)}
 .tr-fields{display:flex;flex-direction:column;gap:.7rem}
 .tr-row{display:grid;grid-template-columns:minmax(0,1fr) auto 2.8rem;gap:1rem;align-items:center;padding:.4rem .8rem;border-radius:1.1rem;border:var(--line) solid var(--ink);background:var(--card);transition:background .3s}
 .tr-row .lbl{display:flex;align-items:center;gap:.6rem;font:800 1.35rem/1 var(--font-body)}
@@ -688,8 +688,8 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
 .hw-grid{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);gap:2rem}
 .hw-card{position:relative;padding:1.1rem 1.4rem 1.2rem;display:flex;flex-direction:column;gap:.7rem;min-height:0}
 .hw-num{position:absolute;right:-1rem;top:-1.2rem;width:4rem;height:4rem;border-radius:50%;display:grid;place-items:center;background:var(--electron);border:var(--line) solid var(--ink);box-shadow:var(--shadow-sm);font:800 1.8rem/1 var(--font-display);transform:rotate(8deg)}
-.hw-card h3{margin:0;font:700 1.45rem/1.2 var(--font-display);padding-right:2.5rem}
-.hw-card .hw-sub{margin:0;font-size:1.1rem;line-height:1.35;color:var(--ink-2)}
+.hw-card h3{margin:0;font:800 1.65rem/1.2 var(--font-display);padding-right:2.5rem}
+.hw-card .hw-sub{margin:0;font-size:1.3rem;line-height:1.35;color:var(--ink-2)}
 .el-chips{display:grid;grid-template-columns:repeat(5,1fr);gap:.45rem}
 .el-chip{aspect-ratio:2;border-radius:.7rem;border:.16rem solid var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);font:800 1.5rem/1 var(--font-display);position:relative}
 .el-chip small{position:absolute;left:.3rem;top:.25rem;font:800 .7rem/1 var(--font-body);color:var(--ink-2)}
@@ -706,7 +706,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
 .mat svg{width:2.6rem;height:2.6rem}
 .hw-body{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 12rem;gap:1rem;align-items:center}
 .hw-steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.4rem;counter-reset:hs}
-.hw-steps li{counter-increment:hs;display:grid;grid-template-columns:2rem 1fr;gap:.6rem;align-items:center;font-size:1.02rem;line-height:1.25;padding:.22rem .4rem;border-radius:.7rem;transition:background .4s}
+.hw-steps li{counter-increment:hs;display:grid;grid-template-columns:2rem 1fr;gap:.6rem;align-items:center;font-size:1.25rem;line-height:1.25;padding:.3rem .4rem;border-radius:.7rem;transition:background .4s}
 .hw-steps li::before{content:counter(hs);width:2.1rem;height:2.1rem;border-radius:50%;border:.16rem solid var(--ink);display:grid;place-items:center;font:800 1rem/1 var(--font-display);background:var(--card)}
 .hw-steps li.on{background:var(--brand-2)}
 .hw-steps li.on::before{background:var(--brand);color:#fff}
@@ -716,24 +716,24 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
 
 /* ---------- 21 · reflection ---------- */
 .rf-grid{flex:1;min-height:0;display:grid;grid-template-columns:auto minmax(0,1fr) minmax(0,1fr);gap:2.2rem;align-items:center}
-.tlight{width:11rem;height:auto;overflow:visible}
+.tlight{width:10.5rem;height:auto;overflow:visible}
 .lamp{cursor:pointer}
 .lamp .glass{transition:fill .35s,filter .35s}
 .lamp:focus{outline:none}
 .lamp:focus-visible .rim{stroke:var(--brand);stroke-width:8}
 .rf-opts{display:flex;flex-direction:column;gap:1rem}
-.rf-opt{display:grid;grid-template-columns:3.2rem 1fr;gap:1rem;align-items:center;padding:1rem 1.2rem;border-radius:1.1rem;border:var(--line) solid var(--ink);background:var(--card);box-shadow:var(--shadow-sm);font:800 1.35rem/1.3 var(--font-body);text-align:left;cursor:pointer;transition:transform .3s var(--spring),background .3s}
+.rf-opt{display:grid;grid-template-columns:3.2rem 1fr;gap:1rem;align-items:center;padding:1.1rem 1.3rem;border-radius:1.1rem;border:var(--line) solid var(--ink);background:var(--card);box-shadow:var(--shadow-sm);font:800 1.7rem/1.3 var(--font-body);text-align:left;cursor:pointer;transition:transform .3s var(--spring),background .3s}
 .rf-opt i{width:3.2rem;height:3.2rem;border-radius:50%;border:var(--line) solid var(--ink);background:var(--c)}
 .rf-opt.on{transform:translateX(.8rem) scale(1.03);background:var(--c2)}
 .rf-stems{padding:1.3rem 1.5rem;display:flex;flex-direction:column;gap:.9rem;background:#FFFDF4}
 .rf-stems h3{margin:0;font:700 1.4rem/1.2 var(--font-display)}
-.rf-stems p{margin:0;font:700 2.1rem/1.15 var(--font-hand);color:var(--ink)}
+.rf-stems p{margin:0;font:700 2.5rem/1.15 var(--font-hand);color:var(--ink)}
 .rf-stems p span{color:var(--ink-3)}
 
 /* ---------- 22 · thanks ---------- */
 .thx{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.6rem;text-align:center}
-.thx-big{margin:0;font:800 7.5rem/1 var(--font-display);letter-spacing:-.04em}
-.thx p{margin:0;font-size:1.6rem;color:var(--ink-2);max-width:48rem}
+.thx-big{margin:0;font:900 8rem/1 var(--font-display);letter-spacing:-.02em}
+.thx p{margin:0;font-size:2.1rem;color:var(--ink-2);max-width:48rem}
 .brand-xl{display:inline-flex;align-items:center;gap:1.2rem;padding:1rem 2.2rem 1rem 1.2rem;border-radius:99rem;background:var(--ink);color:#fff;font:800 3rem/1 var(--font-display);letter-spacing:-.02em;box-shadow:.5rem .5rem 0 var(--brand)}
 .brand-xl .brand-atom{width:5rem;height:5rem;color:var(--electron)}
 .brand-xl b{color:var(--electron);font-weight:800}
@@ -894,7 +894,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
         <h1 class="mega" data-split data-i="Атом құрылысы|Строение атома|Atomic structure"></h1>
         <div class="mega-2 ani a-pop" style="--d:1000" data-i="Изотоптар|Изотопы|Isotopes"></div>
       </div>
-      <p class="lead ani a-rise" style="--d:1250" data-i="Атомның ішіне саяхат: модельдер, бөлшектер және изотоптар|Путешествие внутрь атома: модели, частицы и изотопы|A journey inside the atom: models, particles and isotopes"></p>
+      <p class="lead ani a-rise" style="--d:1250" data-i="Атомның ішіне саяхат|Путешествие внутрь атома|A journey inside the atom"></p>
       <div class="title-chips ani a-rise" style="--d:1450">
         <span class="chip chip-p"><i class="dot"></i><span class="sym">p<sup>+</sup></span> <span data-i="протон|протон|proton"></span></span>
         <span class="chip chip-n"><i class="dot"></i><span class="sym">n<sup>0</sup></span> <span data-i="нейтрон|нейтрон|neutron"></span></span>
@@ -932,7 +932,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
   <header class="s-head">
     <div class="eyebrow" data-i="Сабақ жоспары|План урока|Lesson plan"></div>
     <h2 class="s-title" data-i="Бүгінгі саяхат|Наше путешествие|Today's journey"></h2>
-    <p class="s-sub" data-i="Атомның ішіне алты аялдама арқылы жетеміз. Аялдаманы басып, сол бөлімге өтуге болады.|Шесть остановок на пути внутрь атома. Нажми на остановку, чтобы перейти к разделу.|Six stops on the way inside the atom. Tap a stop to jump to that part."></p>
+    <p class="s-sub" data-i="6 аялдама. Біреуін бас — сол бөлімге өтесің.|6 остановок. Нажми на любую — перейдёшь туда.|6 stops. Tap one to jump there."></p>
   </header>
   <div class="map-wrap">
     <svg class="map-svg" viewBox="0 0 1600 600" id="mapSvg">
@@ -975,7 +975,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
         <g class="blink"><circle cx="-8" cy="-3" r="4" fill="#1E1A3D"/><circle cx="8" cy="-3" r="4" fill="#1E1A3D"/></g>
         <path d="M-8 8 Q0 14 8 8" fill="none" stroke="#1E1A3D" stroke-width="4" stroke-linecap="round"/>
       </g>
-      <text x="40" y="560" font-size="30" class="hand" fill="#514C78" style="font-family:var(--font-hand);font-weight:700" data-i="старт!|старт!|start!"></text>
+      <text x="40" y="560" font-size="30" class="hand" fill="#514C78" style="font-family:var(--font-hand);font-weight:700" data-i="бастау!|старт!|start!"></text>
     </svg>
   </div>
 </section>
@@ -988,10 +988,10 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
   </header>
   <div class="zoom-grid">
     <ol class="ladder" id="ladder">
-      <li class="ani a-left" style="--d:300"><button type="button" class="rung on" data-zstep="0"><span class="num">1</span><span class="rt" data-i="Физикалық дене|Физическое тело|Physical object"></span><span class="rd" data-i="Мұз текшесі — физикалық дене. Оны көруге, ұстауға болады.|Кубик льда — физическое тело. Его можно увидеть и потрогать.|An ice cube is a physical object. You can see it and touch it."></span></button></li>
+      <li class="ani a-left" style="--d:300"><button type="button" class="rung on" data-zstep="0"><span class="num">1</span><span class="rt" data-i="Физикалық дене|Физическое тело|Physical object"></span><span class="rd" data-i="Мұз текшесі — физикалық дене.|Кубик льда — физическое тело.|An ice cube is a physical object."></span></button></li>
       <li class="ani a-left" style="--d:420"><button type="button" class="rung" data-zstep="1"><span class="num">2</span><span class="rt" data-i="Зат|Вещество|Substance"></span><span class="rd" data-i="Мұз судан тұрады. Су — зат.|Лёд состоит из воды. Вода — вещество.|Ice is made of water. Water is a substance."></span></button></li>
-      <li class="ani a-left" style="--d:540"><button type="button" class="rung" data-zstep="2"><span class="num">3</span><span class="rt" data-i="Молекула|Молекула|Molecule"></span><span class="rd" data-i="Молекула — заттың қасиетін сақтайтын ең кіші бөлшегі. Су молекуласы — H₂O.|Молекула — мельчайшая частица вещества, которая сохраняет его свойства. Молекула воды — H₂O.|A molecule is the smallest particle that keeps the substance's properties. A water molecule is H₂O."></span></button></li>
-      <li class="ani a-left" style="--d:660"><button type="button" class="rung" data-zstep="3"><span class="num">4</span><span class="rt" data-i="Атом|Атом|Atom"></span><span class="rd" data-i="Молекула атомдардан тұрады: 1 оттегі атомы + 2 сутегі атомы. Атом — химиялық жолмен бөлінбейтін ең кіші бөлшек.|Молекула состоит из атомов: 1 атом кислорода + 2 атома водорода. Атом — мельчайшая химически неделимая частица.|A molecule is made of atoms: 1 oxygen atom + 2 hydrogen atoms. An atom is the smallest particle that chemical reactions cannot split."></span></button></li>
+      <li class="ani a-left" style="--d:540"><button type="button" class="rung" data-zstep="2"><span class="num">3</span><span class="rt" data-i="Молекула|Молекула|Molecule"></span><span class="rd" data-i="Судың ең кіші бөлшегі — H₂O молекуласы.|Мельчайшая частица воды — молекула H₂O.|The smallest particle of water is an H₂O molecule."></span></button></li>
+      <li class="ani a-left" style="--d:660"><button type="button" class="rung" data-zstep="3"><span class="num">4</span><span class="rt" data-i="Атом|Атом|Atom"></span><span class="rd" data-i="H₂O = 1 оттегі атомы + 2 сутегі атомы.|H₂O = 1 атом кислорода + 2 атома водорода.|H₂O = 1 oxygen atom + 2 hydrogen atoms."></span></button></li>
     </ol>
     <div class="zoom-stage ani a-zoom" style="--d:200">
       <div class="lens-handle"></div>
@@ -1073,10 +1073,10 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
 </section>
 
 <!-- 4 · HISTORY -->
-<section class="slide" data-id="history" data-sec="2" data-title="Атомды қалай ашты?|Как открывали атом?|How was the atom discovered?">
+<section class="slide" data-id="history" data-sec="2" data-title="Атом қалай ашылды?|Как открывали атом?|How was the atom discovered?">
   <header class="s-head">
     <div class="eyebrow" data-i="2 · Атом модельдері|2 · Модели атома|2 · Atomic models"></div>
-    <h2 class="s-title" data-i="Атомды қалай ашты?|Как открывали атом?|How was the atom discovered?"></h2>
+    <h2 class="s-title" data-i="Атом қалай ашылды?|Как открывали атом?|How was the atom discovered?"></h2>
   </header>
   <div class="tl">
     <svg class="tl-line" viewBox="0 0 1000 20" preserveAspectRatio="none" aria-hidden="true"><path class="draw" pathLength="1" d="M5 10 H995" style="--d:150"/></svg>
@@ -1084,7 +1084,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
       <div class="tl-card card">
         <svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><path d="M8 20 L32 8 L56 20 Z" fill="#ECE7FF" stroke="#1E1A3D" stroke-width="3.5" stroke-linejoin="round"/><rect x="10" y="20" width="44" height="6" fill="#fff" stroke="#1E1A3D" stroke-width="3.5"/><path d="M16 26 V50 M27 26 V50 M37 26 V50 M48 26 V50" stroke="#1E1A3D" stroke-width="5" stroke-linecap="round"/><rect x="8" y="50" width="48" height="7" rx="2" fill="#fff" stroke="#1E1A3D" stroke-width="3.5"/></svg>
         <h3 data-i="Демокрит|Демокрит|Democritus"></h3>
-        <p data-i="Заттар өте ұсақ бөлшектерден тұрады деп болжады. Грекше «атомос» — «бөлінбейтін».|Предположил, что вещества состоят из мельчайших частиц. По-гречески «атомос» — «неделимый».|Suggested that matter is made of tiny particles. In Greek, “atomos” means “indivisible”."></p>
+        <p data-i="«Атомос» — грекше «бөлінбейтін».|«Атомос» по-гречески — «неделимый».|Greek “atomos” means “indivisible”."></p>
       </div>
       <div class="tl-year" data-i="~2400 жыл бұрын|~2400 лет назад|~2400 years ago"></div>
     </article>
@@ -1092,15 +1092,15 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
       <div class="tl-year">1897</div>
       <div class="tl-card card">
         <span class="chr ico" data-chr="electron"></span>
-        <h3 data-i="Дж. Томсон|Дж. Томсон|J. J. Thomson"></h3>
-        <p data-i="Электронды ашты. Демек, атом да бөлінеді екен!|Открыл электрон. Значит, атом всё-таки делим!|Discovered the electron. So the atom can be divided after all!"></p>
+        <h3 data-i="Дж. Томсон|Дж. Томсон|J. J. Thomson"></h3>
+        <p data-i="Электронды ашты.|Открыл электрон.|Discovered the electron."></p>
       </div>
     </article>
     <article class="tl-item up hot ani a-rise" style="--d:750">
       <div class="tl-card card">
         <svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="32" rx="28" ry="11" fill="none" stroke="#1E1A3D" stroke-width="3"/><ellipse cx="32" cy="32" rx="28" ry="11" fill="none" stroke="#1E1A3D" stroke-width="3" transform="rotate(60 32 32)"/><ellipse cx="32" cy="32" rx="28" ry="11" fill="none" stroke="#1E1A3D" stroke-width="3" transform="rotate(-60 32 32)"/><circle cx="32" cy="32" r="8" fill="#FF4D5E" stroke="#1E1A3D" stroke-width="3"/><circle cx="60" cy="32" r="4.5" fill="#FFC21A" stroke="#1E1A3D" stroke-width="2.5"/></svg>
-        <h3 data-i="Э. Резерфорд|Э. Резерфорд|E. Rutherford"></h3>
-        <p data-i="Атомның ортасында ядро бар екенін дәлелдеді.|Доказал, что в центре атома есть ядро.|Proved that the atom has a nucleus at its centre."></p>
+        <h3 data-i="Э. Резерфорд|Э. Резерфорд|E. Rutherford"></h3>
+        <p data-i="Ядроны ашты.|Открыл ядро.|Discovered the nucleus."></p>
       </div>
       <div class="tl-year">1911</div>
     </article>
@@ -1108,15 +1108,15 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
       <div class="tl-year">1919</div>
       <div class="tl-card card">
         <span class="chr ico" data-chr="proton"></span>
-        <h3 data-i="Э. Резерфорд|Э. Резерфорд|E. Rutherford"></h3>
-        <p data-i="Ядроның ішінен протонды ашты.|Открыл протон в ядре атома.|Discovered the proton inside the nucleus."></p>
+        <h3 data-i="Э. Резерфорд|Э. Резерфорд|E. Rutherford"></h3>
+        <p data-i="Протонды ашты.|Открыл протон.|Discovered the proton."></p>
       </div>
     </article>
     <article class="tl-item up ani a-rise" style="--d:1150">
       <div class="tl-card card">
         <span class="chr ico" data-chr="neutron"></span>
-        <h3 data-i="Дж. Чедвик|Дж. Чедвик|J. Chadwick"></h3>
-        <p data-i="Нейтронды ашты. Атомның «пазлы» толық жиналды!|Открыл нейтрон. «Пазл» атома собран!|Discovered the neutron. The atom “puzzle” was complete!"></p>
+        <h3 data-i="Дж. Чедвик|Дж. Чедвик|J. Chadwick"></h3>
+        <p data-i="Нейтронды ашты.|Открыл нейтрон.|Discovered the neutron."></p>
       </div>
       <div class="tl-year">1932</div>
     </article>
@@ -1131,11 +1131,11 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
   </header>
   <div class="two-col">
     <div style="display:flex;flex-direction:column;gap:1.4rem;min-width:0">
-      <p class="lead ani a-rise" style="--d:300" data-i="1897 жылы Дж. Томсон электронды ашты, ал 1904 жылы атомның алғашқы моделін ұсынды.|В 1897 году Дж. Томсон открыл электрон, а в 1904 году предложил первую модель атома.|In 1897 J. J. Thomson discovered the electron, and in 1904 he proposed the first model of the atom."></p>
+      <p class="lead ani a-rise" style="--d:300" data-i="1904 жыл — атомның алғашқы моделі.|1904 год — первая модель атома.|1904: the first model of the atom."></p>
       <ul class="pts">
         <li class="ani a-left" style="--d:500"><span class="pi" style="background:var(--proton);color:#fff">+</span><span data-i="Атом — оң зарядталған шар.|Атом — положительно заряженный шар.|The atom is a positively charged ball."></span></li>
-        <li class="ani a-left" style="--d:650"><span class="pi" style="background:var(--electron)">−</span><span data-i="Электрондар оның ішінде кекстегі мейіз сияқты орналасқан.|Электроны вкраплены в него, как изюм в кексе.|Electrons are stuck inside it like raisins in a cake."></span></li>
-        <li class="ani a-left" style="--d:800"><span class="pi">=</span><span data-i="Оң және теріс заряд тең, сондықтан атом бейтарап.|Положительный и отрицательный заряды равны — атом нейтрален.|Positive and negative charges are equal, so the atom is neutral."></span></li>
+        <li class="ani a-left" style="--d:650"><span class="pi" style="background:var(--electron)">−</span><span data-i="Электрондар — ішіндегі «мейіздер».|Электроны — «изюминки» внутри.|Electrons are the “raisins” inside."></span></li>
+        <li class="ani a-left" style="--d:800"><span class="pi">=</span><span data-i="Заряды тең → атом бейтарап.|Заряды равны → атом нейтрален.|Charges balance → the atom is neutral."></span></li>
       </ul>
       <div class="ani a-rise" style="--d:1000"><button class="btn yellow" type="button" id="thomToggle"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></svg><span data-i="Кекс ↔ Атом|Кекс ↔ Атом|Cake ↔ Atom"></span></button></div>
     </div>
@@ -1176,7 +1176,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
 <section class="slide" data-id="ruth-exp" data-sec="2" data-title="Резерфорд тәжірибесі|Опыт Резерфорда|Rutherford's experiment">
   <header class="s-head">
     <div class="eyebrow" data-i="Атом моделі · 2|Модель атома · 2|Atomic model · 2"></div>
-    <h2 class="s-title" data-i="Резерфорд тәжірибесі: алтын фольга|Опыт Резерфорда: золотая фольга|Rutherford's gold foil experiment"></h2>
+    <h2 class="s-title" data-i="Резерфорд тәжірибесі|Опыт Резерфорда|Rutherford's experiment"></h2>
   </header>
   <div class="rx-grid">
     <div class="rx-stage ani a-zoom" style="--d:200">
@@ -1188,24 +1188,24 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
       </div>
     </div>
     <div class="rx-side">
-      <p class="rx-lead ani a-rise" style="--d:350" data-i="Резерфорд α-бөлшектерді (оң зарядталған ауыр бөлшектер) жұқа алтын фольгаға бағыттады. Олар қайда ұшты?|Резерфорд направил α-частицы (тяжёлые положительные частицы) на тонкую золотую фольгу. Куда они полетели?|Rutherford fired α-particles (heavy positive particles) at a thin gold foil. Where did they go?"></p>
+      <p class="rx-lead ani a-rise" style="--d:350" data-i="α-бөлшектерді алтын фольгаға атқылады. Не болды?|α-частицами обстреляли золотую фольгу. Что вышло?|α-particles were fired at gold foil. What happened?"></p>
       <div class="rx-res r1 ani a-right" style="--d:500" id="rxR1">
         <div class="ri"><svg viewBox="0 0 32 32"><path d="M4 16h22M20 10l6 6-6 6"/></svg></div>
         <h3 data-i="Тура өтіп кетті|Прошли насквозь|Went straight through"></h3>
         <b class="cnt" id="rxC1">0</b>
-        <p data-i="→ атомның көп бөлігі — бос кеңістік|→ атом в основном пустой|→ the atom is mostly empty space"></p>
+        <p data-i="→ атомның іші негізінен бос|→ атом почти пустой|→ the atom is mostly empty"></p>
       </div>
       <div class="rx-res r2 ani a-right" style="--d:650" id="rxR2">
         <div class="ri"><svg viewBox="0 0 32 32"><path d="M4 22 C12 22 16 18 26 8M19 8h7v7"/></svg></div>
         <h3 data-i="Бағытын өзгертті|Отклонились|Changed direction"></h3>
         <b class="cnt" id="rxC2">0</b>
-        <p data-i="→ ортасында оң зарядталған бөлік бар|→ в центре есть положительный заряд|→ there is a positive charge in the centre"></p>
+        <p data-i="→ ортасында оң заряд бар|→ в центре есть «+» заряд|→ there is a “+” charge in the centre"></p>
       </div>
       <div class="rx-res r3 ani a-right" style="--d:800" id="rxR3">
         <div class="ri"><svg viewBox="0 0 32 32"><path d="M4 12h16a6 6 0 0 1 0 12H8M12 18l-5 6 5 6" transform="translate(0 -4)"/></svg></div>
         <h3 data-i="Кері серпілді|Отскочили назад|Bounced back"></h3>
         <b class="cnt" id="rxC3">0</b>
-        <p data-i="→ ядро кішкентай, бірақ өте тығыз әрі ауыр|→ ядро крошечное, но очень плотное|→ the nucleus is tiny but very dense"></p>
+        <p data-i="→ ядро кішкентай, бірақ ауыр|→ ядро маленькое, но тяжёлое|→ the nucleus is tiny but heavy"></p>
       </div>
     </div>
   </div>
@@ -1248,7 +1248,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
       <text x="650" y="400" text-anchor="middle" font-size="27" fill="#1E1A3D" data-i="Резерфорд атомы|Атом Резерфорда|Rutherford's atom"></text>
     </svg>
     <div class="pm-text">
-      <p class="lead ani a-rise" style="--d:450" data-i="Атомның ортасында — өте кішкентай, оң зарядталған &lt;b&gt;ядро&lt;/b&gt;. Электрондар ядроны планеталар Күнді айналғандай айналады.|В центре атома — крошечное положительно заряженное &lt;b&gt;ядро&lt;/b&gt;. Электроны движутся вокруг него, как планеты вокруг Солнца.|At the centre of the atom is a tiny, positively charged &lt;b&gt;nucleus&lt;/b&gt;. Electrons move around it like planets around the Sun."></p>
+      <p class="lead ani a-rise" style="--d:450" data-i="Ортасында — кішкентай оң &lt;b&gt;ядро&lt;/b&gt;. Электрондар оны планеталар сияқты айналады.|В центре — крошечное «+» &lt;b&gt;ядро&lt;/b&gt;. Электроны кружат вокруг, как планеты.|A tiny “+” &lt;b&gt;nucleus&lt;/b&gt; sits in the centre. Electrons circle it like planets."></p>
       <div class="title-chips ani a-rise" style="--d:600">
         <span class="chip" style="background:#FFF1C2"><i class="dot" style="background:#FFD23F"></i><span data-i="Күн ≈ ядро|Солнце ≈ ядро|Sun ≈ nucleus"></span></span>
         <span class="chip chip-e"><i class="dot"></i><span data-i="планеталар ≈ электрондар|планеты ≈ электроны|planets ≈ electrons"></span></span>
@@ -1266,7 +1266,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
             <circle cx="204" cy="28" r="24" fill="#fff" stroke="#1E1A3D" stroke-width="4"/>
             <circle cx="204" cy="28" r="10" fill="#57C766" stroke="#1E1A3D" stroke-width="3"/>
           </svg>
-          <p data-i="Атомды футбол стадионындай етіп үлкейтсек, ядро алаңның ортасындағы бұршақтай ғана болар еді! Бірақ атом массасының 99,9%-ы — сол ядрода.|Если увеличить атом до размеров футбольного стадиона, ядро будет как горошина в центре поля! Но 99,9 % массы атома — именно в ядре.|If an atom were as big as a football stadium, the nucleus would be a pea in the middle of the pitch! Yet 99.9% of the atom's mass is in that nucleus."></p>
+          <p data-i="Атом — стадион болса, ядро — ортадағы бұршақ! Бірақ массаның 99,9%-ы — ядрода.|Если атом — стадион, ядро — горошина в центре! Но 99,9 % массы — в ядре.|If the atom were a stadium, the nucleus would be a pea in the middle! Yet it holds 99.9% of the mass."></p>
         </div>
       </div>
     </div>
@@ -1317,9 +1317,9 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
       </g>
     </svg>
     <div class="tree-notes">
-      <div class="tnote card ani a-right" style="--d:900"><span class="chr" data-chr="proton"></span><span data-i="&lt;b&gt;Ядро&lt;/b&gt; — атомның ортасындағы кішкентай әрі ауыр бөлігі. Ол оң зарядталған, себебі онда протондар бар.|&lt;b&gt;Ядро&lt;/b&gt; — маленькая и тяжёлая часть в центре атома. Оно заряжено положительно, потому что в нём протоны.|The &lt;b&gt;nucleus&lt;/b&gt; is the small, heavy centre of the atom. It is positive because it contains protons."></span></div>
-      <div class="tnote card ani a-right" style="--d:1100"><span class="chr" data-chr="neutron"></span><span data-i="&lt;b&gt;Нейтрондар&lt;/b&gt; ядрода протондармен бірге тұрады, бірақ заряды жоқ.|&lt;b&gt;Нейтроны&lt;/b&gt; живут в ядре вместе с протонами, но заряда у них нет.|&lt;b&gt;Neutrons&lt;/b&gt; sit in the nucleus with the protons but have no charge."></span></div>
-      <div class="tnote card ani a-right" style="--d:1300"><span class="chr" data-chr="electron"></span><span data-i="&lt;b&gt;Электрондар&lt;/b&gt; ядроның айналасында үздіксіз қозғалып жүреді.|&lt;b&gt;Электроны&lt;/b&gt; непрерывно движутся вокруг ядра.|&lt;b&gt;Electrons&lt;/b&gt; keep moving around the nucleus."></span></div>
+      <div class="tnote card ani a-right" style="--d:900"><span class="chr" data-chr="proton"></span><span data-i="&lt;b&gt;Протон&lt;/b&gt; — ядрода, заряды +1|&lt;b&gt;Протон&lt;/b&gt; — в ядре, заряд +1|&lt;b&gt;Proton&lt;/b&gt;: in the nucleus, charge +1"></span></div>
+      <div class="tnote card ani a-right" style="--d:1100"><span class="chr" data-chr="neutron"></span><span data-i="&lt;b&gt;Нейтрон&lt;/b&gt; — ядрода, заряды 0|&lt;b&gt;Нейтрон&lt;/b&gt; — в ядре, заряд 0|&lt;b&gt;Neutron&lt;/b&gt;: in the nucleus, charge 0"></span></div>
+      <div class="tnote card ani a-right" style="--d:1300"><span class="chr" data-chr="electron"></span><span data-i="&lt;b&gt;Электрон&lt;/b&gt; — ядроның айналасында, заряды −1|&lt;b&gt;Электрон&lt;/b&gt; — вокруг ядра, заряд −1|&lt;b&gt;Electron&lt;/b&gt;: around the nucleus, charge −1"></span></div>
       <div class="formula-line ani a-rise" style="--d:1600" data-i="Атом = ядро (&lt;span class=tp&gt;p⁺&lt;/span&gt; + &lt;span class=tn&gt;n⁰&lt;/span&gt;) + &lt;span class=te&gt;e⁻&lt;/span&gt;|Атом = ядро (&lt;span class=tp&gt;p⁺&lt;/span&gt; + &lt;span class=tn&gt;n⁰&lt;/span&gt;) + &lt;span class=te&gt;e⁻&lt;/span&gt;|Atom = nucleus (&lt;span class=tp&gt;p⁺&lt;/span&gt; + &lt;span class=tn&gt;n⁰&lt;/span&gt;) + &lt;span class=te&gt;e⁻&lt;/span&gt;"></div>
     </div>
   </div>
@@ -1330,7 +1330,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
   <header class="s-head">
     <div class="eyebrow" data-i="3 · Атом құрылысы|3 · Строение атома|3 · Inside the atom"></div>
     <h2 class="s-title" data-i="Бөлшектермен танысайық!|Знакомьтесь: частицы атома!|Meet the particles!"></h2>
-    <p class="s-sub" data-i="Картаны бас — бөлшектің «паспорты» ашылады.|Нажми на карточку — откроется «паспорт» частицы.|Tap a card to open the particle's “passport”."></p>
+    <p class="s-sub" data-i="Картаны бас — «паспорты» ашылады.|Нажми на карточку — откроется «паспорт».|Tap a card to open its “passport”."></p>
   </header>
   <div class="cards3">
     <div class="pcard ani a-tilt" style="--d:300" data-type="proton" role="button" tabindex="0" aria-pressed="false">
@@ -1384,7 +1384,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
           <dl>
             <dt data-i="Таңбасы|Обозначение|Symbol"></dt><dd class="big">e<sup>−</sup></dd>
             <dt data-i="Заряды|Заряд|Charge"></dt><dd class="big">−1</dd>
-            <dt data-i="Массасы|Масса|Mass"></dt><dd data-i="≈ 0 (протоннан 1836 есе жеңіл)|≈ 0 (в 1836 раз легче протона)|≈ 0 (1836 times lighter than a proton)"></dd>
+            <dt data-i="Массасы|Масса|Mass"></dt><dd data-i="≈ 0 (өте жеңіл)|≈ 0 (очень лёгкий)|≈ 0 (very light)"></dd>
             <dt data-i="Мекені|Где живёт|Lives in"></dt><dd data-i="ядроның айналасында|вокруг ядра|around the nucleus"></dd>
           </dl>
         </div>
@@ -1473,7 +1473,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
   </div>
   <div class="meme-foot card ani a-rise" style="--d:1400">
     <span class="tag" data-i="Шын мәнінде|А на самом деле|In real science"></span>
-    <p data-i="Протондар мен нейтрондар &lt;b&gt;ядрода&lt;/b&gt; бірге тұрады. Электрондар ядроға кірмейді — олар ядроның &lt;b&gt;айналасында&lt;/b&gt; үнемі қозғалып жүреді.|Протоны и нейтроны вместе находятся &lt;b&gt;в ядре&lt;/b&gt;. Электроны в ядро не попадают — они всё время движутся &lt;b&gt;вокруг&lt;/b&gt; него.|Protons and neutrons stay together &lt;b&gt;in the nucleus&lt;/b&gt;. Electrons never go inside — they keep moving &lt;b&gt;around&lt;/b&gt; it."></p>
+    <p data-i="&lt;b&gt;p⁺&lt;/b&gt; мен &lt;b&gt;n⁰&lt;/b&gt; — ядрода бірге. &lt;b&gt;e⁻&lt;/b&gt; — сыртта, ядроны айналып жүреді.|&lt;b&gt;p⁺&lt;/b&gt; и &lt;b&gt;n⁰&lt;/b&gt; — вместе в ядре. &lt;b&gt;e⁻&lt;/b&gt; — снаружи, кружит вокруг.|&lt;b&gt;p⁺&lt;/b&gt; and &lt;b&gt;n⁰&lt;/b&gt; live together in the nucleus. &lt;b&gt;e⁻&lt;/b&gt; circles outside."></p>
   </div>
 </section>
 
@@ -1524,15 +1524,15 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
     <div class="pp-side">
       <div class="fact ani a-right" style="--d:1700;background:var(--brand-2)">
         <h4><span data-i="Ең маңызды сан|Самое важное число|The most important number"></span></h4>
-        <p data-i="Реттік нөмір атомда неше протон бар екенін айтады. Көміртегіде — 6 протон.|Порядковый номер показывает, сколько протонов в атоме. У углерода — 6 протонов.|The atomic number tells you how many protons the atom has. Carbon has 6."></p>
+        <p data-i="№ = протон саны. Көміртегіде — 6.|№ = число протонов. У углерода — 6.|№ = number of protons. Carbon has 6."></p>
       </div>
       <div class="fact ani a-right" style="--d:1900;background:var(--sky-2)">
         <h4>Ar</h4>
-        <p data-i="Есептерде Ar-ды бүтін санға дейін дөңгелектейміз: 12,011 ≈ 12.|В задачах округляем Ar до целого: 12,011 ≈ 12.|In problems we round Ar to a whole number: 12.011 ≈ 12."></p>
+        <p data-i="Ar-ды бүтін санға дөңгелекте: 12,011 ≈ 12.|Округляй Ar до целого: 12,011 ≈ 12.|Round Ar to a whole number: 12.011 ≈ 12."></p>
       </div>
       <div class="fact ani a-right" style="--d:2100;background:var(--neutron-2)">
         <h4 data-i="1869 жыл|1869 год|1869"></h4>
-        <p data-i="Д. И. Менделеев элементтерді бір кестеге жүйеледі. Бүгін онда 118 элемент бар.|Д. И. Менделеев расположил элементы в одной таблице. Сегодня в ней 118 элементов.|Dmitri Mendeleev arranged the elements in one table. Today it holds 118 elements."></p>
+        <p data-i="Менделеев кестесі. Бүгін — 118 элемент.|Таблица Менделеева. Сегодня — 118 элементов.|Mendeleev's table. Today: 118 elements."></p>
       </div>
     </div>
   </div>
@@ -1553,7 +1553,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
         <span class="ft ft-z" style="--i:6">Z</span>
       </div>
       <p class="f-cap" data-i="Реттік нөмір = протон саны = электрон саны = ядро заряды|Порядковый номер = число протонов = число электронов = заряд ядра|Atomic number = protons = electrons = nuclear charge"></p>
-      <p class="f-why"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="#FFC21A" stroke="#1E1A3D" stroke-width="2.6"/><path d="M16 9v9M16 22.5v.5" stroke="#1E1A3D" stroke-width="3" stroke-linecap="round"/></svg><span data-i="Неге? Атом электрбейтарап: оң (+) және теріс (−) зарядтар саны бірдей.|Почему? Атом электронейтрален: положительных (+) и отрицательных (−) зарядов поровну.|Why? An atom is neutral: it has as many positive (+) charges as negative (−) ones."></span></p>
+      <p class="f-why"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="#FFC21A" stroke="#1E1A3D" stroke-width="2.6"/><path d="M16 9v9M16 22.5v.5" stroke="#1E1A3D" stroke-width="3" stroke-linecap="round"/></svg><span data-i="Атом бейтарап: «+» саны = «−» саны.|Атом нейтрален: «+» столько же, сколько «−».|An atom is neutral: as many “+” as “−”."></span></p>
     </div>
     <div class="plate plate-2 card" data-step="1">
       <div class="f-row" aria-label="n0 = Ar - №">
@@ -1562,7 +1562,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
         <span class="ft" style="--i:4">№</span>
       </div>
       <p class="f-cap" data-i="Нейтрон саны = салыстырмалы атомдық масса − реттік нөмір|Число нейтронов = относительная атомная масса − порядковый номер|Neutrons = relative atomic mass − atomic number"></p>
-      <p class="f-why"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="#A5CFFF" stroke="#1E1A3D" stroke-width="2.6"/><path d="M10 17l4 4 8-9" fill="none" stroke="#1E1A3D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i="Ar-ды бүтін санға дейін дөңгелекте: 22,99 → 23.|Округляй Ar до целого числа: 22,99 → 23.|Round Ar to a whole number: 22.99 → 23."></span></p>
+      <p class="f-why"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="#A5CFFF" stroke="#1E1A3D" stroke-width="2.6"/><path d="M10 17l4 4 8-9" fill="none" stroke="#1E1A3D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i="Ar-ды дөңгелекте: 22,99 → 23.|Округляй Ar: 22,99 → 23.|Round Ar: 22.99 → 23."></span></p>
     </div>
     <div class="f-ex card" data-step="2">
       <h3>
@@ -1696,7 +1696,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
   </header>
   <div class="iso-def card ani a-rise" style="--d:250">
     <span class="big-i">=p⁺<br>≠n⁰</span>
-    <p data-i="&lt;b&gt;Изотоптар&lt;/b&gt; — &lt;mark&gt;протон саны бірдей&lt;/mark&gt;, бірақ &lt;mark class=n&gt;нейтрон саны әртүрлі&lt;/mark&gt; бір элементтің атомдары. Реттік нөмірі бірдей, ал массалық саны әртүрлі.|&lt;b&gt;Изотопы&lt;/b&gt; — атомы одного элемента с &lt;mark&gt;одинаковым числом протонов&lt;/mark&gt;, но &lt;mark class=n&gt;разным числом нейтронов&lt;/mark&gt;. Порядковый номер одинаковый, массовые числа разные.|&lt;b&gt;Isotopes&lt;/b&gt; are atoms of one element with &lt;mark&gt;the same number of protons&lt;/mark&gt; but &lt;mark class=n&gt;different numbers of neutrons&lt;/mark&gt;. Same atomic number, different mass numbers."></p>
+    <p data-i="&lt;b&gt;Изотоптар&lt;/b&gt; — бір элементтің атомдары: &lt;mark&gt;протон саны бірдей&lt;/mark&gt;, &lt;mark class=n&gt;нейтрон саны әртүрлі&lt;/mark&gt;.|&lt;b&gt;Изотопы&lt;/b&gt; — атомы одного элемента: &lt;mark&gt;протонов поровну&lt;/mark&gt;, &lt;mark class=n&gt;нейтронов — по-разному&lt;/mark&gt;.|&lt;b&gt;Isotopes&lt;/b&gt; are atoms of one element: &lt;mark&gt;same protons&lt;/mark&gt;, &lt;mark class=n&gt;different neutrons&lt;/mark&gt;."></p>
   </div>
   <div class="iso-cols">
     <div class="iso-col card ani a-rise" style="--d:450">
@@ -1712,7 +1712,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
       <div class="iso-info"><span class="nuc"><span class="nn"><i>3</i><i>1</i></span>H</span><h3 data-i="Тритий|Тритий|Tritium"></h3><div class="iso-chips"><span class="chip chip-p"><span class="sym">1 p<sup>+</sup></span></span><span class="chip chip-n diff"><span class="sym">2 n<sup>0</sup></span></span><span class="chip chip-e"><span class="sym">1 e<sup>−</sup></span></span></div><div class="iso-note" data-i="радиоактивті|радиоактивный|radioactive"></div></div>
     </div>
   </div>
-  <div class="iso-word ani a-fade" style="--d:1100" data-i="«Изотоп» = грекше &lt;b&gt;isos&lt;/b&gt; «бірдей» + &lt;b&gt;topos&lt;/b&gt; «орын»: кестеде бір ұяшықта тұрады!|«Изотоп» = греч. &lt;b&gt;isos&lt;/b&gt; «одинаковый» + &lt;b&gt;topos&lt;/b&gt; «место»: занимают одну клетку таблицы!|“Isotope” = Greek &lt;b&gt;isos&lt;/b&gt; “equal” + &lt;b&gt;topos&lt;/b&gt; “place”: they share one cell of the table!"></div>
+  <div class="iso-word ani a-fade" style="--d:1100" data-i="&lt;b&gt;isos&lt;/b&gt; «бірдей» + &lt;b&gt;topos&lt;/b&gt; «орын» — кестеде бір ұяшықта!|&lt;b&gt;isos&lt;/b&gt; «одинаковый» + &lt;b&gt;topos&lt;/b&gt; «место» — одна клетка таблицы!|&lt;b&gt;isos&lt;/b&gt; “equal” + &lt;b&gt;topos&lt;/b&gt; “place”: one cell of the table!"></div>
 </section>
 
 <!-- 17 · ISOTOPES IN LIFE -->
@@ -1725,31 +1725,31 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
     <div class="use-card card ani a-pop" style="--d:250;--tint:#F3E5D0">
       <div class="u-ico"><svg viewBox="0 0 48 48"><path d="M10 38 L20 18 L26 28 L30 22 L38 38 Z"/><circle cx="34" cy="12" r="4"/><path d="M6 38h36"/></svg></div>
       <h3><span class="nuc"><span class="nn"><i>14</i><i>6</i></span>C</span><span data-i="Археология|Археология|Archaeology"></span></h3>
-      <p data-i="Көміртегі-14 арқылы ежелгі қазбалардың жасын анықтайды.|По углероду-14 определяют возраст древних находок.|Carbon-14 tells scientists how old ancient finds are."></p>
+      <p data-i="Ежелгі қазбалардың жасын анықтайды.|Определяет возраст древних находок.|Tells how old ancient finds are."></p>
     </div>
     <div class="use-card card kz ani a-pop" style="--d:400;--tint:#D8F3FF">
       <div class="u-ico"><svg viewBox="0 0 48 48"><path d="M10 40 V22 h8 v18 M22 40 V12 h8 v28 M34 40 V26 h6 v14"/><path d="M6 40h36"/><path d="M26 8 l2 -4 l2 4"/></svg></div>
       <h3><span class="nuc"><span class="nn"><i>235</i><i>92</i></span>U</span><span data-i="Энергетика|Энергетика|Energy"></span></h3>
-      <p data-i="Уран-235 — атом электр станцияларының отыны.|Уран-235 — топливо для атомных электростанций.|Uranium-235 is the fuel of nuclear power plants."></p>
+      <p data-i="Атом электр станциясының отыны.|Топливо для атомных электростанций.|Fuel for nuclear power plants."></p>
       <span class="kz-flag" style="grid-column:2" data-i="Қазақстан — уран өндіруден әлемде 1-орында!|Казахстан — № 1 в мире по добыче урана!|Kazakhstan is the world's No. 1 uranium producer!"></span>
     </div>
     <div class="use-card card ani a-pop" style="--d:550;--tint:#FFE2E5">
       <div class="u-ico"><svg viewBox="0 0 48 48"><path d="M24 8 v32 M8 24 h32"/><rect x="14" y="14" width="20" height="20" rx="4"/></svg></div>
       <h3><span class="nuc"><span class="nn"><i>131</i><i>53</i></span>I</span><span data-i="Медицина|Медицина|Medicine"></span></h3>
-      <p data-i="Йод-131 қалқанша безді тексеру және емдеу үшін қолданылады.|Йод-131 применяют для диагностики и лечения щитовидной железы.|Iodine-131 is used to check and treat the thyroid gland."></p>
+      <p data-i="Қалқанша безді емдейді.|Лечит щитовидную железу.|Treats the thyroid gland."></p>
     </div>
     <div class="use-card card ani a-pop" style="--d:700;--tint:#E1EEFF">
       <div class="u-ico"><svg viewBox="0 0 48 48"><path d="M24 6 C24 6 36 20 36 28 a12 12 0 0 1 -24 0 C12 20 24 6 24 6 Z"/><path d="M19 28 a5 5 0 0 0 5 5"/></svg></div>
       <h3><span class="nuc"><span class="nn"><i>2</i><i>1</i></span>H</span><span data-i="Ауыр су|Тяжёлая вода|Heavy water"></span></h3>
-      <p data-i="Дейтерийден тұратын ауыр су (D₂O) ядролық реакторларда қолданылады.|Тяжёлая вода из дейтерия (D₂O) используется в ядерных реакторах.|Heavy water made with deuterium (D₂O) is used in nuclear reactors."></p>
+      <p data-i="Ауыр су D₂O — ядролық реакторларға.|Тяжёлая вода D₂O — для ядерных реакторов.|Heavy water D₂O is used in nuclear reactors."></p>
     </div>
     <div class="cl-box card ani a-right" style="--d:500">
       <h3 data-i="Неліктен Ar(Cl) = 35,5?|Почему Ar(Cl) = 35,5?|Why is Ar(Cl) = 35.5?"></h3>
-      <p data-i="Табиғатта хлордың екі изотопы бар. Әр 4 атомның үшеуі — &lt;b&gt;³⁵Cl&lt;/b&gt;, біреуі — &lt;b&gt;³⁷Cl&lt;/b&gt;.|В природе у хлора два изотопа. Из каждых 4 атомов три — &lt;b&gt;³⁵Cl&lt;/b&gt;, один — &lt;b&gt;³⁷Cl&lt;/b&gt;.|Natural chlorine has two isotopes. Out of every 4 atoms, three are &lt;b&gt;³⁵Cl&lt;/b&gt; and one is &lt;b&gt;³⁷Cl&lt;/b&gt;."></p>
+      <p data-i="Әр 4 хлор атомының үшеуі — &lt;b&gt;³⁵Cl&lt;/b&gt;, біреуі — &lt;b&gt;³⁷Cl&lt;/b&gt;.|Из 4 атомов хлора три — &lt;b&gt;³⁵Cl&lt;/b&gt;, один — &lt;b&gt;³⁷Cl&lt;/b&gt;.|Of every 4 chlorine atoms, 3 are &lt;b&gt;³⁵Cl&lt;/b&gt; and 1 is &lt;b&gt;³⁷Cl&lt;/b&gt;."></p>
       <div class="cl-balls">
         <span class="cl-ball" style="--i:0">35</span><span class="cl-ball" style="--i:1">35</span><span class="cl-ball" style="--i:2">35</span><span class="cl-ball heavy" style="--i:3">37</span>
       </div>
-      <p data-i="Сондықтан кестедегі Ar — изотоптардың орташа массасы:|Поэтому Ar в таблице — средняя масса изотопов:|So Ar in the table is the average mass of the isotopes:"></p>
+      <p data-i="Ar — орташа масса:|Ar — средняя масса:|Ar is the average mass:"></p>
       <div class="cl-avg">(35 + 35 + 35 + 37) : 4 = <b data-i="35,5|35,5|35.5"></b></div>
     </div>
   </div>
@@ -1774,7 +1774,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
       </div>
     </div>
     <div class="tr-right">
-      <p class="tr-q ani a-rise" style="--d:300" data-i="Атомда неше протон, нейтрон және электрон бар?|Сколько в атоме протонов, нейтронов и электронов?|How many protons, neutrons and electrons are in this atom?"></p>
+      <p class="tr-q ani a-rise" style="--d:300" data-i="p⁺, n⁰, e⁻ санын тап!|Найди число p⁺, n⁰, e⁻!|Find p⁺, n⁰ and e⁻!"></p>
       <div class="tr-fields">
         <div class="tr-row rp ani a-right" style="--d:400"><label class="lbl" for="inP"><i></i><span class="sym">p<sup>+</sup></span><small data-i="протон|протоны|protons"></small></label><span class="stepper"><button type="button" data-tstep="inP:-1">−</button><input id="inP" type="number" inputmode="numeric" min="0" max="300" value="0"><button type="button" data-tstep="inP:1">+</button></span><span class="mark"><svg viewBox="0 0 24 24"><path class="m-ok" d="M5 12l5 5 9-10"/><path class="m-no" d="M6 6l12 12M18 6L6 18"/></svg></span></div>
         <div class="tr-row rn ani a-right" style="--d:500"><label class="lbl" for="inN"><i></i><span class="sym">n<sup>0</sup></span><small data-i="нейтрон|нейтроны|neutrons"></small></label><span class="stepper"><button type="button" data-tstep="inN:-1">−</button><input id="inN" type="number" inputmode="numeric" min="0" max="300" value="0"><button type="button" data-tstep="inN:1">+</button></span><span class="mark"><svg viewBox="0 0 24 24"><path class="m-ok" d="M5 12l5 5 9-10"/><path class="m-no" d="M6 6l12 12M18 6L6 18"/></svg></span></div>
@@ -1812,7 +1812,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
     <div class="hw-card card ani a-rise" style="--d:200">
       <span class="hw-num">1</span>
       <h3 data-i="15 элементтің атом құрылысын жаз|Запиши строение атомов 15 элементов|Write the atomic structure of 15 elements"></h3>
-      <p class="hw-sub" data-i="Периодтық кестенің алғашқы 15 элементі — H-тан P-ға дейін. Дәптерге кесте түрінде жаз.|Первые 15 элементов таблицы — от H до P. Запиши в тетрадь в виде таблицы.|The first 15 elements of the table, from H to P. Write them in your notebook as a table."></p>
+      <p class="hw-sub" data-i="H-тан P-ға дейін. Дәптерге кесте етіп жаз.|От H до P. Запиши в тетрадь таблицей.|From H to P. Write them as a table."></p>
       <div class="el-chips" id="hwChips"></div>
       <div class="nb">
         <table>
@@ -1827,7 +1827,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
     <div class="hw-card card ani a-rise" style="--d:400">
       <span class="hw-num">2</span>
       <h3 data-i="Резерфорд моделін жасап әкел|Сделай модель атома Резерфорда|Make a Rutherford atom model"></h3>
-      <p class="hw-sub" data-i="Үйдегі қолжетімді заттарды пайдалан. Түстер: протон — қызыл, нейтрон — жасыл, электрон — сары.|Используй то, что есть дома. Цвета: протон — красный, нейтрон — зелёный, электрон — жёлтый.|Use things you have at home. Colours: proton red, neutron green, electron yellow."></p>
+      <p class="hw-sub" data-i="Үйдегі заттардан жаса. p⁺ — қызыл, n⁰ — жасыл, e⁻ — сары.|Из подручных материалов. p⁺ — красный, n⁰ — зелёный, e⁻ — жёлтый.|Use things at home. p⁺ red, n⁰ green, e⁻ yellow."></p>
       <div class="mat">
         <div><svg viewBox="0 0 56 56" aria-hidden="true"><rect x="6" y="18" width="44" height="26" rx="6" fill="#FF4D5E" stroke="#1E1A3D" stroke-width="3"/><rect x="6" y="18" width="15" height="26" rx="4" fill="#3DD68C" stroke="#1E1A3D" stroke-width="3"/><rect x="35" y="18" width="15" height="26" rx="4" fill="#FFC21A" stroke="#1E1A3D" stroke-width="3"/></svg><span data-i="пластилин (3 түсті)|пластилин (3 цвета)|clay (3 colours)"></span></div>
         <div><svg viewBox="0 0 56 56" aria-hidden="true"><ellipse cx="28" cy="30" rx="24" ry="20" fill="#fff" stroke="#1E1A3D" stroke-width="3"/><ellipse cx="28" cy="30" rx="15" ry="12" fill="none" stroke="#1E1A3D" stroke-width="2" stroke-dasharray="3 3"/></svg><span data-i="картон немесе тәрелке|картон или тарелка|card or a paper plate"></span></div>
@@ -1837,10 +1837,10 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
       </div>
       <div class="hw-body">
         <ol class="hw-steps" id="hwSteps">
-          <li data-i="Элементті таңда: мысалы, литий (Li)|Выбери элемент: например, литий (Li)|Pick an element, e.g. lithium (Li)"></li>
-          <li data-i="Ядро: 3 қызыл (p⁺) + 4 жасыл (n⁰) шар|Ядро: 3 красных (p⁺) + 4 зелёных (n⁰) шарика|Nucleus: 3 red (p⁺) + 4 green (n⁰) balls"></li>
-          <li data-i="Сыммен не жіппен 2 орбита жаса|Сделай 2 орбиты из проволоки или нитки|Make 2 orbits from wire or thread"></li>
-          <li data-i="3 сары электронды орбитаға орналастыр (2 + 1)|Размести 3 жёлтых электрона на орбитах (2 + 1)|Place 3 yellow electrons on the orbits (2 + 1)"></li>
+          <li data-i="Элемент таңда: мысалы, Li|Выбери элемент: например, Li|Pick an element, e.g. Li"></li>
+          <li data-i="Ядро: 3 қызыл + 4 жасыл шар|Ядро: 3 красных + 4 зелёных шарика|Nucleus: 3 red + 4 green balls"></li>
+          <li data-i="Сымнан не жіптен 2 орбита|2 орбиты из проволоки или нитки|2 orbits of wire or thread"></li>
+          <li data-i="3 сары электрон: 2 + 1|3 жёлтых электрона: 2 + 1|3 yellow electrons: 2 + 1"></li>
           <li data-i="Белгіле: Li — 3p⁺, 4n⁰, 3e⁻|Подпиши: Li — 3p⁺, 4n⁰, 3e⁻|Label it: Li — 3p⁺, 4n⁰, 3e⁻"></li>
         </ol>
         <svg class="model-svg" viewBox="0 0 240 240" id="hwModel" aria-hidden="true">
@@ -1873,9 +1873,9 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
       <g class="lamp" data-lamp="2" tabindex="0" role="button"><circle class="rim" cx="60" cy="252" r="36" fill="#1E1A3D" stroke="#1E1A3D" stroke-width="4"/><circle class="glass" cx="60" cy="252" r="30" fill="#5A3438"/></g>
     </svg>
     <div class="rf-opts">
-      <button type="button" class="rf-opt ani a-right" style="--d:350;--c:#2FD46F;--c2:#DCF5E7" data-rf="0"><i></i><span data-i="Бәрі түсінікті, басқаларға түсіндіре аламын|Всё понятно, могу объяснить другим|All clear, I can explain it to others"></span></button>
-      <button type="button" class="rf-opt ani a-right" style="--d:500;--c:#FFC21A;--c2:#FFF3CC" data-rf="1"><i></i><span data-i="Түсіндім, бірақ сұрақтарым бар|Понятно, но есть вопросы|I get it, but I have questions"></span></button>
-      <button type="button" class="rf-opt ani a-right" style="--d:650;--c:#FF4D5E;--c2:#FFE2E5" data-rf="2"><i></i><span data-i="Тағы бір рет түсіндіріп беріңізші|Объясните, пожалуйста, ещё раз|Please explain it once more"></span></button>
+      <button type="button" class="rf-opt ani a-right" style="--d:350;--c:#2FD46F;--c2:#DCF5E7" data-rf="0"><i></i><span data-i="Бәрі түсінікті!|Всё понятно!|All clear!"></span></button>
+      <button type="button" class="rf-opt ani a-right" style="--d:500;--c:#FFC21A;--c2:#FFF3CC" data-rf="1"><i></i><span data-i="Түсіндім, бірақ сұрағым бар|Понятно, но есть вопрос|Got it, but I have a question"></span></button>
+      <button type="button" class="rf-opt ani a-right" style="--d:650;--c:#FF4D5E;--c2:#FFE2E5" data-rf="2"><i></i><span data-i="Қайта түсіндіріңізші|Объясните ещё раз|Please explain again"></span></button>
     </div>
     <div class="rf-stems card ani a-rise" style="--d:800">
       <h3 data-i="Сөйлемді аяқта:|Закончи предложение:|Finish the sentence:"></h3>
@@ -1895,7 +1895,7 @@ kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.7em;padding:
       <span class="chr bob" data-chr="electron" style="animation-delay:-2s"></span>
     </div>
     <h2 class="thx-big" data-split data-i="Рахмет!|Спасибо!|Thank you!"></h2>
-    <p class="ani a-rise" style="--d:900" data-i="Сабақта белсенді болғандарың үшін рахмет! Химия — айналамыздағы әлем.|Спасибо за активную работу на уроке! Химия — это мир вокруг нас.|Thanks for being so active today! Chemistry is the world around us."></p>
+    <p class="ani a-rise" style="--d:900" data-i="Химия — айналамыздағы әлем!|Химия — это мир вокруг нас!|Chemistry is the world around us!"></p>
     <div class="brand-xl ani a-pop" style="--d:1200">
       <svg class="brand-atom" viewBox="-50 -50 100 100" aria-hidden="true">
         <ellipse class="ba-orb" rx="43" ry="16"/><ellipse class="ba-orb" rx="43" ry="16" transform="rotate(60)"/><ellipse class="ba-orb" rx="43" ry="16" transform="rotate(-60)"/>
@@ -2683,7 +2683,7 @@ reg('title', { enter() { avTitle.set(0, 0, 0, { instant: true }); avTitle.set(6,
     c.fillStyle = 'rgba(255,122,69,.10)'; c.fillRect(bx + bw, cy - R * 0.45, R * 0.4, R * 0.9);
     c.fillStyle = '#5A607A'; c.strokeStyle = '#fff'; c.lineWidth = 2;
     c.beginPath(); if (c.roundRect) c.roundRect(bx, cy - bh / 2, bw, bh, 8); else c.rect(bx, cy - bh / 2, bw, bh); c.fill(); c.stroke();
-    c.fillStyle = '#FF7A45'; c.font = '800 ' + (fs * 1.5) + 'px Unbounded, Nunito, sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.fillStyle = '#FF7A45'; c.font = '800 ' + (fs * 1.5) + 'px Rubik, Nunito, sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle';
     c.fillText('α', bx + bw / 2, cy + 1);
     c.fillStyle = 'rgba(255,255,255,.85)'; c.font = '800 ' + fs + 'px Nunito, Segoe UI, sans-serif';
     c.textBaseline = 'alphabetic';
@@ -2826,7 +2826,7 @@ reg('title', { enter() { avTitle.set(0, 0, 0, { instant: true }); avTitle.set(6,
   function mRender() {
     if (free) {
       $('#mTitle').textContent = tr(['Еркін режим', 'Свободный режим', 'Free play']);
-      $('#mTarget').textContent = tr(['Кез келген атомды құрастыр. Тапсырмаларға оралу үшін «Келесі тапсырма» түймесін бас.', 'Собери любой атом. Чтобы вернуться к заданиям, нажми «Следующее задание».', 'Build any atom you like. Tap “Next mission” to return to the missions.']);
+      $('#mTarget').textContent = tr(['Кез келген атомды құрастыр!', 'Собери любой атом!', 'Build any atom you like!']);
     } else {
       const m = MISSIONS[mi];
       $('#mTitle').textContent = tr(['Тапсырма', 'Задание', 'Mission']) + ' ' + (mi + 1) + '/' + MISSIONS.length;
@@ -2917,8 +2917,8 @@ reg('title', { enter() { avTitle.set(0, 0, 0, { instant: true }); avTitle.set(6,
   }
   function scoreUI() { $('#trScore').textContent = score; $('#trStreak').textContent = streak; }
   const hintText = () => mode === 'el'
-    ? tr(['Кеңес: <b>p⁺ = №</b>, <b>e⁻ = p⁺</b>, <b>n⁰ = Ar − №</b>. Ar-ды бүтін санға дейін дөңгелекте!', 'Подсказка: <b>p⁺ = №</b>, <b>e⁻ = p⁺</b>, <b>n⁰ = Ar − №</b>. Не забудь округлить Ar!', 'Hint: <b>p⁺ = №</b>, <b>e⁻ = p⁺</b>, <b>n⁰ = Ar − №</b>. Round Ar to a whole number!'])
-    : tr(['Кеңес: төменгі сан — №, жоғарғы сан — массалық сан A. <b>p⁺ = e⁻ = №</b>, <b>n⁰ = A − №</b>.', 'Подсказка: нижнее число — №, верхнее — массовое число A. <b>p⁺ = e⁻ = №</b>, <b>n⁰ = A − №</b>.', 'Hint: the bottom number is №, the top one is the mass number A. <b>p⁺ = e⁻ = №</b>, <b>n⁰ = A − №</b>.']);
+    ? tr(['Кеңес: <b>p⁺ = №</b>, <b>e⁻ = p⁺</b>, <b>n⁰ = Ar − №</b> (Ar-ды дөңгелекте).', 'Подсказка: <b>p⁺ = №</b>, <b>e⁻ = p⁺</b>, <b>n⁰ = Ar − №</b> (округли Ar).', 'Hint: <b>p⁺ = №</b>, <b>e⁻ = p⁺</b>, <b>n⁰ = Ar − №</b> (round Ar).'])
+    : tr(['Кеңес: төменгі сан — №, жоғарғы — A. <b>n⁰ = A − №</b>.', 'Подсказка: нижнее число — №, верхнее — A. <b>n⁰ = A − №</b>.', 'Hint: the bottom number is №, the top is A. <b>n⁰ = A − №</b>.']);
   function solution() {
     const a = ans(), top = q.iso ? 'A' : 'Ar';
     const note = q.iso ? '' : ' <small>(Ar = ' + arShow(q.z) + ' ≈ ' + q.A + ')</small>';
@@ -2939,7 +2939,7 @@ reg('title', { enter() { avTitle.set(0, 0, 0, { instant: true }); avTitle.set(6,
       setFb('good', () => '<b>' + tr(['Дұрыс! Жарайсың!', 'Верно! Молодец!', 'Correct! Well done!']) + '</b> ' + record() + (streak >= 3 ? ' · ' + tr(['Қатарынан ', 'Подряд ', 'Streak: ']) + streak + '!' : ''));
     } else {
       streak = 0; sfx.error();
-      setFb('bad', () => '<b>' + tr(['Қатесі бар. Қызыл өрістерді тексер.', 'Есть ошибка. Проверь красные поля.', 'Something is off. Check the red boxes.']) + '</b><br>' + hintText());
+      setFb('bad', () => '<b>' + tr(['Қате бар — қызыл өрістерді тексер.', 'Есть ошибка — проверь красные поля.', 'Not quite. Check the red boxes.']) + '</b><br>' + hintText());
     }
     scoreUI();
   }
@@ -2967,23 +2967,23 @@ reg('title', { enter() { avTitle.set(0, 0, 0, { instant: true }); avTitle.set(6,
   const Q = [
     { q: ['Атомның ортасында не орналасқан?', 'Что находится в центре атома?', 'What is at the centre of an atom?'],
       o: [['Ядро', 'Ядро', 'The nucleus'], ['Электрон', 'Электрон', 'An electron'], ['Молекула', 'Молекула', 'A molecule'], ['Бос кеңістік', 'Пустота', 'Empty space']],
-      x: ['Резерфорд дәлелдегендей, атомның ортасында кішкентай әрі ауыр ядро бар.', 'Как доказал Резерфорд, в центре атома — маленькое тяжёлое ядро.', 'As Rutherford showed, a tiny heavy nucleus sits at the centre.'] },
+      x: ['Атомның ортасында — ядро.', 'В центре атома — ядро.', 'The nucleus is at the centre.'] },
     { q: ['Протонның заряды қандай?', 'Какой заряд у протона?', 'What is the charge of a proton?'],
       o: [['+1', '+1', '+1'], ['−1', '−1', '−1'], ['0', '0', '0'], ['+2', '+2', '+2']],
-      x: ['Протон — оң зарядталған бөлшек: p⁺, заряды +1.', 'Протон — положительная частица: p⁺, заряд +1.', 'A proton is positive: p⁺, charge +1.'] },
+      x: ['Протон: p⁺, заряды +1.', 'Протон: p⁺, заряд +1.', 'Proton: p⁺, charge +1.'] },
     { q: ['Қай бөлшектің заряды жоқ?', 'У какой частицы нет заряда?', 'Which particle has no charge?'],
       o: [['Нейтрон', 'Нейтрон', 'Neutron'], ['Протон', 'Протон', 'Proton'], ['Электрон', 'Электрон', 'Electron'], ['Ядро', 'Ядро', 'Nucleus']],
       x: ['Нейтрон бейтарап: n⁰, заряды 0.', 'Нейтрон нейтрален: n⁰, заряд 0.', 'The neutron is neutral: n⁰, charge 0.'] },
     { q: ['Атом ядросы неден тұрады?', 'Из чего состоит ядро атома?', 'What is the nucleus made of?'],
       o: [['Протондар мен нейтрондардан', 'Из протонов и нейтронов', 'Protons and neutrons'], ['Протондар мен электрондардан', 'Из протонов и электронов', 'Protons and electrons'], ['Тек электрондардан', 'Только из электронов', 'Only electrons'], ['Молекулалардан', 'Из молекул', 'Molecules']],
-      x: ['Ядро = протондар + нейтрондар. Электрондар ядроның айналасында.', 'Ядро = протоны + нейтроны. Электроны — вокруг ядра.', 'Nucleus = protons + neutrons. Electrons stay around it.'] },
+      x: ['Ядро = p⁺ + n⁰.', 'Ядро = p⁺ + n⁰.', 'Nucleus = p⁺ + n⁰.'] },
     { q: ['«Мейізді кекс» моделін кім ұсынды?', 'Кто предложил модель «пудинг с изюмом»?', 'Who proposed the “plum pudding” model?'],
       o: [['Дж. Томсон', 'Дж. Томсон', 'J. J. Thomson'], ['Э. Резерфорд', 'Э. Резерфорд', 'E. Rutherford'], ['Д. Менделеев', 'Д. Менделеев', 'D. Mendeleev'], ['Демокрит', 'Демокрит', 'Democritus']],
-      x: ['Томсон электронды ашып, атомды мейізді кекске ұқсатты.', 'Томсон открыл электрон и сравнил атом с кексом с изюмом.', 'Thomson discovered the electron and compared the atom to a plum pudding.'] },
-    { q: ['Резерфорд тәжірибесінде α-бөлшектердің көбі фольгадан тура өтіп кетті. Бұл нені көрсетеді?', 'В опыте Резерфорда большинство α-частиц прошли сквозь фольгу. Что это значит?', 'In Rutherford\'s experiment most α-particles went straight through the foil. What does it show?'],
+      x: ['Томсон атомды мейізді кекске ұқсатты.', 'Томсон сравнил атом с кексом с изюмом.', 'Thomson compared the atom to a plum pudding.'] },
+    { q: ['α-бөлшектердің көбі фольгадан тура өтті. Бұл нені білдіреді?', 'Большинство α-частиц прошли сквозь фольгу. Что это значит?', 'Most α-particles went straight through the foil. What does it mean?'],
       o: [['Атомның көп бөлігі бос', 'Атом в основном пустой', 'The atom is mostly empty'], ['Атом өте қатты', 'Атом очень твёрдый', 'The atom is very hard'], ['Алтын — металл', 'Золото — металл', 'Gold is a metal'], ['Электрондар ауыр', 'Электроны тяжёлые', 'Electrons are heavy']],
-      x: ['Бөлшектер еш нәрсеге соқпай өтті — демек атомда бос кеңістік көп.', 'Частицы ни во что не врезались — значит, в атоме много пустоты.', 'They hit nothing, so the atom must be mostly empty space.'] },
-    { q: ['Натрийдің реттік нөмірі 11. Натрий атомында неше электрон бар?', 'Порядковый номер натрия — 11. Сколько электронов в атоме натрия?', 'Sodium\'s atomic number is 11. How many electrons does a sodium atom have?'],
+      x: ['Соқпай өтті → атомның іші бос.', 'Ни во что не врезались → атом почти пустой.', 'They hit nothing → the atom is mostly empty.'] },
+    { q: ['Натрий: № 11. Атомында неше электрон бар?', 'Натрий: № 11. Сколько в атоме электронов?', 'Sodium: № 11. How many electrons?'],
       o: [['11', '11', '11'], ['12', '12', '12'], ['23', '23', '23'], ['22', '22', '22']],
       x: ['№ = p⁺ = e⁻ = 11.', '№ = p⁺ = e⁻ = 11.', '№ = p⁺ = e⁻ = 11.'] },
     { q: ['Алюминий: № 13, Ar = 27. Нейтрон саны қанша?', 'Алюминий: № 13, Ar = 27. Сколько нейтронов?', 'Aluminium: № 13, Ar = 27. How many neutrons?'],
@@ -3004,7 +3004,7 @@ reg('title', { enter() { avTitle.set(0, 0, 0, { instant: true }); avTitle.set(6,
   function start() { S.phase = 'q'; S.i = 0; S.score = 0; S.picked = []; S.perms = Q.map(() => shuffle([0, 1, 2, 3])); render(true); sfx.whoosh(); }
   function render(anim) {
     if (S.phase === 'start') {
-      box.innerHTML = '<div class="q-start">' + chars + '<h3>' + tr(['10 сұрақ — 10 ұпай!', '10 вопросов — 10 баллов!', '10 questions, 10 points!']) + '</h3><p>' + tr(['Әр сұраққа бір жауап таңда. Пернетақтадағы 1–4 сандарын да басуға болады.', 'Выбери один ответ на каждый вопрос. Можно нажимать клавиши 1–4.', 'Pick one answer for each question. You can also press keys 1–4.']) + '</p><button class="btn" type="button" id="qStart">' + tr(['Бастау', 'Начать', 'Start']) + ' →</button></div>';
+      box.innerHTML = '<div class="q-start">' + chars + '<h3>' + tr(['10 сұрақ — 10 ұпай!', '10 вопросов — 10 баллов!', '10 questions, 10 points!']) + '</h3><p>' + tr(['Бір жауапты таңда. 1–4 пернелері де жұмыс істейді.', 'Выбери один ответ. Работают и клавиши 1–4.', 'Pick one answer. Keys 1–4 work too.']) + '</p><button class="btn" type="button" id="qStart">' + tr(['Бастау', 'Начать', 'Start']) + ' →</button></div>';
       $('#qStart').addEventListener('click', start);
     } else if (S.phase === 'q') {
       const q = Q[S.i], perm = S.perms[S.i], picked = S.picked[S.i];
@@ -3022,7 +3022,7 @@ reg('title', { enter() { avTitle.set(0, 0, 0, { instant: true }); avTitle.set(6,
       const nb = $('#qNext'); if (nb) nb.addEventListener('click', advance);
     } else {
       const s = S.score, stars = s >= 9 ? 3 : s >= 6 ? 2 : 1;
-      const msg = s >= 9 ? ['Керемет! Сен — нағыз химиксің!', 'Великолепно! Ты настоящий химик!', 'Amazing! You are a real chemist!'] : s >= 6 ? ['Жақсы нәтиже! Аздап қайталасаң, мінсіз болады.', 'Хороший результат! Немного повтори — и будет идеально.', 'Good result! A little more practice and it will be perfect.'] : ['Тақырыпты тағы бір қарап шық — сен міндетті түрде үлгересің!', 'Повтори тему ещё раз — у тебя обязательно получится!', 'Go over the topic once more, you can definitely do it!'];
+      const msg = s >= 9 ? ['Керемет! Сен — нағыз химиксің!', 'Великолепно! Ты настоящий химик!', 'Amazing! You are a real chemist!'] : s >= 6 ? ['Жақсы! Аздап қайталасаң — мінсіз.', 'Хорошо! Чуть повтори — и будет идеально.', 'Good! A bit more practice and it\'s perfect.'] : ['Тақырыпты қайтала — сен үлгересің!', 'Повтори тему — у тебя получится!', 'Review the topic, you can do it!'];
       box.innerHTML = '<div class="q-result">' + chars + '<div class="big-score">' + s + ' / ' + Q.length + '</div><div class="big-stars">' + [0, 1, 2].map(i => starSVG(i < stars, i)).join('') + '</div><h3>' + tr(msg) + '</h3><button class="btn yellow" type="button" id="qAgain">' + tr(['Қайта бастау', 'Пройти заново', 'Try again']) + '</button></div>';
       $('#qAgain').addEventListener('click', start);
     }
