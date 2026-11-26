@@ -7,7 +7,7 @@
   --font: "Segoe UI", system-ui, -apple-system, Roboto, "Noto Sans", "Helvetica Neue", Arial, sans-serif;
   --bar-h: 58px;
 }
-html[data-theme="dark"]{
+:root,html[data-theme="dark"]{
   --bg:#0a1022; --bg-2:#0f1730; --ink:#eef3ff; --muted:#a3b2d6; --line:rgba(255,255,255,.13);
   --card:rgba(255,255,255,.055); --card-2:rgba(255,255,255,.09); --card-solid:#151e3b;
   --exo:#ff7d33; --exo-2:#ffb43a; --exo-3:#ff4040; --endo:#3cc4ff; --endo-2:#8fe6ff; --endo-3:#3b6cff;
@@ -1103,3 +1103,11 @@ html[data-theme="light"] .work-badge.solo{color:#6d28d9}
 .pg.open .pq{border-style:solid}
 .pq-list{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
 .pq-list > span{font-size:20px;font-weight:650;padding:9px 16px;border-radius:999px;background:var(--card);border:1px solid var(--glass-border)}
+
+/* phones: keep the control bar and panels clear of system bars */
+#bar{height:calc(var(--bar-h) + env(safe-area-inset-bottom,0px));padding-bottom:env(safe-area-inset-bottom,0px);padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px))}
+#viewport{top:env(safe-area-inset-top,0px);bottom:calc(var(--bar-h) + env(safe-area-inset-bottom,0px))}
+.modal{bottom:calc(var(--bar-h) + env(safe-area-inset-bottom,0px))}
+.sheet{bottom:calc(var(--bar-h) + env(safe-area-inset-bottom,0px) + 10px)}
+.panel{top:calc(16px + env(safe-area-inset-top,0px));right:calc(16px + env(safe-area-inset-right,0px))}
+.pill-btn.armed{color:#fff;background:var(--bad);border-color:var(--bad)}

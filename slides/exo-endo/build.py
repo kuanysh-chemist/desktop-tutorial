@@ -61,6 +61,16 @@ def main():
                    .replace("/*__JS__*/", js))
     OUT.write_text(out, encoding="utf-8")
     print(f"OK → {OUT.name} ({len(out.encode('utf-8')) / 1024:.0f} KB)")
+    if len(sys.argv) > 2 and sys.argv[1] == "--artifact":
+        # claude.ai artifact: the host adds doctype/head/body, so ship title + style + body only
+        title = re.search(r"<title>.*?</title>", out, re.S).group(0)
+        style = re.search(r"<style>.*?</style>", out, re.S).group(0)
+        body = out[out.index("<body>") + len("<body>"):out.rindex("</body>")]
+        early = ('<script>document.documentElement.lang="kk";'
+                 'document.documentElement.setAttribute("data-theme","dark")</script>')
+        art = pathlib.Path(sys.argv[2])
+        art.write_text(title + "\n" + style + "\n" + early + "\n" + body, encoding="utf-8")
+        print(f"OK → {art} (artifact)")
 
 
 if __name__ == "__main__":

@@ -38,7 +38,7 @@ var UI = {
   addTeam: T3('Топ қосу', 'Добавить группу', 'Add team'),
   removeTeam: T3('Топты алу', 'Убрать группу', 'Remove team'),
   reset: T3('Нөлдеу', 'Сбросить', 'Reset'),
-  resetConfirm: T3('Барлық ұпайды нөлдейміз бе?', 'Обнулить все баллы?', 'Reset all points?'),
+  resetConfirm: T3('Нөлдеу үшін тағы басыңыз', 'Нажмите ещё раз для сброса', 'Tap again to reset'),
   team: T3('{n}-топ', 'Группа {n}', 'Team {n}'),
   playAgain: T3('Қайта ойнау', 'Сыграть ещё', 'Play again'),
   restart: T3('Қайта бастау', 'Начать заново', 'Restart'),
@@ -59,7 +59,7 @@ var UI = {
     '<kbd>→</kbd> <kbd>Space</kbd> <kbd>PageDown</kbd> — next step · <kbd>↓</kbd> — next slide · <kbd>←</kbd> — back · <kbd>N</kbd> — notes · <kbd>T</kbd> — timer · <kbd>S</kbd> — scores · <kbd>M</kbd> — slides · <kbd>F</kbd> — full screen · <kbd>Esc</kbd> — close'
   )
 };
-var TITLE = T3('Экзо- және эндотермиялық реакциялар · 8 сынып', 'Экзо- и эндотермические реакции · 8 класс', 'Exothermic & endothermic reactions · Grade 8');
+var TITLE = T3('Экзо- және эндотермиялық реакциялар', 'Экзо- и эндотермические реакции', 'Exothermic and endothermic reactions');
 var STAGES = {
   1: T3('I. Ұйымдастыру кезеңі · 2 мин', 'I. Организационный момент · 2 мин', 'I. Organisation · 2 min'),
   2: T3('II. Білімді өзектендіру · 5 мин', 'II. Актуализация знаний · 5 мин', 'II. Activating prior knowledge · 5 min'),
@@ -164,7 +164,7 @@ function subifyAll(root) { $$('.f', root || document).forEach(subify); }
 /* ================= stage scaling ================= */
 var stage = $('#stage'), viewport = $('#viewport'), bar = $('#bar');
 function fit() {
-  var W = window.innerWidth, H = window.innerHeight - bar.offsetHeight;
+  var W = viewport.clientWidth || window.innerWidth, H = viewport.clientHeight || (window.innerHeight - bar.offsetHeight);
   var s = Math.min(W / 1600, H / 900);
   S.scale = s;
   var x = (W - 1600 * s) / 2, y = (H - 900 * s) / 2;
@@ -661,7 +661,17 @@ function scInit() {
       var a = b.getAttribute('data-sc');
       if (a === 'add' && teams.length < 8) teams.push({ n: '', s: 0 });
       if (a === 'remove' && teams.length > 1) teams.pop();
-      if (a === 'reset') { if (!window.confirm(L(UI.resetConfirm))) return; teams.forEach(function (t) { t.s = 0; }); }
+      if (a === 'reset') {
+        var lbl = b.querySelector('[data-ui]');
+        if (!b._armed) {
+          b._armed = true; b.classList.add('armed'); lbl.textContent = L(UI.resetConfirm); sfx('pop');
+          clearTimeout(b._t);
+          b._t = setTimeout(function () { b._armed = false; b.classList.remove('armed'); lbl.textContent = L(UI.reset); }, 3500);
+          return;
+        }
+        b._armed = false; clearTimeout(b._t); b.classList.remove('armed'); lbl.textContent = L(UI.reset);
+        teams.forEach(function (t) { t.s = 0; });
+      }
       saveTeams(); renderTeams(); sfx('pop');
     });
   });
@@ -1261,8 +1271,8 @@ function toggleFull() {
   var d = document, el = d.documentElement;
   var isFull = d.fullscreenElement || d.webkitFullscreenElement;
   try {
-    if (!isFull) { (el.requestFullscreen || el.webkitRequestFullscreen).call(el); }
-    else { (d.exitFullscreen || d.webkitExitFullscreen).call(d); }
+    var r = !isFull ? (el.requestFullscreen || el.webkitRequestFullscreen).call(el) : (d.exitFullscreen || d.webkitExitFullscreen).call(d);
+    if (r && r.catch) r.catch(function () {});
   } catch (e) {}
 }
 
